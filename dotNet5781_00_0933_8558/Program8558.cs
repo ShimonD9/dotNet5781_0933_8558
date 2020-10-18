@@ -22,7 +22,7 @@ namespace dotNet5781_00_0933_8558
             Console.WriteLine("Enter your name:");
             string userName = Console.ReadLine();
             Console.WriteLine("{0}, welcome to my first console application", userName);
-            // Please shimond111000
+            // Please shimond1110002
         }
     }
 }
