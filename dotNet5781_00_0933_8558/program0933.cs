@@ -10,7 +10,7 @@ namespace dotNet5781_00_0933_8558
     {
         static partial void Welcome0933()
         {
-            Console.WriteLine("hello dan");
+            Console.WriteLine("i am also here");
         }
     }
 }
