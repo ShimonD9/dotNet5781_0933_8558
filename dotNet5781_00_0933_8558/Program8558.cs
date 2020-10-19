@@ -24,6 +24,7 @@ namespace dotNet5781_00_0933_8558
             Console.WriteLine("{0}, welcome to my first console application", userName);
             // Now it WORKS
             //finish ex0
+            //BRAVISSIMO
         }
     }
 }
