@@ -40,12 +40,13 @@ namespace dotNet5781_01_0933_8558
 						{
 							try
 							{
-								buses.Add(new Bus(taarich, rishuy)); // surround with try
+								buses.Add(new Bus(Date, rishuy)); // surround with try
 								foreach (Bus bus in buses)
 								{
 									Console.WriteLine(bus);
 								}
-						catch (Exception exception)
+							}
+							catch (Exception exception)
 							{
 								Console.WriteLine(exception.Message);
 							}
