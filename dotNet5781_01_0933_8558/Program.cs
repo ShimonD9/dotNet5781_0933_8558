@@ -30,17 +30,17 @@ namespace dotNet5781_01_0933_8558
 				{
 					case CHOICE.ADD_BUS:
 						Console.WriteLine("put the details in please:");
-						string rishuy;
+						string license;
 						DateTime Date;
 						Console.WriteLine("enter date");
 						success = DateTime.TryParse(Console.ReadLine(), out Date);
 						Console.WriteLine("teb rishuy");
-						rishuy = Console.ReadLine();
+						license = Console.ReadLine();
 						if (success)
 						{
 							try
 							{
-								buses.Add(new Bus(Date, rishuy)); // surround with try
+								buses.Add(new Bus(Date, license)); // surround with try
 								foreach (Bus bus in buses)
 								{
 									Console.WriteLine(bus);
