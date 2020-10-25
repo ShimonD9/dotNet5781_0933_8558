@@ -21,7 +21,7 @@ namespace dotNet5781_01_0933_8558
 				success = Enum.TryParse(kelet, out choice);
 				if (!success)
 				{
-					Console.WriteLine("Try again"); o
+					Console.WriteLine("Try again");
 				}
 			}
 			while (!success);
