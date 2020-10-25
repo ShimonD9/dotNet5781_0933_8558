@@ -10,15 +10,14 @@ namespace dotNet5781_01_0933_8558
     {
         static void Main(string[] args)
         {
-
 			List<Bus> buses = new List<Bus>();
 			CHOICE choice;
 			bool success;
 			do
-			{
-				Console.WriteLine("enter etc.");
-				string kelet = Console.ReadLine();
-				success = Enum.TryParse(kelet, out choice);
+			{ 
+				Console.WriteLine("enter your choice:");
+				string answer = Console.ReadLine();
+				success = Enum.TryParse(answer, out choice);
 				if (!success)
 				{
 					Console.WriteLine("Try again");
@@ -30,11 +29,11 @@ namespace dotNet5781_01_0933_8558
 				switch (choice)
 				{
 					case CHOICE.ADD_BUS:
-						Consoe.WriteLine("ten li pratim");
+						Console.WriteLine("put the details in please:");
 						string rishuy;
-						DateTime.taarich;
+						DateTime Date;
 						Console.WriteLine("enter date");
-						success = DateTime.TryPrase(Console.ReadLine(), out taarich);
+						success = DateTime.TryParse(Console.ReadLine(), out Date);
 						Console.WriteLine("teb rishuy");
 						rishuy = Console.ReadLine();
 						if (success)
@@ -48,7 +47,7 @@ namespace dotNet5781_01_0933_8558
 								}
 						catch (Exception exception)
 							{
-								console.WriteLine(exception.Message);
+								Console.WriteLine(exception.Message);
 							}
 						}
 						break;

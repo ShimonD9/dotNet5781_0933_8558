@@ -10,6 +10,10 @@ namespace dotNet5781_00_0933_8558
     {
         static void Main(string[] args)
         {
+            int x;
+            bool b = int.TryParse("aba", out x);
+           bool y = int.TryParse("1234",out x);
+            Console.WriteLine("{0},{1}",b,x-1);
             Welcome8558();
             Welcome0933();
             Console.ReadKey();
