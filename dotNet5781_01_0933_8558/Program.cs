@@ -11,7 +11,7 @@ namespace dotNet5781_01_0933_8558
     {
         static void Main(string[] args)
         {
-			Bus pupik = new Bus(new DateTime(2018, 2, 2), "1234561");
+			Bus pupik = new Bus(new DateTime(2018, 2, 2), "45555554");
 			Console.WriteLine("{0}", pupik.License);
 
 /*
