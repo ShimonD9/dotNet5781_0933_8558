@@ -9,11 +9,11 @@ namespace dotNet5781_01_0933_8558
     public class Bus
     {
 		public DateTime DateOfAbsorption { get; set; }
-
 		private String license;
 
 		public String License
 		{
+			
 			get
 			{
 				string prefix, middle, suffix, result;
@@ -37,13 +37,13 @@ namespace dotNet5781_01_0933_8558
 
 			set
 			{
-				if (DateOfAbsorption.Year >= 2018 && License.Length == 8)
+				if (DateOfAbsorption.Year >= 2018 && value.Length == 8)
 				{
-					license = License;
+					license = value;
 				}
-				else if (License.Length == 7)
+				else if (value.Length == 7)
 				{
-					license = License;
+					license = value;
 				}
 				else
 				{
@@ -52,13 +52,11 @@ namespace dotNet5781_01_0933_8558
 
 			}
 		}
-
-		public Bus(DateTime date, string license) // Bus constructor
+		public Bus(DateTime date, string license)
 		{
 			DateOfAbsorption = date;
 			License = license;
 		}
-
 		public override string ToString()
 		{
 			return string.Format("rishuy = {0}; date = {1}", License, DateOfAbsorption.ToShortDateString());

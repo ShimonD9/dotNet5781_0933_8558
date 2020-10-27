@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +10,6 @@ namespace dotNet5781_01_0933_8558
     {
         static void Main(string[] args)
         {
-			DateTime 
-			Bus pupik(out DateTime, 30403020);
-			Console.WriteLine("{0}", pupik.License);
 			List<Bus> buses = new List<Bus>();
 			CHOICE choice;
 			bool success;
