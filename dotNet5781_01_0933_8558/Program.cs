@@ -11,8 +11,15 @@ namespace dotNet5781_01_0933_8558
     {
         static void Main(string[] args)
         {
-			Bus pupik = new Bus(new DateTime(2018, 2, 2), "45555655");
-			Console.WriteLine("{0}", pupik.ToString());
+            try
+			{ 
+			Bus pupik = new Bus(new DateTime(2015, 2, 2), "565");
+			}
+			catch (Exception exception)
+			{
+				Console.WriteLine(exception.Message);
+			}
+			//Console.WriteLine("{0}", pupik); // pupik = pupik.toString();
 
 			/*
 			List<Bus> buses = new List<Bus>();

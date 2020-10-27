@@ -8,34 +8,35 @@ namespace dotNet5781_01_0933_8558
 {
     public class Bus
     {
-		public Bus(DateTime date, string license) // Bus constructor
+
+		public Bus(DateTime dateInput, string licenseInput) // Bus constructor
 		{
-			DateOfAbsorption = date;
-			busLicense = license;
+			DateOfAbsorption = dateInput;
+			license = licenseInput;
 		}
 
 		public DateTime DateOfAbsorption { get; set; }
 
-		private String busLicense;
+		String license;
 
 		public String License
 		{
 			get
 			{
 				string prefix, middle, suffix, result;
-				if (busLicense.Length == 7)
+				if (license.Length == 7)
 				{
-					prefix = busLicense.Substring(0, 2);
-					middle = busLicense.Substring(2, 3);
-					suffix = busLicense.Substring(4, 2);
+					prefix = license.Substring(0, 2);
+					middle = license.Substring(2, 3);
+					suffix = license.Substring(4, 2);
 					result = string.Format("{0}-{1}-{2}", prefix, middle, suffix);
 
 				}
 				else
 				{
-					prefix = busLicense.Substring(0, 3);
-					middle = busLicense.Substring(3, 2);
-					suffix = busLicense.Substring(5, 3);
+					prefix = license.Substring(0, 3);
+					middle = license.Substring(3, 2);
+					suffix = license.Substring(5, 3);
 					result = string.Format("{0}-{1}-{2}", prefix, middle, suffix);
 				}
 				return result;
@@ -43,13 +44,13 @@ namespace dotNet5781_01_0933_8558
 
 			set
 			{
-				if (DateOfAbsorption.Year >= 2018 && License.Length == 8)
+				if (DateOfAbsorption.Year >= 2018 && value.Length == 8)
 				{
-					busLicense = value;
+					license = value;
 				}
-				else if (License.Length == 7)
+				else if (value.Length == 7)
 				{
-					busLicense = value;
+					license = value;
 				}
 				else
 				{
