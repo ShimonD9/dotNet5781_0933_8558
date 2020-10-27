@@ -8,7 +8,6 @@ namespace dotNet5781_01_0933_8558
 {
     public class Bus
     {
-
 		public Bus(DateTime dateInput, string licenseInput) // Bus constructor
 		{
 			DateOfAbsorption = dateInput;
@@ -54,15 +53,14 @@ namespace dotNet5781_01_0933_8558
 				}
 				else
 				{
-					throw new Exception("kuku");
+					throw new Exception("Wrong input");
 				}
-
 			}
 		}
 
 		public override string ToString()
 		{
-			return string.Format("rishuy = {0}; date = {1}", License, DateOfAbsorption.ToShortDateString());
+			return string.Format("License = {0}\n Date = {1}", License, DateOfAbsorption.ToShortDateString());
 		}
 	}
 }
