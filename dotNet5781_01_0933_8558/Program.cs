@@ -11,54 +11,55 @@ namespace dotNet5781_01_0933_8558
     {
         static void Main(string[] args)
         {
-			DateTime 
-			Bus pupik(out DateTime, 30403020);
+			Bus pupik = new Bus(new DateTime(2018, 2, 2), "1234561");
 			Console.WriteLine("{0}", pupik.License);
-			List<Bus> buses = new List<Bus>();
-			CHOICE choice;
-			bool success;
-			do
-			{ 
-				Console.WriteLine("enter your choice:");
-				string answer = Console.ReadLine();
-				success = Enum.TryParse(answer, out choice);
-				if (!success)
+			/*
+List<Bus> buses = new List<Bus>();
+CHOICE choice;
+bool success;
+do
+{ 
+	Console.WriteLine("enter your choice:");
+	string answer = Console.ReadLine();
+	success = Enum.TryParse(answer, out choice);
+	if (!success)
+	{
+		Console.WriteLine("Try again");
+	}
+}
+while (!success);
+do
+{
+	switch (choice)
+	{
+		case CHOICE.ADD_BUS:
+			Console.WriteLine("put the details in please:");
+			string license;
+			DateTime Date;
+			Console.WriteLine("enter date");
+			success = DateTime.TryParse(Console.ReadLine(), out Date);
+			Console.WriteLine("teb rishuy");
+			license = Console.ReadLine();
+			if (success)
+			{
+				try
 				{
-					Console.WriteLine("Try again");
+					buses.Add(new Bus(Date, license)); // surround with try
+					foreach (Bus bus in buses)
+					{
+						Console.WriteLine(bus);
+					}
+				}
+				catch (Exception exception)
+				{
+					Console.WriteLine(exception.Message);
 				}
 			}
-			while (!success);
-			do
-			{
-				switch (choice)
-				{
-					case CHOICE.ADD_BUS:
-						Console.WriteLine("put the details in please:");
-						string license;
-						DateTime Date;
-						Console.WriteLine("enter date");
-						success = DateTime.TryParse(Console.ReadLine(), out Date);
-						Console.WriteLine("teb rishuy");
-						license = Console.ReadLine();
-						if (success)
-						{
-							try
-							{
-								buses.Add(new Bus(Date, license)); // surround with try
-								foreach (Bus bus in buses)
-								{
-									Console.WriteLine(bus);
-								}
-							}
-							catch (Exception exception)
-							{
-								Console.WriteLine(exception.Message);
-							}
-						}
-						break;
-				}
+			break;
+	}
 
-			} while (success);
+} while (success);
+*/
 		}
-    }
+	}
 }
