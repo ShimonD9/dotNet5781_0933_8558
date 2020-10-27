@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,17 @@ namespace dotNet5781_01_0933_8558
     {
         static void Main(string[] args)
         {
+            try
+			{ 
+			Bus pupik = new Bus(new DateTime(2015, 2, 2), "565");
+			}
+			catch (Exception exception)
+			{
+				Console.WriteLine(exception.Message);
+			}
+			//Console.WriteLine("{0}", pupik); // pupik = pupik.toString();
+
+			/*
 			List<Bus> buses = new List<Bus>();
 			CHOICE choice;
 			bool success;
@@ -30,17 +42,17 @@ namespace dotNet5781_01_0933_8558
 				{
 					case CHOICE.ADD_BUS:
 						Console.WriteLine("put the details in please:");
-						string license;
-						DateTime Date;
+						String license;
+						DateTime date;
 						Console.WriteLine("enter date");
-						success = DateTime.TryParse(Console.ReadLine(), out Date);
+						success = DateTime.TryParse(Console.ReadLine(), out date);
 						Console.WriteLine("teb rishuy");
 						license = Console.ReadLine();
 						if (success)
 						{
 							try
 							{
-								buses.Add(new Bus(Date, license)); // surround with try
+								buses.Add(new Bus(date, license)); // surround with try
 								foreach (Bus bus in buses)
 								{
 									Console.WriteLine(bus);
@@ -55,6 +67,7 @@ namespace dotNet5781_01_0933_8558
 				}
 
 			} while (success);
+			*/
 		}
-    }
+	}
 }
