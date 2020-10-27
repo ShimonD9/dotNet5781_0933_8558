@@ -12,7 +12,7 @@ namespace dotNet5781_01_0933_8558
 		public Bus(DateTime dateInput, string licenseInput) // Bus constructor
 		{
 			DateOfAbsorption = dateInput;
-			license = licenseInput;
+			License = licenseInput;
 		}
 
 		public DateTime DateOfAbsorption { get; set; }
