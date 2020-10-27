@@ -13,7 +13,8 @@ namespace dotNet5781_01_0933_8558
         {
 			Bus pupik = new Bus(new DateTime(2018, 2, 2), "1234561");
 			Console.WriteLine("{0}", pupik.License);
-			/*
+
+/*
 List<Bus> buses = new List<Bus>();
 CHOICE choice;
 bool success;
