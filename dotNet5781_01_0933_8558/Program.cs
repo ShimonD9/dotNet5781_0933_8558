@@ -9,11 +9,12 @@ namespace dotNet5781_01_0933_8558
 {
     class Program
     {
-        static void Main(string[] args)
+		static void Main(string[] args)
         {
+			Bus pupik = null; ;
 			try
 			{ 
-			pupik = new Bus(new DateTime(2015, 2, 2), "565");
+				pupik = new Bus(new DateTime(2014, 2, 2), "5233435");
 			}
 			catch (Exception exception)
 			{

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_01_0933_8558
 {
-    public class Bus
-    {
+	public class Bus
+	{
 		public Bus(DateTime dateInput, string licenseInput) // Bus constructor
 		{
 			DateOfAbsorption = dateInput;
@@ -47,7 +47,7 @@ namespace dotNet5781_01_0933_8558
 				{
 					license = value;
 				}
-				else if (value.Length == 7)
+				else if (DateOfAbsorption.Year < 2018 && value.Length == 7)
 				{
 					license = value;
 				}
@@ -57,10 +57,10 @@ namespace dotNet5781_01_0933_8558
 				}
 			}
 		}
-
+		
 		public override string ToString()
 		{
-			return string.Format("License = {0}\n Date = {1}", License, DateOfAbsorption.ToShortDateString());
+			return string.Format("License = {0} Date = {1}", License, DateOfAbsorption.ToShortDateString());
 		}
 	}
 }
