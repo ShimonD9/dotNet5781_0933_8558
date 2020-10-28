@@ -12,11 +12,12 @@ namespace dotNet5781_01_0933_8558
 		{
 			DateOfAbsorption = dateInput;
 			License = licenseInput;
+			mileageSinceRefill = 1200;
 		}
 
 		public DateTime DateOfAbsorption { get; set; }
 
-		String license;
+		private String license;
 
 		public String License
 		{
@@ -57,10 +58,55 @@ namespace dotNet5781_01_0933_8558
 				}
 			}
 		}
-		
+
+        private double mileage;
+
+        public double Mileage
+		{
+            get { return mileage; }
+            set { mileage = value; }
+        }
+
+        private double mileageSinceRefill;
+
+        public double MileageSinceRefill
+		{
+            get { return mileageSinceRefill; }
+			set
+			{
+				if (mileageSinceRefill > value)
+				{ mileageSinceRefill -= value; }
+				else
+				{
+					throw new Exception("There is not enough fuel for the ride!");
+				}
+			}
+        }
+
+		/*
+        private bool fuelIsEmpty;
+
+        public bool FuelIsEmpty
+		{
+			get { return  fuelIsEmpty; }
+            set { }
+        }
+
+		private bool buslIsDangerous;
+
+        public bool buslIsDangerous
+		{
+			get { return buslIsDangerous; }
+            set { }
+        }
+		*/
+
+
+		public static Random kmForRide = new Random(DateTime.Now.Millisecond);
+
 		public override string ToString()
 		{
-			return string.Format("License = {0} Date = {1}", License, DateOfAbsorption.ToShortDateString());
+			return string.Format("License = {0} Date = {1}, km left to ride = {2}", License, DateOfAbsorption.ToShortDateString(), MileageSinceRefill);
 		}
 	}
 }

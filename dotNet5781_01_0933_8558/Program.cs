@@ -11,18 +11,6 @@ namespace dotNet5781_01_0933_8558
     {
 		static void Main(string[] args)
         {
-			Bus pupik = null; ;
-			try
-			{ 
-				pupik = new Bus(new DateTime(2014, 2, 2), "5233435");
-			}
-			catch (Exception exception)
-			{
-				Console.WriteLine(exception.Message);
-			}
-			Console.WriteLine("{0}", pupik); // pupik = pupik.toString();
-
-			/*
 			List<Bus> buses = new List<Bus>();
 			CHOICE choice;
 			bool success;
@@ -68,7 +56,20 @@ namespace dotNet5781_01_0933_8558
 				}
 
 			} while (success);
-			*/
 		}
 	}
 }
+
+/*
+			Bus pupik = null;
+			try
+			{
+				pupik = new Bus(new DateTime(2014, 2, 2), "5233435");
+				pupik.MileageSinceRefill = 1199;
+			}
+			catch (Exception exception)
+			{
+				Console.WriteLine(exception.Message);
+			}
+			Console.WriteLine("{0}", pupik); // pupik = pupik.toString();
+*/
