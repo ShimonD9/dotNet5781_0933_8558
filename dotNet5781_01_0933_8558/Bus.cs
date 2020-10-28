@@ -8,11 +8,12 @@ namespace dotNet5781_01_0933_8558
 {
 	public class Bus
 	{
-		public Bus(DateTime dateInput, string licenseInput) // Bus constructor
+		public Bus(DateTime dateInput, string licenseInput,double mile) // Bus constructor
 		{
 			DateOfAbsorption = dateInput;
 			License = licenseInput;
 			mileageSinceRefill = 1200;
+			Mileage = mile;
 		}
 
 		public DateTime DateOfAbsorption { get; set; }
@@ -59,11 +60,12 @@ namespace dotNet5781_01_0933_8558
 			}
 		}
 
-        private double mileage;
+		private double mileage = 0;
 
         public double Mileage
 		{
             get { return mileage; }
+
             set { mileage = value; }
         }
 
@@ -108,7 +110,7 @@ namespace dotNet5781_01_0933_8558
 
         public override string ToString()
 		{
-			return string.Format("License = {0} Date = {1}, km left to ride = {2}", License, DateOfAbsorption.ToShortDateString(), MileageSinceRefill);
+			return string.Format("License = {0} Date = {1}, Km left to ride = {2},mileage = {3} ", License, DateOfAbsorption.ToShortDateString(), MileageSinceRefill,Mileage);
 		}
 	}
 }

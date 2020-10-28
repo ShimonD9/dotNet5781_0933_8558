@@ -34,17 +34,21 @@ namespace dotNet5781_01_0933_8558
 				switch (choice)
 				{
 					case CHOICE.ADD_BUS:
-						String license;
+						bool successMile, successDate;
+						double mile;
 						DateTime date;
 						Console.WriteLine("Enter the license number, please:");
-						license = Console.ReadLine();
+						String license = Console.ReadLine();
+						Console.WriteLine("Enter the mileage of the bus, please:");
+						successMile = double.TryParse(Console.ReadLine(), out mile);
 						Console.WriteLine("Enter date of absorption, please:");
-						success = DateTime.TryParse(Console.ReadLine(), out date);
-						if (success)
+						successDate = DateTime.TryParse(Console.ReadLine(), out date);
+						
+						if (successDate && successMile)
 						{
 							try
 							{
-								buses.Add(new Bus(date, license)); // surround with try
+								buses.Add(new Bus(date, license,mile)); 
 							}
 							catch (Exception exception)
 							{
@@ -55,6 +59,8 @@ namespace dotNet5781_01_0933_8558
 								Console.WriteLine(bus);
 							}
 						}
+						else
+                            Console.WriteLine("Wrong input for Date or Mile.");
 						break;
 
 						case CHOICE.PICK_BUS:
@@ -90,6 +96,11 @@ namespace dotNet5781_01_0933_8558
 								Console.WriteLine(bus);
 							}
 						}
+						break;
+					case CHOICE.REFULE_BUS:
+                        {
+
+                        }
 						break;
 				}
 
