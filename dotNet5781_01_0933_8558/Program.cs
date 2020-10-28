@@ -14,9 +14,16 @@ namespace dotNet5781_01_0933_8558
 		public static Random kmForRide = new Random(DateTime.Now.Millisecond);
 		static void Main(string[] args)
         {
-		List<Bus> buses = new List<Bus>();
+			List<Bus> buses = new List<Bus>();
 			CHOICE choice;
 			bool success;
+			Console.WriteLine(@"Bus management
+				Enter one of the following:
+				ADD_BUS: To add a new bus
+				PICK_BUS: To pick a bus for a ride
+				TREAT_BUS: to fill the fuel or treat the bus
+				SHOW_MILEAGE: to show the milage since the last treatment
+				EXIT: exit");
 			do
 			{ 
 				Console.WriteLine("enter your choice:");
@@ -48,12 +55,21 @@ namespace dotNet5781_01_0933_8558
 						{
 							try
 							{
+								// Check if there is already such a bus:
+								foreach (Bus bus in buses)
+								{
+									if (bus.compareLicenses(license))
+									{
+										throw new Exception("There is already a bus with such a license!");
+									}
+								}
 								buses.Add(new Bus(date, license,mile)); 
 							}
 							catch (Exception exception)
 							{
 								Console.WriteLine(exception.Message);
 							}
+
 							foreach (Bus bus in buses)
 							{
 								Console.WriteLine(bus);
@@ -69,6 +85,8 @@ namespace dotNet5781_01_0933_8558
 							license = Console.ReadLine();
 							double kmRand = 1200 * kmForRide.NextDouble();
 							Bus busFound = null;
+
+							// Find the bus with the license:
 							foreach (Bus bus in buses)
 							{
 								if (bus.compareLicenses(license))
@@ -80,11 +98,11 @@ namespace dotNet5781_01_0933_8558
 
 							if (busFound == null)
                             {
-								Console.WriteLine("We are sorry, go search your mama!");
+								Console.WriteLine("The bus doesn't exist!");
 							}
 							else try
 							{
-								busFound.MileageSinceRefill = kmRand;
+								busFound.KMLeftToRide = kmRand;
 							}
 							catch (Exception exception)
 							{

@@ -12,7 +12,7 @@ namespace dotNet5781_01_0933_8558
 		{
 			DateOfAbsorption = dateInput;
 			License = licenseInput;
-			mileageSinceRefill = 1200;
+			KMLeftToRide = 1200;
 			Mileage = mile;
 		}
 
@@ -68,15 +68,15 @@ namespace dotNet5781_01_0933_8558
             set { mileage = value; }
         }
 
-        private double mileageSinceRefill;
+        private double kmLeftToRide;
 
-        public double MileageSinceRefill
+        public double KMLeftToRide
 		{
-            get { return mileageSinceRefill; }
+            get { return kmLeftToRide; }
 			set
 			{
-				if (mileageSinceRefill > value)
-				{ mileageSinceRefill -= value; }
+				if (kmLeftToRide > value)
+				{ kmLeftToRide -= value; }
 				else
 				{
 					throw new Exception("There is not enough fuel for the ride!");
@@ -109,7 +109,7 @@ namespace dotNet5781_01_0933_8558
 
         public override string ToString()
 		{
-			return string.Format("License = {0} Date = {1}, Km left to ride = {2},mileage = {3} ", License, DateOfAbsorption.ToShortDateString(), MileageSinceRefill,Mileage);
+			return string.Format("License = {0} Date = {1}, Km left to ride = {2},mileage = {3} ", License, DateOfAbsorption.ToShortDateString(), KMLeftToRide, Mileage);
 		}
 	}
 }
