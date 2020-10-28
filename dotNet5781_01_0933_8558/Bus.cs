@@ -54,7 +54,7 @@ namespace dotNet5781_01_0933_8558
 				}
 				else
 				{
-					throw new Exception("Wrong input");
+					throw new Exception("The license number is incorrect.");
 				}
 			}
 		}
@@ -83,7 +83,12 @@ namespace dotNet5781_01_0933_8558
 			}
         }
 
-		/*
+		public bool compareLicenses(String str)
+        {
+			return (this.license == str);
+        }
+
+        /*
         private bool fuelIsEmpty;
 
         public bool FuelIsEmpty
@@ -101,10 +106,7 @@ namespace dotNet5781_01_0933_8558
         }
 		*/
 
-
-		public static Random kmForRide = new Random(DateTime.Now.Millisecond);
-
-		public override string ToString()
+        public override string ToString()
 		{
 			return string.Format("License = {0} Date = {1}, km left to ride = {2}", License, DateOfAbsorption.ToShortDateString(), MileageSinceRefill);
 		}

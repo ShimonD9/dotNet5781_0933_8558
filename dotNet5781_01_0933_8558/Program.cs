@@ -1,5 +1,7 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -7,11 +9,12 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_01_0933_8558
 {
-    class Program
+	class Program
     {
+		public static Random kmForRide = new Random(DateTime.Now.Millisecond);
 		static void Main(string[] args)
         {
-			List<Bus> buses = new List<Bus>();
+		List<Bus> buses = new List<Bus>();
 			CHOICE choice;
 			bool success;
 			do
@@ -25,34 +28,77 @@ namespace dotNet5781_01_0933_8558
 				}
 			}
 			while (!success);
+
 			do
 			{
 				switch (choice)
 				{
 					case CHOICE.ADD_BUS:
-						Console.WriteLine("put the details in please:");
 						String license;
 						DateTime date;
-						Console.WriteLine("enter date");
-						success = DateTime.TryParse(Console.ReadLine(), out date);
-						Console.WriteLine("teb rishuy");
+						Console.WriteLine("Enter the license number, please:");
 						license = Console.ReadLine();
+						Console.WriteLine("Enter date of absorption, please:");
+						success = DateTime.TryParse(Console.ReadLine(), out date);
 						if (success)
 						{
 							try
 							{
 								buses.Add(new Bus(date, license)); // surround with try
-								foreach (Bus bus in buses)
-								{
-									Console.WriteLine(bus);
-								}
 							}
 							catch (Exception exception)
 							{
 								Console.WriteLine(exception.Message);
 							}
+							foreach (Bus bus in buses)
+							{
+								Console.WriteLine(bus);
+							}
 						}
 						break;
+
+						case CHOICE.PICK_BUS:
+                        {
+							Console.WriteLine("Enter the license number of the bus for ride, please:");
+							license = Console.ReadLine();
+							double kmRand = 1200 * kmForRide.NextDouble();
+							Bus busFound = null;
+							foreach (Bus bus in buses)
+							{
+								if (bus.compareLicenses(license))
+                                {
+									busFound = bus;
+									break;
+                                }
+							}
+
+							if (busFound == null)
+                            {
+								Console.WriteLine("We are sorry, go search your mama!");
+							}
+							else try
+							{
+								busFound.MileageSinceRefill = kmRand;
+							}
+							catch (Exception exception)
+							{
+								Console.WriteLine(exception.Message);
+							}
+
+							foreach (Bus bus in buses)
+							{
+								Console.WriteLine(bus);
+							}
+						}
+						break;
+				}
+
+				Console.WriteLine("enter your choice:");
+				string answer = Console.ReadLine();
+				success = Enum.TryParse(answer, out choice);
+				if (!success)
+				{
+					Console.WriteLine("Try again");
 				}
 
 			} while (success);
@@ -73,3 +119,10 @@ namespace dotNet5781_01_0933_8558
 			}
 			Console.WriteLine("{0}", pupik); // pupik = pupik.toString();
 */
+
+/*
+ 								foreach (Bus bus in buses)
+								{
+									Console.WriteLine(bus);
+								}
+ */
