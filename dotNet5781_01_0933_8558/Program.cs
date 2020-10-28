@@ -83,7 +83,7 @@ namespace dotNet5781_01_0933_8558
 
                     case CHOICE.PICK_BUS:
                         {
-                            double kmRand = 1200 * kmForRide.NextDouble();
+                            double kmRand = 1200 * kmForRide.NextDouble() + 1; // Minimum 1 kilometer ride
                             Console.WriteLine("Enter the license number of the bus for ride, please:");
                             license = Console.ReadLine();
 
@@ -144,14 +144,14 @@ namespace dotNet5781_01_0933_8558
                                 if (checkRequest == 'A')
                                 {
                                     busFound.ReFuel();
+                                    Console.WriteLine("Success!");
                                 }
                                 else if (checkRequest == 'B')
                                 {
                                     busFound.Treatment();
                                 }
                                 else
-                                    Console.WriteLine("Wrong input");
-
+                                    Console.WriteLine("Success!");
                                 break;
                             }
                         }
