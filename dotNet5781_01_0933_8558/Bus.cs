@@ -65,7 +65,9 @@ namespace dotNet5781_01_0933_8558
 		{
             get { return mileage; }
 
-            set { mileage = value; }
+            set { if (value < 0) throw new Exception("The mileage input is incorrect.");
+				mileage = value;
+			}
         }
 
         private double kmLeftToRide;
@@ -83,6 +85,14 @@ namespace dotNet5781_01_0933_8558
 				}
 			}
         }
+
+		private double mileageAtLastTreat;
+
+		public double MileageAtLastTreat
+		{
+			get { return mileageAtLastTreat; }
+			set { mileageAtLastTreat = Mileage; }
+		}
 
 		public bool compareLicenses(String str)
         {
