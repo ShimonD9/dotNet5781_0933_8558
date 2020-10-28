@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_01_0933_8558
 {
-    public class Bus
-    {
+	public class Bus
+	{
 		public Bus(DateTime dateInput, string licenseInput) // Bus constructor
 		{
 			DateOfAbsorption = dateInput;
 			License = licenseInput;
+			mileageSinceRefill = 1200;
 		}
 
 		public DateTime DateOfAbsorption { get; set; }
 
-		String license;
+		private String license;
 
 		public String License
 		{
@@ -47,20 +48,67 @@ namespace dotNet5781_01_0933_8558
 				{
 					license = value;
 				}
-				else if (value.Length == 7)
+				else if (DateOfAbsorption.Year < 2018 && value.Length == 7)
 				{
 					license = value;
 				}
 				else
 				{
-					throw new Exception("Wrong input");
+					throw new Exception("The license number is incorrect.");
 				}
 			}
 		}
 
-		public override string ToString()
+        private double mileage;
+
+        public double Mileage
 		{
-			return string.Format("License = {0}\n Date = {1}", License, DateOfAbsorption.ToShortDateString());
+            get { return mileage; }
+            set { mileage = value; }
+        }
+
+        private double mileageSinceRefill;
+
+        public double MileageSinceRefill
+		{
+            get { return mileageSinceRefill; }
+			set
+			{
+				if (mileageSinceRefill > value)
+				{ mileageSinceRefill -= value; }
+				else
+				{
+					throw new Exception("There is not enough fuel for the ride!");
+				}
+			}
+        }
+
+		public bool compareLicenses(String str)
+        {
+			return (this.license == str);
+        }
+
+        /*
+        private bool fuelIsEmpty;
+
+        public bool FuelIsEmpty
+		{
+			get { return  fuelIsEmpty; }
+            set { }
+        }
+
+		private bool buslIsDangerous;
+
+        public bool buslIsDangerous
+		{
+			get { return buslIsDangerous; }
+            set { }
+        }
+		*/
+
+        public override string ToString()
+		{
+			return string.Format("License = {0} Date = {1}, km left to ride = {2}", License, DateOfAbsorption.ToShortDateString(), MileageSinceRefill);
 		}
 	}
 }
