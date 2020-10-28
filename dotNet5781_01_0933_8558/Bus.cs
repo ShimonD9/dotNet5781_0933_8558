@@ -30,7 +30,6 @@ namespace dotNet5781_01_0933_8558
 					middle = license.Substring(2, 3);
 					suffix = license.Substring(4, 2);
 					result = string.Format("{0}-{1}-{2}", prefix, middle, suffix);
-
 				}
 				else
 				{
