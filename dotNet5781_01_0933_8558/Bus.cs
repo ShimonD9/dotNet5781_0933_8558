@@ -6,97 +6,111 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_01_0933_8558
 {
-	public class Bus
-	{
-		public Bus(DateTime dateInput, string licenseInput,double mile) // Bus constructor
-		{
-			DateOfAbsorption = dateInput;
-			License = licenseInput;
-			KMLeftToRide = 1200;
-			Mileage = mile;
-		}
+    public class Bus
+    {
+        public Bus(DateTime dateInput, string licenseInput, double mile) // Bus constructor
+        {
+            DateOfAbsorption = dateInput;
+            License = licenseInput;
+            kmLeftToRide = 1200;
+            Mileage = mile;
+        }
 
-		public DateTime DateOfAbsorption { get; set; }
+        public DateTime DateOfAbsorption { get; set; }
 
-		private String license;
+        private String license;
 
-		public String License
-		{
-			get
-			{
-				string prefix, middle, suffix, result;
-				if (license.Length == 7)
-				{
-					prefix = license.Substring(0, 2);
-					middle = license.Substring(2, 3);
-					suffix = license.Substring(4, 2);
-					result = string.Format("{0}-{1}-{2}", prefix, middle, suffix);
-				}
-				else
-				{
-					prefix = license.Substring(0, 3);
-					middle = license.Substring(3, 2);
-					suffix = license.Substring(5, 3);
-					result = string.Format("{0}-{1}-{2}", prefix, middle, suffix);
-				}
-				return result;
-			}
+        public String License
+        {
+            get
+            {
+                string prefix, middle, suffix, result;
+                if (license.Length == 7)
+                {
+                    prefix = license.Substring(0, 2);
+                    middle = license.Substring(2, 3);
+                    suffix = license.Substring(5, 2);
+                    result = string.Format("{0}-{1}-{2}", prefix, middle, suffix);
+                }
+                else
+                {
+                    prefix = license.Substring(0, 3);
+                    middle = license.Substring(3, 2);
+                    suffix = license.Substring(5, 3);
+                    result = string.Format("{0}-{1}-{2}", prefix, middle, suffix);
+                }
+                return result;
+            }
 
-			set
-			{
-				if (DateOfAbsorption.Year >= 2018 && value.Length == 8)
-				{
-					license = value;
-				}
-				else if (DateOfAbsorption.Year < 2018 && value.Length == 7)
-				{
-					license = value;
-				}
-				else
-				{
-					throw new Exception("The license number is incorrect.");
-				}
-			}
-		}
+            set
+            {
+                if (DateOfAbsorption.Year >= 2018 && value.Length == 8)
+                {
+                    license = value;
+                }
+                else if (DateOfAbsorption.Year < 2018 && value.Length == 7)
+                {
+                    license = value;
+                }
+                else
+                {
+                    throw new Exception("The license number is incorrect.");
+                }
+            }
+        }
 
-		private double mileage = 0;
+        private double mileage = 0;
 
         public double Mileage
-		{
+        {
             get { return mileage; }
 
-            set { if (value < 0) throw new Exception("The mileage input is incorrect.");
-				mileage = value;
-			}
+            set
+            {
+                if (value < 0) throw new Exception("The mileage input is incorrect.");
+                mileage = value;
+            }
         }
 
         private double kmLeftToRide;
 
-        public double KMLeftToRide
-		{
-            get { return kmLeftToRide; }
-			set
-			{
-				if (kmLeftToRide > value)
-				{ kmLeftToRide -= value; }
-				else
-				{
-					throw new Exception("There is not enough fuel for the ride!");
-				}
-			}
+        public void ReFuel()
+        {
+            kmLeftToRide = 1200;
         }
 
-		private double mileageAtLastTreat;
-
-		public double MileageAtLastTreat
-		{
-			get { return mileageAtLastTreat; }
-			set { mileageAtLastTreat = Mileage; }
-		}
-
-		public bool compareLicenses(String str)
+        private DateTime treatmentDate;
+        public void Treatment()
         {
-			return (this.license == str);
+            treatmentDate = DateTime.Now;
+            MileageAtLastTreat = mileage;
+        }
+
+        public double KMLeftToRide
+        {
+            get { return kmLeftToRide; }
+            set
+            {
+                if (kmLeftToRide > value)
+                { kmLeftToRide -= value; }
+                else
+                {
+                    throw new Exception("There is not enough fuel for the ride!");
+                }
+            }
+        }
+
+        private double mileageAtLastTreat;
+
+        public double MileageAtLastTreat
+        {
+            get { return mileageAtLastTreat; }
+            set { mileageAtLastTreat = Mileage; }
+        }
+
+        public bool compareLicenses(String str)
+        {
+            return (this.license == str);
         }
 
         /*
@@ -118,8 +132,8 @@ namespace dotNet5781_01_0933_8558
 		*/
 
         public override string ToString()
-		{
-			return string.Format("License = {0} Date = {1}, Km left to ride = {2},mileage = {3} ", License, DateOfAbsorption.ToShortDateString(), KMLeftToRide, Mileage);
-		}
-	}
+        {
+            return string.Format("License = {0} Date = {1}, Km left to ride = {2},mileage = {3} ", License, DateOfAbsorption.ToShortDateString(), KMLeftToRide, Mileage);
+        }
+    }
 }

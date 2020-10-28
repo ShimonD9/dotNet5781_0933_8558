@@ -23,7 +23,7 @@ namespace dotNet5781_01_0933_8558
 				Enter one of the following:
 				ADD_BUS: To add a new bus
 				PICK_BUS: To pick a bus for a ride
-				TREAT_BUS: to fill the fuel or treat the bus
+				TREAT_BUS: to refuel or treat the bus
 				SHOW_MILEAGE: to show the milage since the last treatment
 				EXIT: exit");
             do
@@ -136,15 +136,41 @@ namespace dotNet5781_01_0933_8558
                             {
                                 Console.WriteLine("The bus doesn't exist!");
                             }
-                            else try
+                            else
+                            {
+                                char checkRequest; 
+                                Console.WriteLine("Please enter A for refuel or B for treatment:");
+                                char.TryParse(Console.ReadLine(), out checkRequest);
+                                if (checkRequest == 'A')
                                 {
-                                    
+                                    busFound.ReFuel();
                                 }
-                                catch (Exception exception)
+                                else if (checkRequest == 'B')
                                 {
-                                    Console.WriteLine(exception.Message);
+                                    busFound.Treatment();
                                 }
+                                else
+                                    Console.WriteLine("Wrong input");
+
+                                break;
+                            }
                         }
+                        break;
+                    case CHOICE.SHOW_MILEAGE:
+                        {
+                            foreach (Bus bus in buses)
+                            {
+                                Console.WriteLine("License = {0} ,Mileage = {1},Mileage since last treatment = {2} ", bus.License,bus.Mileage ,bus.Mileage - bus.MileageAtLastTreat);
+                            }
+                        }
+                        break;
+                    case CHOICE.EXIT:
+                        {
+                            Console.WriteLine("Good Bye ☺");
+                            return;
+                        }
+                    default:
+                        Console.WriteLine("Wrong Choice");
                         break;
                 }
 
