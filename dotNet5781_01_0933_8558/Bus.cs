@@ -14,11 +14,12 @@ namespace dotNet5781_01_0933_8558
             License = licenseInput;
             kmLeftToRide = 1200;
             Mileage = km;
+            // It is assumed that the treatment was done on the day of the bus absorption:
             treatmentDate = DateTime.Now;
             mileageAtLastTreat = km;
         }
 
-        public readonly DateTime DateOfAbsorption;
+        private readonly DateTime DateOfAbsorption;
 
         private String license;
 
