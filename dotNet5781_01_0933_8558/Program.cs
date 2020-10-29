@@ -79,15 +79,15 @@ namespace dotNet5781_01_0933_8558
                                 throw new Exception("Wrong input of license number.");
 
                             if (FindIfBusExist(buses, license))
-                                throw new Exception("There is already a bus with such a license");
+                                throw new Exception("There is already a bus with such a license.");
 
                             Console.WriteLine("Enter the date of absorption, please:");
-                            if (!DateTime.TryParse(Console.ReadLine(), out DateTime date))
-                                throw new Exception("Wrong input for date");
+                            if (!DateTime.TryParse(Console.ReadLine(), out DateTime date) || date > DateTime.Now)
+                                throw new Exception("Wrong input for date.");
 
                             Console.WriteLine("Enter the mileage of the bus, please:");
                             if (!double.TryParse(Console.ReadLine(), out double mile))
-                                throw new Exception("Wrong input for mileage");
+                                throw new Exception("Wrong input for mileage.");
 
                             buses.Add(new Bus(date, license, mile));
 
@@ -105,20 +105,20 @@ namespace dotNet5781_01_0933_8558
                                 Console.WriteLine("Please, enter the license number of the bus for travel:");
                                 license = Console.ReadLine();
                                 if (!int.TryParse(license, out number) || license.Length > 8 || license.Length < 7)
-                                    throw new Exception("Wrong input of license number");
+                                    throw new Exception("Wrong input of license number.");
 
                                 // Find the bus with the license:
                                 busFound = FindBus(buses, license);
 
                                 if (busFound == null)
                                 {
-                                    throw new Exception("The bus doesn't exist!");
+                                    throw new Exception("The bus doesn't exist.");
                                 }
                                 else
                                 {
                                     if (!busFound.CheckIfDangerous(kmRand))
                                     {
-                                        busFound.KMLeftToRide = kmRand; // Check if there are km left to go to this ride, if left, the kmLeftToRide will be updated in the setter                                 
+                                        busFound.KMLeftToRide = kmRand; // Check if there are km left to go to this ride, if left, the kmLeftToRide will be updated in the setter, if not the setter throws exception                                 
                                         busFound.Mileage += kmRand; // Add the km of the ride to the toal mileage                                       
                                     }
                                     else

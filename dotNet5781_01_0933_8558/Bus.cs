@@ -19,8 +19,8 @@ namespace dotNet5781_01_0933_8558
             DateOfAbsorption = dateInput;
             License = licenseInput;
             Mileage = km;
-            
-            // It is assumed that the treatment was done on the day of the bus absorption, and the gas tank is full:
+
+            // It is assumed that the treatment and the gas tank refill were done on the day of the entry to the database:
             treatmentDate = DateTime.Now;
             mileageAtLastTreat = km;
             kmLeftToRide = 1200;                            
@@ -108,7 +108,7 @@ namespace dotNet5781_01_0933_8558
                 { kmLeftToRide -= value; }
                 else
                 {
-                    throw new Exception("There is not enough fuel for the ride!");
+                    throw new Exception("There is not enough fuel for the travel.");
                 }
             }
         }
