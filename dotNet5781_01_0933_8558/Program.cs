@@ -53,19 +53,19 @@ namespace dotNet5781_01_0933_8558
 
             do
             {
-                do
+                do // The choice input loop
                 {
                     Console.WriteLine("enter your choice:");
                     string answer = Console.ReadLine();
-                    success = Enum.TryParse(answer, out choice);
-                    if (!success)
+                    success = Enum.TryParse(answer, out choice);  
+                    if (!success) // If the conversion of the string to enum didn't succeed - print message and run the loop again
                     {
                         Console.WriteLine("There is no such option in the menu, please enter your choice again.");
                     }
                 }
                 while (!success);
 
-                try
+                try // Try and catch for all the error cases in the switch case
                 {
                     String license;
                     Bus busFound = null;
@@ -121,7 +121,7 @@ namespace dotNet5781_01_0933_8558
                                         busFound.Mileage += kmRand; // Add the km of the ride to the toal mileage                                       
                                     }
                                     else
-                                        throw new Exception("The bus you enter is dangerous !");
+                                        throw new Exception("The bus you chose is dangerous, please take it to treatment!");
                                 }
 
                                 // למחוק לפני הגשה:
@@ -171,7 +171,7 @@ namespace dotNet5781_01_0933_8558
                             {
                                 foreach (Bus bus in buses)
                                 {
-                                    Console.WriteLine("License = {0}, Mileage = {1}, Mileage since last treatment = {2} ", bus.License, bus.Mileage, bus.MileageFromLastTreat());
+                                    Console.WriteLine("License = {0}, Mileage = {1} km, Mileage since last treatment = {2} km", bus.License, bus.Mileage, bus.MileageFromLastTreat());
                                 }
                             }
                             break;
@@ -179,6 +179,7 @@ namespace dotNet5781_01_0933_8558
                         case CHOICE.EXIT:
                             {
                                 Console.WriteLine("Good Bye ☺");
+                                Console.ReadKey();
                             }
                             break;
                         default:

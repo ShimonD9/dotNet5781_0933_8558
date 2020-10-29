@@ -18,7 +18,7 @@ namespace dotNet5781_01_0933_8558
             mileageAtLastTreat = km;
         }
 
-        public DateTime DateOfAbsorption { get; set; }
+        public readonly DateTime DateOfAbsorption;
 
         private String license;
 
@@ -44,7 +44,7 @@ namespace dotNet5781_01_0933_8558
                 return result;
             }
 
-            set
+            private set
             {
                 if (DateOfAbsorption.Year >= 2018 && value.Length == 8)
                 {
@@ -122,15 +122,19 @@ namespace dotNet5781_01_0933_8558
         {
             return Mileage - MileageAtLastTreat;
         }
-
+       
         public bool CompareLicenses(String str)
         {
             return (this.license == str);
         }
 
+        /// <summary>
+        /// Formats a string which represents the Bus object
+        /// </summary>
+        /// <returns> Returns the string to print the object </returns>
         public override string ToString()
         {
-            return string.Format("License = {0}, Date = {1}, KM left to ride = {2}, Total mileage = {3} ", License, DateOfAbsorption.ToShortDateString(), KMLeftToRide, Mileage);
+            return string.Format("License = {0}, Date = {1}, KM left to ride = {2} km, Total mileage = {3} km", License, DateOfAbsorption.ToShortDateString(), KMLeftToRide, Mileage);
         }
     }
 }
