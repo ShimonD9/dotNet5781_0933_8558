@@ -83,7 +83,7 @@ namespace dotNet5781_01_0933_8558
 
                             Console.WriteLine("Enter the date of absorption, please:");
                             if (!DateTime.TryParse(Console.ReadLine(), out DateTime date) || date > DateTime.Now)
-                                throw new Exception("Wrong input for date.");
+                                throw new Exception("Wrong input for date (enter a legit date - 1/1/2001, or 1.1.2001, and not a future date).");
 
                             Console.WriteLine("Enter the mileage of the bus, please:");
                             if (!double.TryParse(Console.ReadLine(), out double mile))
