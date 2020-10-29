@@ -50,20 +50,21 @@ namespace dotNet5781_01_0933_8558
 				TREAT_BUS: to refuel or treat the bus
 				SHOW_MILEAGE: to show the milage since the last treatment
 				EXIT: exit");
-            do
-            {
-                Console.WriteLine("enter your choice:");
-                string answer = Console.ReadLine();
-                success = Enum.TryParse(answer, out choice);
-                if (!success)
-                {
-                    Console.WriteLine("There is no such option in the menu, please enter your choice again.");
-                }
-            }
-            while (!success);
 
             do
             {
+                do
+                {
+                    Console.WriteLine("enter your choice:");
+                    string answer = Console.ReadLine();
+                    success = Enum.TryParse(answer, out choice);
+                    if (!success)
+                    {
+                        Console.WriteLine("There is no such option in the menu, please enter your choice again.");
+                    }
+                }
+                while (!success);
+
                 try
                 {
                     String license;
@@ -189,13 +190,9 @@ namespace dotNet5781_01_0933_8558
                 {
                     Console.WriteLine(exception.Message);
                 }
-                Console.WriteLine("Returning to the menu. Enter your choice:");
-                string answer = Console.ReadLine();
-                success = Enum.TryParse(answer, out choice);
-                if (!success)
-                {
-                    Console.WriteLine("There is no such option in the menu, please enter your choice again.");
-                }
+
+                Console.WriteLine("Returning to the menu.");
+
             } while (choice != CHOICE.EXIT);
         }
     }
