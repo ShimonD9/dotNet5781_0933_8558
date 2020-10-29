@@ -118,7 +118,6 @@ namespace dotNet5781_01_0933_8558
             return false;
         }
 
-
         public double MileageFromLastTreat()
         {
             return Mileage - MileageAtLastTreat;
@@ -128,24 +127,6 @@ namespace dotNet5781_01_0933_8558
         {
             return (this.license == str);
         }
-
-        /*
-        private bool fuelIsEmpty;
-
-        public bool FuelIsEmpty
-		{
-			get { return  fuelIsEmpty; }
-            set { }
-        }
-
-		private bool buslIsDangerous;
-
-        public bool buslIsDangerous
-		{
-			get { return buslIsDangerous; }
-            set { }
-        }
-		*/
 
         public override string ToString()
         {

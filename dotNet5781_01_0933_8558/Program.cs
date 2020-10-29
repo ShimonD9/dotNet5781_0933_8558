@@ -75,7 +75,7 @@ namespace dotNet5781_01_0933_8558
                             Console.WriteLine("Enter the license number, please:");
                             license = Console.ReadLine();
                             if (!int.TryParse(license, out int number) || license.Length > 8 || license.Length < 7)
-                                throw new Exception("Wrong input of license number");
+                                throw new Exception("Wrong input of license number.");
 
                             if (FindIfBusExist(buses, license))
                                 throw new Exception("There is already a bus with such a license");
@@ -178,8 +178,8 @@ namespace dotNet5781_01_0933_8558
                         case CHOICE.EXIT:
                             {
                                 Console.WriteLine("Good Bye ☺");
-                                return;
                             }
+                            break;
                         default:
                             Console.WriteLine("Wrong Choice");
                             break;
@@ -189,35 +189,14 @@ namespace dotNet5781_01_0933_8558
                 {
                     Console.WriteLine(exception.Message);
                 }
-                Console.WriteLine("Enter your choice:");
+                Console.WriteLine("Returning to the menu. Enter your choice:");
                 string answer = Console.ReadLine();
                 success = Enum.TryParse(answer, out choice);
                 if (!success)
                 {
-                    Console.WriteLine("Try again");
+                    Console.WriteLine("There is no such option in the menu, please enter your choice again.");
                 }
-            } while (success);
+            } while (choice != CHOICE.EXIT);
         }
     }
 }
-
-/*
-			Bus pupik = null;
-			try
-			{
-				pupik = new Bus(new DateTime(2014, 2, 2), "5233435");
-				pupik.MileageSinceRefill = 1199;
-			}
-			catch (Exception exception)
-			{
-				Console.WriteLine(exception.Message);
-			}
-			Console.WriteLine("{0}", pupik); // pupik = pupik.toString();
-*/
-
-/*
- 								foreach (Bus bus in buses)
-								{
-									Console.WriteLine(bus);
-								}
- */
