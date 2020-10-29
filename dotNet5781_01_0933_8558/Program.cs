@@ -11,11 +11,10 @@ namespace dotNet5781_01_0933_8558
 {
     class Program
     {
-        public static Random kmForRide = new Random(DateTime.Now.Millisecond);
+        public static Random kmForRide = new Random(DateTime.Now.Millisecond); // Booting the random sequence field
+
         static void Main(string[] args)
         {
-            String license;
-            Bus busFound = null;
             List<Bus> buses = new List<Bus>();
             CHOICE choice;
             bool success;
@@ -40,148 +39,147 @@ namespace dotNet5781_01_0933_8558
 
             do
             {
-                switch (choice)
+                try
                 {
-                    case CHOICE.ADD_BUS:
-                        bool successMile, successDate;
-                        double mile;
-                        DateTime date;
-                        Console.WriteLine("Enter the license number, please:");
-                        license = Console.ReadLine();
-                        Console.WriteLine("Enter the mileage of the bus, please:");
-                        successMile = double.TryParse(Console.ReadLine(), out mile);
-                        Console.WriteLine("Enter date of absorption, please:");
-                        successDate = DateTime.TryParse(Console.ReadLine(), out date);
+                    String license;
+                    Bus busFound = null;
 
-                        if (successDate && successMile)
-                        {
-                            try
+                    switch (choice)
+                    {
+                        case CHOICE.ADD_BUS:
+                            Console.WriteLine("Enter the license number, please:");
+                            license = Console.ReadLine();
+                            if (!int.TryParse(license, out int number) || license.Length > 8 || license.Length < 7)
+                                throw new Exception("Wrong input of license number");
+
+                            // להכניס לפונקציה
+                            foreach (Bus bus in buses)
                             {
-                                // Check if there is already such a bus:
+                                if (bus.compareLicenses(license))
+                                {
+                                    throw new Exception("There is already a bus with such a license");
+                                }
+                            }
+
+                            Console.WriteLine("Enter the date of absorption, please:");
+                            if (!DateTime.TryParse(Console.ReadLine(), out DateTime date))
+                                throw new Exception("Wrong input for date");
+
+                            Console.WriteLine("Enter the mileage of the bus, please:");
+                            if (!double.TryParse(Console.ReadLine(), out double mile))
+                                throw new Exception("Wrong input for mileage");
+
+                            buses.Add(new Bus(date, license, mile));
+
+                            // למחוק לפני הגשה:
+                            foreach (Bus bus in buses)
+                            {
+                                Console.WriteLine(bus);
+                            }
+                            break;
+
+                        case CHOICE.PICK_BUS:
+                            {
+                                double kmRand = 1200 * kmForRide.NextDouble(); // Choosing a random number base on the sequence created above - a double number between 0-1200 km (a ride above 1200 isn't possible)
+                                Console.WriteLine("Please, enter the license number of the bus for travel:");
+                                license = Console.ReadLine();
+
+                                // Find the bus with the license:
                                 foreach (Bus bus in buses)
                                 {
                                     if (bus.compareLicenses(license))
                                     {
-                                        throw new Exception("There is already a bus with such a license!");
+                                        busFound = bus;
+                                        break;
                                     }
                                 }
-                                buses.Add(new Bus(date, license, mile));
-                            }
-                            catch (Exception exception)
-                            {
-                                Console.WriteLine(exception.Message);
-                            }
 
-                            foreach (Bus bus in buses)
-                            {
-                                Console.WriteLine(bus);
-                            }
-                        }
-                        else
-                            Console.WriteLine("Wrong input for Date or Mile.");
-                        break;
-
-                    case CHOICE.PICK_BUS:
-                        {
-                            double kmRand = 1200 * kmForRide.NextDouble() + 1; // Minimum 1 kilometer ride
-                            Console.WriteLine("Enter the license number of the bus for ride, please:");
-                            license = Console.ReadLine();
-
-                            // Find the bus with the license:
-                            foreach (Bus bus in buses)
-                            {
-                                if (bus.compareLicenses(license))
+                                if (busFound == null)
                                 {
-                                    busFound = bus;
-                                    break;
+                                    throw new Exception("The bus doesn't exist!");
                                 }
-                            }
-
-                            if (busFound == null)
-                            {
-                                Console.WriteLine("The bus doesn't exist!");
-                            }
-                            else try
+                                else
                                 {
                                     busFound.KMLeftToRide = kmRand; // Check if there are km left to go to this ride, if left, the kmLeftToRide will be updated in the setter
                                     busFound.Mileage += kmRand; // Add the km of the ride to the toal mileage
                                 }
-                                catch (Exception exception)
+
+                                // למחוק לפני הגשה:
+                                foreach (Bus bus in buses)
                                 {
-                                    Console.WriteLine(exception.Message);
+                                    Console.WriteLine(bus);
+                                }
+                            }
+                            break;
+                        case CHOICE.TREAT_BUS:
+                            {
+                                Console.WriteLine("Enter the license number, please:");
+                                license = Console.ReadLine();
+
+                                // Find the bus with the license:
+                                foreach (Bus bus in buses)
+                                {
+                                    if (bus.compareLicenses(license))
+                                    {
+                                        busFound = bus;
+                                        break;
+                                    }
                                 }
 
-                            foreach (Bus bus in buses)
-                            {
-                                Console.WriteLine(bus);
-                            }
-                        }
-                        break;
-                    case CHOICE.TREAT_BUS:
-                        {
-                            Console.WriteLine("Enter the license number, please:");
-                            license = Console.ReadLine();
-
-                            // Find the bus with the license:
-                            foreach (Bus bus in buses)
-                            {
-                                if (bus.compareLicenses(license))
+                                if (busFound == null)
                                 {
-                                    busFound = bus;
+                                    throw new Exception("The bus doesn't exist!");
+                                }
+                                else
+                                {
+                                    char checkRequest;
+                                    Console.WriteLine(@"Please enter A for refuel
+                                                                     B for treatment
+                                                                     other key to return to the menu:");
+                                    char.TryParse(Console.ReadLine(), out checkRequest);
+                                    if (checkRequest == 'A')
+                                    {
+                                        busFound.ReFuel();
+                                        Console.WriteLine("Success!");
+                                    }
+                                    else if (checkRequest == 'B')
+                                    {
+                                        busFound.Treatment();
+                                        Console.WriteLine("Success!");
+                                    }
                                     break;
                                 }
                             }
 
-                            if (busFound == null)
+                        case CHOICE.SHOW_MILEAGE:
                             {
-                                Console.WriteLine("The bus doesn't exist!");
-                            }
-                            else
-                            {
-                                char checkRequest; 
-                                Console.WriteLine("Please enter A for refuel or B for treatment:");
-                                char.TryParse(Console.ReadLine(), out checkRequest);
-                                if (checkRequest == 'A')
+                                foreach (Bus bus in buses)
                                 {
-                                    busFound.ReFuel();
-                                    Console.WriteLine("Success!");
+                                    Console.WriteLine("License = {0}, Mileage = {1}, Mileage since last treatment = {2} ", bus.License, bus.Mileage, bus.MileageFromLastTreat());
                                 }
-                                else if (checkRequest == 'B')
-                                {
-                                    busFound.Treatment();
-                                }
-                                else
-                                    Console.WriteLine("Success!");
-                                break;
                             }
-                        }
-                        break;
-                    case CHOICE.SHOW_MILEAGE:
-                        {
-                            foreach (Bus bus in buses)
+                            break;
+                        case CHOICE.EXIT:
                             {
-                                Console.WriteLine("License = {0} ,Mileage = {1},Mileage since last treatment = {2} ", bus.License,bus.Mileage ,bus.Mileage - bus.MileageAtLastTreat);
+                                Console.WriteLine("Good Bye ☺");
+                                return;
                             }
-                        }
-                        break;
-                    case CHOICE.EXIT:
-                        {
-                            Console.WriteLine("Good Bye ☺");
-                            return;
-                        }
-                    default:
-                        Console.WriteLine("Wrong Choice");
-                        break;
+                        default:
+                            Console.WriteLine("Wrong Choice");
+                            break;
+                    }
                 }
-
-                Console.WriteLine("enter your choice:");
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
+                Console.WriteLine("Enter your choice:");
                 string answer = Console.ReadLine();
                 success = Enum.TryParse(answer, out choice);
                 if (!success)
                 {
                     Console.WriteLine("Try again");
                 }
-
             } while (success);
         }
     }

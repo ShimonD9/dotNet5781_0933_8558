@@ -8,12 +8,12 @@ namespace dotNet5781_01_0933_8558
 {
     public class Bus
     {
-        public Bus(DateTime dateInput, string licenseInput, double mile) // Bus constructor
+        public Bus(DateTime dateInput, string licenseInput, double km) // Bus constructor
         {
             DateOfAbsorption = dateInput;
             License = licenseInput;
             kmLeftToRide = 1200;
-            Mileage = mile;
+            Mileage = km;
         }
 
         public DateTime DateOfAbsorption { get; set; }
@@ -80,6 +80,7 @@ namespace dotNet5781_01_0933_8558
         }
 
         private DateTime treatmentDate;
+
         public void Treatment()
         {
             treatmentDate = DateTime.Now;
@@ -108,6 +109,11 @@ namespace dotNet5781_01_0933_8558
             set { mileageAtLastTreat = Mileage; }
         }
 
+        public double MileageFromLastTreat()
+        {
+            return Mileage - MileageAtLastTreat;
+        }
+        
         public bool compareLicenses(String str)
         {
             return (this.license == str);
@@ -133,7 +139,7 @@ namespace dotNet5781_01_0933_8558
 
         public override string ToString()
         {
-            return string.Format("License = {0} Date = {1}, Km left to ride = {2},mileage = {3} ", License, DateOfAbsorption.ToShortDateString(), KMLeftToRide, Mileage);
+            return string.Format("License = {0}, Date = {1}, KM left to ride = {2}, Total mileage = {3} ", License, DateOfAbsorption.ToShortDateString(), KMLeftToRide, Mileage);
         }
     }
 }
