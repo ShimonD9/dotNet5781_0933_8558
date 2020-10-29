@@ -43,13 +43,13 @@ namespace dotNet5781_01_0933_8558
             List<Bus> buses = new List<Bus>();
             CHOICE choice;
             bool success;
-            Console.WriteLine(@"Bus management
-				Enter one of the following:
-				ADD_BUS: To add a new bus
-				PICK_BUS: To pick a bus for a ride
-				TREAT_BUS: to refuel or treat the bus
-				SHOW_MILEAGE: to show the milage since the last treatment
-				EXIT: exit");
+            Console.WriteLine("Bus management:\n\n"+
+                "Enter one of the following:\n" +
+                "ADD_BUS: To add a new bus\n" +
+                "PICK_BUS: To pick a bus for a ride\n" +
+                "TREAT_BUS: to refuel or treat the bus\n" +
+                "SHOW_MILEAGE: to show the milage since the last treatment\n" +
+                "EXIT: exit\n");
 
             do
             {
@@ -150,9 +150,9 @@ namespace dotNet5781_01_0933_8558
                                 else
                                 {
                                     char checkRequest;
-                                    Console.WriteLine(@"Please enter A for refuel
-                                                                     B for treatment
-                                                                     other key to return to the menu:");
+                                    Console.WriteLine("Please enter A for refuel\n" +
+                                                       "B for treatment\n" +
+                                                       "or other key to return to the menu:\n");
                                     char.TryParse(Console.ReadLine(), out checkRequest);
                                     if (checkRequest == 'A')
                                     {
