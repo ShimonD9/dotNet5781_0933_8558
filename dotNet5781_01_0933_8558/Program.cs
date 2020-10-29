@@ -3,6 +3,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,30 @@ namespace dotNet5781_01_0933_8558
     class Program
     {
         public static Random kmForRide = new Random(DateTime.Now.Millisecond); // Booting the random sequence field
+
+        public static bool FindIfBusExist(List<Bus> buses, string license)
+        {
+            foreach (Bus bus in buses)
+            {
+                if (bus.compareLicenses(license))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public static Bus FindBus(List<Bus> buses, string license)
+        {
+            foreach (Bus bus in buses)
+            {
+                if (bus.compareLicenses(license))
+                {
+                    return bus;
+                }
+            }
+            return null;
+        }
 
         static void Main(string[] args)
         {
@@ -32,7 +57,7 @@ namespace dotNet5781_01_0933_8558
                 success = Enum.TryParse(answer, out choice);
                 if (!success)
                 {
-                    Console.WriteLine("Try again");
+                    Console.WriteLine("There is no such option in the menu, please enter your choice again.");
                 }
             }
             while (!success);
@@ -52,14 +77,8 @@ namespace dotNet5781_01_0933_8558
                             if (!int.TryParse(license, out int number) || license.Length > 8 || license.Length < 7)
                                 throw new Exception("Wrong input of license number");
 
-                            // להכניס לפונקציה
-                            foreach (Bus bus in buses)
-                            {
-                                if (bus.compareLicenses(license))
-                                {
-                                    throw new Exception("There is already a bus with such a license");
-                                }
-                            }
+                            if (FindIfBusExist(buses, license))
+                                throw new Exception("There is already a bus with such a license");
 
                             Console.WriteLine("Enter the date of absorption, please:");
                             if (!DateTime.TryParse(Console.ReadLine(), out DateTime date))
@@ -83,16 +102,11 @@ namespace dotNet5781_01_0933_8558
                                 double kmRand = 1200 * kmForRide.NextDouble(); // Choosing a random number base on the sequence created above - a double number between 0-1200 km (a ride above 1200 isn't possible)
                                 Console.WriteLine("Please, enter the license number of the bus for travel:");
                                 license = Console.ReadLine();
+                                if (!int.TryParse(license, out number) || license.Length > 8 || license.Length < 7)
+                                    throw new Exception("Wrong input of license number");
 
                                 // Find the bus with the license:
-                                foreach (Bus bus in buses)
-                                {
-                                    if (bus.compareLicenses(license))
-                                    {
-                                        busFound = bus;
-                                        break;
-                                    }
-                                }
+                                busFound = FindBus(buses, license);
 
                                 if (busFound == null)
                                 {
@@ -115,16 +129,11 @@ namespace dotNet5781_01_0933_8558
                             {
                                 Console.WriteLine("Enter the license number, please:");
                                 license = Console.ReadLine();
+                                if (!int.TryParse(license, out number) || license.Length > 8 || license.Length < 7)
+                                    throw new Exception("Wrong input of license number");
 
                                 // Find the bus with the license:
-                                foreach (Bus bus in buses)
-                                {
-                                    if (bus.compareLicenses(license))
-                                    {
-                                        busFound = bus;
-                                        break;
-                                    }
-                                }
+                                busFound = FindBus(buses, license);
 
                                 if (busFound == null)
                                 {
@@ -159,6 +168,7 @@ namespace dotNet5781_01_0933_8558
                                 }
                             }
                             break;
+
                         case CHOICE.EXIT:
                             {
                                 Console.WriteLine("Good Bye ☺");
