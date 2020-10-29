@@ -14,6 +14,8 @@ namespace dotNet5781_01_0933_8558
             License = licenseInput;
             kmLeftToRide = 1200;
             Mileage = km;
+            treatmentDate = DateTime.Now;
+            mileageAtLastTreat = km;
         }
 
         public DateTime DateOfAbsorption { get; set; }
@@ -109,12 +111,20 @@ namespace dotNet5781_01_0933_8558
             set { mileageAtLastTreat = Mileage; }
         }
 
+        public bool CheckIfDangerous(double kmForNextRide = 0)
+        {         
+            if ((MileageFromLastTreat() + kmForNextRide > 20000)|| treatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
+                return true;
+            return false;
+        }
+
+
         public double MileageFromLastTreat()
         {
             return Mileage - MileageAtLastTreat;
         }
-        
-        public bool compareLicenses(String str)
+
+        public bool CompareLicenses(String str)
         {
             return (this.license == str);
         }

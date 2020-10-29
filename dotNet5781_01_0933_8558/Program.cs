@@ -18,7 +18,7 @@ namespace dotNet5781_01_0933_8558
         {
             foreach (Bus bus in buses)
             {
-                if (bus.compareLicenses(license))
+                if (bus.CompareLicenses(license))
                 {
                     return true;
                 }
@@ -30,7 +30,7 @@ namespace dotNet5781_01_0933_8558
         {
             foreach (Bus bus in buses)
             {
-                if (bus.compareLicenses(license))
+                if (bus.CompareLicenses(license))
                 {
                     return bus;
                 }
@@ -114,8 +114,13 @@ namespace dotNet5781_01_0933_8558
                                 }
                                 else
                                 {
-                                    busFound.KMLeftToRide = kmRand; // Check if there are km left to go to this ride, if left, the kmLeftToRide will be updated in the setter
-                                    busFound.Mileage += kmRand; // Add the km of the ride to the toal mileage
+                                    if (!busFound.CheckIfDangerous(kmRand))
+                                    {
+                                        busFound.KMLeftToRide = kmRand; // Check if there are km left to go to this ride, if left, the kmLeftToRide will be updated in the setter                                 
+                                        busFound.Mileage += kmRand; // Add the km of the ride to the toal mileage                                       
+                                    }
+                                    else
+                                        throw new Exception("The bus you enter is dangerous !");
                                 }
 
                                 // למחוק לפני הגשה:
@@ -127,6 +132,7 @@ namespace dotNet5781_01_0933_8558
                             break;
                         case CHOICE.TREAT_BUS:
                             {
+                                
                                 Console.WriteLine("Enter the license number, please:");
                                 license = Console.ReadLine();
                                 if (!int.TryParse(license, out number) || license.Length > 8 || license.Length < 7)
