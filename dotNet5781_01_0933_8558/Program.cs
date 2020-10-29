@@ -101,6 +101,7 @@ namespace dotNet5781_01_0933_8558
                         case CHOICE.PICK_BUS:
                             {
                                 double kmRand = 1200 * kmForRide.NextDouble(); // Choosing a random number base on the sequence created above - a double number between 0-1200 km (a ride above 1200 isn't possible)
+                                kmRand = Math.Round(kmRand, 2); // Round up the double to two decimal places
                                 Console.WriteLine("Please, enter the license number of the bus for travel:");
                                 license = Console.ReadLine();
                                 if (!int.TryParse(license, out number) || license.Length > 8 || license.Length < 7)
@@ -155,7 +156,7 @@ namespace dotNet5781_01_0933_8558
                                     char.TryParse(Console.ReadLine(), out checkRequest);
                                     if (checkRequest == 'A')
                                     {
-                                        busFound.ReFuel();
+                                        busFound.Refuel();
                                         Console.WriteLine("Success!");
                                     }
                                     else if (checkRequest == 'B')
