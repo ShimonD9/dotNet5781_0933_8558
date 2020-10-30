@@ -70,7 +70,7 @@ namespace dotNet5781_01_0933_8558
                 }
                 else
                 {
-                    throw new Exception("The license number is incorrect."); // Throws message if the input is incorrect
+                    throw new Exception("The license or year number is incorrect."); // Throws message if the input is incorrect
                 }
             }
         }
