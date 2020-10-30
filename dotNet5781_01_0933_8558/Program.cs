@@ -1,4 +1,7 @@
-﻿/*Exercise 1 - Mendi Ben Ezra (311140933), Shimon Dyskin (310468558)*/
+﻿/*
+ Exercise 1 - Mendi Ben Ezra (311140933), Shimon Dyskin (310468558)
+ Description: A program offers to add a bus, pick it to a travel and treat and refuel it.
+ */
 
 
 using System;
