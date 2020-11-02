@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_01_0933_8558
 {
-    public enum CHOICE
+    public enum BUS_CHOICE
     {
-        ADD_BUS, PICK_BUS,TREAT_BUS,SHOW_MILEAGE, EXIT = -1
+        ADD, PICK,TREAT,SHOW_MILEAGE, EXIT = -1
     }
 }
