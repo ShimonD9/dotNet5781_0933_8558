@@ -164,7 +164,7 @@ namespace dotNet5781_01_0933_8558
                 {
                     Console.WriteLine(exception.Message);
                 }
-
+                
                 Console.WriteLine("Returning to the menu.");
 
             } while (choice != BUS_CHOICE.EXIT);
