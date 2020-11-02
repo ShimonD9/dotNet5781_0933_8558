@@ -23,7 +23,7 @@ namespace dotNet5781_01_0933_8558
         static void Main(string[] args)
         {
             List<Bus> buses = new List<Bus>();
-            CHOICE choice;
+            BUS_CHOICE choice;
             bool success;
             Console.WriteLine("Bus management:\n\n"+
                 "Enter one of the following:\n" +
