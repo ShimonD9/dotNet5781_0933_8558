@@ -10,4 +10,8 @@ namespace dotNet5781_02_0933_8558
     {
         ADD, DELETE, SEARCH, PRINT, EXIT = -1
     }
+    public enum AREA
+    {
+        General,North,South,Center,Jerusalem
+    }
 }
