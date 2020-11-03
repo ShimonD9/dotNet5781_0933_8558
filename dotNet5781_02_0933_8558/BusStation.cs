@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_0933_8558
 {
-    class BusStation
+    public class BusStation
     {
         public static Random lineLocation = new Random(DateTime.Now.Millisecond);
-
-        
+       public BusStation(double lati,double longi,int stationKey, string address)
+        {
+            Latitude = lati;
+            Longitude = longi;
+            BusStationKey = stationKey;
+            StationAddress = address;
+        }
+        public BusStation() {; }
         private double latitude;
 
         public double Latitude
@@ -27,17 +33,17 @@ namespace dotNet5781_02_0933_8558
             set { longitude = 34.3 + lineLocation.NextDouble() * 1.2 ; }
         }
 
-        private int stationCode;
+        private int busStationKey;
 
-        public int StationCode
+        public int BusStationKey
         {
-            get { return stationCode; }
+            get { return busStationKey; }
             set
             {
                 if (value < 0 || value > 1000000)
                     throw new ArgumentException("Worng input for station code.");
                 else
-                    stationCode = value;
+                    busStationKey = value;
             }
         }
 
@@ -51,20 +57,10 @@ namespace dotNet5781_02_0933_8558
                 stationAddress = value;
             }
         }
-
-
-        private double stationLocation;
-
-        public double StationLocation
-        {
-            get { return stationLocation; }
-            set { stationLocation = value; }
-        }
-
         public override string ToString()
         {
             return string.Format("Bus Station Code:\n+" +
-                                  "BusStationKey = {0},Latitude = {1}, Longitude = {2}", StationCode, Location.latitude, Location.longitude);
+                                  "BusStationKey = {0},Latitude = {1}, Longitude = {2}", BusStationKey, Latitude, Longitude);
         }
     }
 }

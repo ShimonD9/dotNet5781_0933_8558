@@ -7,8 +7,18 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_0933_8558
 {
-    public class BusLineStation : BusStation
+    class BusLineStation : BusStation
     {
+        public BusLineStation(double dist, int minutes, double lati,
+            double longi, int stationKey, string address)
+        {
+            base.Latitude = lati;
+            base.Longitude = longi;
+            base.StationAddress = address;
+            base.BusStationKey = stationKey;
+            Distance = dist;
+            TravelTimeFromLastStation = TimeSpan.FromMinutes(minutes);
+        }
         private double distance;
 
         public double Distance
@@ -18,15 +28,16 @@ namespace dotNet5781_02_0933_8558
                     throw new ArgumentException("Illegal input of distence.");
                 distance = value; }
         }
-        private float timeTravelFromLastStaiton;
-
-        public float TimeTravelFromLastStaiton
+   
+        private TimeSpan travelTimeFromLastStation;
+       
+        public TimeSpan TravelTimeFromLastStation
         {
-            get { return timeTravelFromLastStaiton; }
-            set {
-                if (timeTravelFromLastStaiton < 0)
-                    throw new ArgumentException("Illegal input of time travel.");
-                timeTravelFromLastStaiton = value; }
+            get { return travelTimeFromLastStation; }
+            set { 
+                if(value.Minutes <0)
+                    throw new ArgumentException("Illegal input of minutes.");
+                travelTimeFromLastStation =TimeSpan.FromMinutes(value.Minutes); }
         }
 
     }
