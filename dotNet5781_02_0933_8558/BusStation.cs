@@ -59,7 +59,7 @@ namespace dotNet5781_02_0933_8558
         }
         public override string ToString()
         {
-            return string.Format("Bus Station Code:\n+" +
+            return string.Format("Bus Station Code:\n" +
                                   "BusStationKey = {0},Latitude = {1}, Longitude = {2}", BusStationKey, Latitude, Longitude);
         }
     }

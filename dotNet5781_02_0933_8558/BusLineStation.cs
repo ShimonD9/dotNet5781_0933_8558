@@ -16,17 +16,17 @@ namespace dotNet5781_02_0933_8558
             base.Longitude = longi;
             base.StationAddress = address;
             base.BusStationKey = stationKey;
-            Distance = dist;
+            DistanceFromLastStation = dist;
             TravelTimeFromLastStation = TimeSpan.FromMinutes(minutes);
         }
-        private double distance;
 
-        public double Distance
+        private double distanceFromLastStation;
+        public double DistanceFromLastStation
         {
-            get { return distance; }
-            set { if (distance < 0)
+            get { return distanceFromLastStation; }
+            set { if (distanceFromLastStation < 0)
                     throw new ArgumentException("Illegal input of distence.");
-                distance = value; }
+                distanceFromLastStation = value; }
         }
            void addStation(int keyStation, double lati, double longi, string address)
         {

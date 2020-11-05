@@ -8,7 +8,7 @@ using System.CodeDom.Compiler;
 
 namespace dotNet5781_02_0933_8558
 {
-    class BusLine :
+    class BusLine
     {
         public List<BusLineStation> busStationList = new List<BusLineStation> { };
         private int busLineNumber;
@@ -53,26 +53,26 @@ namespace dotNet5781_02_0933_8558
                 lastStation = value;
             }
         }
-
-        void addBusStation(int keyStation,int afterStationKey, double lati, double longi,
-            string address, double dis, int timeTravel)
+        
+        void addBusStation(int keyStation, int existingStationKey, double lati, double longi,
+            string address, double dis, int timeTravel,double distanceToNextStation)
         {
-
-            if (busStationList == null)
+            
+            if (busStationList[0] == null || existingStationKey == 0)
             {
                 BusLineStation firstStation = new BusLineStation(dis, timeTravel, lati, longi, keyStation, address);
                 busStationList.Add(firstStation);
-                return;
+                return;//לעדכן את התחנה הבאה במרחק החדש
             }
-            else if (busStationList[busStationList.Count - 1].BusStationKey == keyStation)
+            else if (busStationList[busStationList.Count - 1].BusStationKey == existingStationKey)
             {
                 //write code //in case the new station to insert is in the end
             }
             else
             {
                 BusLineStation middleStation = new BusLineStation(dis, timeTravel, lati, longi, keyStation, address);
-                BusLineStation findIndexStation = findStation(afterStationKey);
-                int index = busStationList.IndexOf(middleStation);
+                BusLineStation findIndexStation = findStation(existingStationKey);
+                int index = busStationList.IndexOf(findIndexStation);
                 busStationList.Insert(index, middleStation);
             }
         }
@@ -93,7 +93,7 @@ namespace dotNet5781_02_0933_8558
             foreach (BusLineStation station in busStationList)
             {
                 if (station.BusStationKey == key)
-                    return station;        
+                    return station;
             }
             throw new ArgumentException("the station was not found");
         }
@@ -106,11 +106,11 @@ namespace dotNet5781_02_0933_8558
             }
             return false;
         }
-        double distanceStation(int first,int seconde)
+        double distanceStation(int first, int seconde)
         {
             BusLineStation firstStation = findStation(first);
             BusLineStation secondeStation = findStation(seconde);
-            return Math.Abs(firstStation.Distance - secondeStation.Distance);
+            return Math.Abs(firstStation.DistanceFromLastStation - secondeStation.DistanceFromLastStation);
         }
         BusLine track(BusLineStation first, BusLineStation seconde)
         {
