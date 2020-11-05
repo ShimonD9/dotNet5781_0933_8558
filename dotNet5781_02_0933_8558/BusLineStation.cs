@@ -28,7 +28,13 @@ namespace dotNet5781_02_0933_8558
                     throw new ArgumentException("Illegal input of distence.");
                 distance = value; }
         }
-   
+           void addStation(int keyStation, double lati, double longi, string address)
+        {
+            BusStationKey = keyStation;
+            Latitude = lati;
+            Longitude = longi;
+            StationAddress = address;
+        }
         private TimeSpan travelTimeFromLastStation;
        
         public TimeSpan TravelTimeFromLastStation
