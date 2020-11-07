@@ -34,7 +34,10 @@ namespace dotNet5781_02_0933_8558
             switch (choice)
             {
                 case CHOICE.ADD:
-
+                    // adding new station:
+                    // בודק אם הרשימה ריקה. אם כן, אז מבקש להוסיף שתי תחנות
+                    // אם לא ריקה, אז שואל איפה להוסיף.
+                    // אם להוסיף בהתחלה - אז לשלוח עם פרמטר 0 של תחנה קודמת
                     break;
                 case CHOICE.DELETE:
                     break;

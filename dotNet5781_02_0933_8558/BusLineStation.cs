@@ -9,41 +9,36 @@ namespace dotNet5781_02_0933_8558
 {
     class BusLineStation : BusStation
     {
-        public BusLineStation(double dist, int minutes, double lati,
+        public BusLineStation(double dist, double minutes, double lati,
             double longi, int stationKey, string address)
         {
             base.Latitude = lati;
             base.Longitude = longi;
             base.StationAddress = address;
             base.BusStationKey = stationKey;
-            DistanceFromLastStation = dist;
-            TravelTimeFromLastStation = TimeSpan.FromMinutes(minutes);
+            DistanceFromPreviousStation = dist;
+            TravelTimeFromPreviousStation = TimeSpan.FromMinutes(minutes);
         }
 
         private double distanceFromLastStation;
-        public double DistanceFromLastStation
+
+        public double DistanceFromPreviousStation
         {
             get { return distanceFromLastStation; }
             set { if (distanceFromLastStation < 0)
                     throw new ArgumentException("Illegal input of distence.");
                 distanceFromLastStation = value; }
         }
-           void addStation(int keyStation, double lati, double longi, string address)
-        {
-            BusStationKey = keyStation;
-            Latitude = lati;
-            Longitude = longi;
-            StationAddress = address;
-        }
+
         private TimeSpan travelTimeFromLastStation;
        
-        public TimeSpan TravelTimeFromLastStation
+        public TimeSpan TravelTimeFromPreviousStation
         {
             get { return travelTimeFromLastStation; }
             set { 
-                if(value.Minutes <0)
+                if (value.Minutes < 0)
                     throw new ArgumentException("Illegal input of minutes.");
-                travelTimeFromLastStation =TimeSpan.FromMinutes(value.Minutes); }
+                travelTimeFromLastStation = TimeSpan.FromMinutes(value.Minutes); }
         }
 
     }

@@ -57,28 +57,47 @@ namespace dotNet5781_02_0933_8558
 
       
         void addBusStation(int stationKey, int previousStationKey, double lati, double longi,
-            string address, double distanceFromPreviousStation, int timeTravelFromPreviousStation)
+            string address, double distanceFromPreviousStation, double timeTravelFromPreviousStation, double distanceToNextStation, double timeTravelToNextStation)
         {
-            if (busStationList[0] == null || previousStationKey == 0)
+            if (timeTravelToNextStation < 0 || distanceToNextStation < 0)
+                throw new ArgumentException("Illegal input of minutes.");
+            TimeSpan timeToNext = TimeSpan.FromMinutes(timeTravelFromPreviousStation);
+
+            // If it's the first station
+            if (previousStationKey == 0)
             {
-                BusLineStation firstStation = new BusLineStation(distanceFromPreviousStation, timeTravelFromPreviousStation, lati, longi, stationKey, address);
-                busStationList.Add(firstStation);
-                return;//לעדכן את התחנה הבאה במרחק החדש
-            }
+                if (busStationList[0] == null)
+                { 
+                    BusLineStation firstStation = new BusLineStation(0, 0, lati, longi, stationKey, address);
+                    busStationList.Add(firstStation);
+                }
+                else if (busStationList[0] != null)
+                {
+                    busStationList[0].DistanceFromPreviousStation = distanceToNextStation;
+                    busStationList[0].TravelTimeFromPreviousStation = timeToNext;
+                    BusLineStation firstStation = new BusLineStation(0, 0, lati, longi, stationKey, address);
+                    busStationList.Add(firstStation);
+                }
+            }   
+            // If needs to be put in the end
             else if (busStationList[busStationList.Count - 1].BusStationKey == previousStationKey)
             {
                 BusLineStation lastStation = new BusLineStation(distanceFromPreviousStation, timeTravelFromPreviousStation, lati, longi, stationKey, address);
                 busStationList.Insert(busStationList.Count - 1, lastStation);
             }
+            // If needs to be put in the middle
             else
             {
                 BusLineStation newStation = new BusLineStation(distanceFromPreviousStation, timeTravelFromPreviousStation, lati, longi, stationKey, address);
                 BusLineStation previouStation = findStation(previousStationKey);
                 int index = busStationList.IndexOf(previouStation);
-                busStationList[index + 1].DistanceFromLastStation -= distanceFromPreviousStation;
-
+                // Updates the travel and distance of the bus station ahead (based on a subtraction):
+                busStationList[index + 1].DistanceFromPreviousStation = distanceToNextStation;
+                busStationList[index + 1].TravelTimeFromPreviousStation = timeToNext;
             }
+            throw new ArgumentException("the station was not found");
         }
+
         void deleteBusStation(int keyStation)
         {
             foreach (BusLineStation station in busStationList)
@@ -91,6 +110,7 @@ namespace dotNet5781_02_0933_8558
             }
             throw new ArgumentException("the station was not found");
         }
+
         BusLineStation findStation(int key)
         {
             foreach (BusLineStation station in busStationList)
@@ -133,11 +153,11 @@ namespace dotNet5781_02_0933_8558
                     flag = true;
                 
                 if (flag == true && station != lastStation)
-                    total += station.DistanceFromLastStation;
+                    total += station.DistanceFromPreviousStation;
 
                 else if (flag == true && station == lastStation)
                 {
-                    total += station.DistanceFromLastStation;
+                    total += station.DistanceFromPreviousStation;
                     return total;
                 }
             }
@@ -149,6 +169,7 @@ namespace dotNet5781_02_0933_8558
 
 
         }
+
         BusLine track(int keyA, int keyB)
         {
             BusLineStation first = findStation(keyA);
