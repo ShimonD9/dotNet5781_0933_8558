@@ -8,7 +8,7 @@ using System.CodeDom.Compiler;
 
 namespace dotNet5781_02_0933_8558
 {
-    class BusLine
+    class BusLine 
     {
         public List<BusLineStation> busStationList = new List<BusLineStation> { };
         private int busLineNumber;
@@ -22,7 +22,7 @@ namespace dotNet5781_02_0933_8558
                 busLineNumber = value;
             }
         }
-        private int firstStation;
+
         private string area;
 
         public string Area
@@ -31,6 +31,7 @@ namespace dotNet5781_02_0933_8558
             set { area = value; }
         }
 
+        private int firstStation;
         public int FirstStation
         {
             get { return firstStation; }
@@ -53,27 +54,29 @@ namespace dotNet5781_02_0933_8558
                 lastStation = value;
             }
         }
-        
-        void addBusStation(int keyStation, int existingStationKey, double lati, double longi,
-            string address, double dis, int timeTravel,double distanceToNextStation)
+
+      
+        void addBusStation(int stationKey, int previousStationKey, double lati, double longi,
+            string address, double distanceFromPreviousStation, int timeTravelFromPreviousStation)
         {
-            
-            if (busStationList[0] == null || existingStationKey == 0)
+            if (busStationList[0] == null || previousStationKey == 0)
             {
-                BusLineStation firstStation = new BusLineStation(dis, timeTravel, lati, longi, keyStation, address);
+                BusLineStation firstStation = new BusLineStation(distanceFromPreviousStation, timeTravelFromPreviousStation, lati, longi, stationKey, address);
                 busStationList.Add(firstStation);
                 return;//לעדכן את התחנה הבאה במרחק החדש
             }
-            else if (busStationList[busStationList.Count - 1].BusStationKey == existingStationKey)
+            else if (busStationList[busStationList.Count - 1].BusStationKey == previousStationKey)
             {
-                //write code //in case the new station to insert is in the end
+                BusLineStation lastStation = new BusLineStation(distanceFromPreviousStation, timeTravelFromPreviousStation, lati, longi, stationKey, address);
+                busStationList.Insert(busStationList.Count - 1, lastStation);
             }
             else
             {
-                BusLineStation middleStation = new BusLineStation(dis, timeTravel, lati, longi, keyStation, address);
-                BusLineStation findIndexStation = findStation(existingStationKey);
-                int index = busStationList.IndexOf(findIndexStation);
-                busStationList.Insert(index, middleStation);
+                BusLineStation newStation = new BusLineStation(distanceFromPreviousStation, timeTravelFromPreviousStation, lati, longi, stationKey, address);
+                BusLineStation previouStation = findStation(previousStationKey);
+                int index = busStationList.IndexOf(previouStation);
+                busStationList[index + 1].DistanceFromLastStation -= distanceFromPreviousStation;
+
             }
         }
         void deleteBusStation(int keyStation)
@@ -106,15 +109,87 @@ namespace dotNet5781_02_0933_8558
             }
             return false;
         }
-        double distanceStation(int first, int seconde)
+        double distanceStation(int keyA, int keyB)
         {
-            BusLineStation firstStation = findStation(first);
-            BusLineStation secondeStation = findStation(seconde);
-            return Math.Abs(firstStation.DistanceFromLastStation - secondeStation.DistanceFromLastStation);
+            BusLineStation firstStation = findStation(keyA);
+            BusLineStation lastStation = findStation(keyB);
+            int indexA = busStationList.IndexOf(firstStation);
+            int indexB = busStationList.IndexOf(lastStation);
+            if (indexA == -1)
+            {
+                throw new ArgumentException("the first station was not found");
+            }
+            else if (indexB == -1)
+            {
+                throw new ArgumentException("the last station was not found");
+
+            }
+            double total = 0;
+            bool flag = false;
+            foreach (BusLineStation station in busStationList)
+            {
+
+                if (flag == false && station == firstStation)                                    
+                    flag = true;
+                
+                if (flag == true && station != lastStation)
+                    total += station.DistanceFromLastStation;
+
+                else if (flag == true && station == lastStation)
+                {
+                    total += station.DistanceFromLastStation;
+                    return total;
+                }
+            }
+            return 0;
         }
-        BusLine track(BusLineStation first, BusLineStation seconde)
+
+        double timeTravel(int keyA, int keyB)
         {
 
+
+        }
+        BusLine track(int keyA, int keyB)
+        {
+            BusLineStation first = findStation(keyA);
+            BusLineStation last = findStation(keyB);
+            int indexA = busStationList.IndexOf(first);
+            int indexB = busStationList.IndexOf(last);
+            if(indexA == -1)
+            {
+                throw new ArgumentException("the first station was not found");
+            }
+            else if (indexB == -1)
+            {
+                throw new ArgumentException("the last station was not found");
+            }
+            else if(indexA < indexB)
+            {
+                throw new ArgumentException("the order of the stations is inccorect");
+            }
+
+            bool flag = false;
+            BusLine trackList = new BusLine();
+            foreach (BusLineStation station in busStationList)
+            {
+               
+                if (flag == false && station == first)
+                {
+                    trackList.busStationList.Add(station);
+                    flag = true;
+                }
+                if (flag == true && station != last)
+                {
+                    trackList.busStationList.Add(station);
+                }
+                else if (flag == true && station == last)
+                {
+                    trackList.busStationList.Add(station);
+                    return trackList;
+                }
+
+            }
+            throw new ArgumentException("the station was not found");
         }
 
 
