@@ -43,7 +43,7 @@ namespace dotNet5781_02_0933_8558
                     break;
                 case CHOICE.SEARCH:
                     break;
-                case CHOICE.PRINT:
+                case CHOICE.PRINT: 
                     break;
                 case CHOICE.EXIT:
                     break;
