@@ -9,7 +9,7 @@ namespace dotNet5781_02_0933_8558
     public class BusStation
     {
         public static Random lineLocation = new Random(DateTime.Now.Millisecond);
-       public BusStation(double lati,double longi,int stationKey, string address)
+       public BusStation(double lati, double longi, int stationKey, string address)
         {
             Latitude = lati;
             Longitude = longi;
