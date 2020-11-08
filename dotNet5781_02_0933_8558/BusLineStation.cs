@@ -11,8 +11,8 @@ namespace dotNet5781_02_0933_8558
     {
         public BusLineStation(double dist, double minutes, int stationKey, string address)
         {
-            base.Latitude = 31 + lineLocation.NextDouble() * 2.3; 
-            base.Longitude = 34.3 + lineLocation.NextDouble() * 1.2;
+            base.Latitude = lati;
+            base.Longitude = longi;
             base.StationAddress = address;
             base.BusStationKey = stationKey;
             DistanceFromPreviousStation = dist;
