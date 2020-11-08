@@ -8,8 +8,10 @@ using System.CodeDom.Compiler;
 
 namespace dotNet5781_02_0933_8558
 {
-    class BusLine 
+    class BusLine : IComparable
     {
+        BusLine(int busLineKey,int firstStationKey,int secondStationKey,string area
+
         public List<BusLineStation> busStationList = new List<BusLineStation> { };
         private int busLineNumber;
         public int BusLineNmber
@@ -23,8 +25,8 @@ namespace dotNet5781_02_0933_8558
             }
         }
 
+      
         private string area;
-
         public string Area
         {
             get { return area; }
@@ -129,6 +131,7 @@ namespace dotNet5781_02_0933_8558
             }
             return false;
         }
+
         double distanceStation(int keyA, int keyB)
         {
             BusLineStation firstStation = findStation(keyA);
@@ -158,16 +161,46 @@ namespace dotNet5781_02_0933_8558
                 else if (flag == true && station == lastStation)
                 {
                     total += station.DistanceFromPreviousStation;
-                    return total;
+                    break;
                 }
             }
-            return 0;
+            return total;
         }
 
-        double timeTravel(int keyA, int keyB)
+        TimeSpan timeTravel(int keyA, int keyB)
         {
 
+            BusLineStation firstStation = findStation(keyA);
+            BusLineStation lastStation = findStation(keyB);
+            int indexA = busStationList.IndexOf(firstStation);
+            int indexB = busStationList.IndexOf(lastStation);
+            if (indexA == -1)
+            {
+                throw new ArgumentException("the first station was not found");
+            }
+            else if (indexB == -1)
+            {
+                throw new ArgumentException("the last station was not found");
 
+            }
+            TimeSpan total = new TimeSpan();
+            bool flag = false;
+            foreach (BusLineStation station in busStationList)
+            {
+
+                if (flag == false && station == firstStation)
+                    flag = true;
+
+                if (flag == true && station != lastStation)
+                    total.Add(station.TravelTimeFromPreviousStation);
+
+                else if (flag == true && station == lastStation)
+                {
+                    total.Add(station.TravelTimeFromPreviousStation);
+                    break;
+                }
+            }
+            return total;
         }
 
         BusLine track(int keyA, int keyB)
@@ -211,6 +244,17 @@ namespace dotNet5781_02_0933_8558
 
             }
             throw new ArgumentException("the station was not found");
+        }
+
+        public int CompareTo(object keyBus)
+        {
+            BusLine compareBusLine = (BusLine)keyBus;
+
+            //sort by id, using CompareTo of the int type     
+            return this.b;
+
+            //sort by name, using CompareTo of the string 
+            //return name.CompareTo(s.name); type
         }
 
 

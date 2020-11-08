@@ -20,25 +20,25 @@ namespace dotNet5781_02_0933_8558
             TravelTimeFromPreviousStation = TimeSpan.FromMinutes(minutes);
         }
 
-        private double distanceFromLastStation;
+        private double distanceFromPreviousStation;
 
         public double DistanceFromPreviousStation
         {
-            get { return distanceFromLastStation; }
-            set { if (distanceFromLastStation < 0)
+            get { return distanceFromPreviousStation; }
+            set { if (distanceFromPreviousStation < 0)
                     throw new ArgumentException("Illegal input of distence.");
-                distanceFromLastStation = value; }
+                distanceFromPreviousStation = value; }
         }
 
-        private TimeSpan travelTimeFromLastStation;
+        private TimeSpan travelTimeFromPreviousStation;
        
         public TimeSpan TravelTimeFromPreviousStation
         {
-            get { return travelTimeFromLastStation; }
+            get { return travelTimeFromPreviousStation; }
             set { 
                 if (value.Minutes < 0)
                     throw new ArgumentException("Illegal input of minutes.");
-                travelTimeFromLastStation = TimeSpan.FromMinutes(value.Minutes); }
+                travelTimeFromPreviousStation = TimeSpan.FromMinutes(value.Minutes); }
         }
 
     }
