@@ -9,8 +9,7 @@ namespace dotNet5781_02_0933_8558
 {
     class BusLineStation : BusStation
     {
-        public BusLineStation(double dist, double minutes, double lati,
-            double longi, int stationKey, string address)
+        public BusLineStation(double dist, double minutes, int stationKey, string address)
         {
             base.Latitude = lati; 
             base.Longitude = longi;

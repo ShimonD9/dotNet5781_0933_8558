@@ -13,9 +13,9 @@ namespace dotNet5781_02_0933_8558
 
         static void Main(string[] args)
         {
+            // Bus stop randomizer routine:
+            List<BusLineStation> busStops = new List<BusLineStation>();
             var chars = "ABCDEF GHIJKLMN OPQRS TUVWXY Zabcd efghij klmnopqrs tuv wxyz";
-            List<BusLineCollections> busCompany;
-            List<BusLineStation> busLines;
             for (int i = 0; i < 40; ++i)
             {
                 char[] stringChars = new char[8];
@@ -24,12 +24,14 @@ namespace dotNet5781_02_0933_8558
                     stringChars[i] = chars[rnd.Next(chars.Length)];
                 }
                 string address = new string(stringChars);
-                int stationKey = rnd.Next(0, 100000);
+                int stationKey = rnd.Next(100000);
                 double dist = 100 * rnd.NextDouble() + 1;
                 double minutes = 200 * rnd.NextDouble() + 1;
-                BusLineStation newStation = new BusLineStation(dist, minutes, 0, 0, stationKey, address);
+                BusLineStation newStation = new BusLineStation(dist, minutes, stationKey, address);
+                busStops.Add(newStation);
             }
 
+            BusLineCollections busCompany;
 
 
             var finalString = new String(stringChars);

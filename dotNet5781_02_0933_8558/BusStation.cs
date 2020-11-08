@@ -11,8 +11,8 @@ namespace dotNet5781_02_0933_8558
         public static Random lineLocation = new Random(DateTime.Now.Millisecond);
        public BusStation(double lati, double longi, int stationKey, string address)
         {
-            Latitude = lati;
-            Longitude = longi;
+            latitude = 31 + lineLocation.NextDouble() * 2.3;
+            longitude = 34.3 + lineLocation.NextDouble() * 1.2;
             BusStationKey = stationKey;
             StationAddress = address;
         }
