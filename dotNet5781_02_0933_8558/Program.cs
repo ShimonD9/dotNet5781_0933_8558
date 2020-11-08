@@ -25,6 +25,10 @@ namespace dotNet5781_02_0933_8558
                 }
                 string address = new string(stringChars);
                 int stationKey = rnd.Next(100000);
+                while (busStops.Any(item => item.BusStationKey == stationKey)) // This loop makes sures there is no duplicateded station key
+                {
+                    stationKey = rnd.Next(100000); 
+                }
                 double dist = 100 * rnd.NextDouble() + 1;
                 double minutes = 200 * rnd.NextDouble() + 1;
                 BusLineStation newStation = new BusLineStation(dist, minutes, stationKey, address);
@@ -68,5 +72,10 @@ namespace dotNet5781_02_0933_8558
                 }
 
             }
+
+        private static bool BusStopExists(int stopKey)
+        {
+            return BusLine;
+        }
     }
 }
