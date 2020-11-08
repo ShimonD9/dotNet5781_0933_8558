@@ -246,6 +246,25 @@ namespace dotNet5781_02_0933_8558
             throw new ArgumentException("the station was not found");
         }
 
+        TimeSpan TotalTimeTravel()
+        {
+            TimeSpan totalTime = new TimeSpan() ;
+            foreach(BusLineStation station in busStationList)
+            {
+                totalTime += station.TravelTimeFromPreviousStation; 
+            }
+            return totalTime;
+        }
+
+        double TotalDistance()
+        {
+            double totalDistance = new double();
+            foreach (BusLineStation station in busStationList)
+            {
+                totalDistance += station.DistanceFromPreviousStation;
+            }
+            return totalDistance;
+        }
         public int CompareTo(object keyBus)
         {
             BusLine compareBusLine = (BusLine)keyBus;
