@@ -10,7 +10,7 @@ namespace dotNet5781_02_0933_8558
 {
     class BusLine : IComparable
     {
-        BusLine(int busLineKey,int firstStationKey,int secondStationKey,string area
+        BusLine(int busLineKey, int firstStationKey, int secondStationKey, string area);
 
         public List<BusLineStation> busStationList = new List<BusLineStation> { };
         private int busLineNumber;
@@ -77,7 +77,7 @@ namespace dotNet5781_02_0933_8558
                 {
                     busStationList[0].DistanceFromPreviousStation = distanceToNextStation;
                     busStationList[0].TravelTimeFromPreviousStation = timeToNext;
-                    BusLineStation firstStation = new BusLineStation(0, 0, lati, longi, stationKey, address);
+                    BusLineStation firstStation = new BusLineStation(lati, longi, stationKey, address);
                     busStationList.Add(firstStation);
                 }
             }   
