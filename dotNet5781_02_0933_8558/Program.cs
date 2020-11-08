@@ -9,11 +9,35 @@ namespace dotNet5781_02_0933_8558
 {
     class Program
     {
+        public static Random rnd = new Random(DateTime.Now.Millisecond);
+
         static void Main(string[] args)
         {
+            // Bus stop randomizer routine:
+            List<BusLineStation> busStops = new List<BusLineStation>();
+            var chars = "ABCDEF GHIJKLMN OPQRS TUVWXY Zabcd efghij klmnopqrs tuv wxyz";
+            for (int i = 0; i < 40; ++i)
+            {
+                char[] stringChars = new char[8];
+                for (int j = 0; j < stringChars.Length; j++)
+                {
+                    stringChars[i] = chars[rnd.Next(chars.Length)];
+                }
+                string address = new string(stringChars);
+                int stationKey = rnd.Next(100000);
+                double dist = 100 * rnd.NextDouble() + 1;
+                double minutes = 200 * rnd.NextDouble() + 1;
+                BusLineStation newStation = new BusLineStation(dist, minutes, stationKey, address);
+                busStops.Add(newStation);
+            }
+
+            BusLineCollections busCompany;
+
+
+            var finalString = new String(stringChars);
             CHOICE choice;
-            bool success;
-            Console.WriteLine("Bus management:\n\n" +
+        bool success;
+        Console.WriteLine("Bus management:\n\n" +
                 "Enter one of the following:\n" +
                 "ADD: To add a new linr or station\n" +
                 "DELETE: To delete line or station\n" +
@@ -26,31 +50,23 @@ namespace dotNet5781_02_0933_8558
                 string answer = Console.ReadLine();
                 success = Enum.TryParse(answer, out choice);
                 if (!success) // If the conversion of the string to enum didn't succeed - print message and run the loop again
-                {
                     Console.WriteLine("There is no such option in the menu, please enter your choice again.");
-                }
-            }
-            while (!success);
-            switch (choice)
-            {
+             } while (!success) ;
+             switch (choice) { 
                 case CHOICE.ADD:
-                    // adding new station:
-                    // בודק אם הרשימה ריקה. אם כן, אז מבקש להוסיף שתי תחנות
-                    // אם לא ריקה, אז שואל איפה להוסיף.
-                    // אם להוסיף בהתחלה - אז לשלוח עם פרמטר 0 של תחנה קודמת
-                    break;
+                          break;
                 case CHOICE.DELETE:
-                    break;
+                        break;
                 case CHOICE.SEARCH:
-                    break;
-                case CHOICE.PRINT: 
-                    break;
+                        break;
+                case CHOICE.PRINT:
+                        break;
                 case CHOICE.EXIT:
-                    break;
+                        break;
                 default:
-                    break;
-            }
+                break;
+                }
 
-        }
+            }
     }
 }
