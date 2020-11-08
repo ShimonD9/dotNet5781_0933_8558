@@ -36,7 +36,7 @@ namespace dotNet5781_02_0933_8558
 
             // Bus lines collection routine:
 
-            BusLineCollections busCompany;
+            BusLinesCollection busCompany;
 
             for (int i = 0; i < 10; i++)
             {

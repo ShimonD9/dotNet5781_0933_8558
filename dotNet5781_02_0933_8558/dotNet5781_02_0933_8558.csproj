@@ -43,8 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusLinesCollectionIEnumartor.cs" />
     <Compile Include="BusLine.cs" />
-    <Compile Include="BusLineCollections.cs" />
+    <Compile Include="BusLinesCollection.cs" />
     <Compile Include="BusLineStation.cs" />
     <Compile Include="BusStation.cs" />
     <Compile Include="EnumLines.cs" />

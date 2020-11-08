@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 using System.CodeDom.Compiler;
+using System.Runtime.Remoting.Messaging;
 
 namespace dotNet5781_02_0933_8558
 {
@@ -12,15 +13,26 @@ namespace dotNet5781_02_0933_8558
     {
 
         BusLine() {; }
-        BusLine(int busLineKey, int firstStationKey, int secondStationKey)
+        BusLine(int busLineKey, BusLineStation firstStationKey, BusLineStation secondStationKey, int areaKey)
         {
             FirstStation = firstStationKey;
             LastStation = secondStationKey;
             BusLineNmber = busLineKey;
-            AREA choice;
+            BusArea = (AREA)areaKey;
+            //busStationList.Add(LastStation);
+            // busStationList.Add(FirstStation);
+            busStationList = new List<BusLineStation> { FirstStation, LastStation };
+          
         }
 
-        public List<BusLineStation> busStationList = new List<BusLineStation> { };
+        //public List<BusLineStation> busStationList;
+        private List<BusLineStation> busStationList;
+        public List<BusLineStation> BusStationList
+        {
+            get { return busStationList; }          
+        }
+
+
         private int busLineNumber;
         public int BusLineNmber
         {
@@ -34,37 +46,32 @@ namespace dotNet5781_02_0933_8558
         }
 
 
-        private string area;
-        public string Area
+        private AREA busArea;
+        public AREA BusArea
         {
-            get { return area; }
-            set { area = value; }
+            get { return busArea; }
+            set { busArea = value; }
         }
 
-        private int firstStation;
-        public int FirstStation
+        private BusLineStation firstStation;
+        public BusLineStation FirstStation
         {
             get { return firstStation; }
             set
             {
-                if (firstStation < 0 || firstStation > 1000000)
-                    throw new ArgumentException("Illegal input of first station.");
                 firstStation = value;
             }
         }
 
-        private int lastStation;
-        public int LastStation
+        private BusLineStation lastStation;
+        public BusLineStation LastStation
         {
             get { return lastStation; }
             set
             {
-                if (lastStation < 0 || lastStation > 1000000)
-                    throw new ArgumentException("Illegal input of last station.");
                 lastStation = value;
             }
         }
-
 
         void addBusStation(int stationKey, int previousStationKey, double lati, double longi,
             string address, double distanceFromPreviousStation, double timeTravelFromPreviousStation, double distanceToNextStation, double timeTravelToNextStation)
@@ -130,6 +137,7 @@ namespace dotNet5781_02_0933_8558
             }
             throw new ArgumentException("the station was not found");
         }
+
         bool searchStation(int keyStation)
         {
             foreach (BusLineStation station in busStationList)
@@ -257,7 +265,7 @@ namespace dotNet5781_02_0933_8558
         TimeSpan TotalTimeTravel()
         {
             TimeSpan totalTime = new TimeSpan();
-            totalTime = timeTravel(this.firstStation, this.lastStation);
+            totalTime = timeTravel(this.firstStation.BusStationKey, this.lastStation.BusStationKey);
             return totalTime;
         }
 
@@ -270,29 +278,27 @@ namespace dotNet5781_02_0933_8558
             }
             return totalDistance;
         }
+
         public int CompareTo(object keyBus)
         {
             //TimeSpan busTimeA , busTimeB ;
             BusLine compareBusLine = (BusLine)keyBus;
-           // busTimeA = this.TotalTimeTravel();
+            // busTimeA = this.TotalTimeTravel();
             //busTimeB = this.TotalTimeTravel();
-        
+
             return TotalTimeTravel().CompareTo(compareBusLine.TotalTimeTravel());
         }
 
-
-
-
-
         public override string ToString()
         {
-            foreach (BusLine in busStationList)
+            string stations = null;
+            foreach (BusLineStation item in busStationList)
             {
-
+                stations += item.BusStationKey + '\n'; 
             }
             return string.Format("Bus line details:\n+" +
-                                  "Bus line = {0},Aera line = {1}, Longitude = {2},Station List{3}", BusLineNmber, Area, busStationList);
+                                  "Bus line = {0},Aera line = {1}, busStationList: = {2}",
+                                  BusLineNmber, busArea, stations);
         }
     }
-
 }
