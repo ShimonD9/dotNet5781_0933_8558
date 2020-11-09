@@ -14,9 +14,9 @@ namespace dotNet5781_02_0933_8558
      */
 
 
-    class BusLinesCollection : IEnumerable
+    public class BusLinesCollection : IEnumerable
     {
-        BusLinesCollection() { }
+        public BusLinesCollection() { }
 
         public IEnumerator GetEnumerator()
         {
@@ -24,11 +24,11 @@ namespace dotNet5781_02_0933_8558
             return counterBusLine;
         }
 
-        private List<BusLine> busLineCollectionsList = new List<BusLine> { };
+        public List<BusLine> busLineCollectionsList = new List<BusLine> { };
 
         void AddBusLine(BusLine BusLine)
         {
-            busLineCollectionsList.Add(BusLine);
+            busLineCollectionsList.Insert(0, BusLine);;
         }
 
         void DeleteBusLine(int BusLineKey)
@@ -67,7 +67,7 @@ namespace dotNet5781_02_0933_8558
                 {
                     if (station.BusStationKey == stationKey)
                     {
-                        tempList.Add(bus);
+                        tempList.Insert(0,bus);
                         flag = true;
                         break;
                     }
@@ -86,9 +86,11 @@ namespace dotNet5781_02_0933_8558
             throw new KeyNotFoundException("the bus line number was not found\n");
         }
 
-        void sortBusList()
+        List<BusLine> sortBusList()
         {
-            busLineCollectionsList.Sort();
+            List<BusLine> tempList = busLineCollectionsList;
+            tempList.Sort();
+            return tempList;
         }
 
         public BusLine this[int numBusLine]
@@ -106,14 +108,13 @@ namespace dotNet5781_02_0933_8558
 
         }
 
-        public bool searchForTwoStaionExistent(int busStationKey)
+        public bool staionExist(int stationKey)
         {           
             foreach (BusLine bus in busLineCollectionsList)
                 foreach (BusLineStation station in bus.BusStationList)                
-                    if (station.BusStationKey == busStationKey)
+                    if (station.BusStationKey == stationKey)
                         return true;
-            return false;
-            
+            return false;           
         }
     }
 }

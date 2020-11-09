@@ -9,11 +9,11 @@ using System.Runtime.Remoting.Messaging;
 
 namespace dotNet5781_02_0933_8558
 {
-    class BusLine : IComparable
+    public class BusLine : IComparable
     {
 
-        BusLine() {; }
-        BusLine(int busLineKey, BusLineStation firstStationKey, BusLineStation secondStationKey, int areaKey)
+        BusLine() { }
+        public BusLine(int busLineKey, BusLineStation firstStationKey, BusLineStation secondStationKey, int areaKey)
         {
             FirstStation = firstStationKey;
             LastStation = secondStationKey;
@@ -22,14 +22,14 @@ namespace dotNet5781_02_0933_8558
             //busStationList.Add(LastStation);
             // busStationList.Add(FirstStation);
             busStationList = new List<BusLineStation> { FirstStation, LastStation };
-          
+
         }
 
         //public List<BusLineStation> busStationList;
         private List<BusLineStation> busStationList;
         public List<BusLineStation> BusStationList
         {
-            get { return busStationList; }          
+            get { return busStationList; }
         }
 
 
@@ -73,48 +73,6 @@ namespace dotNet5781_02_0933_8558
             }
         }
 
-        void addBusStation(int stationKey, int previousStationKey, double lati, double longi,
-            string address, double distanceFromPreviousStation, double timeTravelFromPreviousStation, double distanceToNextStation, double timeTravelToNextStation)
-        { 
-            if (timeTravelToNextStation < 0 || distanceToNextStation < 0)
-                throw new ArgumentException("Illegal input of minutes.");
-            TimeSpan timeToNext = TimeSpan.FromMinutes(timeTravelFromPreviousStation);
-
-            // If it's the first station
-            if (previousStationKey == 0)
-            {
-                if (busStationList[0] == null)
-                {
-                    BusLineStation firstStation = new BusLineStation(0, 0, stationKey, address);
-                    busStationList.Add(firstStation);
-                }
-                else if (busStationList[0] != null)
-                {
-                    busStationList[0].DistanceFromPreviousStation = distanceToNextStation;
-                    busStationList[0].TravelTimeFromPreviousStation = timeToNext;
-                    BusLineStation firstStation = new BusLineStation(0, 0, stationKey, address);
-                    busStationList.Add(firstStation);
-                }
-            }
-            // If needs to be put in the end
-            else if (busStationList[busStationList.Count - 1].BusStationKey == previousStationKey)
-            {
-                BusLineStation lastStation = new BusLineStation(distanceFromPreviousStation, timeTravelFromPreviousStation, stationKey, address);
-                busStationList.Insert(busStationList.Count - 1, lastStation);
-            }
-            // If needs to be put in the middle
-            else
-            {
-                BusLineStation newStation = new BusLineStation(distanceFromPreviousStation, timeTravelFromPreviousStation, stationKey, address);
-                BusLineStation previouStation = findStation(previousStationKey);
-                int index = busStationList.IndexOf(previouStation);
-                // Updates the travel and distance of the bus station ahead (based on a subtraction):
-                busStationList[index + 1].DistanceFromPreviousStation = distanceToNextStation;
-                busStationList[index + 1].TravelTimeFromPreviousStation = timeToNext;
-            }
-            throw new ArgumentException("the station was not found");
-        }
-
         void deleteBusStation(int keyStation)
         {
             foreach (BusLineStation station in busStationList)
@@ -125,7 +83,7 @@ namespace dotNet5781_02_0933_8558
                     return;
                 }
             }
-            throw new ArgumentException("the station was not found");
+            throw new KeyNotFoundException("the station was not found");
         }
 
         BusLineStation findStation(int key)
@@ -135,7 +93,7 @@ namespace dotNet5781_02_0933_8558
                 if (station.BusStationKey == key)
                     return station;
             }
-            throw new ArgumentException("the station was not found");
+            throw new KeyNotFoundException("the station was not found");
         }
 
         bool searchStation(int keyStation)
@@ -227,15 +185,15 @@ namespace dotNet5781_02_0933_8558
             int indexB = busStationList.IndexOf(last);
             if (indexA == -1)
             {
-                throw new ArgumentException("the first station was not found");
+                throw new KeyNotFoundException("the first station was not found");
             }
             else if (indexB == -1)
             {
-                throw new ArgumentException("the last station was not found");
+                throw new KeyNotFoundException("the last station was not found");
             }
             else if (indexA < indexB)
             {
-                throw new ArgumentException("the order of the stations is inccorect");
+                throw new KeyNotFoundException("the order of the stations is inccorect");
             }
 
             bool flag = false;
@@ -245,16 +203,16 @@ namespace dotNet5781_02_0933_8558
 
                 if (flag == false && station == first)
                 {
-                    trackList.busStationList.Add(station);
+                    trackList.busStationList.Insert(0, station);
                     flag = true;
                 }
                 if (flag == true && station != last)
                 {
-                    trackList.busStationList.Add(station);
+                    trackList.busStationList.Insert(0, station);
                 }
                 else if (flag == true && station == last)
                 {
-                    trackList.busStationList.Add(station);
+                    trackList.busStationList.Insert(0, station);
                     return trackList;
                 }
 
@@ -294,11 +252,89 @@ namespace dotNet5781_02_0933_8558
             string stations = null;
             foreach (BusLineStation item in busStationList)
             {
-                stations += item.BusStationKey + '\n'; 
+                stations += item.BusStationKey + '\n';
             }
             return string.Format("Bus line details:\n+" +
                                   "Bus line = {0},Aera line = {1}, busStationList: = {2}",
                                   BusLineNumber, busArea, stations);
         }
+        public void addBusStation(BusLineStation newStation, int prevKey, double distanceToNextStation, double timeToNextStation)
+        {
+            if (prevKey == 0)
+            {
+                FirstStation = newStation;
+                busStationList[0].DistanceFromPreviousStation = distanceToNextStation;
+                busStationList[0].TravelTimeFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);
+                busStationList.Insert(0, newStation);
+                busStationList[0].DistanceFromPreviousStation = 0;
+                busStationList[0].TravelTimeFromPreviousStation= TimeSpan.FromMinutes(0);
+            }
+            else if (prevKey > 0)
+            {
+                BusLineStation tempStation = findStation(prevKey);
+                int index = busStationList.IndexOf(tempStation);
+                busStationList[index].DistanceFromPreviousStation = distanceToNextStation;
+                busStationList[index].TravelTimeFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);
+                busStationList.Insert(index, newStation);
+            }
+        }
+
+        public void addBusStationToTheEnd(BusLineStation newStation)
+        {
+            LastStation = newStation;
+            busStationList.Add(newStation);
+        }
     }
 }
+
+
+
+
+
+
+//public void addExistStation(BusLineStation )
+//{
+
+//}
+
+//public void addBusStation(BusLineStation newStation,int stationKey, int previousStationKey, double lati, double longi,
+//    string address, double distanceFromPreviousStation, double timeTravelFromPreviousStation, double distanceToNextStation, double timeTravelToNextStation)
+//{ 
+//    if (timeTravelToNextStation < 0 || distanceToNextStation < 0)
+//        throw new ArgumentException("Illegal input of minutes.");
+//    TimeSpan timeToNext = TimeSpan.FromMinutes(timeTravelFromPreviousStation);
+
+//    // If it's the first station
+//    if (previousStationKey == 0)
+//    {
+//        if (busStationList[0] == null)
+//        {
+//            //BusLineStation firstStation = new BusLineStation(0, 0, stationKey, address);
+//            busStationList.Add(firstStation);
+//        }
+//        else if (busStationList[0] != null)
+//        {
+//            busStationList[0].DistanceFromPreviousStation = distanceToNextStation;
+//            busStationList[0].TravelTimeFromPreviousStation = timeToNext;
+//            BusLineStation firstStation = new BusLineStation(0, 0, stationKey, address);
+//            busStationList.Add(firstStation);
+//        }
+//    }
+//    // If needs to be put in the end
+//    else if (busStationList[busStationList.Count - 1].BusStationKey == previousStationKey)
+//    {
+//       // BusLineStation lastStation = new BusLineStation(distanceFromPreviousStation, timeTravelFromPreviousStation, stationKey, address);
+//        busStationList.Insert(busStationList.Count - 1, lastStation);
+//    }
+//    // If needs to be put in the middle
+//    else
+//    {
+//        BusLineStation newStation1 = new BusLineStation(distanceFromPreviousStation, timeTravelFromPreviousStation, stationKey, address);
+//        BusLineStation previouStation = findStation(previousStationKey);
+//        int index = busStationList.IndexOf(previouStation);
+//        // Updates the travel and distance of the bus station ahead (based on a subtraction):
+//        busStationList[index + 1].DistanceFromPreviousStation = distanceToNextStation;
+//        busStationList[index + 1].TravelTimeFromPreviousStation = timeToNext;
+//    }
+//    throw new ArgumentException("the station was not found");
+//}

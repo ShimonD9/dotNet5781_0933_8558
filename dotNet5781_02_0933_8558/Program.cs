@@ -13,46 +13,11 @@ namespace dotNet5781_02_0933_8558
 
         static void Main(string[] args)
         {
+            BusLinesCollection busCompany = new BusLinesCollection();
             // Bus stop randomizer routine:
 
-            Stack<BusStation> busStops = new Stack<BusStation>();
-            var chars = "ABCDEF GHIJKLMN OPQRS TUVWXY Zabcd efghij klmnopqrs tuv wxyz";
-            for (int i = 0; i < 40; ++i)
-            {
-                char[] stringChars = new char[8];
-                for (int j = 0; j < stringChars.Length; j++)
-                {
-                    stringChars[i] = chars[rnd.Next(chars.Length)];
-                }
-                string address = new string(stringChars);
-                int stationKey = rnd.Next(100000);
-                while (busStops.Any(item => item.BusStationKey == stationKey)) // This loop makes sures there is no duplicateded station key
-                {
-                    stationKey = rnd.Next(100000);
-                }
-                BusStation newStation = new BusStation(stationKey, address);
-                busStops.Push(newStation);
-            }
-
-            // Bus lines collection routine:
-
-            BusLinesCollection busCompany;
-
-            for (int i = 0; i < 10; i++)
-            {
-                int busNumber = rnd.Next(999);
-
-                // First station build:
-                BusLineStation first = (BusLineStation)busStops.Pop();
-                first.DistanceFromPreviousStation = 0;
-                first.TravelTimeFromPreviousStation = TimeSpan.FromMinutes(0);
-
-                // Last station build:
-                BusLineStation last = (BusLineStation)busStops.Pop();
-                last.DistanceFromPreviousStation = 100 * rnd.NextDouble() + 1; ;
-                last.TravelTimeFromPreviousStation = TimeSpan.FromMinutes(200 * rnd.NextDouble() + 1);
-            }
-
+            List<BusLineStation> busStops = new List<BusLineStation>();
+            busCompanyInitializer(ref busCompany, ref busStops);
             CHOICE choice;
             bool success;
             Console.WriteLine("Bus management:\n\n" +
@@ -73,25 +38,25 @@ namespace dotNet5781_02_0933_8558
             } while (!success);
 
             switch (choice)
-            { 
+            {
                 case CHOICE.ADD:
                     char checkRequest; // For the A or B input
                     Console.WriteLine("Please enter A for adding a new line" +
                                        "B for adding a new bus line stop to an existing line" +
                                        "or other key to return to the menu:\n");
                     char.TryParse(Console.ReadLine(), out checkRequest); // Checks if the input legit and stores checkRequest
-                    
+
                     if (checkRequest == 'A')
                     {
                         // busCompany.add();
                         Console.WriteLine("The gas tank was filled succesfuly!");
                     }
 
-                    else if (checkRequest == 'B')
-                    {
-                        busFound.Treatment();
-                        Console.WriteLine("The bus recieved a treatment!");
-                    }
+                    //else if (checkRequest == 'B')
+                    //{
+                    //    busFound.Treatment();
+                    //    Console.WriteLine("The bus recieved a treatment!");
+                    //}
 
                     break;
                 case CHOICE.DELETE:
@@ -105,7 +70,58 @@ namespace dotNet5781_02_0933_8558
                 default:
                     break;
             }
+        }
 
-        }       
+        public static void busCompanyInitializer(ref BusLinesCollection busCompany, ref List<BusLineStation> busStops)
+        {
+            var chars = "ABCDEF GHIJKLMN OPQRS TUVWXY Zabcd efghij klmnopqrs tuv wxyz";
+            for (int i = 0; i < 40; ++i)
+            {
+                char[] stringChars = new char[8];
+                for (int j = 0; j < stringChars.Length; j++)
+                {
+                    stringChars[j] = chars[rnd.Next(chars.Length-1)];
+                }
+                string address = new string(stringChars);
+                int stationKey = rnd.Next(100000);
+                while (busStops.Any(item => item.BusStationKey == stationKey)) // This loop makes sures there is no duplicateded station key
+                {
+                    stationKey = rnd.Next(100000);
+                }
+                BusLineStation newStation = new BusLineStation(stationKey, address);
+                busStops.Insert(0, newStation); ;
+            }
+
+            // Bus lines collection routine:
+
+
+
+            for (int i = 0; i < 10; i++)
+            {
+                int busNumber = i * 100;
+                int area = rnd.Next(0, 5);
+
+                // First station build:
+
+                BusLineStation first = busStops[i];
+                first.DistanceFromPreviousStation = 0;
+                first.TravelTimeFromPreviousStation = TimeSpan.FromMinutes(0);
+
+                // Last station build:
+
+                BusLineStation last = busStops[i+10];
+                last.DistanceFromPreviousStation = 100 * rnd.NextDouble() + 1; 
+                last.TravelTimeFromPreviousStation = TimeSpan.FromMinutes(200 * rnd.NextDouble() + 1);
+                BusLine newLine = new BusLine(busNumber, first, last, area);
+                busCompany.busLineCollectionsList.Insert(0,newLine);
+
+                //  Middle station build:
+
+                BusLineStation middle = (BusLineStation)busStops[i + 20];
+                middle.DistanceFromPreviousStation = 100 * rnd.NextDouble() + 1; 
+                middle.TravelTimeFromPreviousStation = TimeSpan.FromMinutes(200 * rnd.NextDouble() + 1);
+                busCompany.busLineCollectionsList[i].addBusStation(middle, first.BusStationKey, 100 * rnd.NextDouble() + 1, (200 * rnd.NextDouble() + 1));
+            }
+        }
     }
 }

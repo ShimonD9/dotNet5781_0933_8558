@@ -7,8 +7,13 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_0933_8558
 {
-    class BusLineStation : BusStation
+    public class BusLineStation : BusStation
     {
+        public BusLineStation(int stationKey, string address) : base(stationKey, address)
+        {
+            DistanceFromPreviousStation = 0;
+            TravelTimeFromPreviousStation = TimeSpan.FromMinutes(0);
+        }
         public BusLineStation(double dist, double minutes, int stationKey, string address)
         {
             base.Latitude = 31 + lineLocation.NextDouble() * 2.3;
