@@ -17,7 +17,7 @@ namespace dotNet5781_02_0933_8558
         {
             FirstStation = firstStationKey;
             LastStation = secondStationKey;
-            BusLineNmber = busLineKey;
+            BusLineNumber = busLineKey;
             BusArea = (AREA)areaKey;
             //busStationList.Add(LastStation);
             // busStationList.Add(FirstStation);
@@ -34,7 +34,7 @@ namespace dotNet5781_02_0933_8558
 
 
         private int busLineNumber;
-        public int BusLineNmber
+        public int BusLineNumber
         {
             get { return busLineNumber; }
             set
@@ -75,7 +75,7 @@ namespace dotNet5781_02_0933_8558
 
         void addBusStation(int stationKey, int previousStationKey, double lati, double longi,
             string address, double distanceFromPreviousStation, double timeTravelFromPreviousStation, double distanceToNextStation, double timeTravelToNextStation)
-        {
+        { 
             if (timeTravelToNextStation < 0 || distanceToNextStation < 0)
                 throw new ArgumentException("Illegal input of minutes.");
             TimeSpan timeToNext = TimeSpan.FromMinutes(timeTravelFromPreviousStation);
@@ -298,7 +298,7 @@ namespace dotNet5781_02_0933_8558
             }
             return string.Format("Bus line details:\n+" +
                                   "Bus line = {0},Aera line = {1}, busStationList: = {2}",
-                                  BusLineNmber, busArea, stations);
+                                  BusLineNumber, busArea, stations);
         }
     }
 }

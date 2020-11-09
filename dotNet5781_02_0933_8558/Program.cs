@@ -106,11 +106,6 @@ namespace dotNet5781_02_0933_8558
                     break;
             }
 
-        }
-
-        private static bool BusStopExists(int stopKey)
-        {
-            return BusLine;
-        }
+        }       
     }
 }
