@@ -7,21 +7,24 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_02_0933_8558
 {
-    public class BusLineStation : BusStation
+    public class BusLineStation
     {
-        public BusLineStation(int stationKey, string address) : base(stationKey, address)
+       public BusLineStation(BusStop busStop, double dist, double minutes)
         {
-            DistanceFromPreviousStation = 0;
-            TravelTimeFromPreviousStation = TimeSpan.FromMinutes(0);
-        }
-        public BusLineStation(double dist, double minutes, int stationKey, string address)
-        {
-            base.Latitude = 31 + lineLocation.NextDouble() * 2.3;
-            base.Longitude = 34.3 + lineLocation.NextDouble() * 1.2; 
-            base.StationAddress = address;
-            base.BusStationKey = stationKey;
+            BusStop = busStop;
             DistanceFromPreviousStation = dist;
-            TravelTimeFromPreviousStation = TimeSpan.FromMinutes(minutes);
+            TimeTravelFromPreviousStation = TimeSpan.FromMinutes(minutes);
+        }
+
+        private BusStop busStop;
+
+        public BusStop BusStop
+        {
+            get { return busStop; }
+            set
+            {
+                busStop = value;
+            }
         }
 
         private double distanceFromPreviousStation;
@@ -34,16 +37,25 @@ namespace dotNet5781_02_0933_8558
                 distanceFromPreviousStation = value; }
         }
 
-        private TimeSpan travelTimeFromPreviousStation;
+        private TimeSpan timeTravelFromPreviousStation;
        
-        public TimeSpan TravelTimeFromPreviousStation
+        public TimeSpan TimeTravelFromPreviousStation
         {
-            get { return travelTimeFromPreviousStation; }
+            get { return timeTravelFromPreviousStation; }
             set { 
                 if (value.Minutes < 0)
                     throw new ArgumentException("Illegal input of minutes.");
-                travelTimeFromPreviousStation = TimeSpan.FromMinutes(value.Minutes); }
+                timeTravelFromPreviousStation = TimeSpan.FromMinutes(value.Minutes); }
         }
 
+        /// <summary>
+        /// Overrides the ToString function, returning info on the bus line station
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return string.Format("Bus Station Code:\n" +
+                                  "BusStationKey = {0}, Latitude = {1}, Longitude = {2}, Time from last station = {3}, Km from last station = {4}", BusStop.BusStopKey, BusStop.Latitude, BusStop.Longitude, TimeTravelFromPreviousStation, DistanceFromPreviousStation);
+        }
     }
 }

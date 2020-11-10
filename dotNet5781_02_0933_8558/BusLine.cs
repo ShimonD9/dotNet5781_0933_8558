@@ -99,17 +99,17 @@ namespace dotNet5781_02_0933_8558
             {
                 FirstStation = newStation;
                 busStationList[0].DistanceFromPreviousStation = distanceToNextStation;
-                busStationList[0].TravelTimeFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);
+                busStationList[0].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);
                 busStationList.Insert(0, newStation);
                 busStationList[0].DistanceFromPreviousStation = 0;
-                busStationList[0].TravelTimeFromPreviousStation = TimeSpan.FromMinutes(0);
+                busStationList[0].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(0);
             }
             else if (prevKey > 0)
             {
                 BusLineStation tempStation = findStation(prevKey);
                 int index = busStationList.IndexOf(tempStation);
                 busStationList[index].DistanceFromPreviousStation = distanceToNextStation;
-                busStationList[index].TravelTimeFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);
+                busStationList[index].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);
                 busStationList.Insert(index, newStation);
             }
         }
@@ -132,7 +132,7 @@ namespace dotNet5781_02_0933_8558
         {
             foreach (BusLineStation station in busStationList)
             {
-                if (station.BusStationKey == keyStation)
+                if (station.BusStop.BusStopKey == keyStation)
                 {
                     busStationList.Remove(station);
                     return;
@@ -150,7 +150,7 @@ namespace dotNet5781_02_0933_8558
         {
             foreach (BusLineStation station in busStationList)
             {
-                if (station.BusStationKey == key)
+                if (station.BusStop.BusStopKey == key)
                     return station;
             }
             throw new KeyNotFoundException("the station was not found");
@@ -165,7 +165,7 @@ namespace dotNet5781_02_0933_8558
         {
             foreach (BusLineStation station in busStationList)
             {
-                if (station.BusStationKey == keyStation)
+                if (station.BusStop.BusStopKey == keyStation)
                     return true;
             }
             return false;
@@ -243,11 +243,11 @@ namespace dotNet5781_02_0933_8558
                     flag = true;
 
                 if (flag == true && station != lastStation)
-                    total.Add(station.TravelTimeFromPreviousStation);
+                    total.Add(station.TimeTravelFromPreviousStation);
 
                 else if (flag == true && station == lastStation)
                 {
-                    total.Add(station.TravelTimeFromPreviousStation);
+                    total.Add(station.TimeTravelFromPreviousStation);
                     break;
                 }
             }
@@ -310,7 +310,7 @@ namespace dotNet5781_02_0933_8558
         TimeSpan TotalTimeTravel()
         {
             TimeSpan totalTime = new TimeSpan();
-            totalTime = timeTravel(this.firstStation.BusStationKey, this.lastStation.BusStationKey);
+            totalTime = timeTravel(this.firstStation.BusStop.BusStopKey, this.lastStation.BusStop.BusStopKey);
             return totalTime;
         }
 
@@ -352,10 +352,10 @@ namespace dotNet5781_02_0933_8558
             string stations = null;
             foreach (BusLineStation item in busStationList)
             {
-                stations += item.BusStationKey + '\n';
+                stations += item.ToString() + " \n";
             }
             return string.Format("Bus line details:\n+" +
-                                  "Bus line = {0}, Area line = {1}, busStationList: = {2}",
+                                  "Bus line = {0}, Area line = {1}, busStationList: =\n{2}",
                                   BusLineNumber, busArea, stations);
         }
 

@@ -47,7 +47,7 @@
     <Compile Include="BusLine.cs" />
     <Compile Include="BusLinesCollection.cs" />
     <Compile Include="BusLineStation.cs" />
-    <Compile Include="BusStation.cs" />
+    <Compile Include="BusStop.cs" />
     <Compile Include="EnumLines.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

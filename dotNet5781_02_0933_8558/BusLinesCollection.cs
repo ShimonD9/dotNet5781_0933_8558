@@ -65,7 +65,7 @@ namespace dotNet5781_02_0933_8558
             {
                 foreach (BusLineStation station in bus.BusStationList)
                 {
-                    if (station.BusStationKey == stationKey)
+                    if (station.BusStop.BusStopKey == stationKey)
                     {
                         tempList.Insert(0,bus);
                         flag = true;
@@ -112,7 +112,7 @@ namespace dotNet5781_02_0933_8558
         {           
             foreach (BusLine bus in busLineCollectionsList)
                 foreach (BusLineStation station in bus.BusStationList)                
-                    if (station.BusStationKey == stationKey)
+                    if (station.BusStop.BusStopKey == stationKey)
                         return true;
             return false;           
         }
