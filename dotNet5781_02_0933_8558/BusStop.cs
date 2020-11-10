@@ -8,7 +8,7 @@ namespace dotNet5781_02_0933_8558
 {
     public class BusStop
     {
-       // A random object for creating random longitude and latitude
+       // A Random initialized for creating random longitude and latitude
        public static Random lineLocation = new Random(DateTime.Now.Millisecond);
 
         /// <summary>

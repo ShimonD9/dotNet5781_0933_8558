@@ -9,11 +9,6 @@ using System.Xml.Schema;
 namespace dotNet5781_02_0933_8558
 {
     //NOTE:
-    /*
-     התייחסנו לכך שנדיר שישנם 2 קווי אוטובוס באותו העיר
-     */
-
-
     public class BusLinesCollection : IEnumerable
     {
         public BusLinesCollection() { }
