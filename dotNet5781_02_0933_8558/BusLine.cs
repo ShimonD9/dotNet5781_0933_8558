@@ -114,11 +114,11 @@ namespace dotNet5781_02_0933_8558
             int indexB = busStationList.IndexOf(lastStation);
             if (indexA == -1)
             {
-                throw new ArgumentException("the first station was not found");
+                throw new KeyNotFoundException("the first station was not found");
             }
             else if (indexB == -1)
             {
-                throw new ArgumentException("the last station was not found");
+                throw new KeyNotFoundException("the last station was not found");
 
             }
             double total = 0;
@@ -150,11 +150,11 @@ namespace dotNet5781_02_0933_8558
             int indexB = busStationList.IndexOf(lastStation);
             if (indexA == -1)
             {
-                throw new ArgumentException("the first station was not found");
+                throw new KeyNotFoundException("the first station was not found");
             }
             else if (indexB == -1)
             {
-                throw new ArgumentException("the last station was not found");
+                throw new KeyNotFoundException("the last station was not found");
 
             }
             TimeSpan total = new TimeSpan();

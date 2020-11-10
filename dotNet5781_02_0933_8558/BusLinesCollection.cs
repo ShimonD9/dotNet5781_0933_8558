@@ -44,7 +44,7 @@ namespace dotNet5781_02_0933_8558
             }
         }
 
-        bool searchBusLine(int keyBusLine)
+       public bool searchBusLine(int keyBusLine)
         {
             int count = 0;
             foreach (BusLine bus in busLineCollectionsList)
@@ -52,7 +52,7 @@ namespace dotNet5781_02_0933_8558
                 if (bus.BusLineNumber == keyBusLine)
                     count++;
             }
-            if (count < 3)
+            if (count < 2)
                 return true;
             return false;
         }
