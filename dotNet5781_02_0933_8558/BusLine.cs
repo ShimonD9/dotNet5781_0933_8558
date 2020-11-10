@@ -11,8 +11,18 @@ namespace dotNet5781_02_0933_8558
 {
     public class BusLine : IComparable
     {
-
+        /// <summary>
+        /// Empty bus line constructor
+        /// </summary>
         BusLine() { }
+
+        /// <summary>
+        /// Bus Line Constructor
+        /// </summary>
+        /// <param name="busLineKey"></param>
+        /// <param name="firstStationKey"></param>
+        /// <param name="secondStationKey"></param>
+        /// <param name="areaKey"></param>
         public BusLine(int busLineKey, BusLineStation firstStationKey, BusLineStation secondStationKey, int areaKey)
         {
             FirstStation = firstStationKey;
@@ -25,14 +35,15 @@ namespace dotNet5781_02_0933_8558
 
         }
 
-        //public List<BusLineStation> busStationList;
+        // List of bus line stations, with get property:
         private List<BusLineStation> busStationList;
+
         public List<BusLineStation> BusStationList
         {
             get { return busStationList; }
         }
 
-
+        // Bus line number, with get & set property:
         private int busLineNumber;
         public int BusLineNumber
         {
@@ -45,7 +56,7 @@ namespace dotNet5781_02_0933_8558
             }
         }
 
-
+        // Bus area of AREA Enum, with get & set property:
         private AREA busArea;
         public AREA BusArea
         {
@@ -53,6 +64,7 @@ namespace dotNet5781_02_0933_8558
             set { busArea = value; }
         }
 
+        // First station, with get & set property:
         private BusLineStation firstStation;
         public BusLineStation FirstStation
         {
@@ -63,6 +75,7 @@ namespace dotNet5781_02_0933_8558
             }
         }
 
+        // Last station, with get & set property:
         private BusLineStation lastStation;
         public BusLineStation LastStation
         {
@@ -73,6 +86,48 @@ namespace dotNet5781_02_0933_8558
             }
         }
 
+        /// <summary>
+        /// Add bus station to the list
+        /// </summary>
+        /// <param name="newStation"></param>
+        /// <param name="prevKey"></param>
+        /// <param name="distanceToNextStation"></param>
+        /// <param name="timeToNextStation"></param>
+        public void addBusStation(BusLineStation newStation, int prevKey, double distanceToNextStation, double timeToNextStation)
+        {
+            if (prevKey == 0)
+            {
+                FirstStation = newStation;
+                busStationList[0].DistanceFromPreviousStation = distanceToNextStation;
+                busStationList[0].TravelTimeFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);
+                busStationList.Insert(0, newStation);
+                busStationList[0].DistanceFromPreviousStation = 0;
+                busStationList[0].TravelTimeFromPreviousStation = TimeSpan.FromMinutes(0);
+            }
+            else if (prevKey > 0)
+            {
+                BusLineStation tempStation = findStation(prevKey);
+                int index = busStationList.IndexOf(tempStation);
+                busStationList[index].DistanceFromPreviousStation = distanceToNextStation;
+                busStationList[index].TravelTimeFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);
+                busStationList.Insert(index, newStation);
+            }
+        }
+
+        /// <summary>
+        /// Add bus station to the end of the list
+        /// </summary>
+        /// <param name="newStation"></param>
+        public void addBusStationToTheEnd(BusLineStation newStation)
+        {
+            LastStation = newStation;
+            busStationList.Add(newStation);
+        }
+
+        /// <summary>
+        /// Deletes bus station based on it's key
+        /// </summary>
+        /// <param name="keyStation"></param>
         void deleteBusStation(int keyStation)
         {
             foreach (BusLineStation station in busStationList)
@@ -86,6 +141,11 @@ namespace dotNet5781_02_0933_8558
             throw new KeyNotFoundException("the station was not found");
         }
 
+
+        /// <summary>
+        /// Finds and returns bus line station based on it's key
+        /// </summary>
+        /// <param name="keyStation"></param>
         BusLineStation findStation(int key)
         {
             foreach (BusLineStation station in busStationList)
@@ -96,6 +156,11 @@ namespace dotNet5781_02_0933_8558
             throw new KeyNotFoundException("the station was not found");
         }
 
+        /// <summary>
+        /// Search if bus line station exist based on it's key
+        /// </summary>
+        /// <param name="keyStation"></param>
+        /// <returns></returns>
         bool searchStation(int keyStation)
         {
             foreach (BusLineStation station in busStationList)
@@ -106,6 +171,12 @@ namespace dotNet5781_02_0933_8558
             return false;
         }
 
+        /// <summary>
+        /// Calculates the distance between two bus stations, based on their keys
+        /// </summary>
+        /// <param name="keyA"></param>
+        /// <param name="keyB"></param>
+        /// <returns></returns>
         double distanceStation(int keyA, int keyB)
         {
             BusLineStation firstStation = findStation(keyA);
@@ -141,6 +212,12 @@ namespace dotNet5781_02_0933_8558
             return total;
         }
 
+        /// <summary>
+        /// Calculates the time travel difference between two stations, based on their keys
+        /// </summary>
+        /// <param name="keyA"></param>
+        /// <param name="keyB"></param>
+        /// <returns></returns>
         TimeSpan timeTravel(int keyA, int keyB)
         {
 
@@ -177,6 +254,12 @@ namespace dotNet5781_02_0933_8558
             return total;
         }
 
+        /// <summary>
+        /// Returns a new bus line, which contains the track between two given bus station keys
+        /// </summary>
+        /// <param name="keyA"></param>
+        /// <param name="keyB"></param>
+        /// <returns></returns>
         BusLine track(int keyA, int keyB)
         {
             BusLineStation first = findStation(keyA);
@@ -220,6 +303,10 @@ namespace dotNet5781_02_0933_8558
             throw new ArgumentException("the station was not found");
         }
 
+        /// <summary>
+        /// Calculates the total time of ride for a bus line
+        /// </summary>
+        /// <returns></returns>
         TimeSpan TotalTimeTravel()
         {
             TimeSpan totalTime = new TimeSpan();
@@ -227,6 +314,10 @@ namespace dotNet5781_02_0933_8558
             return totalTime;
         }
 
+        /// <summary>
+        /// Calculates the total distance of ride for a bus line
+        /// </summary>
+        /// <returns></returns>
         double TotalDistance()
         {
             double totalDistance = new double();
@@ -237,6 +328,11 @@ namespace dotNet5781_02_0933_8558
             return totalDistance;
         }
 
+        /// <summary>
+        ///  Compare-to functions compares between the total time travel of two bus lines
+        /// </summary>
+        /// <param name="keyBus"></param>
+        /// <returns></returns>
         public int CompareTo(object keyBus)
         {
             //TimeSpan busTimeA , busTimeB ;
@@ -247,6 +343,10 @@ namespace dotNet5781_02_0933_8558
             return TotalTimeTravel().CompareTo(compareBusLine.TotalTimeTravel());
         }
 
+        /// <summary>
+        /// Overrides the ToString function, returning info on the bus line
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             string stations = null;
@@ -255,86 +355,9 @@ namespace dotNet5781_02_0933_8558
                 stations += item.BusStationKey + '\n';
             }
             return string.Format("Bus line details:\n+" +
-                                  "Bus line = {0},Aera line = {1}, busStationList: = {2}",
+                                  "Bus line = {0}, Area line = {1}, busStationList: = {2}",
                                   BusLineNumber, busArea, stations);
         }
-        public void addBusStation(BusLineStation newStation, int prevKey, double distanceToNextStation, double timeToNextStation)
-        {
-            if (prevKey == 0)
-            {
-                FirstStation = newStation;
-                busStationList[0].DistanceFromPreviousStation = distanceToNextStation;
-                busStationList[0].TravelTimeFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);
-                busStationList.Insert(0, newStation);
-                busStationList[0].DistanceFromPreviousStation = 0;
-                busStationList[0].TravelTimeFromPreviousStation= TimeSpan.FromMinutes(0);
-            }
-            else if (prevKey > 0)
-            {
-                BusLineStation tempStation = findStation(prevKey);
-                int index = busStationList.IndexOf(tempStation);
-                busStationList[index].DistanceFromPreviousStation = distanceToNextStation;
-                busStationList[index].TravelTimeFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);
-                busStationList.Insert(index, newStation);
-            }
-        }
 
-        public void addBusStationToTheEnd(BusLineStation newStation)
-        {
-            LastStation = newStation;
-            busStationList.Add(newStation);
-        }
     }
 }
-
-
-
-
-
-
-//public void addExistStation(BusLineStation )
-//{
-
-//}
-
-//public void addBusStation(BusLineStation newStation,int stationKey, int previousStationKey, double lati, double longi,
-//    string address, double distanceFromPreviousStation, double timeTravelFromPreviousStation, double distanceToNextStation, double timeTravelToNextStation)
-//{ 
-//    if (timeTravelToNextStation < 0 || distanceToNextStation < 0)
-//        throw new ArgumentException("Illegal input of minutes.");
-//    TimeSpan timeToNext = TimeSpan.FromMinutes(timeTravelFromPreviousStation);
-
-//    // If it's the first station
-//    if (previousStationKey == 0)
-//    {
-//        if (busStationList[0] == null)
-//        {
-//            //BusLineStation firstStation = new BusLineStation(0, 0, stationKey, address);
-//            busStationList.Add(firstStation);
-//        }
-//        else if (busStationList[0] != null)
-//        {
-//            busStationList[0].DistanceFromPreviousStation = distanceToNextStation;
-//            busStationList[0].TravelTimeFromPreviousStation = timeToNext;
-//            BusLineStation firstStation = new BusLineStation(0, 0, stationKey, address);
-//            busStationList.Add(firstStation);
-//        }
-//    }
-//    // If needs to be put in the end
-//    else if (busStationList[busStationList.Count - 1].BusStationKey == previousStationKey)
-//    {
-//       // BusLineStation lastStation = new BusLineStation(distanceFromPreviousStation, timeTravelFromPreviousStation, stationKey, address);
-//        busStationList.Insert(busStationList.Count - 1, lastStation);
-//    }
-//    // If needs to be put in the middle
-//    else
-//    {
-//        BusLineStation newStation1 = new BusLineStation(distanceFromPreviousStation, timeTravelFromPreviousStation, stationKey, address);
-//        BusLineStation previouStation = findStation(previousStationKey);
-//        int index = busStationList.IndexOf(previouStation);
-//        // Updates the travel and distance of the bus station ahead (based on a subtraction):
-//        busStationList[index + 1].DistanceFromPreviousStation = distanceToNextStation;
-//        busStationList[index + 1].TravelTimeFromPreviousStation = timeToNext;
-//    }
-//    throw new ArgumentException("the station was not found");
-//}
