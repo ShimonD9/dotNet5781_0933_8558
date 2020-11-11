@@ -169,7 +169,7 @@ namespace dotNet5781_02_0933_8558
                                         throw new KeyNotFoundException("The key for the previous station is incorrect");
                                     askForDistanceAndMinutesFromPrevious(ref distance, ref minutes);
                                     BusLineStation newBusLineStation = new BusLineStation(newBusStop, distance, minutes);
-                                    askForDistanceAndMinutesFromPrevious(ref distToNext, ref minToNext);
+                                    askForDistanceAndMinutesToNext(ref distToNext, ref minToNext);
                                     busCompany.busLineCollectionsList[index].addBusStation(newBusLineStation, prevKey, distToNext, minToNext);
                                 }
                                 else if (checkRequest == 'C')

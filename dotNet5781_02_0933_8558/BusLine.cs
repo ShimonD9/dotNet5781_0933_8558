@@ -106,9 +106,9 @@ namespace dotNet5781_02_0933_8558
             {
                 BusLineStation tempStation = findAndReturnStation(prevKey);
                 int index = busStationList.IndexOf(tempStation);
-                busStationList[index].DistanceFromPreviousStation = distanceToNextStation;
-                busStationList[index].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);
-                busStationList.Insert(index, newStation);
+                busStationList[index+1].DistanceFromPreviousStation = distanceToNextStation;
+                busStationList[index+1].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);
+                busStationList.Insert(index+1, newStation);
             }
         }
 
