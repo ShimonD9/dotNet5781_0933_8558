@@ -126,7 +126,7 @@ namespace dotNet5781_02_0933_8558
         /// Deletes bus station based on it's key
         /// </summary>
         /// <param name="keyStation"></param>
-        void deleteBusStation(int keyStation)
+        public void deleteBusStation(int keyStation)
         {
             foreach (BusLineStation station in busStationList)
             {
@@ -144,7 +144,7 @@ namespace dotNet5781_02_0933_8558
         /// Finds and returns bus line station based on it's key
         /// </summary>
         /// <param name="keyStation"></param>
-        BusLineStation findAndReturnStation(int key)
+        public BusLineStation findAndReturnStation(int key)
         {
             foreach (BusLineStation station in busStationList)
             {
@@ -153,7 +153,7 @@ namespace dotNet5781_02_0933_8558
             }
             throw new KeyNotFoundException("The station was not found");
         }
-        
+
         /// <summary>
         /// Search if bus line station exist based on it's key
         /// </summary>
@@ -175,6 +175,7 @@ namespace dotNet5781_02_0933_8558
         /// <param name="keyA"></param>
         /// <param name="keyB"></param>
         /// <returns></returns>
+        /// 
         public double distanceStation(int keyA, int keyB)
         {
             BusLineStation firstStation = findAndReturnStation(keyA);
@@ -208,6 +209,14 @@ namespace dotNet5781_02_0933_8558
                 }
             }
             return total;
+        }
+
+        public int findIndexStation(int busStationKey)
+        {
+            for (int i = 0; i < busStationList.Count; i++)
+                if (busStationList[i].BusStopKey == busStationKey)
+                    return i;
+            throw new KeyNotFoundException("the station number was not found\n");
         }
 
         /// <summary>
@@ -352,7 +361,7 @@ namespace dotNet5781_02_0933_8558
             {
                 stations += item.ToString() + " \n";
             }
-            return string.Format("Bus line details:\n+" +
+            return string.Format("Bus line details:\n" +
                                   "Bus line = {0}, Area line = {1}, busStationList: =\n{2}",
                                   BusLineNumber, busArea, stations);
         }

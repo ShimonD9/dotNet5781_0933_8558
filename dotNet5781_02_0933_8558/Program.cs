@@ -32,7 +32,7 @@ namespace dotNet5781_02_0933_8558
                 try
                 {
                     bool success;
-                    int busLineNumber, stopKey;
+                    int busLineNumber, stopKey, index;
                     double distance = 0, minutes = 0;
 
                     foreach (BusLine bus in busCompany)
@@ -47,9 +47,6 @@ namespace dotNet5781_02_0933_8558
                             "SEARCH: To search lines or print options between two stations\n" +
                             "PRINT: To print all lines or stations\n" +
                             "EXIT: exit\n");
-
-
-
                     do // The choice input loop
                     {
                         Console.WriteLine("Enter your choice please:");
@@ -58,8 +55,6 @@ namespace dotNet5781_02_0933_8558
                         if (!success) // If the conversion of the string to enum didn't succeed - print message and run the loop again
                             Console.WriteLine("There is no such option in the menu, please enter your choice again.");
                     } while (!success);
-
-
 
                     switch (choice)
                     {
@@ -130,14 +125,14 @@ namespace dotNet5781_02_0933_8558
                                 Console.WriteLine("Please enter the number of the line bus, you want to add a bus stop to:");
                                 if (!int.TryParse(Console.ReadLine(), out busLineNumber))
                                     throw new ArgumentException("Invalid input!");
-                                int index = busCompany.searchIndex(busLineNumber); // If there is no such bus line, the searchIndex will throw exception
-                                
+                                index = busCompany.searchIndex(busLineNumber); // If there is no such bus line, the searchIndex will throw exception
+
                                 Console.WriteLine("Are you wish to add an existing one, or to create a new bus stop?\n " +
                                             "Enter A for adding an existing bus stop, " +
                                             "B for creating and adding a new bus stop,");
 
                                 char.TryParse(Console.ReadLine(), out checkRequest); // Checks if the input legit and stores in checkRequest
-                                
+
                                 if (checkRequest == 'A')
                                 {
                                     Console.WriteLine("Please enter the existing bus stop number, you want to add to the bus line");
@@ -150,13 +145,13 @@ namespace dotNet5781_02_0933_8558
                                     newBusStop = addNewBusStop();
                                 }
                                 else throw new ArgumentException("Invalid input!");
-                                
+
                                 Console.WriteLine("Where do you wish to add the bus stop?\n " +
                                                     "Enter A for adding it to the beginning of the line, " +
                                                     "B for adding it to the middle of the line, " +
                                                     "C for adding it to the end of the line:");
                                 char.TryParse(Console.ReadLine(), out checkRequest); // Checks if the input legit and stores in checkRequest
-                               
+
                                 double distToNext = 0, minToNext = 0;
                                 if (checkRequest == 'A')
                                 {
@@ -189,12 +184,71 @@ namespace dotNet5781_02_0933_8558
                             break;
 
                         case CHOICE.DELETE:
+                            // For the A or B input
+                            Console.WriteLine("Please enter A for delete a bus line," +
+                                               " B for delete station," +
+                                               " or other key to return to the menu:");
+                            char.TryParse(Console.ReadLine(), out checkRequest);
+                            if (checkRequest == 'A')
+                            {
+                                Console.WriteLine("Please enter the bus line number you would like to delete:");
+                                if (!int.TryParse(Console.ReadLine(), out busLineNumber))
+                                    throw new ArgumentException("Invalid input!");
+                               // index = busCompany.searchIndex(busLineNumber);
+                               // BusLine deleteBusLineStation = busCompany.busLineCollectionsList[index];
+                                busCompany.DeleteBusLine(busLineNumber);
+                            }
+                            else if (checkRequest == 'B')
+                            {
+                                Console.WriteLine("Please enter the bus line number:");
+                                if (!int.TryParse(Console.ReadLine(), out busLineNumber))
+                                    throw new ArgumentException("Invalid input!");
+                                index = busCompany.searchIndex(busLineNumber);
+                                BusLine busLineHelp = busCompany.busLineCollectionsList[index];
+                                Console.WriteLine("Please enter the station number you would like to delete:");
+                                if (!int.TryParse(Console.ReadLine(), out stopKey))
+                                    throw new ArgumentException("Invalid input!");
+                                index = busLineHelp.findIndexStation(stopKey);
+                                if (index == 0)
+                                {
+                                    busLineHelp.BusStationList[1].DistanceFromPreviousStation = 0;
+                                    busLineHelp.BusStationList[1].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(0);
+                                    busLineHelp.deleteBusStation(stopKey);
+                                }
+                                else if (index == busLineHelp.BusStationList.Count - 1)
+                                {
+                                    busLineHelp.deleteBusStation(stopKey);
+                                }
+                                else
+                                {
+                                    double newDistance, newMinutes;
+                                    Console.WriteLine("You need to update the distance and the time of next stop from the previous station that you wish to delete:\n" +
+                                        "Please enter the new Distance:\n");
+                                    if (!double.TryParse(Console.ReadLine(), out newDistance))
+                                        throw new ArgumentException("Invalid input!");
+                                    Console.WriteLine("Please enter the new Time:\n");
+                                    if (!double.TryParse(Console.ReadLine(), out newMinutes))
+                                        throw new ArgumentException("Invalid input!");
+                                    busLineHelp.BusStationList[index + 1].DistanceFromPreviousStation = newDistance;
+                                    busLineHelp.BusStationList[index + 1].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(newMinutes);
+                                    busLineHelp.deleteBusStation(stopKey);
+                                }                              
+                            }
+                            else throw new ArgumentException("Invalid input!");
                             break;
 
                         case CHOICE.SEARCH:
-                            break;
+                            // For the A or B input
+                            Console.WriteLine("Please enter A for printing the all buses lines," +
+                                               " B for printing the all stations include the buses lines who Passing through them," +
+                                               " or other key to return to the menu:");
+                            char.TryParse(Console.ReadLine(), out checkRequest);
+                            //if (checkRequest == 'A')
+                           
+                                break;
 
                         case CHOICE.PRINT:
+                          
                             break;
 
                         case CHOICE.EXIT:

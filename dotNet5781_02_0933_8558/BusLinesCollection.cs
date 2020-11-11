@@ -35,8 +35,8 @@ namespace dotNet5781_02_0933_8558
                     busLineCollectionsList.Remove(bus);
                     return;
                 }
-
             }
+            throw new KeyNotFoundException("the bus number was not found");
         }
 
        public bool searchBusLine(int keyBusLine)
