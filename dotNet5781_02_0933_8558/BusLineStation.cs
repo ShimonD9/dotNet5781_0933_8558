@@ -65,7 +65,7 @@ namespace dotNet5781_02_0933_8558
             set { 
                 if (value.Minutes < 0)
                     throw new ArgumentException("Illegal input of minutes.");
-                timeTravelFromPreviousStation = TimeSpan.FromMinutes(value.Minutes); }
+                timeTravelFromPreviousStation = value; }
         }
 
         /// <summary>

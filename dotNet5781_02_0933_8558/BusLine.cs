@@ -20,13 +20,13 @@ namespace dotNet5781_02_0933_8558
         /// Bus Line Constructor
         /// </summary>
         /// <param name="busLineKey"></param>
-        /// <param name="firstStationKey"></param>
-        /// <param name="secondStationKey"></param>
+        /// <param name="firstStation"></param>
+        /// <param name="secondStation"></param>
         /// <param name="areaKey"></param>
-        public BusLine(int busLineKey, BusLineStation firstStationKey, BusLineStation secondStationKey, int areaKey)
+        public BusLine(int busLineKey, BusLineStation firstStation, BusLineStation secondStation, int areaKey)
         {
-            FirstStation = firstStationKey;
-            LastStation = secondStationKey;
+            FirstStation = firstStation;
+            LastStation = secondStation;
             BusLineNumber = busLineKey;
             BusArea = (AREA)areaKey;
             //busStationList.Add(LastStation);
