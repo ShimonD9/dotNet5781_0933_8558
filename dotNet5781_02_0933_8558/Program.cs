@@ -32,8 +32,7 @@ namespace dotNet5781_02_0933_8558
                 try
                 {
                     bool success;
-                    int busLineNumber, area, stopKey;
-                    string address;
+                    int busLineNumber, stopKey;
                     double distance = 0, minutes = 0;
 
                     foreach (BusLine bus in busCompany)
@@ -82,7 +81,7 @@ namespace dotNet5781_02_0933_8558
 
                                 // Absorbing the bus line area 
                                 Console.WriteLine("Please enter the area number 0 - 4 (General, North, South, Center, Jerusalem):");
-                                if (!int.TryParse(Console.ReadLine(), out area))
+                                if (!int.TryParse(Console.ReadLine(), out int area))
                                     throw new ArgumentException("Invalid input!");
                                 if (area < 0 || area > 4)
                                     throw new ArgumentException("Invalid area number!");
