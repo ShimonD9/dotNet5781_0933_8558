@@ -102,7 +102,7 @@ namespace dotNet5781_02_0933_8558
                                     if (!int.TryParse(Console.ReadLine(), out stopKey))
                                         throw new ArgumentException("Invalid input!");
                                     BusStop second = findExistBusStop(stopKey);
-                                    askForDistanceAndMinutes(ref distance, ref minutes);
+                                    askForDistanceAndMinutesFromPrevious(ref distance, ref minutes);
                                     BusLineStation secondLineStation = new BusLineStation(second, distance, minutes);
 
                                     BusLine newBusLine = new BusLine(busLineNumber, firstLineStation, secondLineStation, area);
@@ -116,7 +116,7 @@ namespace dotNet5781_02_0933_8558
 
                                     Console.WriteLine("Second bus stop creation:");
                                     BusStop second = addNewBusStop();
-                                    askForDistanceAndMinutes(ref distance, ref minutes);
+                                    askForDistanceAndMinutesFromPrevious(ref distance, ref minutes);
                                     BusLineStation secondLineStation = new BusLineStation(second, distance, minutes);
 
                                     BusLine newBusLine = new BusLine(busLineNumber, firstLineStation, secondLineStation, area);
@@ -130,13 +130,14 @@ namespace dotNet5781_02_0933_8558
                                 Console.WriteLine("Please enter the number of the line bus, you want to add a bus stop to:");
                                 if (!int.TryParse(Console.ReadLine(), out busLineNumber))
                                     throw new ArgumentException("Invalid input!");
-                                int index = busCompany.searchIndex(busLineNumber); // If there is no such bys line, the searchIndex will throw exception
+                                int index = busCompany.searchIndex(busLineNumber); // If there is no such bus line, the searchIndex will throw exception
                                 
-                                Console.WriteLine("Are you wish to create a new bus stop, or to add an existing one?\n " +
+                                Console.WriteLine("Are you wish to add an existing one, or to create a new bus stop?\n " +
                                             "Enter A for adding an existing bus stop, " +
                                             "B for creating and adding a new bus stop,");
 
                                 char.TryParse(Console.ReadLine(), out checkRequest); // Checks if the input legit and stores in checkRequest
+                                
                                 if (checkRequest == 'A')
                                 {
                                     Console.WriteLine("Please enter the existing bus stop number, you want to add to the bus line");
@@ -150,18 +151,17 @@ namespace dotNet5781_02_0933_8558
                                 }
                                 else throw new ArgumentException("Invalid input!");
                                 
-                                double distToNext = 0, minToNext = 0;
-
                                 Console.WriteLine("Where do you wish to add the bus stop?\n " +
                                                     "Enter A for adding it to the beginning of the line, " +
                                                     "B for adding it to the middle of the line, " +
                                                     "C for adding it to the end of the line:");
                                 char.TryParse(Console.ReadLine(), out checkRequest); // Checks if the input legit and stores in checkRequest
-                                                                
+                               
+                                double distToNext = 0, minToNext = 0;
                                 if (checkRequest == 'A')
                                 {
                                     BusLineStation newBusLineStation = new BusLineStation(newBusStop, 0, 0);
-                                    askForDistanceAndMinutes(ref distToNext, ref minToNext);
+                                    askForDistanceAndMinutesToNext(ref distToNext, ref minToNext);
                                     busCompany.busLineCollectionsList[index].addBusStation(newBusLineStation, 0, distToNext, minToNext);
                                 }
                                 else if (checkRequest == 'B')
@@ -172,29 +172,34 @@ namespace dotNet5781_02_0933_8558
                                         throw new ArgumentException("Invalid input!");
                                     if (!busCompany.busLineCollectionsList[index].stationExist(prevKey))
                                         throw new KeyNotFoundException("The key for the previous station is incorrect");
-                                    askForDistanceAndMinutes(ref distance, ref minutes);
+                                    askForDistanceAndMinutesFromPrevious(ref distance, ref minutes);
                                     BusLineStation newBusLineStation = new BusLineStation(newBusStop, distance, minutes);
-                                    askForDistanceAndMinutes(ref distToNext, ref minToNext);
+                                    askForDistanceAndMinutesFromPrevious(ref distToNext, ref minToNext);
                                     busCompany.busLineCollectionsList[index].addBusStation(newBusLineStation, prevKey, distToNext, minToNext);
                                 }
                                 else if (checkRequest == 'C')
                                 {
-                                    askForDistanceAndMinutes(ref distance, ref minutes);
+                                    askForDistanceAndMinutesFromPrevious(ref distance, ref minutes);
                                     BusLineStation newBusLineStation = new BusLineStation(newBusStop, distance, minutes);
-                                    busCompany.busLineCollectionsList[index].addBusStationToTheEnd(newBusLineStation);
+                                    busCompany.busLineCollectionsList[index].addBusStationToEnd(newBusLineStation);
                                 }
                                 else throw new ArgumentException("Invalid input!");
                             }
                             else throw new ArgumentException("Invalid input!");
                             break;
+
                         case CHOICE.DELETE:
                             break;
+
                         case CHOICE.SEARCH:
                             break;
+
                         case CHOICE.PRINT:
                             break;
+
                         case CHOICE.EXIT:
                             break;
+
                         default:
                             break;
                     }
@@ -233,7 +238,7 @@ namespace dotNet5781_02_0933_8558
             return newBus;
         }
 
-        public static void askForDistanceAndMinutes(ref double distance, ref double minutes)
+        public static void askForDistanceAndMinutesFromPrevious(ref double distance, ref double minutes)
         {
             Console.WriteLine("Please enter the distance from the previous bus stop (of this line):\n");
             if (!double.TryParse(Console.ReadLine(), out distance))
@@ -244,7 +249,7 @@ namespace dotNet5781_02_0933_8558
                 throw new ArgumentException("Invalid input!");
         }
 
-        public static void distanceAndMinutesToNext(ref double distance, ref double minutes)
+        public static void askForDistanceAndMinutesToNext(ref double distance, ref double minutes)
         {
             Console.WriteLine("Please enter the distance to the next bus stop (of this line):\n");
             if (!double.TryParse(Console.ReadLine(), out distance))

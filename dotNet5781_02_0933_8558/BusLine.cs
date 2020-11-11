@@ -116,7 +116,7 @@ namespace dotNet5781_02_0933_8558
         /// Add bus station to the end of the list
         /// </summary>
         /// <param name="newStation"></param>
-        public void addBusStationToTheEnd(BusLineStation newStation)
+        public void addBusStationToEnd(BusLineStation newStation)
         {
             LastStation = newStation;
             busStationList.Add(newStation);
