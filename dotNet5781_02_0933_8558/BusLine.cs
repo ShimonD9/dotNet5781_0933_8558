@@ -101,12 +101,10 @@ namespace dotNet5781_02_0933_8558
                 busStationList[0].DistanceFromPreviousStation = distanceToNextStation;
                 busStationList[0].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);
                 busStationList.Insert(0, newStation);
-                busStationList[0].DistanceFromPreviousStation = 0;
-                busStationList[0].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(0);
             }
             else if (prevKey > 0)
             {
-                BusLineStation tempStation = findStation(prevKey);
+                BusLineStation tempStation = findAndReturnStation(prevKey);
                 int index = busStationList.IndexOf(tempStation);
                 busStationList[index].DistanceFromPreviousStation = distanceToNextStation;
                 busStationList[index].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);
@@ -146,22 +144,22 @@ namespace dotNet5781_02_0933_8558
         /// Finds and returns bus line station based on it's key
         /// </summary>
         /// <param name="keyStation"></param>
-        BusLineStation findStation(int key)
+        BusLineStation findAndReturnStation(int key)
         {
             foreach (BusLineStation station in busStationList)
             {
                 if (station.BusStopKey == key)
                     return station;
             }
-            throw new KeyNotFoundException("the station was not found");
+            throw new KeyNotFoundException("The station was not found");
         }
-
+        
         /// <summary>
         /// Search if bus line station exist based on it's key
         /// </summary>
         /// <param name="keyStation"></param>
         /// <returns></returns>
-        bool searchStation(int keyStation)
+        public bool stationExist(int keyStation)
         {
             foreach (BusLineStation station in busStationList)
             {
@@ -177,10 +175,10 @@ namespace dotNet5781_02_0933_8558
         /// <param name="keyA"></param>
         /// <param name="keyB"></param>
         /// <returns></returns>
-        double distanceStation(int keyA, int keyB)
+        public double distanceStation(int keyA, int keyB)
         {
-            BusLineStation firstStation = findStation(keyA);
-            BusLineStation lastStation = findStation(keyB);
+            BusLineStation firstStation = findAndReturnStation(keyA);
+            BusLineStation lastStation = findAndReturnStation(keyB);
             int indexA = busStationList.IndexOf(firstStation);
             int indexB = busStationList.IndexOf(lastStation);
             if (indexA == -1)
@@ -218,11 +216,11 @@ namespace dotNet5781_02_0933_8558
         /// <param name="keyA"></param>
         /// <param name="keyB"></param>
         /// <returns></returns>
-        TimeSpan timeTravel(int keyA, int keyB)
+        public TimeSpan timeTravel(int keyA, int keyB)
         {
 
-            BusLineStation firstStation = findStation(keyA);
-            BusLineStation lastStation = findStation(keyB);
+            BusLineStation firstStation = findAndReturnStation(keyA);
+            BusLineStation lastStation = findAndReturnStation(keyB);
             int indexA = busStationList.IndexOf(firstStation);
             int indexB = busStationList.IndexOf(lastStation);
             if (indexA == -1)
@@ -260,10 +258,10 @@ namespace dotNet5781_02_0933_8558
         /// <param name="keyA"></param>
         /// <param name="keyB"></param>
         /// <returns></returns>
-        BusLine track(int keyA, int keyB)
+        public BusLine track(int keyA, int keyB)
         {
-            BusLineStation first = findStation(keyA);
-            BusLineStation last = findStation(keyB);
+            BusLineStation first = findAndReturnStation(keyA);
+            BusLineStation last = findAndReturnStation(keyB);
             int indexA = busStationList.IndexOf(first);
             int indexB = busStationList.IndexOf(last);
             if (indexA == -1)
@@ -318,7 +316,7 @@ namespace dotNet5781_02_0933_8558
         /// Calculates the total distance of ride for a bus line
         /// </summary>
         /// <returns></returns>
-        double TotalDistance()
+        public double TotalDistance()
         {
             double totalDistance = new double();
             foreach (BusLineStation station in busStationList)
