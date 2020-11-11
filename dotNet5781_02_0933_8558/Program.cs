@@ -172,12 +172,12 @@ namespace dotNet5781_02_0933_8558
                 minutes = 200 * rnd.NextDouble() + 1;
                 BusLineStation middle = new BusLineStation(busStops[i + 20], 1.5 * minutes, minutes);
                 minutes = 200 * rnd.NextDouble() + 1;
-                busCompany.busLineCollectionsList[i].addBusStation(middle, first.BusStop.BusStopKey, 1.5 * minutes, minutes);
+                busCompany.busLineCollectionsList[i].addBusStation(middle, first.BusStopKey, 1.5 * minutes, minutes);
 
                 minutes = 200 * rnd.NextDouble() + 1;
                 BusLineStation secondMiddle = new BusLineStation(busStops[i + 30], 1.5 * minutes, minutes);
                 minutes = 200 * rnd.NextDouble() + 1;
-                busCompany.busLineCollectionsList[i].addBusStation(secondMiddle, first.BusStop.BusStopKey, 1.5 * minutes, minutes);
+                busCompany.busLineCollectionsList[i].addBusStation(secondMiddle, first.BusStopKey, 1.5 * minutes, minutes);
             } // Ending this loop, we initialized 10 bus lines, using 40 bus stations
 
             for (int i = 0; i < 10; i++)

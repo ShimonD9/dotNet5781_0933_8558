@@ -25,7 +25,7 @@ namespace dotNet5781_02_0933_8558
         public BusStop(int stopKey, string address)
         {
             BusStopKey = stopKey;
-            StationAddress = address;
+            BusStopAddress = address;
             latitude = 31 + lineLocation.NextDouble() * 2.3;
             longitude = 34.3 + lineLocation.NextDouble() * 1.2;
         }
@@ -52,7 +52,7 @@ namespace dotNet5781_02_0933_8558
         /// Station address field and property
         /// </summary>
         string busStopAddress;
-        public string StationAddress
+        public string BusStopAddress
         {
             get { return busStopAddress; }
             set

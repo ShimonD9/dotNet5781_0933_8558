@@ -11,21 +11,41 @@ namespace dotNet5781_02_0933_8558
     {
        public BusLineStation(BusStop busStop, double dist, double minutes)
         {
-            BusStop = busStop;
+            busStopKey = busStop.BusStopKey;
+            busStopAddress = busStop.BusStopAddress;
+            longitude = busStop.Longitude;
+            latitude = busStop.Latitude;
             DistanceFromPreviousStation = dist;
             TimeTravelFromPreviousStation = TimeSpan.FromMinutes(minutes);
         }
 
-        private BusStop busStop;
 
-        public BusStop BusStop
-        {
-            get { return busStop; }
-            set
-            {
-                busStop = value;
-            }
-        }
+        // As told by Dan Zilberstein - the Bus Line Station should contain the same fields as in the bus stop (without inheritance)
+        /// <summary>
+        ///  Bus station key field and property
+        /// </summary>
+        private int busStopKey;
+
+        public int BusStopKey { get { return busStopKey; } }
+
+        /// <summary>
+        /// Station address field and property
+        /// </summary>
+        string busStopAddress;
+        public string StationAddress { get { return busStopAddress; } }
+
+
+        /// <summary>
+        /// Latitude and longitude fields and properties:
+        /// </summary>
+
+        private double latitude;
+
+        public double Latitude  { get { return latitude; } }
+
+        private double longitude;
+
+        public double Longitude { get { return longitude; } }
 
         private double distanceFromPreviousStation;
 
@@ -55,7 +75,7 @@ namespace dotNet5781_02_0933_8558
         public override string ToString()
         {
             return string.Format("Bus Station Code:\n" +
-                                  "BusStationKey = {0}, Latitude = {1}, Longitude = {2}, Time from last station = {3}, Km from last station = {4}", BusStop.BusStopKey, BusStop.Latitude, BusStop.Longitude, TimeTravelFromPreviousStation, DistanceFromPreviousStation);
+                                  "BusStationKey = {0}, Latitude = {1}, Longitude = {2}, Time from last station = {3}, Km from last station = {4}", BusStopKey, Latitude, Longitude, TimeTravelFromPreviousStation, DistanceFromPreviousStation);
         }
     }
 }

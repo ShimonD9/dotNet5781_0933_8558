@@ -132,7 +132,7 @@ namespace dotNet5781_02_0933_8558
         {
             foreach (BusLineStation station in busStationList)
             {
-                if (station.BusStop.BusStopKey == keyStation)
+                if (station.BusStopKey == keyStation)
                 {
                     busStationList.Remove(station);
                     return;
@@ -150,7 +150,7 @@ namespace dotNet5781_02_0933_8558
         {
             foreach (BusLineStation station in busStationList)
             {
-                if (station.BusStop.BusStopKey == key)
+                if (station.BusStopKey == key)
                     return station;
             }
             throw new KeyNotFoundException("the station was not found");
@@ -165,7 +165,7 @@ namespace dotNet5781_02_0933_8558
         {
             foreach (BusLineStation station in busStationList)
             {
-                if (station.BusStop.BusStopKey == keyStation)
+                if (station.BusStopKey == keyStation)
                     return true;
             }
             return false;
@@ -310,7 +310,7 @@ namespace dotNet5781_02_0933_8558
         TimeSpan TotalTimeTravel()
         {
             TimeSpan totalTime = new TimeSpan();
-            totalTime = timeTravel(this.firstStation.BusStop.BusStopKey, this.lastStation.BusStop.BusStopKey);
+            totalTime = timeTravel(this.firstStation.BusStopKey, this.lastStation.BusStopKey);
             return totalTime;
         }
 
