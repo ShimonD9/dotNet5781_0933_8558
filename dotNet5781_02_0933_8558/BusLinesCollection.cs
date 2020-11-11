@@ -21,12 +21,12 @@ namespace dotNet5781_02_0933_8558
 
         public List<BusLine> busLineCollectionsList = new List<BusLine> { };
 
-        void AddBusLine(BusLine BusLine)
+        public void AddBusLine(BusLine BusLine)
         {
             busLineCollectionsList.Insert(0, BusLine);;
         }
 
-        void DeleteBusLine(int BusLineKey)
+        public void DeleteBusLine(int BusLineKey)
         {
             foreach (BusLine bus in busLineCollectionsList)
             {
@@ -52,7 +52,7 @@ namespace dotNet5781_02_0933_8558
             return false;
         }
 
-        List<BusLine> listLinesForStation(int stationKey)
+        public List<BusLine> listLinesForStation(int stationKey)
         {
             bool flag = false;
             List<BusLine> tempList = new List<BusLine> { };
@@ -73,7 +73,7 @@ namespace dotNet5781_02_0933_8558
             return tempList;
         }
 
-        int searchIndex(int busLineKey)
+        public int searchIndex(int busLineKey)
         {
             for (int i = 0; i < busLineCollectionsList.Count; i++)
                 if (busLineCollectionsList[i].BusLineNumber == busLineKey)
@@ -81,7 +81,7 @@ namespace dotNet5781_02_0933_8558
             throw new KeyNotFoundException("the bus line number was not found\n");
         }
 
-        List<BusLine> sortBusList()
+        public List<BusLine> sortBusList()
         {
             List<BusLine> tempList = busLineCollectionsList;
             tempList.Sort();
