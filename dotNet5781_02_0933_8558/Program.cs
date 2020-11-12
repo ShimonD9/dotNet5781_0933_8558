@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 
 namespace dotNet5781_02_0933_8558
@@ -35,10 +36,14 @@ namespace dotNet5781_02_0933_8558
                     int busLineNumber, stopKey, index;
                     double distance = 0, minutes = 0;
 
+                    int total = 0;
                     foreach (BusLine bus in busCompany)
                     {
-                        Console.WriteLine(bus.ToString());
+                        if (total < 2)
+                            Console.WriteLine(bus.ToString());
+                        total++;
                     }
+
 
                     Console.WriteLine("Bus management:\n\n" +
                             "Enter one of the following:\n" +
@@ -239,13 +244,51 @@ namespace dotNet5781_02_0933_8558
 
                         case CHOICE.SEARCH:
                             // For the A or B input
-                            Console.WriteLine("Please enter A for printing the all buses lines," +
-                                               " B for printing the all stations include the buses lines who Passing through them," +
-                                               " or other key to return to the menu:");
+                            Console.WriteLine("Please enter A for printing all the bus lines who are passing trough a specific bus stop, " +
+                                               "B for printing the options to travel from one station to another, sorted by travel time, " +
+                                               "or other key to return to the menu:");
                             char.TryParse(Console.ReadLine(), out checkRequest);
-                            //if (checkRequest == 'A')
-                           
-                                break;
+                            if (checkRequest == 'A')
+                            {
+                                Console.WriteLine("Please enter the key of the bus station:");
+                                if (!int.TryParse(Console.ReadLine(), out stopKey))
+                                    throw new ArgumentException("Invalid input!");
+                                BusStop busStop = findExistBusStop(stopKey);
+                                bool flag = false;
+                                foreach (BusLine bus in busCompany)
+                                {
+                                    if (bus.stationExist(stopKey))
+                                    { 
+                                        Console.WriteLine("Bus line number {0} stops at bus station number {1}", bus.BusLineNumber, stopKey);
+                                        flag = true;
+                                    }
+                                }
+                                if (!flag)
+                                    Console.WriteLine("No bus line stops at the given bus station");
+                            }
+                            else if (checkRequest == 'B')
+                            {
+                                int stopKeyA, stopKeyB;
+                                Console.WriteLine("Please enter the key of the first bus station:");
+                                if (!int.TryParse(Console.ReadLine(), out stopKeyA))
+                                    throw new ArgumentException("Invalid input!");
+                                Console.WriteLine("Please enter the key of the second bus station:");
+                                if (!int.TryParse(Console.ReadLine(), out stopKeyB))
+                                    throw new ArgumentException("Invalid input!");
+                                BusLinesCollection busLinesBetweenTwoStops = new BusLinesCollection();
+                                foreach (BusLine bus in busCompany)
+                                {
+                                    if (bus.BusStationList.IndexOf(bus.findAndReturnStation(stopKeyA)) < bus.BusStationList.IndexOf(bus.findAndReturnStation(stopKeyB)))
+                                        busCompany.busLineCollectionsList.Add(bus.track(stopKeyA, stopKeyB));
+                                }
+                                busLinesBetweenTwoStops.sortBusList();
+                                foreach (BusLine bus in busLinesBetweenTwoStops)
+                                {
+                                    Console.WriteLine("Bus number {0} travel time from {1} to {2} is: {3}", bus.BusLineNumber, stopKeyA, stopKeyB, bus.TotalTimeTravel());
+                                }
+                            }
+                            else throw new ArgumentException("Invalid input!");
+                            break;
 
                         case CHOICE.PRINT:
                           

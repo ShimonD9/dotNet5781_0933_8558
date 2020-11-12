@@ -314,7 +314,7 @@ namespace dotNet5781_02_0933_8558
         /// Calculates the total time of ride for a bus line
         /// </summary>
         /// <returns></returns>
-        TimeSpan TotalTimeTravel()
+        public TimeSpan TotalTimeTravel()
         {
             TimeSpan totalTime = new TimeSpan();
             totalTime = timeTravel(this.firstStation.BusStopKey, this.lastStation.BusStopKey);
