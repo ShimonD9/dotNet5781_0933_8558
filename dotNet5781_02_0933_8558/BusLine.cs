@@ -294,7 +294,7 @@ namespace dotNet5781_02_0933_8558
             BusLine trackList = new BusLine(this.busLineNumber, first, last, (int)this.BusArea);
             foreach (BusLineStation station in busStationList)
             {
-                if (flag == false && station == first) // Adding the first bus station
+                if (flag == false && station == first) // Means we find the first bus station of the track
                 {
                     flag = true;
                 }
@@ -302,7 +302,7 @@ namespace dotNet5781_02_0933_8558
                 {
                     trackList.busStationList.Insert(++index, station);
                 }
-                else if (flag == true && station == last) // Adding the last bus station
+                else if (flag == true && station == last) // Means we find the last bus station of the track and can stop the loop
                 {
                     return trackList;
                 }

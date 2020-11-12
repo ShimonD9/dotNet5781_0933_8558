@@ -106,7 +106,7 @@ namespace dotNet5781_02_0933_8558
                                     BusLineStation secondLineStation = new BusLineStation(second, distance, minutes);
 
                                     BusLine newBusLine = new BusLine(busLineNumber, firstLineStation, secondLineStation, area);
-                                    busCompany.busLineCollectionsList.Add(newBusLine);
+                                    busCompany.busLinesList.Add(newBusLine);
                                 }
                                 else if (checkRequest == 'B')
                                 {
@@ -120,7 +120,7 @@ namespace dotNet5781_02_0933_8558
                                     BusLineStation secondLineStation = new BusLineStation(second, distance, minutes);
 
                                     BusLine newBusLine = new BusLine(busLineNumber, firstLineStation, secondLineStation, area);
-                                    busCompany.busLineCollectionsList.Add(newBusLine);
+                                    busCompany.busLinesList.Add(newBusLine);
                                 }
                                 else throw new ArgumentException("Invalid input!");
                             }
@@ -161,26 +161,25 @@ namespace dotNet5781_02_0933_8558
                                 {
                                     BusLineStation newBusLineStation = new BusLineStation(newBusStop, 0, 0);
                                     askForDistanceAndMinutesToNext(ref distToNext, ref minToNext);
-                                    busCompany.busLineCollectionsList[index].addBusStation(newBusLineStation, 0, distToNext, minToNext);
+                                    busCompany.busLinesList[index].addBusStation(newBusLineStation, 0, distToNext, minToNext);
                                 }
                                 else if (checkRequest == 'B')
                                 {
-                                    int prevKey;
                                     Console.WriteLine("Please, enter the key of the previous station.");
-                                    if (!int.TryParse(Console.ReadLine(), out prevKey))
+                                    if (!int.TryParse(Console.ReadLine(), out int prevKey))
                                         throw new ArgumentException("Invalid input!");
-                                    if (!busCompany.busLineCollectionsList[index].stationExist(prevKey))
+                                    if (!busCompany.busLinesList[index].stationExist(prevKey))
                                         throw new KeyNotFoundException("The key for the previous station is incorrect");
                                     askForDistanceAndMinutesFromPrevious(ref distance, ref minutes);
                                     BusLineStation newBusLineStation = new BusLineStation(newBusStop, distance, minutes);
                                     askForDistanceAndMinutesToNext(ref distToNext, ref minToNext);
-                                    busCompany.busLineCollectionsList[index].addBusStation(newBusLineStation, prevKey, distToNext, minToNext);
+                                    busCompany.busLinesList[index].addBusStation(newBusLineStation, prevKey, distToNext, minToNext);
                                 }
                                 else if (checkRequest == 'C')
                                 {
                                     askForDistanceAndMinutesFromPrevious(ref distance, ref minutes);
                                     BusLineStation newBusLineStation = new BusLineStation(newBusStop, distance, minutes);
-                                    busCompany.busLineCollectionsList[index].addBusStationToEnd(newBusLineStation);
+                                    busCompany.busLinesList[index].addBusStationToEnd(newBusLineStation);
                                 }
                                 else throw new ArgumentException("Invalid input!");
                             }
@@ -206,7 +205,7 @@ namespace dotNet5781_02_0933_8558
                                 if (!int.TryParse(Console.ReadLine(), out busLineNumber))
                                     throw new ArgumentException("Invalid input!");
                                 index = busCompany.searchIndex(busLineNumber);
-                                BusLine busLineHelp = busCompany.busLineCollectionsList[index];
+                                BusLine busLineHelp = busCompany.busLinesList[index];
                                 Console.WriteLine("Please enter the station number you would like to delete:");
                                 if (!int.TryParse(Console.ReadLine(), out stopKey))
                                     throw new ArgumentException("Invalid input!");
@@ -223,13 +222,12 @@ namespace dotNet5781_02_0933_8558
                                 }
                                 else
                                 {
-                                    double newDistance, newMinutes;
                                     Console.WriteLine("You need to update the distance and the time (from the previous station) of the next bus station.\n" +
                                         "Please enter the new Distance:");
-                                    if (!double.TryParse(Console.ReadLine(), out newDistance))
+                                    if (!double.TryParse(Console.ReadLine(), out double newDistance))
                                         throw new ArgumentException("Invalid input!");
                                     Console.WriteLine("Please enter the new Time:");
-                                    if (!double.TryParse(Console.ReadLine(), out newMinutes))
+                                    if (!double.TryParse(Console.ReadLine(), out double newMinutes))
                                         throw new ArgumentException("Invalid input!");
                                     busLineHelp.BusStationList[index + 1].DistanceFromPreviousStation = newDistance;
                                     busLineHelp.BusStationList[index + 1].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(newMinutes);
@@ -250,18 +248,11 @@ namespace dotNet5781_02_0933_8558
                                 Console.WriteLine("Please enter the key of the bus station:");
                                 if (!int.TryParse(Console.ReadLine(), out stopKey))
                                     throw new ArgumentException("Invalid input!");
-                                BusStop busStop = findExistBusStop(stopKey);
-                                bool flag = false;
-                                foreach (BusLine bus in busCompany)
+                                BusLinesCollection linesContaining = busCompany.BusLinesContainStation(stopKey);
+                                foreach (BusLine bus in linesContaining)
                                 {
-                                    if (bus.stationExist(stopKey))
-                                    { 
-                                        Console.WriteLine("Bus line number {0} stops at bus station number {1}", bus.BusLineNumber, stopKey);
-                                        flag = true;
-                                    }
+                                       Console.WriteLine("Bus line number {0} stops at bus station number {1}", bus.BusLineNumber, stopKey);
                                 }
-                                if (!flag)
-                                    Console.WriteLine("No bus line stops at the given bus station");
                             }
 
                             else if (checkRequest == 'B')
@@ -280,9 +271,10 @@ namespace dotNet5781_02_0933_8558
                                     BusLineStation last = bus.findAndReturnStation(stopKeyB);
                                     if (first != null && last != null)
                                         if (bus.BusStationList.IndexOf(bus.findAndReturnStation(stopKeyA)) < bus.BusStationList.IndexOf(bus.findAndReturnStation(stopKeyB)))
-                                            busLinesBetweenTwoStops.busLineCollectionsList.Add(bus.Track(stopKeyA, stopKeyB));
+                                            busLinesBetweenTwoStops.busLinesList.Add(bus.Track(stopKeyA, stopKeyB));
                                 }
-                                busLinesBetweenTwoStops.sortBusList();
+
+                                busLinesBetweenTwoStops.SortBusLinesList();
 
                                 Console.WriteLine("Options to travel:");
                                 foreach (BusLine bus in busLinesBetweenTwoStops)
@@ -417,26 +409,26 @@ namespace dotNet5781_02_0933_8558
                 BusLineStation last = new BusLineStation(busStops[i + 10], 1.5 * minutes, minutes);
 
                 BusLine newBusLine = new BusLine(busNumber, first, last, area);
-                busCompany.busLineCollectionsList.Add(newBusLine);
+                busCompany.busLinesList.Add(newBusLine);
 
                 //  Middle stations build:
 
                 minutes = 20 * rnd.NextDouble() + 1;
                 BusLineStation middle = new BusLineStation(busStops[i + 20], 1.5 * minutes, minutes);
                 minutes = 20 * rnd.NextDouble() + 1;
-                busCompany.busLineCollectionsList[i].addBusStation(middle, first.BusStopKey, 1.5 * minutes, minutes);
+                busCompany.busLinesList[i].addBusStation(middle, first.BusStopKey, 1.5 * minutes, minutes);
 
                 minutes = 20 * rnd.NextDouble() + 1;
                 BusLineStation secondMiddle = new BusLineStation(busStops[i + 30], 1.5 * minutes, minutes);
                 minutes = 20 * rnd.NextDouble() + 1;
-                busCompany.busLineCollectionsList[i].addBusStation(secondMiddle, first.BusStopKey, 1.5 * minutes, minutes);
+                busCompany.busLinesList[i].addBusStation(secondMiddle, first.BusStopKey, 1.5 * minutes, minutes);
             } // Ending this loop, we initialized 10 bus lines, using 40 bus stations
 
             for (int i = 0; i < 10; i++)
             {
                 BusLineStation first = new BusLineStation(busStops[i + 1], 0, 0);
                 double minutes = 20 * rnd.NextDouble() + 1;
-                busCompany.busLineCollectionsList[i].addBusStation(first, 0, 1.5 * minutes, minutes);
+                busCompany.busLinesList[i].addBusStation(first, 0, 1.5 * minutes, minutes);
             } // This loop makes sure that at least 10 bus stations will be used for two different bus lines
         }
     }

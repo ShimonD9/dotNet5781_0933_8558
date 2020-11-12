@@ -65,7 +65,6 @@ namespace dotNet5781_02_0933_8558
         /// <summary>
         /// Latitude and longitude fields and properties:
         /// </summary>
-
         private double latitude;
 
         public double Latitude
