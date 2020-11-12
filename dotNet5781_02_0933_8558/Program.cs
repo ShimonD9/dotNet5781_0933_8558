@@ -49,8 +49,8 @@ namespace dotNet5781_02_0933_8558
                             "Enter one of the following:\n" +
                             "ADD: To add a new line or station\n" +
                             "DELETE: To delete line or station\n" +
-                            "SEARCH: To search lines or print options between two stations\n" +
-                            "PRINT: To print all lines or stations\n" +
+                            "SEARCH: To search lines of a bus station, or to print travel options between two stations\n" +
+                            "PRINT: To print all the lines or the stations\n" +
                             "EXIT: exit\n");
                     do // The choice input loop
                     {
@@ -65,9 +65,9 @@ namespace dotNet5781_02_0933_8558
                     {
                         case CHOICE.ADD:
                             char checkRequest; // For the A or B input
-                            Console.WriteLine("Please enter A for adding a new line," +
-                                               " B for adding a new bus line station to an existing line," +
-                                               " or other key to return to the menu:");
+                            Console.WriteLine("Please enter A - for adding a new line, " +
+                                               "B - for adding a new bus line station to an existing line, " +
+                                               "or other key to return to the menu:");
                             char.TryParse(Console.ReadLine(), out checkRequest); // Checks if the input legit and stores in checkRequest
 
                             if (checkRequest == 'A')
@@ -77,7 +77,7 @@ namespace dotNet5781_02_0933_8558
                                 if (!int.TryParse(Console.ReadLine(), out busLineNumber))
                                     throw new ArgumentException("Invalid input!");
                                 if (!busCompany.searchBusLine(busLineNumber))
-                                    throw new ArgumentException("Bus line is already exist twice!");
+                                    throw new ArgumentException("The bus line number is already exist in the company twice!");
 
                                 // Absorbing the bus line area 
                                 Console.WriteLine("Please enter the area number 0 - 4 (General, North, South, Center, Jerusalem):");
@@ -86,9 +86,9 @@ namespace dotNet5781_02_0933_8558
                                 if (area < 0 || area > 4)
                                     throw new ArgumentException("Invalid area number!");
 
-                                Console.WriteLine("A new bus line must containe at least two bus stops.\n " +
-                                              "Please enter A for adding existing 2 bus stops, " +
-                                              "B for creating 2 new bus stops:");
+                                Console.WriteLine("A new bus line must containe at least two bus stops.\n" +
+                                              "Enter A - for adding existing 2 bus stops, " +
+                                              "B - for creating 2 new bus stops:");
                                 char.TryParse(Console.ReadLine(), out checkRequest); // Checks if the input legit and stores in checkRequest
                                 if (checkRequest == 'A')
                                 {
@@ -132,9 +132,8 @@ namespace dotNet5781_02_0933_8558
                                     throw new ArgumentException("Invalid input!");
                                 index = busCompany.searchIndex(busLineNumber); // If there is no such bus line, the searchIndex will throw exception
 
-                                Console.WriteLine("Are you wish to add an existing one, or to create a new bus stop?\n " +
-                                            "Enter A for adding an existing bus stop, " +
-                                            "B for creating and adding a new bus stop,");
+                                Console.WriteLine("Enter A - for adding an existing bus stop, " +
+                                            "B - for creating and adding a new bus stop");
 
                                 char.TryParse(Console.ReadLine(), out checkRequest); // Checks if the input legit and stores in checkRequest
 
@@ -152,9 +151,9 @@ namespace dotNet5781_02_0933_8558
                                 else throw new ArgumentException("Invalid input!");
 
                                 Console.WriteLine("Where do you wish to add the bus stop?\n " +
-                                                    "Enter A for adding it to the beginning of the line, " +
-                                                    "B for adding it to the middle of the line, " +
-                                                    "C for adding it to the end of the line:");
+                                                    "Enter A - for adding it to the beginning of the line, " +
+                                                    "B - for adding it to the middle of the line, " +
+                                                    "C - for adding it to the end of the line:");
                                 char.TryParse(Console.ReadLine(), out checkRequest); // Checks if the input legit and stores in checkRequest
 
                                 double distToNext = 0, minToNext = 0;
@@ -190,17 +189,15 @@ namespace dotNet5781_02_0933_8558
 
                         case CHOICE.DELETE:
                             // For the A or B input
-                            Console.WriteLine("Please enter A for delete a bus line," +
-                                               " B for delete station," +
-                                               " or other key to return to the menu:");
+                            Console.WriteLine("Please enter A - for delete a bus line, " +
+                                               "B - for delete station, " +
+                                               "or other key to return to the menu:");
                             char.TryParse(Console.ReadLine(), out checkRequest);
                             if (checkRequest == 'A')
                             {
                                 Console.WriteLine("Please enter the bus line number you would like to delete:");
                                 if (!int.TryParse(Console.ReadLine(), out busLineNumber))
                                     throw new ArgumentException("Invalid input!");
-                               // index = busCompany.searchIndex(busLineNumber);
-                               // BusLine deleteBusLineStation = busCompany.busLineCollectionsList[index];
                                 busCompany.DeleteBusLine(busLineNumber);
                             }
                             else if (checkRequest == 'B')
@@ -227,11 +224,11 @@ namespace dotNet5781_02_0933_8558
                                 else
                                 {
                                     double newDistance, newMinutes;
-                                    Console.WriteLine("You need to update the distance and the time of next stop from the previous station that you wish to delete:\n" +
-                                        "Please enter the new Distance:\n");
+                                    Console.WriteLine("You need to update the distance and the time (from the previous station) of the next bus station.\n" +
+                                        "Please enter the new Distance:");
                                     if (!double.TryParse(Console.ReadLine(), out newDistance))
                                         throw new ArgumentException("Invalid input!");
-                                    Console.WriteLine("Please enter the new Time:\n");
+                                    Console.WriteLine("Please enter the new Time:");
                                     if (!double.TryParse(Console.ReadLine(), out newMinutes))
                                         throw new ArgumentException("Invalid input!");
                                     busLineHelp.BusStationList[index + 1].DistanceFromPreviousStation = newDistance;
@@ -244,8 +241,8 @@ namespace dotNet5781_02_0933_8558
 
                         case CHOICE.SEARCH:
                             // For the A or B input
-                            Console.WriteLine("Please enter A for printing all the bus lines who are passing trough a specific bus stop, " +
-                                               "B for printing the options to travel from one station to another, sorted by travel time, " +
+                            Console.WriteLine("Please enter A - for printing all the bus lines who are passing trough a specific bus stop, " +
+                                               "B - for printing the options to travel from one station to another, sorted by travel time, " +
                                                "or other key to return to the menu:");
                             char.TryParse(Console.ReadLine(), out checkRequest);
                             if (checkRequest == 'A')
@@ -286,6 +283,8 @@ namespace dotNet5781_02_0933_8558
                                             busLinesBetweenTwoStops.busLineCollectionsList.Add(bus.Track(stopKeyA, stopKeyB));
                                 }
                                 busLinesBetweenTwoStops.sortBusList();
+
+                                Console.WriteLine("Options to travel:");
                                 foreach (BusLine bus in busLinesBetweenTwoStops)
                                 {
                                     Console.WriteLine("Bus number {0} travel time from {1} to {2} is: {3}", bus.BusLineNumber, stopKeyA, stopKeyB, bus.TotalTimeTravel());
@@ -442,3 +441,175 @@ namespace dotNet5781_02_0933_8558
         }
     }
 }
+
+/*
+Bus line details:
+Bus line = 1, Area line = Center, busStationList: =
+Bus Station Code:
+BusStationKey = 66489, Latitude = 32.006602273186, Longitude = 35.1777311466996, Time from last station = 00:00:00, Km from last station = 0
+Bus Station Code:
+BusStationKey = 1395, Latitude = 32.2513984280878, Longitude = 34.3174921842373, Time from last station = 00:02:14.7330000, Km from last station = 3.36831361701168
+Bus Station Code:
+BusStationKey = 75409, Latitude = 33.2613128496619, Longitude = 34.7456978721757, Time from last station = 00:05:29.8560000, Km from last station = 8.24638964084275
+Bus Station Code:
+BusStationKey = 50987, Latitude = 32.0458440956407, Longitude = 35.2926303139853, Time from last station = 00:06:03.0310000, Km from last station = 9.07578664346402
+Bus Station Code:
+BusStationKey = 54672, Latitude = 33.2505180454583, Longitude = 35.1654375467754, Time from last station = 00:18:08.2010000, Km from last station = 27.2050262138737
+
+Bus line details:
+Bus line = 101, Area line = General, busStationList: =
+Bus Station Code:
+BusStationKey = 99641, Latitude = 31.6551010035701, Longitude = 35.0913000473712, Time from last station = 00:00:00, Km from last station = 0
+Bus Station Code:
+BusStationKey = 66489, Latitude = 32.006602273186, Longitude = 35.1777311466996, Time from last station = 00:08:49.1060000, Km from last station = 13.2276403967885
+Bus Station Code:
+BusStationKey = 21930, Latitude = 31.5479610886182, Longitude = 35.3497510886983, Time from last station = 00:04:53.3230000, Km from last station = 7.33306468363528
+Bus Station Code:
+BusStationKey = 72878, Latitude = 32.3575119236752, Longitude = 35.4232365984112, Time from last station = 00:14:33.5370000, Km from last station = 21.8384193733048
+Bus Station Code:
+BusStationKey = 59064, Latitude = 31.7871417542394, Longitude = 35.3085964956361, Time from last station = 00:18:07.6560000, Km from last station = 27.1913919447415
+
+Bus management:
+
+Enter one of the following:
+ADD: To add a new line or station
+DELETE: To delete line or station
+SEARCH: To search lines or print options between two stations
+PRINT: To print all lines or stations
+EXIT: exit
+
+Enter your choice please:
+ADD
+Please enter A for adding a new line, B for adding a new bus line station to an existing line, or other key to return to the menu:
+B
+Please enter the number of the line bus, you want to add a bus stop to:
+1
+Are you wish to add an existing one, or to create a new bus stop?
+ Enter A for adding an existing bus stop, B for creating and adding a new bus stop,
+A
+Please enter the existing bus stop number, you want to add to the bus line
+59064
+Where do you wish to add the bus stop?
+ Enter A for adding it to the beginning of the line, B for adding it to the middle of the line, C for adding it to the end of the line:
+B
+Please, enter the key of the previous station.
+66489
+Please enter the distance from the previous bus stop (of this line):
+
+12.3
+Please enter the minutes of travel (for example: 20.5) from the previous bus stop (of this line):
+
+20.4
+Please enter the distance to the next bus stop (of this line):
+
+11
+Please enter the minutes of travel (for example: 20.5) to the next bus stop (of this line):
+
+3.4
+Bus line details:
+Bus line = 1, Area line = Center, busStationList: =
+Bus Station Code:
+BusStationKey = 66489, Latitude = 32.006602273186, Longitude = 35.1777311466996, Time from last station = 00:00:00, Km from last station = 0
+Bus Station Code:
+BusStationKey = 59064, Latitude = 31.7871417542394, Longitude = 35.3085964956361, Time from last station = 00:20:24, Km from last station = 12.3
+Bus Station Code:
+BusStationKey = 1395, Latitude = 32.2513984280878, Longitude = 34.3174921842373, Time from last station = 00:03:24, Km from last station = 11
+Bus Station Code:
+BusStationKey = 75409, Latitude = 33.2613128496619, Longitude = 34.7456978721757, Time from last station = 00:05:29.8560000, Km from last station = 8.24638964084275
+Bus Station Code:
+BusStationKey = 50987, Latitude = 32.0458440956407, Longitude = 35.2926303139853, Time from last station = 00:06:03.0310000, Km from last station = 9.07578664346402
+Bus Station Code:
+BusStationKey = 54672, Latitude = 33.2505180454583, Longitude = 35.1654375467754, Time from last station = 00:18:08.2010000, Km from last station = 27.2050262138737
+
+Bus line details:
+Bus line = 101, Area line = General, busStationList: =
+Bus Station Code:
+BusStationKey = 99641, Latitude = 31.6551010035701, Longitude = 35.0913000473712, Time from last station = 00:00:00, Km from last station = 0
+Bus Station Code:
+BusStationKey = 66489, Latitude = 32.006602273186, Longitude = 35.1777311466996, Time from last station = 00:08:49.1060000, Km from last station = 13.2276403967885
+Bus Station Code:
+BusStationKey = 21930, Latitude = 31.5479610886182, Longitude = 35.3497510886983, Time from last station = 00:04:53.3230000, Km from last station = 7.33306468363528
+Bus Station Code:
+BusStationKey = 72878, Latitude = 32.3575119236752, Longitude = 35.4232365984112, Time from last station = 00:14:33.5370000, Km from last station = 21.8384193733048
+Bus Station Code:
+BusStationKey = 59064, Latitude = 31.7871417542394, Longitude = 35.3085964956361, Time from last station = 00:18:07.6560000, Km from last station = 27.1913919447415
+
+Bus management:
+
+Enter one of the following:
+ADD: To add a new line or station
+DELETE: To delete line or station
+SEARCH: To search lines or print options between two stations
+PRINT: To print all lines or stations
+EXIT: exit
+
+Enter your choice please:
+SEAECH
+There is no such option in the menu, please enter your choice again.
+Enter your choice please:
+SEARCH
+Please enter A for printing all the bus lines who are passing trough a specific bus stop, B for printing the options to travel from one station to another, sorted by travel time, or other key to return to the menu:
+B
+Please enter the key of the first bus station:
+66489
+Please enter the key of the second bus station:
+59064
+Bus line details:
+Bus line = 1, Area line = Center, busStationList: =
+Bus Station Code:
+BusStationKey = 66489, Latitude = 32.006602273186, Longitude = 35.1777311466996, Time from last station = 00:00:00, Km from last station = 0
+Bus Station Code:
+BusStationKey = 59064, Latitude = 31.7871417542394, Longitude = 35.3085964956361, Time from last station = 00:20:24, Km from last station = 12.3
+
+Bus line details:
+Bus line = 101, Area line = General, busStationList: =
+Bus Station Code:
+BusStationKey = 66489, Latitude = 32.006602273186, Longitude = 35.1777311466996, Time from last station = 00:08:49.1060000, Km from last station = 13.2276403967885
+Bus Station Code:
+BusStationKey = 21930, Latitude = 31.5479610886182, Longitude = 35.3497510886983, Time from last station = 00:04:53.3230000, Km from last station = 7.33306468363528
+Bus Station Code:
+BusStationKey = 72878, Latitude = 32.3575119236752, Longitude = 35.4232365984112, Time from last station = 00:14:33.5370000, Km from last station = 21.8384193733048
+Bus Station Code:
+BusStationKey = 59064, Latitude = 31.7871417542394, Longitude = 35.3085964956361, Time from last station = 00:18:07.6560000, Km from last station = 27.1913919447415
+
+Bus number 1 travel time from 66489 to 59064 is: 00:20:24
+Bus number 101 travel time from 66489 to 59064 is: 00:37:34.5160000
+Bus line details:
+Bus line = 1, Area line = Center, busStationList: =
+Bus Station Code:
+BusStationKey = 66489, Latitude = 32.006602273186, Longitude = 35.1777311466996, Time from last station = 00:00:00, Km from last station = 0
+Bus Station Code:
+BusStationKey = 59064, Latitude = 31.7871417542394, Longitude = 35.3085964956361, Time from last station = 00:20:24, Km from last station = 12.3
+Bus Station Code:
+BusStationKey = 1395, Latitude = 32.2513984280878, Longitude = 34.3174921842373, Time from last station = 00:03:24, Km from last station = 11
+Bus Station Code:
+BusStationKey = 75409, Latitude = 33.2613128496619, Longitude = 34.7456978721757, Time from last station = 00:05:29.8560000, Km from last station = 8.24638964084275
+Bus Station Code:
+BusStationKey = 50987, Latitude = 32.0458440956407, Longitude = 35.2926303139853, Time from last station = 00:06:03.0310000, Km from last station = 9.07578664346402
+Bus Station Code:
+BusStationKey = 54672, Latitude = 33.2505180454583, Longitude = 35.1654375467754, Time from last station = 00:18:08.2010000, Km from last station = 27.2050262138737
+
+Bus line details:
+Bus line = 101, Area line = General, busStationList: =
+Bus Station Code:
+BusStationKey = 99641, Latitude = 31.6551010035701, Longitude = 35.0913000473712, Time from last station = 00:00:00, Km from last station = 0
+Bus Station Code:
+BusStationKey = 66489, Latitude = 32.006602273186, Longitude = 35.1777311466996, Time from last station = 00:08:49.1060000, Km from last station = 13.2276403967885
+Bus Station Code:
+BusStationKey = 21930, Latitude = 31.5479610886182, Longitude = 35.3497510886983, Time from last station = 00:04:53.3230000, Km from last station = 7.33306468363528
+Bus Station Code:
+BusStationKey = 72878, Latitude = 32.3575119236752, Longitude = 35.4232365984112, Time from last station = 00:14:33.5370000, Km from last station = 21.8384193733048
+Bus Station Code:
+BusStationKey = 59064, Latitude = 31.7871417542394, Longitude = 35.3085964956361, Time from last station = 00:18:07.6560000, Km from last station = 27.1913919447415
+
+Bus management:
+
+Enter one of the following:
+ADD: To add a new line or station
+DELETE: To delete line or station
+SEARCH: To search lines or print options between two stations
+PRINT: To print all lines or stations
+EXIT: exit
+
+Enter your choice please:
+*/

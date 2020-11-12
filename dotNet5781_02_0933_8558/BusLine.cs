@@ -231,6 +231,7 @@ namespace dotNet5781_02_0933_8558
             BusLineStation lastStation = findAndReturnStation(keyB);
             int indexA = busStationList.IndexOf(firstStation);
             int indexB = busStationList.IndexOf(lastStation);
+
             if (indexA == -1)
             {
                 throw new KeyNotFoundException("the first station was not found");
@@ -243,8 +244,10 @@ namespace dotNet5781_02_0933_8558
             {
                 throw new KeyNotFoundException("the order of the stations is inccorect");
             }
+
             TimeSpan total = new TimeSpan();
             bool flag = false;
+
             foreach (BusLineStation station in busStationList)
             {
                 if (flag == false && station == firstStation)
@@ -257,6 +260,7 @@ namespace dotNet5781_02_0933_8558
                     break;
                 }
             }
+
             return total;
         }
 
@@ -294,9 +298,9 @@ namespace dotNet5781_02_0933_8558
                 {
                     flag = true;
                 }
-                if (flag == true && station != last) // Adding the bus stations between
+                else if (flag == true && station != last) // Adding the bus stations between
                 {
-                    trackList.busStationList.Insert(index++, station);
+                    trackList.busStationList.Insert(++index, station);
                 }
                 else if (flag == true && station == last) // Adding the last bus station
                 {
@@ -312,8 +316,7 @@ namespace dotNet5781_02_0933_8558
         /// <returns></returns>
         public TimeSpan TotalTimeTravel()
         {
-            TimeSpan totalTime = new TimeSpan();
-            totalTime = timeTravel(this.firstStation.BusStopKey, this.lastStation.BusStopKey);
+            TimeSpan totalTime = timeTravel(this.firstStation.BusStopKey, this.lastStation.BusStopKey);
             return totalTime;
         }
 
