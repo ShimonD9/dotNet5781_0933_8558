@@ -210,17 +210,19 @@ namespace dotNet5781_02_0933_8558
                                 if (!int.TryParse(Console.ReadLine(), out stopKey))
                                     throw new ArgumentException("Invalid input!");
                                 index = busLineHelp.findIndexStation(stopKey);
-                                if (index == 0)
-                                {
+                                if (index == 0)    //in case its the first station to delete
+                                {   //update the first station
                                     busLineHelp.BusStationList[1].DistanceFromPreviousStation = 0;
                                     busLineHelp.BusStationList[1].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(0);
+                                    busLineHelp.FirstStation = busLineHelp.BusStationList[1];   
                                     busLineHelp.deleteBusStation(stopKey);
                                 }
-                                else if (index == busLineHelp.BusStationList.Count - 1)
-                                {
+                                else if (index == busLineHelp.BusStationList.Count - 1) //in case of delete last station
+                                {   //update the last station
+                                    busLineHelp.LastStation = busLineHelp.BusStationList[busLineHelp.BusStationList.Count - 1];
                                     busLineHelp.deleteBusStation(stopKey);
                                 }
-                                else
+                                else                                                    //in case of delete middle station
                                 {
                                     Console.WriteLine("You need to update the distance and the time (from the previous station) of the next bus station.\n" +
                                         "Please enter the new Distance:");
@@ -232,7 +234,7 @@ namespace dotNet5781_02_0933_8558
                                     busLineHelp.BusStationList[index + 1].DistanceFromPreviousStation = newDistance;
                                     busLineHelp.BusStationList[index + 1].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(newMinutes);
                                     busLineHelp.deleteBusStation(stopKey);
-                                }                              
+                                }
                             }
                             else throw new ArgumentException("Invalid input!");
                             break;
@@ -251,7 +253,7 @@ namespace dotNet5781_02_0933_8558
                                 BusLinesCollection linesContaining = busCompany.BusLinesContainStation(stopKey);
                                 foreach (BusLine bus in linesContaining)
                                 {
-                                       Console.WriteLine("Bus line number {0} stops at bus station number {1}", bus.BusLineNumber, stopKey);
+                                    Console.WriteLine("Bus line number {0} stops at bus station number {1}", bus.BusLineNumber, stopKey);
                                 }
                             }
 
@@ -286,7 +288,7 @@ namespace dotNet5781_02_0933_8558
                             break;
 
                         case CHOICE.PRINT:
-                          
+
                             break;
 
                         case CHOICE.EXIT:
