@@ -151,19 +151,19 @@ namespace dotNet5781_02_0933_8558
                 if (station.BusStopKey == key)
                     return station;
             }
-            throw new KeyNotFoundException("The station was not found");
+            return null;
         }
 
         /// <summary>
         /// Search if bus line station exist based on it's key
         /// </summary>
-        /// <param name="keyStation"></param>
+        /// <param name="key"></param>
         /// <returns></returns>
-        public bool stationExist(int keyStation)
+        public bool stationExist(int key)
         {
             foreach (BusLineStation station in busStationList)
             {
-                if (station.BusStopKey == keyStation)
+                if (station.BusStopKey == key)
                     return true;
             }
             return false;
@@ -227,7 +227,6 @@ namespace dotNet5781_02_0933_8558
         /// <returns></returns>
         public TimeSpan timeTravel(int keyA, int keyB)
         {
-
             BusLineStation firstStation = findAndReturnStation(keyA);
             BusLineStation lastStation = findAndReturnStation(keyB);
             int indexA = busStationList.IndexOf(firstStation);
@@ -239,22 +238,22 @@ namespace dotNet5781_02_0933_8558
             else if (indexB == -1)
             {
                 throw new KeyNotFoundException("the last station was not found");
-
+            }
+            else if (indexA > indexB)
+            {
+                throw new KeyNotFoundException("the order of the stations is inccorect");
             }
             TimeSpan total = new TimeSpan();
             bool flag = false;
             foreach (BusLineStation station in busStationList)
             {
-
                 if (flag == false && station == firstStation)
                     flag = true;
-
-                if (flag == true && station != lastStation)
-                    total.Add(station.TimeTravelFromPreviousStation);
-
+                else if (flag == true && station != lastStation)
+                    total = total.Add(station.TimeTravelFromPreviousStation);
                 else if (flag == true && station == lastStation)
                 {
-                    total.Add(station.TimeTravelFromPreviousStation);
+                    total = total.Add(station.TimeTravelFromPreviousStation);
                     break;
                 }
             }
@@ -267,7 +266,7 @@ namespace dotNet5781_02_0933_8558
         /// <param name="keyA"></param>
         /// <param name="keyB"></param>
         /// <returns></returns>
-        public BusLine track(int keyA, int keyB)
+        public BusLine Track(int keyA, int keyB)
         {
             BusLineStation first = findAndReturnStation(keyA);
             BusLineStation last = findAndReturnStation(keyB);
@@ -281,33 +280,30 @@ namespace dotNet5781_02_0933_8558
             {
                 throw new KeyNotFoundException("the last station was not found");
             }
-            else if (indexA < indexB)
+            else if (indexA > indexB)
             {
                 throw new KeyNotFoundException("the order of the stations is inccorect");
             }
 
+            int index = 0;
             bool flag = false;
-            BusLine trackList = new BusLine();
+            BusLine trackList = new BusLine(this.busLineNumber, first, last, (int)this.BusArea);
             foreach (BusLineStation station in busStationList)
             {
-
-                if (flag == false && station == first)
+                if (flag == false && station == first) // Adding the first bus station
                 {
-                    trackList.busStationList.Insert(0, station);
                     flag = true;
                 }
-                if (flag == true && station != last)
+                if (flag == true && station != last) // Adding the bus stations between
                 {
-                    trackList.busStationList.Insert(0, station);
+                    trackList.busStationList.Insert(index++, station);
                 }
-                else if (flag == true && station == last)
+                else if (flag == true && station == last) // Adding the last bus station
                 {
-                    trackList.busStationList.Insert(0, station);
                     return trackList;
                 }
-
             }
-            throw new ArgumentException("the station was not found");
+            return null;
         }
 
         /// <summary>
@@ -345,7 +341,7 @@ namespace dotNet5781_02_0933_8558
             //TimeSpan busTimeA , busTimeB ;
             BusLine compareBusLine = (BusLine)keyBus;
             // busTimeA = this.TotalTimeTravel();
-            //busTimeB = this.TotalTimeTravel();
+            // busTimeB = this.TotalTimeTravel();
 
             return TotalTimeTravel().CompareTo(compareBusLine.TotalTimeTravel());
         }

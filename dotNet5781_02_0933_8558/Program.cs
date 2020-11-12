@@ -266,6 +266,7 @@ namespace dotNet5781_02_0933_8558
                                 if (!flag)
                                     Console.WriteLine("No bus line stops at the given bus station");
                             }
+
                             else if (checkRequest == 'B')
                             {
                                 int stopKeyA, stopKeyB;
@@ -278,8 +279,11 @@ namespace dotNet5781_02_0933_8558
                                 BusLinesCollection busLinesBetweenTwoStops = new BusLinesCollection();
                                 foreach (BusLine bus in busCompany)
                                 {
-                                    if (bus.BusStationList.IndexOf(bus.findAndReturnStation(stopKeyA)) < bus.BusStationList.IndexOf(bus.findAndReturnStation(stopKeyB)))
-                                        busCompany.busLineCollectionsList.Add(bus.track(stopKeyA, stopKeyB));
+                                    BusLineStation first = bus.findAndReturnStation(stopKeyA);
+                                    BusLineStation last = bus.findAndReturnStation(stopKeyB);
+                                    if (first != null && last != null)
+                                        if (bus.BusStationList.IndexOf(bus.findAndReturnStation(stopKeyA)) < bus.BusStationList.IndexOf(bus.findAndReturnStation(stopKeyB)))
+                                            busLinesBetweenTwoStops.busLineCollectionsList.Add(bus.Track(stopKeyA, stopKeyB));
                                 }
                                 busLinesBetweenTwoStops.sortBusList();
                                 foreach (BusLine bus in busLinesBetweenTwoStops)
