@@ -36,16 +36,7 @@ namespace dotNet5781_02_0933_8558
                     int busLineNumber, stopKey, index;
                     double distance = 0, minutes = 0;
 
-                    int total = 0;
-                    foreach (BusLine bus in busCompany)
-                    {
-                        if (total < 2)
-                            Console.WriteLine(bus.ToString());
-                        total++;
-                    }
-
-
-                    Console.WriteLine("Bus management:\n\n" +
+                    Console.WriteLine("====================BUS COMPANY====================\n\n" +
                             "Enter one of the following:\n" +
                             "ADD: To add a new line or station\n" +
                             "DELETE: To delete line or station\n" +
@@ -288,7 +279,33 @@ namespace dotNet5781_02_0933_8558
                             break;
 
                         case CHOICE.PRINT:
-
+                            // For the A or B input
+                            Console.WriteLine("Please enter A - for printing all the bus lines in the company, " +
+                                               "B - for printing all the bus stations, and the bus lines stoping at them, " +
+                                               "or other key to return to the menu:");
+                            char.TryParse(Console.ReadLine(), out checkRequest);
+                            if (checkRequest == 'A')
+                            {
+                                foreach (BusLine bus in busCompany)
+                                {
+                                    Console.WriteLine(bus);
+                                }
+                            }
+                            else if (checkRequest == 'B')
+                            {
+                                foreach (BusStop busStop in busStops)
+                                {
+                                    BusLinesCollection linesContaining = busCompany.BusLinesContainStation(busStop.BusStopKey);
+                                    Console.Write("Bus lines numbers which stop at bus station number {0} =>", busStop.BusStopKey);
+                                    foreach (BusLine bus in linesContaining)
+                                    {
+                                        Console.Write(" {0,-5}", bus.BusLineNumber, busStop.BusStopKey);
+                                   
+                                    }
+                                    Console.WriteLine("\n====");
+                                }
+                            }
+                            else throw new ArgumentException("Invalid input!");
                             break;
 
                         case CHOICE.EXIT:
@@ -307,6 +324,7 @@ namespace dotNet5781_02_0933_8558
                 {
                     Console.WriteLine(exception.Message);
                 };
+                Console.WriteLine("\n");
             } while (choice != CHOICE.EXIT);
 
         }

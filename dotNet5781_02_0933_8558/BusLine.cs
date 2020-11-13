@@ -358,10 +358,10 @@ namespace dotNet5781_02_0933_8558
             string stations = null;
             foreach (BusLineStation item in busStationList)
             {
-                stations += item.ToString() + " \n";
+                stations += item.BusStopKey + ", ";
             }
-            return string.Format("Bus line details:\n" +
-                                  "Bus line = {0}, Area line = {1}, busStationList: =\n{2}",
+            stations = stations.Remove(stations.Length - 2);
+            return string.Format("Bus line = {0, -7} Area line = {1, -11} Stops at next stations: {2, -14}",
                                   BusLineNumber, busArea, stations);
         }
 
