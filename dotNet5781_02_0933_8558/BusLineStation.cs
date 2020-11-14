@@ -32,7 +32,7 @@ namespace dotNet5781_02_0933_8558
         }
 
 
-        // As told by Dan Zilberstein - the Bus Line Station should contain the same fields as in the bus stop (without inheritance)
+        // NOTE: As told by Dan Zilberstein - the Bus Line Station should contain the same fields as in the bus stop (without inheritance)
         /// <summary>
         ///  Bus station key field and property
         /// </summary>
@@ -68,7 +68,7 @@ namespace dotNet5781_02_0933_8558
             get { return distanceFromPreviousStation; }
             set { if (distanceFromPreviousStation < 0)          //in case of illegal input
                     throw new ArgumentException("Illegal input of distence.");
-                distanceFromPreviousStation = value; }
+                distanceFromPreviousStation = Math.Round(value); }
         }
         /// <summary>
         /// the time travel of the bus from last station property

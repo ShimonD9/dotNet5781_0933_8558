@@ -2,7 +2,7 @@
  Exercise 2 - Mendi Ben Ezra (311140933), Shimon Dyskin (310468558)
  Description: The program manages a collection of bus lines, with bus stations,
 offering to add, delete, search and print.
- ===Note: According to the lecturer we decided, that two round-trip lines would not pass through stations with the same code (even the first and the last ones, as it is in reality.
+ ===Note: According to the lecturer we decided, that two round-trip lines would not pass through stations with the same code (even the first and the last ones, as it is in reality.)
 */
 using System;
 using System.Collections.Generic;
@@ -138,7 +138,7 @@ namespace dotNet5781_02_0933_8558
                     return;                                 //out of the loop
                 }
             }
-            throw new KeyNotFoundException("the station was not found");        //in case the key was not found
+            throw new KeyNotFoundException("The station was not found");        //in case the key was not found
         }
 
 
@@ -186,16 +186,16 @@ namespace dotNet5781_02_0933_8558
             int indexB = busStationList.IndexOf(lastStation);       //find the index of second station
             if (indexA == -1)           //in case first station was not found
             {
-                throw new KeyNotFoundException("the first station was not found");
+                throw new KeyNotFoundException("The first station was not found");
             }
             else if (indexB == -1)      //in case second station was not found
             {
-                throw new KeyNotFoundException("the last station was not found");
+                throw new KeyNotFoundException("The last station was not found");
 
             }
             else if (indexA > indexB)       //in case of oppiset input of station
             {
-                throw new KeyNotFoundException("the order of the stations is inccorect");
+                throw new KeyNotFoundException("The order of the stations is inccorect");
             }
             double total = 0;           //create total distance
             bool flag = false;          //flag for known when the first station of the distance was found
@@ -226,7 +226,7 @@ namespace dotNet5781_02_0933_8558
             for (int i = 0; i < busStationList.Count; i++)                           //loop for find the station
                 if (busStationList[i].BusStopKey == busStationKey)      
                     return i;                                                       //return index
-            throw new ArgumentException("the station number was not found\n");   //in case index was not found
+            throw new ArgumentException("The station number was not found\n");   //in case index was not found
         }
 
         /// <summary>
@@ -244,15 +244,15 @@ namespace dotNet5781_02_0933_8558
 
             if (indexA == -1)                           //in case second station was not found
             {
-                throw new KeyNotFoundException("the first station was not found");
+                throw new KeyNotFoundException("The first station was not found");
             }
             else if (indexB == -1)                      //in case second station was not found
             {
-                throw new KeyNotFoundException("the last station was not found");
+                throw new KeyNotFoundException("The last station was not found");
             }
             else if (indexA > indexB)                   //in case of oppiset input of station
             {
-                throw new ArgumentException("the order of the stations is inccorect");
+                throw new ArgumentException("The order of the stations is inccorect");
             }
 
             TimeSpan total = new TimeSpan();    //create total time
@@ -289,15 +289,15 @@ namespace dotNet5781_02_0933_8558
 
             if (indexA == -1)               //in case first station was not found
             {
-                throw new KeyNotFoundException("the first station was not found");
+                throw new KeyNotFoundException("The first station was not found");
             }
             else if (indexB == -1)          //in case second station was not found
             {
-                throw new KeyNotFoundException("the last station was not found");
+                throw new KeyNotFoundException("The last station was not found");
             }
             else if (indexA > indexB)        //in case of oppiset input of station
             {
-                throw new KeyNotFoundException("the order of the stations is inccorect");
+                throw new KeyNotFoundException("The order of the stations is inccorect");
             }
 
             int index = 0;
@@ -367,10 +367,10 @@ namespace dotNet5781_02_0933_8558
             string stations = null;
             foreach (BusLineStation item in busStationList)         //loop for printing the all stations
             {
-                stations += item.BusStopKey + ", ";
+                stations += item.BusStopKey + " => ";
             }
-            stations = stations.Remove(stations.Length - 2);
-            return string.Format("Bus line = {0, -7} Area line = {1, -11} Stops at next stations: {2, -14}",
+            stations = stations.Remove(stations.Length - 3);
+            return string.Format("Bus line = {0, -7} Area line = {1, -11} Stops at the next stations: {2, -14}",
                                   BusLineNumber, busArea, stations);
         }
 

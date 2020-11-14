@@ -2,7 +2,7 @@
  Exercise 2 - Mendi Ben Ezra (311140933), Shimon Dyskin (310468558)
  Description: The program manages a collection of bus lines, with bus stations,
 offering to add, delete, search and print.
- ===Note: According to the lecturer we decided, that two round-trip lines would not pass through stations with the same code (even the first and the last ones, as it is in reality.
+ ===Note: According to the lecturer we decided, that two round-trip lines would not pass through stations with the same code (even the first and the last ones, as it is in reality.)
 */
 using System;
 using System.Collections.Generic;
@@ -57,7 +57,7 @@ namespace dotNet5781_02_0933_8558
                     return;
                 }
             }
-            throw new KeyNotFoundException("the bus number was not found");       //in case the bus was not found
+            throw new KeyNotFoundException("The bus number was not found");       //in case the bus was not found
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace dotNet5781_02_0933_8558
                 }
             }
             if (!flag)  //in case of not found station
-                throw new KeyNotFoundException("there is no line buses for this station");
+                throw new KeyNotFoundException("There is no line buses for this station");
             return tempCollection;      //return the collection
         }
 
@@ -116,7 +116,7 @@ namespace dotNet5781_02_0933_8558
             for (int i = 0; i < busLinesList.Count; i++)        //loop for find the index
                 if (busLinesList[i].BusLineNumber == busLineKey)
                     return i;                       //return index
-            throw new KeyNotFoundException("the bus line number was not found\n");  //in case index was not found
+            throw new KeyNotFoundException("The bus line number was not found\n");  //in case index was not found
         }
 
         /// <summary>

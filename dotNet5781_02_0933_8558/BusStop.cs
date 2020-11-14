@@ -2,7 +2,7 @@
  Exercise 2 - Mendi Ben Ezra (311140933), Shimon Dyskin (310468558)
  Description: The program manages a collection of bus lines, with bus stations,
 offering to add, delete, search and print.
- ===Note: According to the lecturer we decided, that two round-trip lines would not pass through stations with the same code (even the first and the last ones, as it is in reality.
+ ===Note: According to the lecturer we decided, that two round-trip lines would not pass through stations with the same code (even the first and the last ones, as it is in reality.)
 */
 using System;
 using System.Collections.Generic;
@@ -32,8 +32,8 @@ namespace dotNet5781_02_0933_8558
         {
             BusStopKey = stopKey;
             BusStopAddress = address;
-            latitude = 31 + lineLocation.NextDouble() * 2.3;            //random numbers between [31,33.3] for Latitud
-            longitude = 34.3 + lineLocation.NextDouble() * 1.2;         //random numbers between [34.3,35.5] for Longitude
+            latitude = Math.Round(31 + lineLocation.NextDouble() * 2.3, 6); //random numbers between [31,33.3] for Latitud
+            longitude = Math.Round(34.3 + lineLocation.NextDouble() * 1.2, 6); //random numbers between [34.3,35.5] for Longitude
         }
 
 
@@ -76,7 +76,7 @@ namespace dotNet5781_02_0933_8558
         public double Latitude
         {
             get { return latitude; }
-            set { latitude = 31 + lineLocation.NextDouble() * 2.3; }
+            set { latitude = Math.Round(31 + lineLocation.NextDouble() * 2.3, 6); }
         }
 
         private double longitude;
@@ -84,7 +84,7 @@ namespace dotNet5781_02_0933_8558
         public double Longitude
         {
             get { return longitude; }
-            set { longitude = 34.3 + lineLocation.NextDouble() * 1.2 ; }
+            set { longitude = Math.Round(34.3 + lineLocation.NextDouble() * 1.2, 6) ; }
         }
 
         /// <summary>
@@ -93,8 +93,7 @@ namespace dotNet5781_02_0933_8558
         /// <returns></returns>
         public override string ToString()           //printting details of the stations
         {
-            return string.Format("Bus Stop Code:\n" +
-                                  "BusStopKey = {0}, Latitude = {1}, Longitude = {2}", BusStopKey, Latitude, Longitude);
+            return string.Format("Bus Station Code: {0}, Addres: {1}, Latitude = {2}°N , Longitude = {3}°E", BusStopKey, BusStopAddress, Latitude, Longitude);
         }
     }
 }
