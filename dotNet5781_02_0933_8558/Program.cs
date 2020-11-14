@@ -1,7 +1,7 @@
 ﻿/*
  Exercise 2 - Mendi Ben Ezra (311140933), Shimon Dyskin (310468558)
- Description: The program manage a collection of bus lines, with bus stations, offering to add, delete, search and print.
- Note: According to the lecturer we decided that two round-trip lines would not pass through stations with the same code (even the first and the last ones, as it is in reality.
+ Description: The program manages a collection of bus lines, with bus stations, offering to add, delete, search and print.
+ ===Note: According to the lecturer we decided that two round-trip lines would not pass through stations with the same code (even the first and the last ones, as it is in reality.
 */
 
 using System;
@@ -16,15 +16,6 @@ using System.Xml.Serialization;
 
 namespace dotNet5781_02_0933_8558
 {
-    public class RouteException : Exception
-    {
-        public RouteException() { }
-        public RouteException(string message) : base(message) { }
-        public RouteException(string message, Exception inner) : base(message, inner) { }
-        protected RouteException(
-          System.Runtime.Serialization.SerializationInfo info,
-          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
-    }  //in case there are only two stations in this line
     class Program
     {
         static BusLinesCollection busCompany = new BusLinesCollection();        
@@ -34,7 +25,7 @@ namespace dotNet5781_02_0933_8558
         static void Main(string[] args)
         {
 
-            busCompanyInitializer(ref busCompany, ref busStops); // Calling the 40 bus stops and 10 bus lines randomizer routine:
+            BusCompanyInitializer(ref busCompany, ref busStops); // Calling the 40 bus stops and 10 bus lines randomizer routine:
             CHOICE choice = CHOICE.EXIT;
 
             do
@@ -45,13 +36,14 @@ namespace dotNet5781_02_0933_8558
                     int busLineNumber, stopKey, index;
                     double distance = 0, minutes = 0;
 
-                    Console.WriteLine("====================BUS COMPANY====================\n\n" +
-                            "Enter one of the following:\n" +
-                            "ADD: To add a new line or station\n" +
-                            "DELETE: To delete line or station\n" +
-                            "SEARCH: To search lines of a bus station, or to print travel options between two stations\n" +
-                            "PRINT: To print all the lines or the stations\n" +
-                            "EXIT: exit\n");
+                    Console.WriteLine("\t====================BUS COMPANY MANAGEMENT====================\n\n" +
+                            "\tEnter one of the following:\n" +
+                            "\tADD: To add a new bus line or a bus station\n" +
+                            "\tDELETE: To delete a bus line or a bus station\n" +
+                            "\tSEARCH: To search lines of a bus station, or to print travel options between two stations\n" +
+                            "\tPRINT: To print all the lines or the stations\n" +
+                            "\tEXIT: exit\n");
+
                     do // The choice input loop
                     {
                         Console.WriteLine("Enter your choice please:");
@@ -65,16 +57,17 @@ namespace dotNet5781_02_0933_8558
                     {
                         case CHOICE.ADD:
                             char checkRequest; // For the A or B input
-                            Console.WriteLine("Please enter A - for adding a new line, " +
-                                               "B - for adding a new bus line station to an existing line, " +
+                            Console.WriteLine("Please enter A - for adding a new line,\n" +
+                                               "B - for adding a new bus line station to an existing line,\n" +
                                                "or other key to return to the menu:");
                             char.TryParse(Console.ReadLine(), out checkRequest); // Checks if the input legit and stores in checkRequest
 
+                            // New bus line addition
                             if (checkRequest == 'A')
                             {
                                 // Absorbing the bus line number and checking if already exist
                                 Console.WriteLine("Please enter new line number:");
-                                if (!int.TryParse(Console.ReadLine(), out busLineNumber))
+                                if (!int.TryParse(Console.ReadLine(), out busLineNumber))                                       // Checks if the input is legit (and same for the next uses of try parse) - an argument exception is being thrown
                                     throw new ArgumentException("Invalid input!");
                                 if (!busCompany.searchBusLine(busLineNumber))
                                     throw new ArgumentException("The bus line number is already exist in the company twice!");
@@ -86,98 +79,116 @@ namespace dotNet5781_02_0933_8558
                                 if (area < 0 || area > 4)
                                     throw new ArgumentException("Invalid area number!");
 
+                                // Entering the two bus line stations procedure
                                 Console.WriteLine("A new bus line must containe at least two bus stops.\n" +
-                                              "Enter A - for adding existing 2 bus stops, " +
-                                              "B - for creating 2 new bus stops:");
-                                char.TryParse(Console.ReadLine(), out checkRequest); // Checks if the input legit and stores in checkRequest
+                                              "Enter A - for adding existing 2 bus stops,\n" +
+                                              "B - for creating 2 new bus stops\n" +
+                                              "or other key to return to the menu:");
+                                char.TryParse(Console.ReadLine(), out checkRequest);                                            // Checks if the input legit and stores in checkRequest
+
+                                // Adding 2 existing bus stops
                                 if (checkRequest == 'A')
                                 {
+                                    // Finding existing bus stop and creating the first bus line station based on it:
                                     Console.WriteLine("Please enter the key of the first existing bus stop:");
                                     if (!int.TryParse(Console.ReadLine(), out stopKey))
                                         throw new ArgumentException("Invalid input!");
-                                    BusStop first = findExistBusStop(stopKey);
-                                    BusLineStation firstLineStation = new BusLineStation(first, 0, 0);
+                                    BusStop first = FindExistBusStop(stopKey);                                                   // Calls the findExistBusStop function, and returns the first bus (if not found, an exception will be thrown)
+                                    BusLineStation firstLineStation = new BusLineStation(first, 0, 0);                           // Builds a new bus line station. It is the first bus line station, so the previous distance and time irrelevant
 
+                                    // Finding existing bus stop and creating the second bus line station based on it:
                                     Console.WriteLine("Please enter the key of the second bus stop:");
                                     if (!int.TryParse(Console.ReadLine(), out stopKey))
                                         throw new ArgumentException("Invalid input!");
-                                    BusStop second = findExistBusStop(stopKey);
-                                    askForDistanceAndMinutesFromPrevious(ref distance, ref minutes);
+                                    BusStop second = FindExistBusStop(stopKey);
+                                    AskForDistanceAndMinutesFromPrevious(ref distance, ref minutes);                            // Calls the function to fill the distance and minutes from previous station
                                     BusLineStation secondLineStation = new BusLineStation(second, distance, minutes);
 
-                                    BusLine newBusLine = new BusLine(busLineNumber, firstLineStation, secondLineStation, area);
-                                    busCompany.busLinesList.Add(newBusLine);
+                                    BusLine newBusLine = new BusLine(busLineNumber, firstLineStation, secondLineStation, area); // Builds a new bus line
+                                    busCompany.busLinesList.Add(newBusLine);                                                    // Adds the new bus line to the company
                                 }
+                                // Creating and adding 2 new bus stops
                                 else if (checkRequest == 'B')
                                 {
+                                    // First bus stop creation:
                                     Console.WriteLine("First bus stop creation:");
-                                    BusStop first = addNewBusStop();
-                                    BusLineStation firstLineStation = new BusLineStation(first, 0, 0);
+                                    BusStop first = AddNewBusStop();                                                            // Calls the function to add a new bus stop and stores it in 'first'
+                                    BusLineStation firstLineStation = new BusLineStation(first, 0, 0);                          // Builds the first bus line station. 
 
+                                    // Second bus stop creation:
                                     Console.WriteLine("Second bus stop creation:");
-                                    BusStop second = addNewBusStop();
-                                    askForDistanceAndMinutesFromPrevious(ref distance, ref minutes);
-                                    BusLineStation secondLineStation = new BusLineStation(second, distance, minutes);
+                                    BusStop second = AddNewBusStop();                                                           // Calls the function to add a new bus stop and stores it in 'second'
+                                    AskForDistanceAndMinutesFromPrevious(ref distance, ref minutes);
+                                    BusLineStation secondLineStation = new BusLineStation(second, distance, minutes);           // Builds the second bus line station. 
 
-                                    BusLine newBusLine = new BusLine(busLineNumber, firstLineStation, secondLineStation, area);
-                                    busCompany.busLinesList.Add(newBusLine);
+                                    BusLine newBusLine = new BusLine(busLineNumber, firstLineStation, secondLineStation, area); // Builds a new bus line
+                                    busCompany.busLinesList.Add(newBusLine);                                                    // Adds the new bus line to the company
                                 }
                                 else throw new ArgumentException("Invalid input!");
                             }
+
+                            // New bus line station addition:
                             else if (checkRequest == 'B')
                             {
                                 BusStop newBusStop;
                                 Console.WriteLine("Please enter the number of the line bus, you want to add a bus stop to:");
                                 if (!int.TryParse(Console.ReadLine(), out busLineNumber))
                                     throw new ArgumentException("Invalid input!");
-                                index = busCompany.searchIndex(busLineNumber); // If there is no such bus line, the searchIndex will throw exception
+                                index = busCompany.searchIndex(busLineNumber);                                              // If there is no such bus line, the searchIndex will throw exception
 
                                 Console.WriteLine("Enter A - for adding an existing bus stop, " +
                                             "B - for creating and adding a new bus stop");
 
-                                char.TryParse(Console.ReadLine(), out checkRequest); // Checks if the input legit and stores in checkRequest
+                                char.TryParse(Console.ReadLine(), out checkRequest);                                        // Checks if the input legit and stores in checkRequest
 
+                                // Finding an existing bus stop:
                                 if (checkRequest == 'A')
                                 {
                                     Console.WriteLine("Please enter the existing bus stop number, you want to add to the bus line");
                                     if (!int.TryParse(Console.ReadLine(), out stopKey))
                                         throw new ArgumentException("Invalid input!");
-                                    newBusStop = findExistBusStop(stopKey);
+                                    newBusStop = FindExistBusStop(stopKey);
                                 }
+                                // Creating an new bus stop:
                                 else if (checkRequest == 'B')
                                 {
-                                    newBusStop = addNewBusStop();
+                                    newBusStop = AddNewBusStop();
                                 }
                                 else throw new ArgumentException("Invalid input!");
 
                                 Console.WriteLine("Where do you wish to add the bus stop?\n " +
-                                                    "Enter A - for adding it to the beginning of the line, " +
-                                                    "B - for adding it to the middle of the line, " +
+                                                    "Enter A - for adding it to the beginning of the line,\n" +
+                                                    "B - for adding it to the middle of the line,\n" +
                                                     "C - for adding it to the end of the line:");
                                 char.TryParse(Console.ReadLine(), out checkRequest); // Checks if the input legit and stores in checkRequest
 
                                 double distToNext = 0, minToNext = 0;
+
+                                // Adding a new bus line station based on the bus stop - to the beginning of the line:
                                 if (checkRequest == 'A')
                                 {
                                     BusLineStation newBusLineStation = new BusLineStation(newBusStop, 0, 0);
-                                    askForDistanceAndMinutesToNext(ref distToNext, ref minToNext);
+                                    AskForDistanceAndMinutesToNext(ref distToNext, ref minToNext);    // Calling a function for initializing the parameters of the next station (distance and minutes to the previous station)
                                     busCompany.busLinesList[index].addBusStation(newBusLineStation, 0, distToNext, minToNext);
                                 }
+                                // Adding a new bus line station based on the bus stop - to the middle of the line:
                                 else if (checkRequest == 'B')
                                 {
-                                    Console.WriteLine("Please, enter the key of the previous station.");
+                                    Console.WriteLine("Please, enter the key of the previous station."); // The key of the previous station necessary in order to place the new station in the desired place
                                     if (!int.TryParse(Console.ReadLine(), out int prevKey))
                                         throw new ArgumentException("Invalid input!");
                                     if (!busCompany.busLinesList[index].stationExist(prevKey))
-                                        throw new KeyNotFoundException("The key for the previous station is incorrect");
-                                    askForDistanceAndMinutesFromPrevious(ref distance, ref minutes);
+                                        throw new KeyNotFoundException("The key for the previous station is incorrect"); // The throw of this exception in case the key isn't found
+                                    // Distance and minutes absorption:
+                                    AskForDistanceAndMinutesFromPrevious(ref distance, ref minutes);
                                     BusLineStation newBusLineStation = new BusLineStation(newBusStop, distance, minutes);
-                                    askForDistanceAndMinutesToNext(ref distToNext, ref minToNext);
+                                    AskForDistanceAndMinutesToNext(ref distToNext, ref minToNext);
                                     busCompany.busLinesList[index].addBusStation(newBusLineStation, prevKey, distToNext, minToNext);
                                 }
+                                // Adding a new bus line station based on the bus stop - to the end of the line:
                                 else if (checkRequest == 'C')
                                 {
-                                    askForDistanceAndMinutesFromPrevious(ref distance, ref minutes);
+                                    AskForDistanceAndMinutesFromPrevious(ref distance, ref minutes);
                                     BusLineStation newBusLineStation = new BusLineStation(newBusStop, distance, minutes);
                                     busCompany.busLinesList[index].addBusStationToEnd(newBusLineStation);
                                 }
@@ -187,55 +198,60 @@ namespace dotNet5781_02_0933_8558
                             break;
 
                         case CHOICE.DELETE:
-                            // For the A or B input
-                            Console.WriteLine("Please enter A - for delete a bus line, " +
-                                               "B - for delete station, " +
+                                                        
+                            Console.WriteLine("Please enter A - for delete a bus line,\n" +
+                                               "B - for delete station,\n" +
                                                "or other key to return to the menu:");
                             char.TryParse(Console.ReadLine(), out checkRequest);
+                            // A bus line deletion:
                             if (checkRequest == 'A')
                             {
                                 Console.WriteLine("Please enter the bus line number you would like to delete:");
                                 if (!int.TryParse(Console.ReadLine(), out busLineNumber))
                                     throw new ArgumentException("Invalid input!");
-                                busCompany.DeleteBusLine(busLineNumber);
+                                busCompany.DeleteBusLine(busLineNumber); // Calls the delete bus line method (in the collection class)
                             }
+                            // A bus station deletion:
                             else if (checkRequest == 'B')
                             {
                                 Console.WriteLine("Please enter the bus line number:");
                                 if (!int.TryParse(Console.ReadLine(), out busLineNumber))
                                     throw new ArgumentException("Invalid input!");
-                                index = busCompany.searchIndex(busLineNumber);
-                                BusLine busLineHelp = busCompany.busLinesList[index];
-                                if (busLineHelp.BusStationList.Count == 2)
-                                    throw new RouteException("there are only two stations in this line");
+                                index = busCompany.searchIndex(busLineNumber);                  // Finds the index of the bus to delete
+                                BusLine busLineHelp = busCompany.busLinesList[index];           // Creates a new busLine based on the index found (for ease of code writing)
+                                if (busLineHelp.BusStationList.Count == 2)                      // Cannot delete a bus station if there are only 2 in the bus line
+                                    throw new RouteException("there are only two stations in this line"); // Throws exception created especially for this case
                                 Console.WriteLine("Please enter the station number you would like to delete:");
                                 if (!int.TryParse(Console.ReadLine(), out stopKey))
                                     throw new ArgumentException("Invalid input!");
-                                index = busLineHelp.findIndexStation(stopKey);
-                                if (index == 0)    //in case its the first station to delete
-                                {   //update the first station
+                                index = busLineHelp.findIndexStation(stopKey);                  // Finds the index of the bus station for deletion
+                                if (index == 0)                                                 // In case it is the first station to delete
+                                {   
+                                    // Distance, minutes, and first station update:
                                     busLineHelp.BusStationList[1].DistanceFromPreviousStation = 0;
                                     busLineHelp.BusStationList[1].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(0);
-                                    busLineHelp.FirstStation = busLineHelp.BusStationList[1];
-                                    busLineHelp.deleteBusStation(stopKey);
+                                    busLineHelp.FirstStation = busLineHelp.BusStationList[1];   
+                                    busLineHelp.deleteBusStation(stopKey);                      // Calls the delete bus line method (in the bus line class)
                                 }
-                                else if (index == busLineHelp.BusStationList.Count - 1) //in case of delete last station
-                                {   //update the last station
+                                else if (index == busLineHelp.BusStationList.Count - 1)        // In case it is the last station to delete
+                                {
+                                    // First station update:
                                     busLineHelp.LastStation = busLineHelp.BusStationList[busLineHelp.BusStationList.Count - 1];
-                                    busLineHelp.deleteBusStation(stopKey);
+                                    busLineHelp.deleteBusStation(stopKey);                     // Calls the delete bus line method (in the bus line class)
                                 }
-                                else                                                    //in case of delete middle station
+                                else                                                           // In case of delete middle station                                            
                                 {
                                     Console.WriteLine("You need to update the distance and the time (from the previous station) of the next bus station.\n" +
-                                        "Please enter the new Distance:");
+                                        "Please enter the new distance:");
                                     if (!double.TryParse(Console.ReadLine(), out double newDistance))
                                         throw new ArgumentException("Invalid input!");
                                     Console.WriteLine("Please enter the new Time:");
                                     if (!double.TryParse(Console.ReadLine(), out double newMinutes))
                                         throw new ArgumentException("Invalid input!");
+                                    // Updates the next station info:
                                     busLineHelp.BusStationList[index + 1].DistanceFromPreviousStation = newDistance;
                                     busLineHelp.BusStationList[index + 1].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(newMinutes);
-                                    busLineHelp.deleteBusStation(stopKey);
+                                    busLineHelp.deleteBusStation(stopKey);                     // Calls the delete bus line method (in the bus line class)
                                 }
                             }
                             else throw new ArgumentException("Invalid input!");
@@ -243,58 +259,60 @@ namespace dotNet5781_02_0933_8558
 
                         case CHOICE.SEARCH:
                             // For the A or B input
-                            Console.WriteLine("Please enter A - for printing all the bus lines who are passing trough a specific bus stop, " +
-                                               "B - for printing the options to travel from one station to another, sorted by travel time, " +
+                            Console.WriteLine("Please enter A - for printing all the bus lines who are passing trough a specific bus stop,\n" +
+                                               "B - for printing the options to travel from one station to another, sorted by travel time,\n" +
                                                "or other key to return to the menu:");
                             char.TryParse(Console.ReadLine(), out checkRequest);
+                            // Searchs and prints all the bus lines stopping at the given bus stop
                             if (checkRequest == 'A')
                             {
                                 Console.WriteLine("Please enter the key of the bus station:");
                                 if (!int.TryParse(Console.ReadLine(), out stopKey))
-                                    throw new ArgumentException("Invalid input!");
-                                BusLinesCollection linesContaining = busCompany.BusLinesContainStation(stopKey);
+                                    throw new ArgumentException("Invalid input!");  
+                                BusLinesCollection linesContaining = busCompany.BusLinesContainStation(stopKey); // Calling the BusLinesContainStation method of the collection, to return a bus line collection of bus lines which stopping in the stopKey
+                                Console.WriteLine("Bus lines stopping at bus stop number {0}:", stopKey);
                                 foreach (BusLine bus in linesContaining)
                                 {
-                                    Console.WriteLine("Bus line number {0} stops at bus station number {1}", bus.BusLineNumber, stopKey);
+                                    Console.Write("Bus line number {0} \t", bus.BusLineNumber); // Prints each bus line of the new collection
                                 }
                             }
-
+                            // Searchs and prints the options to travel between two bus stops
                             else if (checkRequest == 'B')
                             {
-                                int stopKeyA, stopKeyB;
                                 Console.WriteLine("Please enter the key of the first bus station:");
-                                if (!int.TryParse(Console.ReadLine(), out stopKeyA))
+                                if (!int.TryParse(Console.ReadLine(), out int stopKeyA))
                                     throw new ArgumentException("Invalid input!");
                                 Console.WriteLine("Please enter the key of the second bus station:");
-                                if (!int.TryParse(Console.ReadLine(), out stopKeyB))
+                                if (!int.TryParse(Console.ReadLine(), out int stopKeyB))
                                     throw new ArgumentException("Invalid input!");
-                                BusLinesCollection busLinesBetweenTwoStops = new BusLinesCollection();
+                                BusLinesCollection busLinesBetweenTwoStops = new BusLinesCollection(); // Creates a new collection for bus sub-lines which travel between the two bus stops
                                 foreach (BusLine bus in busCompany)
                                 {
-                                    BusLineStation first = bus.findAndReturnStation(stopKeyA);
-                                    BusLineStation last = bus.findAndReturnStation(stopKeyB);
-                                    if (first != null && last != null)
-                                        if (bus.BusStationList.IndexOf(bus.findAndReturnStation(stopKeyA)) < bus.BusStationList.IndexOf(bus.findAndReturnStation(stopKeyB)))
-                                            busLinesBetweenTwoStops.busLinesList.Add(bus.Track(stopKeyA, stopKeyB));
-                                }
+                                    BusLineStation first = bus.findAndReturnStation(stopKeyA);  // Finds the first bus station
+                                    BusLineStation last = bus.findAndReturnStation(stopKeyB);   // Finds the second bus station
+                                    if (first != null && last != null)                          // If the bus stations actually been found
+                                        if (bus.BusStationList.IndexOf(bus.findAndReturnStation(stopKeyA)) < bus.BusStationList.IndexOf(bus.findAndReturnStation(stopKeyB))) // And if they were given in the right order (checking by their index)
+                                            busLinesBetweenTwoStops.busLinesList.Add(bus.Track(stopKeyA, stopKeyB));                                                         // Add the sub-lines (created and returned by Track function) to the collection
+                                }   
 
-                                busLinesBetweenTwoStops.SortBusLinesList();
+                                busLinesBetweenTwoStops.SortBusLinesList(); // Calls the sort method of the collection 
 
                                 Console.WriteLine("Options to travel:");
                                 foreach (BusLine bus in busLinesBetweenTwoStops)
                                 {
-                                    Console.WriteLine("Bus number {0} travel time from {1} to {2} is: {3}", bus.BusLineNumber, stopKeyA, stopKeyB, bus.TotalTimeTravel());
+                                    Console.WriteLine("Bus number {0} travel time from {1} to {2} is: {3}", bus.BusLineNumber, stopKeyA, stopKeyB, bus.TotalTimeTravel()); // Prints the options to travel and stored in the collection, sorted by their travel time
                                 }
                             }
                             else throw new ArgumentException("Invalid input!");
                             break;
 
                         case CHOICE.PRINT:
-                            // For the A or B input
-                            Console.WriteLine("Please enter A - for printing all the bus lines in the company, " +
-                                               "B - for printing all the bus stations, and the bus lines stoping at them, " +
+                            Console.WriteLine("Please enter A - for printing all the bus lines in the company,\n" +
+                                               "B - for printing all the bus stations, and the bus lines stoping at them,\n" +
                                                "or other key to return to the menu:");
                             char.TryParse(Console.ReadLine(), out checkRequest);
+                            
+                            // Prints all the bus lines:
                             if (checkRequest == 'A')
                             {
                                 foreach (BusLine bus in busCompany)
@@ -302,15 +320,16 @@ namespace dotNet5781_02_0933_8558
                                     Console.WriteLine(bus);
                                 }
                             }
+                            // Prints all the bus stops and the bus lines stopping at them:
                             else if (checkRequest == 'B')
                             {
                                 foreach (BusStop busStop in busStops)
                                 {
-                                    BusLinesCollection linesContaining = busCompany.BusLinesContainStation(busStop.BusStopKey);
-                                    Console.Write("Bus lines numbers which stop at bus station number {0} =>", busStop.BusStopKey);
+                                    BusLinesCollection linesContaining = busCompany.BusLinesContainStation(busStop.BusStopKey);  // Calling the BusLinesContainStation method of the collection, to return a bus line collection of bus lines which stopping in the stopKey
+                                    Console.Write("Bus lines numbers which stop at bus station number {0}, at the address {1} =>", busStop.BusStopKey, busStop.BusStopAddress); // Prints the bus station number
                                     foreach (BusLine bus in linesContaining)
                                     {
-                                        Console.Write(" {0,-5}", bus.BusLineNumber, busStop.BusStopKey);
+                                        Console.Write(" {0,-5}", bus.BusLineNumber, busStop.BusStopKey); // Prints the bus lines
 
                                     }
                                     Console.WriteLine("\n====");
@@ -344,28 +363,37 @@ namespace dotNet5781_02_0933_8558
 
         }
 
-        public static BusStop addNewBusStop()
+        /// <summary>
+        /// Adds a new bus stop
+        /// </summary>
+        /// <returns></returns>
+        public static BusStop AddNewBusStop() 
         {
-            int stopKey;
             string address;
             Console.WriteLine("Please enter the key of the bus stop:\n");
-            if (!int.TryParse(Console.ReadLine(), out stopKey))
+            if (!int.TryParse(Console.ReadLine(), out int stopKey))
                 throw new ArgumentException("Invalid input!");
+            // In case the bus already exist an argument exception will be thrown
             foreach (BusStop busStop in busStops)
             {
                 if (busStop.BusStopKey == stopKey)
                 {
-                    throw new KeyNotFoundException("The bus stop already exist!");
+                    throw new ArgumentException("The bus stop already exist!");
                 }
             }
             Console.WriteLine("Please enter the address of the bus stop:\n");
             address = Console.ReadLine();
-            BusStop newBus = new BusStop(stopKey, address);
-            busStops.Insert(0, newBus);
+            BusStop newBus = new BusStop(stopKey, address); // Builds a new bus stop
+            busStops.Insert(0, newBus);                     // Inserts it to the bus stops list
             return newBus;
         }
 
-        public static void askForDistanceAndMinutesFromPrevious(ref double distance, ref double minutes)
+        /// <summary>
+        /// Asks the user for the distance and minutes from the previous bus station
+        /// </summary>
+        /// <param name="distance"></param>
+        /// <param name="minutes"></param>
+        public static void AskForDistanceAndMinutesFromPrevious(ref double distance, ref double minutes)
         {
             Console.WriteLine("Please enter the distance from the previous bus stop (of this line):\n");
             if (!double.TryParse(Console.ReadLine(), out distance))
@@ -376,7 +404,12 @@ namespace dotNet5781_02_0933_8558
                 throw new ArgumentException("Invalid input!");
         }
 
-        public static void askForDistanceAndMinutesToNext(ref double distance, ref double minutes)
+        /// <summary>
+        /// Asks the user for the distance and minutes to the next bus station
+        /// </summary>
+        /// <param name="distance"></param>
+        /// <param name="minutes"></param>
+        public static void AskForDistanceAndMinutesToNext(ref double distance, ref double minutes)
         {
             Console.WriteLine("Please enter the distance to the next bus stop (of this line):\n");
             if (!double.TryParse(Console.ReadLine(), out distance))
@@ -387,7 +420,12 @@ namespace dotNet5781_02_0933_8558
                 throw new ArgumentException("Invalid input!");
         }
 
-        public static BusStop findExistBusStop(int stopKey)
+        /// <summary>
+        /// Finds and returns a bus stop based on its key
+        /// </summary>
+        /// <param name="stopKey"></param>
+        /// <returns></returns>
+        public static BusStop FindExistBusStop(int stopKey)
         {
             foreach (BusStop busStop in busStops)
             {
@@ -399,15 +437,22 @@ namespace dotNet5781_02_0933_8558
             throw new KeyNotFoundException("The bus stop doesn't exist!");
         }
 
-
-        public static void busCompanyInitializer(ref BusLinesCollection busCompany, ref List<BusStop> busStops)
+        /// <summary>
+        /// Bus company initializer, called at the beginning of the program
+        /// </summary>
+        /// <param name="busCompany"></param>
+        /// <param name="busStops"></param>
+        public static void BusCompanyInitializer(ref BusLinesCollection busCompany, ref List<BusStop> busStops)
         {
+            // The strings are used to create an address
             var bigChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             var smallChars = "abcdefghijklmnopqrstuvwxyz";
             var numbers = "0123456789";
+            // Creates 40 bus stops
             for (int i = 0; i < 40; ++i)
             {
                 char[] stringChars = new char[8];
+                // Cutts the strings above to create an address in the form of Abcde 23
                 for (int j = 0; j < stringChars.Length; j++)
                 {
                     if (j == 0) stringChars[j] = bigChars[rnd.Next(bigChars.Length - 1)];
@@ -416,13 +461,14 @@ namespace dotNet5781_02_0933_8558
                     else stringChars[j] = numbers[rnd.Next(numbers.Length - 1)];
                 }
                 string address = new string(stringChars);
+                // Random number for the key of bus stop:
                 int stationKey = rnd.Next(100000);
                 while (busStops.Any(item => item.BusStopKey == stationKey)) // This loop makes sures there is no duplicateded station key
                 {
                     stationKey = rnd.Next(100000);
                 }
-                BusStop newStation = new BusStop(stationKey, address);
-                busStops.Insert(0, newStation); ;
+                BusStop newStation = new BusStop(stationKey, address); // Builds the bus stop
+                busStops.Insert(0, newStation);                         // Inserts it to the list
             } // Ending this loop, 40 bus station are initialized
 
             // Bus lines collection routine:
@@ -467,6 +513,19 @@ namespace dotNet5781_02_0933_8558
             } // This loop makes sure that at least 10 bus stations will be used for two different bus lines
         }
     }
+
+    /// <summary>
+    /// In case there are only two stations in this line
+    /// </summary>
+    public class RouteException : Exception
+    {
+        public RouteException() { }
+        public RouteException(string message) : base(message) { }
+        public RouteException(string message, Exception inner) : base(message, inner) { }
+        protected RouteException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }  
 }
 
 /*
