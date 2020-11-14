@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ Exercise 2 - Mendi Ben Ezra (311140933), Shimon Dyskin (310468558)
+ Description: The program manages a collection of bus lines, with bus stations,
+offering to add, delete, search and print.
+ ===Note: According to the lecturer we decided, that two round-trip lines would not pass through stations with the same code (even the first and the last ones, as it is in reality.
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,8 +32,8 @@ namespace dotNet5781_02_0933_8558
         {
             BusStopKey = stopKey;
             BusStopAddress = address;
-            latitude = 31 + lineLocation.NextDouble() * 2.3;
-            longitude = 34.3 + lineLocation.NextDouble() * 1.2;
+            latitude = 31 + lineLocation.NextDouble() * 2.3;            //random numbers between [31,33.3] for Latitud
+            longitude = 34.3 + lineLocation.NextDouble() * 1.2;         //random numbers between [34.3,35.5] for Longitude
         }
 
 
@@ -41,7 +47,7 @@ namespace dotNet5781_02_0933_8558
             get { return busStopKey; }
             set
             {
-                if (value < 0 || value > 1000000) // The bus station key is 6 digits only
+                if (value < 0 || value > 1000000)       // The bus station key is 6 digits only
                     throw new ArgumentException("Worng input for station code.");
                 else
                     busStopKey = value;
@@ -85,7 +91,7 @@ namespace dotNet5781_02_0933_8558
         /// Overrides the ToString function, returning info on the bus station
         /// </summary>
         /// <returns></returns>
-        public override string ToString()
+        public override string ToString()           //printting details of the stations
         {
             return string.Format("Bus Stop Code:\n" +
                                   "BusStopKey = {0}, Latitude = {1}, Longitude = {2}", BusStopKey, Latitude, Longitude);
