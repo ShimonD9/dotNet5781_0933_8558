@@ -94,7 +94,7 @@ namespace dotNet5781_02_0933_8558
         /// <param name="prevKey"></param>
         /// <param name="distanceToNextStation"></param>
         /// <param name="timeToNextStation"></param>
-        public void addBusStation(BusLineStation newStation, int prevKey, double distanceToNextStation, double timeToNextStation)
+        public void AddBusStation(BusLineStation newStation, int prevKey, double distanceToNextStation, double timeToNextStation)
         {
             if (prevKey == 0)                       //in case of first station in the bus
             {
@@ -105,7 +105,7 @@ namespace dotNet5781_02_0933_8558
             }
             else if (prevKey > 0)                    //in case of insert station in the midddle
             {
-                BusLineStation tempStation = findAndReturnStation(prevKey);     //create a temp station to insert
+                BusLineStation tempStation = FindAndReturnStation(prevKey);     //create a temp station to insert
                 int index = busStationList.IndexOf(tempStation);                //find the index for the new station
                 busStationList[index + 1].DistanceFromPreviousStation = distanceToNextStation;      //update the previous station distance
                 busStationList[index + 1].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(timeToNextStation);      //update the previous station time travel
@@ -117,7 +117,7 @@ namespace dotNet5781_02_0933_8558
         /// Add bus station to the end of the list
         /// </summary>
         /// <param name="newStation"></param>
-        public void addBusStationToEnd(BusLineStation newStation)       //in case of insert station to the end
+        public void AddBusStationToEnd(BusLineStation newStation)       //in case of insert station to the end
         {
             LastStation = newStation;                                   //update the new last station
             busStationList.Add(newStation);                             //add the station to the end
@@ -127,7 +127,7 @@ namespace dotNet5781_02_0933_8558
         /// Deletes bus station based on it's key
         /// </summary>
         /// <param name="keyStation"></param>
-        public void deleteBusStation(int keyStation)        //delete station
+        public void DeleteBusStation(int keyStation)        //delete station
         {
 
             foreach (BusLineStation station in busStationList)      //loop for finding the key of the station to delete
@@ -146,7 +146,7 @@ namespace dotNet5781_02_0933_8558
         /// Finds and returns bus line station based on it's key
         /// </summary>
         /// <param name="keyStation"></param>
-        public BusLineStation findAndReturnStation(int key)         //found the station by key and return the object
+        public BusLineStation FindAndReturnStation(int key)         //found the station by key and return the object
         {
             foreach (BusLineStation station in busStationList)      //looop for finding the key
             {
@@ -161,7 +161,7 @@ namespace dotNet5781_02_0933_8558
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public bool stationExist(int key)                       //checks if station exist in the busline
+        public bool StationExist(int key)                       //checks if station exist in the busline
         {
             foreach (BusLineStation station in busStationList)  //loop for checking if the station exist
             {
@@ -178,10 +178,10 @@ namespace dotNet5781_02_0933_8558
         /// <param name="keyB"></param>
         /// <returns></returns>
         /// 
-        public double distanceStation(int keyA, int keyB)           //check distance between two stations
+        public double DistanceStation(int keyA, int keyB)           //check distance between two stations
         {
-            BusLineStation firstStation = findAndReturnStation(keyA);     //create the first station with keyA
-            BusLineStation lastStation = findAndReturnStation(keyB);      //create the first station with keyB
+            BusLineStation firstStation = FindAndReturnStation(keyA);     //create the first station with keyA
+            BusLineStation lastStation = FindAndReturnStation(keyB);      //create the first station with keyB
             int indexA = busStationList.IndexOf(firstStation);      //find the index of first station
             int indexB = busStationList.IndexOf(lastStation);       //find the index of second station
             if (indexA == -1)           //in case first station was not found
@@ -221,7 +221,7 @@ namespace dotNet5781_02_0933_8558
         /// </summary>
         /// <param name="busStationKey"></param>
         /// <returns></returns>
-        public int findIndexStation(int busStationKey)
+        public int FindIndexStation(int busStationKey)
         {
             for (int i = 0; i < busStationList.Count; i++)                           //loop for find the station
                 if (busStationList[i].BusStopKey == busStationKey)      
@@ -235,10 +235,10 @@ namespace dotNet5781_02_0933_8558
         /// <param name="keyA"></param>
         /// <param name="keyB"></param>
         /// <returns></returns>
-        public TimeSpan timeTravel(int keyA, int keyB)
+        public TimeSpan TimeTravel(int keyA, int keyB)
         {
-            BusLineStation firstStation = findAndReturnStation(keyA);     //create the first station with keyA
-            BusLineStation lastStation = findAndReturnStation(keyB);      //create the first station with keyB
+            BusLineStation firstStation = FindAndReturnStation(keyA);     //create the first station with keyA
+            BusLineStation lastStation = FindAndReturnStation(keyB);      //create the first station with keyB
             int indexA = busStationList.IndexOf(firstStation);            //find the index of first station
             int indexB = busStationList.IndexOf(lastStation);             //find the index of second station  
 
@@ -282,8 +282,8 @@ namespace dotNet5781_02_0933_8558
         /// <returns></returns>
         public BusLine Track(int keyA, int keyB)
         {
-            BusLineStation first = findAndReturnStation(keyA);      //create the first station with keyA
-            BusLineStation last = findAndReturnStation(keyB);       //create the first station with keyB
+            BusLineStation first = FindAndReturnStation(keyA);      //create the first station with keyA
+            BusLineStation last = FindAndReturnStation(keyB);       //create the first station with keyB
             int indexA = busStationList.IndexOf(first);             //find the index of first station
             int indexB = busStationList.IndexOf(last);              //find the index of second station 
 
@@ -328,7 +328,7 @@ namespace dotNet5781_02_0933_8558
         /// <returns></returns>
         public TimeSpan TotalTimeTravel()       
         {
-            TimeSpan totalTime = timeTravel(this.firstStation.BusStopKey, this.lastStation.BusStopKey);
+            TimeSpan totalTime = TimeTravel(this.firstStation.BusStopKey, this.lastStation.BusStopKey);
             return totalTime;
         }
 

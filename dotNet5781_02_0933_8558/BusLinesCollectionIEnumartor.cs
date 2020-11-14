@@ -15,8 +15,8 @@ namespace dotNet5781_02_0933_8558
 {
     class BusLinesCollectionIEnumartor : IEnumerator
     {
-        int index = -1, counter;
-        List<BusLine> busLineList;
+        int index = -1, counter;        //index and counter
+        List<BusLine> busLineList;      //bus list to return
 
         public BusLinesCollectionIEnumartor(List<BusLine> busLineList)
         {
@@ -26,10 +26,10 @@ namespace dotNet5781_02_0933_8558
 
         public object Current => (BusLine)busLineList[index];
 
-        public bool MoveNext()
+        public bool MoveNext()      //go to the next place
         {
             index++;
-            if (index >= counter)
+            if (index >= counter)   
             {
                 index = -1;
                 return false;
@@ -37,7 +37,7 @@ namespace dotNet5781_02_0933_8558
             return true;
         }
 
-        public void Reset()
+        public void Reset()     //reset index
         {
             index = -1;
         }

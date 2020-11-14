@@ -65,7 +65,7 @@ namespace dotNet5781_02_0933_8558
         /// </summary>
         /// <param name="keyBusLine"></param>
         /// <returns></returns>
-       public bool searchBusLine(int keyBusLine)
+       public bool SearchBusLine(int keyBusLine)
         {
             int count = 0;                              //for count the bus line
             foreach (BusLine bus in busLinesList)       //loop counting the bus line
@@ -111,7 +111,7 @@ namespace dotNet5781_02_0933_8558
         /// </summary>
         /// <param name="busLineKey"></param>
         /// <returns></returns>
-        public int searchIndex(int busLineKey)
+        public int SearchIndex(int busLineKey)
         {
             for (int i = 0; i < busLinesList.Count; i++)        //loop for find the index
                 if (busLinesList[i].BusLineNumber == busLineKey)
@@ -139,12 +139,12 @@ namespace dotNet5781_02_0933_8558
         {
             get
             {
-                int index = searchIndex(numBusLine);
+                int index = SearchIndex(numBusLine);
                 return busLinesList[index];
             }
             set
             {
-                int index = searchIndex(numBusLine);
+                int index = SearchIndex(numBusLine);
                 busLinesList[index] = value;
             }
 
@@ -155,7 +155,7 @@ namespace dotNet5781_02_0933_8558
         /// </summary>
         /// <param name="stationKey"></param>
         /// <returns></returns>
-        public bool staionExist(int stationKey)         //check for exsit station
+        public bool StaionExist(int stationKey)         //check for exsit station
         {           
             foreach (BusLine bus in busLinesList)       //loop for the bus
                 foreach (BusLineStation station in bus.BusStationList)          //inner loop for stations              
