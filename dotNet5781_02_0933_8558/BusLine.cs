@@ -9,6 +9,7 @@ using System.Runtime.Remoting.Messaging;
 
 namespace dotNet5781_02_0933_8558
 {
+   
     public class BusLine : IComparable
     {
         /// <summary>
@@ -127,7 +128,8 @@ namespace dotNet5781_02_0933_8558
         /// </summary>
         /// <param name="keyStation"></param>
         public void deleteBusStation(int keyStation)
-        {
+        {           
+   
             foreach (BusLineStation station in busStationList)
             {
                 if (station.BusStopKey == keyStation)

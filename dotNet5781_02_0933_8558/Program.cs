@@ -16,9 +16,18 @@ using System.Xml.Serialization;
 
 namespace dotNet5781_02_0933_8558
 {
+    public class RouteException : Exception
+    {
+        public RouteException() { }
+        public RouteException(string message) : base(message) { }
+        public RouteException(string message, Exception inner) : base(message, inner) { }
+        protected RouteException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }  //in case there are only two stations in this line
     class Program
     {
-        static BusLinesCollection busCompany = new BusLinesCollection();
+        static BusLinesCollection busCompany = new BusLinesCollection();        
         static List<BusStop> busStops = new List<BusStop>();
         public static Random rnd = new Random(DateTime.Now.Millisecond);
 
@@ -197,6 +206,8 @@ namespace dotNet5781_02_0933_8558
                                     throw new ArgumentException("Invalid input!");
                                 index = busCompany.searchIndex(busLineNumber);
                                 BusLine busLineHelp = busCompany.busLinesList[index];
+                                if (busLineHelp.BusStationList.Count == 2)
+                                    throw new RouteException("there are only two stations in this line");
                                 Console.WriteLine("Please enter the station number you would like to delete:");
                                 if (!int.TryParse(Console.ReadLine(), out stopKey))
                                     throw new ArgumentException("Invalid input!");
@@ -205,7 +216,7 @@ namespace dotNet5781_02_0933_8558
                                 {   //update the first station
                                     busLineHelp.BusStationList[1].DistanceFromPreviousStation = 0;
                                     busLineHelp.BusStationList[1].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(0);
-                                    busLineHelp.FirstStation = busLineHelp.BusStationList[1];   
+                                    busLineHelp.FirstStation = busLineHelp.BusStationList[1];
                                     busLineHelp.deleteBusStation(stopKey);
                                 }
                                 else if (index == busLineHelp.BusStationList.Count - 1) //in case of delete last station
@@ -300,7 +311,7 @@ namespace dotNet5781_02_0933_8558
                                     foreach (BusLine bus in linesContaining)
                                     {
                                         Console.Write(" {0,-5}", bus.BusLineNumber, busStop.BusStopKey);
-                                   
+
                                     }
                                     Console.WriteLine("\n====");
                                 }
@@ -317,6 +328,10 @@ namespace dotNet5781_02_0933_8558
 
                 }
                 catch (ArgumentException exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
+                catch (RouteException exception)
                 {
                     Console.WriteLine(exception.Message);
                 }
