@@ -15,20 +15,20 @@
             <RowDefinition Height="50*"/>
             <RowDefinition Height="400*"/>
         </Grid.RowDefinitions>
-        <Grid Name = "UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" >
+        <Grid Name = "UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto" Background="#FF5DB5FF" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="36*"/>
-                <ColumnDefinition Width="163*"/>
-                <ColumnDefinition Width="199*"/>
-                <ColumnDefinition Width="198*"/>
-                <ColumnDefinition Width="198*"/>
+                <ColumnDefinition Width="160*"/>
+                <ColumnDefinition Width="195*"/>
+                <ColumnDefinition Width="194*"/>
+                <ColumnDefinition Width="194"/>
             </Grid.ColumnDefinitions>
-            <ComboBox Name ="cbBusLines" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="2" SelectionChanged="cbBusLines_SelectionChanged" Margin="0.333,0,0.334,0" FontFamily="Global Monospace" FontSize="22"/>
-            <Label Content="Bus Line Number:" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bernard MT Condensed" FontSize="22" Margin="17,18,0,12" Grid.ColumnSpan="2" Width="179" RenderTransformOrigin="0.011,0.63" Height="38"/>
-            <Label Content="Area:" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bernard MT Condensed" FontSize="24" Margin="62,16,55,13" Width="77"/>
-            <TextBox Name ="tbArea" Grid.Column="4" HorizontalAlignment="Stretch"  TextWrapping="Wrap" Text="{Binding Path=BusArea}" VerticalAlignment="Center" FontFamily="Bernard MT Condensed" FontWeight="Bold" TextChanged="tbArea_TextChanged" Margin="0,22,64,18" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <ComboBox Name ="cbBusLines" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="2" SelectionChanged="cbBusLines_SelectionChanged" Margin="10,17,119,19" FontFamily="Global Monospace" FontSize="22" Width="66" Background="#FFFFFFE1" BorderBrush="White" OpacityMask="#FFE45252" RenderTransformOrigin="0.697,-2.781" Height="32"/>
+            <Label Content="Bus Line Number:" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bernard MT Condensed" FontSize="22" Margin="0,17,176,13" Grid.ColumnSpan="2" Width="179" RenderTransformOrigin="0.011,0.63" Height="38" Grid.Column="1"/>
+            <Label Content="Area:" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bernard MT Condensed" FontSize="24" Margin="137,15,174,14" Width="77" RenderTransformOrigin="1.753,0.282" Grid.ColumnSpan="2"/>
+            <TextBox Name ="tbArea" Grid.Column="4" HorizontalAlignment="Stretch"  TextWrapping="Wrap" Text="{Binding Path=BusArea}" VerticalAlignment="Center" FontFamily="Yu Gothic UI Semibold" FontWeight="Bold" TextChanged="tbArea_TextChanged" Margin="25,17,80,19" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFFFFFE1" Height="32"/>
         </Grid>
-        <ListBox Name ="lbBusLineStations" ItemsSource="{Binding}" Grid.Row="1" VerticalContentAlignment="Center" FontFamily="Microsoft JhengHei" FontWeight="Bold" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" HorizontalContentAlignment="Stretch"/>
+        <ListBox Name ="lbBusLineStations" ItemsSource="{Binding}" Grid.Row="1" VerticalContentAlignment="Center" FontFamily="Microsoft JhengHei" FontWeight="Bold" Background="#FFFFFFE1" HorizontalContentAlignment="Stretch"/>
 
     </Grid>
 </Window>
