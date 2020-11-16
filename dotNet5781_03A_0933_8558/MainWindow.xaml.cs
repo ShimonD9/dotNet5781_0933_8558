@@ -30,22 +30,29 @@ namespace dotNet5781_03A_0933_8558
         {
             BusCompanyInitializer(ref busCompany, ref busStops); // Calling the 40 bus stops and 10 bus lines randomizer routine:
             InitializeComponent();
+            // Combo box intializing:
             cbBusLines.ItemsSource = busCompany;
             cbBusLines.DisplayMemberPath = "BusLineNumber";
+            cbBusLines.SelectedIndex = 0; // The SelectionChanged method is being called after the index selected
+            // To make the text box read only:
             tbArea.IsReadOnly = true;
-            cbBusLines.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Calls the ShowBusLine in case the selection changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbBusLines_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ShowBusLine((cbBusLines.SelectedValue as BusLine).BusLineNumber);
+            ShowBusLine((cbBusLines.SelectedValue as BusLine).BusLineNumber); // Sents to the function the bus line number
         }
 
         private void ShowBusLine(int index)
         {
             currentDisplayBusLine = busCompany[index];
-            UpGrid.DataContext = currentDisplayBusLine;
-            lbBusLineStations.DataContext = currentDisplayBusLine.BusStationsList;
+            UpGrid.DataContext = currentDisplayBusLine; // To update the area
+            lbBusLineStations.DataContext = currentDisplayBusLine.BusStationsList; // To show the bus stations in the list box
         }
 
         /// <summary>
