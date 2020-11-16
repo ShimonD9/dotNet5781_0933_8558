@@ -30,7 +30,6 @@ namespace dotNet5781_03A_0933_8558
         {
             BusCompanyInitializer(ref busCompany, ref busStops); // Calling the 40 bus stops and 10 bus lines randomizer routine:
             InitializeComponent();
-            tbArea.Text = busCompany.busLinesList[0].BusArea.ToString();
             cbBusLines.ItemsSource = busCompany;
             cbBusLines.DisplayMemberPath = "BusLineNumber";
             cbBusLines.SelectedIndex = 0;
