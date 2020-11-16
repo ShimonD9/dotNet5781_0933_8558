@@ -68,7 +68,7 @@ namespace dotNet5781_02_0933_8558
             get { return distanceFromPreviousStation; }
             set { if (distanceFromPreviousStation < 0)          //in case of illegal input
                     throw new ArgumentException("Illegal input of distence.");
-                distanceFromPreviousStation = Math.Round(value); }
+                distanceFromPreviousStation = Math.Round(value, 1); }
         }
         /// <summary>
         /// the time travel of the bus from last station property
@@ -81,7 +81,8 @@ namespace dotNet5781_02_0933_8558
             set { 
                 if (value.Minutes < 0)                  //in case of illegal input
                     throw new ArgumentException("Illegal input of minutes.");
-                timeTravelFromPreviousStation = value; }
+                timeTravelFromPreviousStation = value - TimeSpan.FromMilliseconds(value.Milliseconds); // Removes the milliseconds
+            }
         }
 
         /// <summary>

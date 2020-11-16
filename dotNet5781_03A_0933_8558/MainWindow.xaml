@@ -24,6 +24,6 @@
             <Label Content="Area:" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bernard MT Condensed" FontSize="24" Grid.ColumnSpan="2" Margin="198.333,0,0.334,0"/>
             <TextBox Name ="tbArea" Grid.Column="4" HorizontalAlignment="Stretch"  TextWrapping="Wrap" Text="{Binding Path=Area}" VerticalAlignment="Center" FontFamily="Bernard MT Condensed" FontWeight="Bold" TextChanged="tbArea_TextChanged" Margin="0,20,64,20" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </Grid>
-        <ListBox Name ="lbBusLineStations" ItemsSource="{Binding}" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch"/>
+        <ListBox Name ="lbBusLineStations" ItemsSource="{Binding}" Grid.Row="1" VerticalContentAlignment="Center" FlowDirection="RightToLeft" HorizontalContentAlignment="Center" FontFamily="Candara" FontWeight="Bold" FontSize="14"/>
     </Grid>
 </Window>

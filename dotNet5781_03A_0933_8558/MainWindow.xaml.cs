@@ -30,30 +30,24 @@ namespace dotNet5781_03A_0933_8558
         {
             BusCompanyInitializer(ref busCompany, ref busStops); // Calling the 40 bus stops and 10 bus lines randomizer routine:
             InitializeComponent();
+            tbArea.Text = busCompany.busLinesList[0].BusArea.ToString();
             cbBusLines.ItemsSource = busCompany;
             cbBusLines.DisplayMemberPath = "BusLineNumber";
             cbBusLines.SelectedIndex = 0;
-            ShowBusLine(busCompany.busLinesList[0].BusLineNumber);
-
+            tbArea.IsReadOnly = true;
         }
-
-        private void tbArea_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
 
         private void cbBusLines_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ShowBusLine((cbBusLines.SelectedValue as BusLine).BusLineNumber);
         }
 
-        private void ShowBusLine(int busLineNumber)
+        private void ShowBusLine(int index)
         {
-            currentDisplayBusLine = busCompany[busLineNumber];
+            currentDisplayBusLine = busCompany[index];
             UpGrid.DataContext = currentDisplayBusLine;
             lbBusLineStations.DataContext = currentDisplayBusLine.BusStationsList;
-            tbArea.Text = busCompany[busLineNumber].BusArea.ToString();
+            tbArea.Text = busCompany[index].BusArea.ToString();
         }
 
         /// <summary>
@@ -130,6 +124,11 @@ namespace dotNet5781_03A_0933_8558
                 double minutes = Math.Round(20 * rnd.NextDouble() + 1, 1);
                 busCompany.busLinesList[i].AddBusStation(first, 0, 1.5 * minutes, minutes);
             } // This loop makes sure that at least 10 bus stations will be used for two different bus lines
+        }
+
+        private void tbArea_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

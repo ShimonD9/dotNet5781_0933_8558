@@ -487,7 +487,7 @@ namespace dotNet5781_02_0933_8558
                 BusLineStation first = new BusLineStation(busStops[i], 0, 0);
 
                 // Last station build:
-                double minutes = Math.Round(20 * rnd.NextDouble() + 1, 1); // Rounding up a randomized double for the minutes, later changed to a time format
+                double minutes = Math.Round(20 * rnd.NextDouble() + 1,1); // Rounding up a randomized double for the minutes, later changed to a time format
                 // Assuming the bus travels 1.5 km at a minute, so there will be a logic connection between the minutes and the distance
                 BusLineStation last = new BusLineStation(busStops[i + 10], 1.5 * minutes, minutes);
 
