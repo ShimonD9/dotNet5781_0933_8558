@@ -32,8 +32,8 @@ namespace dotNet5781_03A_0933_8558
             InitializeComponent();
             cbBusLines.ItemsSource = busCompany;
             cbBusLines.DisplayMemberPath = "BusLineNumber";
-            cbBusLines.SelectedIndex = 0;
             tbArea.IsReadOnly = true;
+            cbBusLines.SelectedIndex = 0;
         }
 
         private void cbBusLines_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -46,7 +46,6 @@ namespace dotNet5781_03A_0933_8558
             currentDisplayBusLine = busCompany[index];
             UpGrid.DataContext = currentDisplayBusLine;
             lbBusLineStations.DataContext = currentDisplayBusLine.BusStationsList;
-            tbArea.Text = busCompany[index].BusArea.ToString();
         }
 
         /// <summary>
