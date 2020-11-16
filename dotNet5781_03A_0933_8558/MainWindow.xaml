@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03A_0933_8558"
         mc:Ignorable="d"
-        Title="Bus Company Management" Height="640" Width="800">
+        Title="Bus Lines Viewer" Height="640" Width="800">
     <Grid Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="792*"/>
+            <ColumnDefinition Width="13*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="400*"/>
@@ -19,11 +23,12 @@
                 <ColumnDefinition Width="198*"/>
                 <ColumnDefinition Width="198*"/>
             </Grid.ColumnDefinitions>
-            <ComboBox Name ="cbBusLines" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="2" SelectionChanged="cbBusLines_SelectionChanged" Margin="0.333,0,0.334,0" FontFamily="Bernard MT Condensed" FontSize="22"/>
-            <Label Content="Bus Line Number:" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bernard MT Condensed" FontSize="22" Margin="20,13,198.333,17" Grid.ColumnSpan="3" Width="179" RenderTransformOrigin="0.011,0.63" Height="38"/>
-            <Label Content="Area:" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bernard MT Condensed" FontSize="24" Margin="63.667,13,57.333,16" Width="77"/>
-            <TextBox Name ="tbArea" Grid.Column="4" HorizontalAlignment="Stretch"  TextWrapping="Wrap" Text="{Binding Path=BusArea}" VerticalAlignment="Center" FontFamily="Bernard MT Condensed" FontWeight="Bold" TextChanged="tbArea_TextChanged" Margin="0,20,64,20" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <ComboBox Name ="cbBusLines" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="2" SelectionChanged="cbBusLines_SelectionChanged" Margin="0.333,0,0.334,0" FontFamily="Global Monospace" FontSize="22"/>
+            <Label Content="Bus Line Number:" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bernard MT Condensed" FontSize="22" Margin="17,18,0,12" Grid.ColumnSpan="2" Width="179" RenderTransformOrigin="0.011,0.63" Height="38"/>
+            <Label Content="Area:" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Bernard MT Condensed" FontSize="24" Margin="62,16,55,13" Width="77"/>
+            <TextBox Name ="tbArea" Grid.Column="4" HorizontalAlignment="Stretch"  TextWrapping="Wrap" Text="{Binding Path=BusArea}" VerticalAlignment="Center" FontFamily="Bernard MT Condensed" FontWeight="Bold" TextChanged="tbArea_TextChanged" Margin="0,22,64,18" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </Grid>
-        <ListBox Name ="lbBusLineStations" ItemsSource="{Binding}" Grid.Row="1" VerticalContentAlignment="Top" FontFamily="Candara" FontWeight="Bold" FontSize="14" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}"/>
+        <ListBox Name ="lbBusLineStations" ItemsSource="{Binding}" Grid.Row="1" VerticalContentAlignment="Center" FontFamily="Microsoft JhengHei" FontWeight="Bold" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" HorizontalContentAlignment="Stretch"/>
+
     </Grid>
 </Window>

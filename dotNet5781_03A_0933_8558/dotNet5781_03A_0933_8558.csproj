@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>busIcon.ico</ApplicationIcon>
+    <ApplicationIcon>Bus.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
@@ -108,6 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="busIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bus.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

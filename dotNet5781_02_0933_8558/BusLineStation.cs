@@ -91,7 +91,7 @@ namespace dotNet5781_02_0933_8558
         /// <returns></returns>
         public override string ToString()           //pritting details of a station
         {
-            return string.Format("Bus station key = {0}     Address = {1}       Time from last station = {2}        Km from last station = {3}", BusStopKey, StationAddress, TimeTravelFromPreviousStation, DistanceFromPreviousStation);
+            return string.Format("Bus station key = {0}      Address = {1}      Time from last station = {2}      Km from last station = {3}", BusStopKey, StationAddress, TimeTravelFromPreviousStation, DistanceFromPreviousStation);
         }
     }
 }
