@@ -90,7 +90,7 @@ namespace dotNet5781_02_0933_8558
             BusLinesCollection tempCollection = new BusLinesCollection();
             foreach (BusLine bus in busLinesList)           //loop for the buses
             {
-                foreach (BusLineStation station in bus.BusStationList)      //inner loop for stations of each bus
+                foreach (BusLineStation station in bus.BusStationsList)      //inner loop for stations of each bus
                 {
                     if (station.BusStopKey == stationKey)
                     {
@@ -158,7 +158,7 @@ namespace dotNet5781_02_0933_8558
         public bool StaionExist(int stationKey)         //check for exsit station
         {           
             foreach (BusLine bus in busLinesList)       //loop for the bus
-                foreach (BusLineStation station in bus.BusStationList)          //inner loop for stations              
+                foreach (BusLineStation station in bus.BusStationsList)          //inner loop for stations              
                     if (station.BusStopKey == stationKey)
                         return true;
             return false;           

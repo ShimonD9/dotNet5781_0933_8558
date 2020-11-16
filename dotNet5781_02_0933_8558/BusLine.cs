@@ -37,7 +37,7 @@ namespace dotNet5781_02_0933_8558
         // List of bus line stations, with get property:
         private List<BusLineStation> busStationList;
 
-        public List<BusLineStation> BusStationList
+        public List<BusLineStation> BusStationsList
         {
             get { return busStationList; }
         }

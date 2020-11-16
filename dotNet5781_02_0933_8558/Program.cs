@@ -219,7 +219,7 @@ namespace dotNet5781_02_0933_8558
                                     throw new ArgumentException("Invalid input!");
                                 index = busCompany.SearchIndex(busLineNumber);                  // Finds the index of the bus to delete
                                 BusLine busLineHelp = busCompany.busLinesList[index];           // Creates a new busLine based on the index found (for ease of code writing)
-                                if (busLineHelp.BusStationList.Count == 2)                      // Cannot delete a bus station if there are only 2 in the bus line
+                                if (busLineHelp.BusStationsList.Count == 2)                      // Cannot delete a bus station if there are only 2 in the bus line
                                     throw new RouteException("There are only two stations in this line"); // Throws exception created especially for this case
                                 Console.WriteLine("Please enter the station number you would like to delete:");
                                 if (!int.TryParse(Console.ReadLine(), out stopKey))
@@ -228,15 +228,15 @@ namespace dotNet5781_02_0933_8558
                                 if (index == 0)                                                 // In case it is the first station to delete
                                 {   
                                     // Distance, minutes, and first station update:
-                                    busLineHelp.BusStationList[1].DistanceFromPreviousStation = 0;
-                                    busLineHelp.BusStationList[1].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(0);
-                                    busLineHelp.FirstStation = busLineHelp.BusStationList[1];   
+                                    busLineHelp.BusStationsList[1].DistanceFromPreviousStation = 0;
+                                    busLineHelp.BusStationsList[1].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(0);
+                                    busLineHelp.FirstStation = busLineHelp.BusStationsList[1];   
                                     busLineHelp.DeleteBusStation(stopKey);                      // Calls the delete bus line method (in the bus line class)
                                 }
-                                else if (index == busLineHelp.BusStationList.Count - 1)        // In case it is the last station to delete
+                                else if (index == busLineHelp.BusStationsList.Count - 1)        // In case it is the last station to delete
                                 {
                                     // First station update:
-                                    busLineHelp.LastStation = busLineHelp.BusStationList[busLineHelp.BusStationList.Count - 1];
+                                    busLineHelp.LastStation = busLineHelp.BusStationsList[busLineHelp.BusStationsList.Count - 1];
                                     busLineHelp.DeleteBusStation(stopKey);                     // Calls the delete bus line method (in the bus line class)
                                 }
                                 else                                                           // In case of delete middle station                                            
@@ -249,8 +249,8 @@ namespace dotNet5781_02_0933_8558
                                     if (!double.TryParse(Console.ReadLine(), out double newMinutes))
                                         throw new ArgumentException("Invalid input!");
                                     // Updates the next station info:
-                                    busLineHelp.BusStationList[index + 1].DistanceFromPreviousStation = newDistance;
-                                    busLineHelp.BusStationList[index + 1].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(newMinutes);
+                                    busLineHelp.BusStationsList[index + 1].DistanceFromPreviousStation = newDistance;
+                                    busLineHelp.BusStationsList[index + 1].TimeTravelFromPreviousStation = TimeSpan.FromMinutes(newMinutes);
                                     busLineHelp.DeleteBusStation(stopKey);                     // Calls the delete bus line method (in the bus line class)
                                 }
                             }
@@ -291,7 +291,7 @@ namespace dotNet5781_02_0933_8558
                                     BusLineStation first = bus.FindAndReturnStation(stopKeyA);  // Finds the first bus station
                                     BusLineStation last = bus.FindAndReturnStation(stopKeyB);   // Finds the second bus station
                                     if (first != null && last != null)                          // If the bus stations actually been found
-                                        if (bus.BusStationList.IndexOf(bus.FindAndReturnStation(stopKeyA)) < bus.BusStationList.IndexOf(bus.FindAndReturnStation(stopKeyB))) // And if they were given in the right order (checking by their index)
+                                        if (bus.BusStationsList.IndexOf(bus.FindAndReturnStation(stopKeyA)) < bus.BusStationsList.IndexOf(bus.FindAndReturnStation(stopKeyB))) // And if they were given in the right order (checking by their index)
                                             busLinesBetweenTwoStops.busLinesList.Add(bus.Track(stopKeyA, stopKeyB));                                                         // Add the sub-lines (created and returned by Track function) to the collection
                                 }   
 

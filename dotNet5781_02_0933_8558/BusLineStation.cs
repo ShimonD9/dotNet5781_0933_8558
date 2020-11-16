@@ -90,8 +90,7 @@ namespace dotNet5781_02_0933_8558
         /// <returns></returns>
         public override string ToString()           //pritting details of a station
         {
-            return string.Format("Bus Station Code:\n" +
-                                  "BusStationKey = {0}, Latitude = {1}, Longitude = {2}, Time from last station = {3}, Km from last station = {4}", BusStopKey, Latitude, Longitude, TimeTravelFromPreviousStation, DistanceFromPreviousStation);
+            return string.Format("BusStationKey = {0}, Latitude = {1}, Longitude = {2}, Time from last station = {3}, Km from last station = {4}", BusStopKey, Latitude, Longitude, TimeTravelFromPreviousStation, DistanceFromPreviousStation);
         }
     }
 }
