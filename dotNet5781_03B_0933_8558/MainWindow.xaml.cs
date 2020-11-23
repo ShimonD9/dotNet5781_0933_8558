@@ -50,8 +50,8 @@ namespace dotNet5781_03B_0933_8558
                 var days = rnd.Next(1, DateTime.DaysInMonth(year, month) + 1);
                 DateTime absorptionDate = new DateTime(year, month, days);
 
-                double km = Math.Round(rnd.NextDouble() * 200000, 2) + 20000;
-                double kmAtLastTreatment = km - rnd.NextDouble() * 10000;
+                double km = Math.Round(rnd.NextDouble() * 200000 + 20000, 2);
+                double kmAtLastTreatment = Math.Round(km - rnd.NextDouble() * 10000, 2);
                 Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 200)));
 
                 busList.Add(newBus);
@@ -76,8 +76,8 @@ namespace dotNet5781_03B_0933_8558
                 var days = rnd.Next(1, DateTime.DaysInMonth(year, month) + 1);
                 DateTime absorptionDate = new DateTime(year, month, days);
 
-                double km = Math.Round(rnd.NextDouble() * 200000, 2) + 20000;
-                double kmAtLastTreatment = km - rnd.NextDouble() * 10000;
+                double km = Math.Round(rnd.NextDouble() * 200000 + 20000, 2);
+                double kmAtLastTreatment = Math.Round(km - rnd.NextDouble() * 10000, 2);
                 Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 300)));
 
                 busList.Add(newBus);
@@ -239,7 +239,7 @@ namespace dotNet5781_03B_0933_8558
             /// <returns></returns>
             public double MileageFromLastTreat()
             {
-                return Mileage - MileageAtLastTreat;
+                return Math.Round(Mileage - MileageAtLastTreat,2);
             }
 
             /// <summary>
