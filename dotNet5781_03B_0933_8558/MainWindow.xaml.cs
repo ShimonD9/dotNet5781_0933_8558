@@ -37,11 +37,12 @@ namespace dotNet5781_03B_0933_8558
             // Before 2018:
             for (int i = 0; i < 5; i++)
             {
-                var numbers = "0123456789";
+                var numbers = "1234567890";
                 char[] stringChars = new char[7];
-                for (int j = 0; j < stringChars.Length; j++)
+                stringChars[0] = numbers[rnd.Next(numbers.Length - 1)]; // To avoid 0 at the beginning of the license
+                for (int j = 1; j < stringChars.Length; j++)
                 {
-                    stringChars[j] = numbers[rnd.Next(numbers.Length - 1)];
+                    stringChars[j] = numbers[rnd.Next(numbers.Length)];
                 }
                 string license = new string(stringChars);
 
@@ -63,11 +64,12 @@ namespace dotNet5781_03B_0933_8558
             // After 2018:
             for (int i = 0; i < 5; i++)
             {
-                var numbers = "0123456789";
+                var numbers = "1234567890";
                 char[] stringChars = new char[8];
-                for (int j = 0; j < stringChars.Length; j++)
+                stringChars[0] = numbers[rnd.Next(numbers.Length - 1)]; // To avoid 0 at the beginning of the license
+                for (int j = 1; j < stringChars.Length; j++)
                 {
-                    stringChars[j] = numbers[rnd.Next(numbers.Length - 1)];
+                    stringChars[j] = numbers[rnd.Next(numbers.Length)];
                 }
                 string license = new string(stringChars);
 
