@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0933_8558"
         mc:Ignorable="d"
-        Title="Bus Company Manager" Height="700" Width="700" ResizeMode="NoResize">
+        Title="Bus Company Manager" Height="700" Width="900" ResizeMode="NoResize">
     <Grid Margin="0,0,4,0">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -15,7 +15,7 @@
         </Grid.Background>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
         <ListBox Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Stretch" Margin="10,64,10,65" Background="#FFEAEAEA">
             <ListBox.ItemTemplate>
@@ -24,6 +24,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80" />
                             <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="200" />
                             <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1 1 1 1">
@@ -39,6 +40,17 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Image Source="/dotNet5781_03B_0933_8558;component/Images/takeBus.png" />
                                         <TextBlock Text="Pick up the bus for travel" VerticalAlignment="Center" Margin="10"/>
+                                    </StackPanel>
+                                </Button.Content>
+                            </Button>
+                        </Border>
+
+                        <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0 1 1 1">
+                            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Width="200">
+                                <Button.Content>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="/dotNet5781_03B_0933_8558;component/Images/fuelBus1.png" />
+                                        <TextBlock Text="Fill up the bus with fuel" VerticalAlignment="Center" Margin="10"/>
                                     </StackPanel>
                                 </Button.Content>
                             </Button>
