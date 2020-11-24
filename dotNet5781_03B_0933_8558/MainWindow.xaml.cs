@@ -108,7 +108,9 @@ namespace dotNet5781_03B_0933_8558
                 KMLeftToRide = 1200;
             }
 
-            private readonly DateTime DateOfAbsorption;
+            private DateTime DateOfAbsorption;
+
+            BUS_STATUS status = BUS_STATUS.READY_FOR_TRAVEL;
 
             private String license;
 

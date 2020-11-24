@@ -7,7 +7,25 @@
         mc:Ignorable="d"
         Title="Bus Company Manager" Height="450" Width="800">
     <Grid>
-        <ListBox Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="293" Margin="10,54,0,0" VerticalAlignment="Top" Width="772"/>
-
+        <ListBox Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="293" Margin="10,54,0,0" VerticalAlignment="Top" Width="772">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <!--<TextBlock Text="Bus License Number" />
+                        <TextBlock Text="Fuel left" Grid.Column="1" />-->
+                        <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1 1 1 1">
+                            <TextBlock Text="{Binding Path = 'License'}" HorizontalAlignment="Center" />
+                        </Border>
+                        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="0 1 1 1">
+                            <ProgressBar Grid.Column="1" Minimum="0" Maximum="1200" Value="{Binding Path='KMLeftToRide'}" Margin="2" />
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>
