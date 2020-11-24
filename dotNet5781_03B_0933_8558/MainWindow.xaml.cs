@@ -54,7 +54,7 @@ namespace dotNet5781_03B_0933_8558
                 double km = Math.Round(rnd.NextDouble() * 200000 + 20000, 2);
                 double kmAtLastTreatment = Math.Round(km - rnd.NextDouble() * 10000, 2);
                 Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 200)));
-
+                
                 busList.Add(newBus);
 
             }
@@ -101,17 +101,16 @@ namespace dotNet5781_03B_0933_8558
                 DateOfAbsorption = dateEntry;
                 License = licenseInput;
                 Mileage = km;
-
-                // It is assumed that the treatment and the gas tank refill were done on the day of the entry to the database:
                 LastTreatmentDate = dateOfLastTreat;
                 MileageAtLastTreat = kmAtLastTreat;
-                KMLeftToRide = 1200;
+                Status = BUS_STATUS.READY_FOR_TRAVEL; // Assuming every added bus is ready for travel
+                KMLeftToRide = 1200; // Assuming every added bus is filled with gas
             }
 
             private DateTime DateOfAbsorption;
 
-            BUS_STATUS status = BUS_STATUS.READY_FOR_TRAVEL;
-
+            private BUS_STATUS status;
+            public BUS_STATUS Status { get { return status; } set { status = value; } }
             private String license;
 
             /// <summary>
