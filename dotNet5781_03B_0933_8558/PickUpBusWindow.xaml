@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0933_8558"
         mc:Ignorable="d"
-        Title="PickUpBusWindow" Height="180.94" Width="268.93">
-    <Grid>
+        Title="PickUpBusWindow" Height="450" Width="800">
+    <Grid Margin="0,0,-47.6,-41.8">
 
     </Grid>
 </Window>

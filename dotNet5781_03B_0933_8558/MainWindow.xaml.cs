@@ -118,23 +118,32 @@ namespace dotNet5781_03B_0933_8558
         }
 
         private void openAddBusWindow(object sender, RoutedEventArgs e)
-        {
-            AddBusWindow addBusWindow = new AddBusWindow(); 
-            addBusWindow.Show();
+        {         
+            if (!Application.Current.Windows.OfType<AddBusWindow>().Any())
+            {
+                AddBusWindow addBusWindow = new AddBusWindow();
+                addBusWindow.Show();
+            }            
         }
 
         private void openPickUpBusWindow(object sender, RoutedEventArgs e)
         {
-            PickUpBusWindow pickUpBusWindow = new PickUpBusWindow();
-            pickUpBusWindow.Show();
+            if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
+            {
+                PickUpBusWindow pickUpBusWindow = new PickUpBusWindow();
+                pickUpBusWindow.Show();
+            }
         }
 
         private void lbBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var list = (ListBox)sender;
-            object item = list.SelectedItem;
-            BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
-            busDetailsWindow.Show();           
+            if (!Application.Current.Windows.OfType<BusDetailsWindow>().Any())
+            {
+                var list = (ListBox)sender;
+                object item = list.SelectedItem;
+                BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
+                busDetailsWindow.Show();
+            }
         }
     }
 }
