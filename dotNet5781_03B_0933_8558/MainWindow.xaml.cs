@@ -31,7 +31,6 @@ namespace dotNet5781_03B_0933_8558
             lbBuses.DataContext = busList;
         }
 
-
         public static void BusesInitializer(ref List<Bus> busList)
         {
             bool flag;
@@ -117,16 +116,18 @@ namespace dotNet5781_03B_0933_8558
             return false;
         }
 
-        private void openAddBusWindow(object sender, RoutedEventArgs e)
+        private void OpenAddBusWindow(object sender, RoutedEventArgs e)
         {         
             if (!Application.Current.Windows.OfType<AddBusWindow>().Any())
             {
                 AddBusWindow addBusWindow = new AddBusWindow();
                 addBusWindow.Show();
-            }            
+                lbBuses.InvalidateArrange();
+                lbBuses.UpdateLayout();
+            }
         }
 
-        private void openPickUpBusWindow(object sender, RoutedEventArgs e)
+        private void OpenPickUpBusWindow(object sender, RoutedEventArgs e)
         {
             if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
             {
@@ -135,7 +136,17 @@ namespace dotNet5781_03B_0933_8558
             }
         }
 
-        private void lbBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void RefuelTheBus(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Go search your mama");
+            //var button = (Button)sender;
+            //var list = (ListBox)button.Parent;
+            //Bus selectedBus = (Bus)list.SelectedItem;
+            //selectedBus.KMLeftToRide = 1200;
+            //list.Items.Refresh();
+        }
+
+        private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (!Application.Current.Windows.OfType<BusDetailsWindow>().Any())
             {

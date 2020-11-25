@@ -22,7 +22,13 @@ namespace dotNet5781_03B_0933_8558
         public AddBusWindow()
         {
             InitializeComponent();
-            //listboxname.Items.refresh
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+           Bus newBus = new Bus(license.GetLineText(0), Double.Parse(mileageNow.GetLineText(0)), Double.Parse(mileageAtLastTreat.GetLineText(0)), dateStart.DisplayDate, dateLastTreat.DisplayDate);
+           MainWindow.busList.Add(newBus);
+           this.Close();
         }
     }
 }

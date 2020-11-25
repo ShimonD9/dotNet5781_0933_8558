@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0933_8558"
         mc:Ignorable="d"
-        Title="AddBusWindow" Height="450" Width="800" ResizeMode="NoResize">
-    <Grid>
-      
-    </Grid>
+        Title="AddBusWindow" Height="487.403" Width="492.597" ResizeMode="NoResize">
+    <StackPanel>
+        <TextBox Name="license"/>
+        <Calendar Name="dateStart" DisplayMode="Month" DisplayDateStart="01.01.2011" DisplayDateEnd="01.20.2016">
+            <Calendar.BlackoutDates>
+            </Calendar.BlackoutDates>
+        </Calendar>
+        <TextBox Name="mileageNow"/>
+        <TextBox Name="mileageAtLastTreat"/>
+        <Calendar Name="dateLastTreat" DisplayMode="Month" DisplayDateStart="01.01.2011" DisplayDateEnd="01.20.2016">
+            <Calendar.BlackoutDates>
+            </Calendar.BlackoutDates>
+        </Calendar>
+        <Button Content="Enter the new bus to the list" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Click="Button_Click"/>
+    </StackPanel>
 </Window>

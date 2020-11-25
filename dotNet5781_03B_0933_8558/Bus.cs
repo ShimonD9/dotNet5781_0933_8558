@@ -31,6 +31,11 @@ namespace dotNet5781_03B_0933_8558
         private BUS_STATUS status;
         public BUS_STATUS Status { get { return status; } set { status = value; } }
 
+        public enum BUS_STATUS
+        {
+            READY_FOR_TRAVEL, AT_TRAVEL, AT_TREATMENT, AT_REFUEL // מוכן לנסיעה, באמצע נסיעה, בתדלוק, בטיפול.
+        }
+
         private String license;
         /// <summary>
         /// License property.
@@ -188,9 +193,5 @@ namespace dotNet5781_03B_0933_8558
             return string.Format("License = {0}, Date = {1}, Last treatment date = {2}, KM left to ride = {3} km, Total mileage = {4} km, Mileage since last treatment = {5} km", License, DateOfAbsorption.ToShortDateString(), lastTreatmentDate.ToShortDateString(), KMLeftToRide, Mileage, MileageSinceLastTreatCalculation());
         }
 
-        public enum BUS_STATUS
-        {
-            READY_FOR_TRAVEL, AT_TRAVEL, AT_TREATMENT, AT_REFUEL // מוכן לנסיעה, באמצע נסיעה, בתדלוק, בטיפול.
-        }
     }
 }
