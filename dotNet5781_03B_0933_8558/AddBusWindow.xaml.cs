@@ -26,7 +26,7 @@ namespace dotNet5781_03B_0933_8558
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           Bus newBus = new Bus(license.GetLineText(0), Double.Parse(mileageNow.GetLineText(0)), Double.Parse(mileageAtLastTreat.GetLineText(0)), dateStart.DisplayDate, dateLastTreat.DisplayDate);
+           Bus newBus = new Bus(license.GetLineText(0), Double.Parse(mileageNow.GetLineText(0)), Double.Parse(mileageAtLastTreat.GetLineText(0)), dateStart.SelectedDate, dateLastTreat.SelectedDate);
            MainWindow.busList.Add(newBus);
            this.Close();
         }
