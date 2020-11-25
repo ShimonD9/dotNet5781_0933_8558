@@ -86,8 +86,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PickUpBusWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PickUpBusWindow.xaml.cs">
+      <DependentUpon>PickUpBusWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -126,6 +133,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\fuelBus1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\busRepair.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -15,19 +15,13 @@ using System.Windows.Shapes;
 namespace dotNet5781_03B_0933_8558
 {
     /// <summary>
-    /// Interaction logic for BusDetailsWindow.xaml
+    /// Interaction logic for PickUpBusWindow.xaml
     /// </summary>
-    public partial class BusDetailsWindow : Window
+    public partial class PickUpBusWindow : Window
     {
-        public BusDetailsWindow()
+        public PickUpBusWindow()
         {
             InitializeComponent();
-        }
-
-        public BusDetailsWindow(object item)
-        {
-            InitializeComponent();
-            BusDet.DataContext = item;
         }
     }
 }

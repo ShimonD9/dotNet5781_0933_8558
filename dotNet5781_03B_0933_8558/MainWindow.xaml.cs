@@ -34,7 +34,7 @@ namespace dotNet5781_03B_0933_8558
 
         public static void BusesInitializer(ref List<Bus> busList)
         {
-            bool flag = true;
+            bool flag;
             string license = null;
             // Before 2018:
             for (int i = 0; i < 5; i++)
@@ -42,7 +42,7 @@ namespace dotNet5781_03B_0933_8558
                 var numbers = "1234567890";
                 char[] stringChars = new char[7];
                 stringChars[0] = numbers[rnd.Next(numbers.Length - 1)]; // To avoid 0 at the beginning of the license
-
+                flag = true;
                 while (flag)  // Makes sure there are no two buses with same license number
                 {
                     for (int j = 1; j < stringChars.Length; j++)
@@ -52,6 +52,7 @@ namespace dotNet5781_03B_0933_8558
                     }
                     flag = FindIfBusExist(busList, license);
                 }
+
                 var year = rnd.Next(1990, 2018);
                 var month = rnd.Next(1, 13);
                 var days = rnd.Next(1, DateTime.DaysInMonth(year, month) + 1);
@@ -62,7 +63,6 @@ namespace dotNet5781_03B_0933_8558
                 Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 200)));
 
                 busList.Add(newBus);
-
             }
             busList[4].LastTreatmentDate = DateTime.Now.AddDays(-2);
 
@@ -123,11 +123,18 @@ namespace dotNet5781_03B_0933_8558
             addBusWindow.Show();
         }
 
+        private void openPickUpBusWindow(object sender, RoutedEventArgs e)
+        {
+            PickUpBusWindow pickUpBusWindow = new PickUpBusWindow();
+            pickUpBusWindow.Show();
+        }
+
         private void lbBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            BusDetailsWindow busDetailsWindow = new BusDetailsWindow();
-            busDetailsWindow.Show();
+            var list = (ListBox)sender;
+            object item = list.SelectedItem;
+            BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
+            busDetailsWindow.Show();           
         }
     }
-
 }
