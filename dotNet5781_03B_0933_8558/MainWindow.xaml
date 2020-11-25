@@ -17,7 +17,7 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Stretch" Margin="10,64,10,65" Background="#FFEAEAEA">
+        <ListBox Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Stretch" Margin="10,64,10,65" Background="#FFEAEAEA" MouseDoubleClick="lbBuses_MouseDoubleClick">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,2">
@@ -60,7 +60,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Height="62" Width="68">
+        <Button Name ="AddBus" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Height="62" Width="68"  
+                Click="openAddBusWindow" >
             <Image Source="/dotNet5781_03B_0933_8558;component/Images/busAdd.png" Height="52" Width="57"/>
         </Button>
     </Grid>
