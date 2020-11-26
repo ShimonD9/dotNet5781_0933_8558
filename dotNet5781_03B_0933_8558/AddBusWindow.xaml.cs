@@ -44,7 +44,7 @@ namespace dotNet5781_03B_0933_8558
                 {
                     MessageBox.Show("The license you entered is too short!");
                 }
-                else if (mileageNow.Text == "" || mileageAtLastTreat.Text == "")
+                else if (!Double.TryParse(mileageNow.GetLineText(0), out double milNow) || !Double.TryParse(mileageAtLastTreat.GetLineText(0), out double milTreat))
                 {
                     MessageBox.Show("You didn't fill all the required information");
                 }
@@ -54,7 +54,7 @@ namespace dotNet5781_03B_0933_8558
                 }
                 else
                 {
-                    Bus newBus = new Bus(license.GetLineText(0), double.Parse(mileageNow.GetLineText(0)), double.Parse(mileageAtLastTreat.GetLineText(0)), startDateChosen, treatDateChosen);
+                    Bus newBus = new Bus(license.GetLineText(0), milNow, milTreat, startDateChosen, treatDateChosen);
                     MainWindow.busList.Add(newBus);
                     this.Close();
                 }
@@ -63,7 +63,7 @@ namespace dotNet5781_03B_0933_8558
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            ..Regex regex = new Regex("[^0-9]+ [\.?]");
+            Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
