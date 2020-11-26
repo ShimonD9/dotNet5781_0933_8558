@@ -17,7 +17,37 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
-        <ListBox Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Stretch" Margin="10,64,10,65" Background="#FFEAEAEA" MouseDoubleClick="LBBuses_MouseDoubleClick">
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" VerticalAlignment="Bottom" Margin="27,0,20,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="200" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1 1 1 1">
+                    <Label Content="License" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch"/>
+                </Border>
+
+                <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1 1 1 1">
+                    <Label Content="KM left to travel" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch"/>
+                </Border>
+
+                <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1 1 1 1">
+                    <Label Content="Pick up for travel button" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch"/>
+                </Border>
+
+                <Border Grid.Column="3" BorderBrush="Black" BorderThickness="1 1 1 1">
+                    <Label Content="Refuel button" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch"/>
+                </Border>
+            </Grid>
+            <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
+             <ListBox Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Stretch" Background="#FFEAEAEA" MouseDoubleClick="LBBuses_MouseDoubleClick">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,2">
@@ -27,13 +57,13 @@
                             <ColumnDefinition Width="200" />
                             <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
-                        
+
                         <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1 1 1 1">
                             <TextBlock Name ="tbLicense" Text="{Binding Path = 'License'}" HorizontalAlignment="Stretch" TextAlignment="Center" />
                         </Border>
-                        
+
                         <Border Grid.Column="1" BorderBrush="Black" BorderThickness="0 1 1 1">
-                            <ProgressBar Name ="pbFuel"  Value="{Binding Path='KMLeftToRide'}" Grid.Column="1" Foreground="Salmon" BorderBrush="Black" BorderThickness="1" Minimum="0" Maximum="1200" Margin="10"/>
+                            <ProgressBar Name ="pbFuel"  Value="{Binding Path='KMLeftToRide'}" Grid.Column="1" BorderThickness="1" Minimum="0" Maximum="1200" Margin="10"/>
                         </Border>
 
                         <Border Grid.Column="2" BorderBrush="Black" BorderThickness="0 1 1 1">
@@ -62,10 +92,11 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        
+            </Grid>
+        </Grid>
         <Button Name ="AddBus" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Height="62" Width="68"  
                 Click="OpenAddBusWindow">
-            <Image Source="/dotNet5781_03B_0933_8558;component/Images/busAdd.png" Height="52" Width="57"/>
+            <Image Source="/dotNet5781_03B_0933_8558;component/Images/busAdd.png" Height="52" Width="57" />
         </Button>
     </Grid>
 

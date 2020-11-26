@@ -54,11 +54,6 @@ namespace dotNet5781_03B_0933_8558
         private void RefuelTheBus(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Go search your mama");
-            //var button = (Button)sender;
-            //var list = (ListBox)button.Parent;
-            //Bus selectedBus = (Bus)list.SelectedItem;
-            //selectedBus.KMLeftToRide = 1200;
-            //list.Items.Refresh();
         }
 
         private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)

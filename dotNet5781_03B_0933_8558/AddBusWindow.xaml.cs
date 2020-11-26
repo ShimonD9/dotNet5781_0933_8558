@@ -44,7 +44,7 @@ namespace dotNet5781_03B_0933_8558
                 {
                     MessageBox.Show("The license you entered is too short!");
                 }
-                else if(MainWindow.FindIfBusExist(MainWindow.busList, license.Text))
+                else if (MainWindow.FindIfBusExist(MainWindow.busList, license.Text))
                 {
                     MessageBox.Show("The bus license you entered already exists in the company!");
                 }
@@ -60,7 +60,7 @@ namespace dotNet5781_03B_0933_8558
                 {
                     Bus newBus = new Bus(license.GetLineText(0), milNow, milTreat, startDateChosen, treatDateChosen);
                     newBus.KMLeftToRide = fuel.Value * 12;
-                    MainWindow.busList.Add(newBus);                    
+                    MainWindow.busList.Insert(0, newBus);                    
                     this.Close();
                 }
             }
