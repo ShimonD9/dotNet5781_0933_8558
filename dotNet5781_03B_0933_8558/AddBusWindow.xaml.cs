@@ -50,7 +50,7 @@ namespace dotNet5781_03B_0933_8558
                 }
                 else if (!Double.TryParse(mileageNow.GetLineText(0), out double milNow) || !Double.TryParse(mileageAtLastTreat.GetLineText(0), out double milTreat))
                 {
-                    MessageBox.Show("You didn't fill all the required information");
+                    MessageBox.Show("You didn't fill correctly all the required information");
                 }
                 else if (double.Parse(mileageAtLastTreat.Text) > double.Parse(mileageNow.Text))
                 {
@@ -59,7 +59,8 @@ namespace dotNet5781_03B_0933_8558
                 else
                 {
                     Bus newBus = new Bus(license.GetLineText(0), milNow, milTreat, startDateChosen, treatDateChosen);
-                    MainWindow.busList.Add(newBus);
+                    newBus.KMLeftToRide = fuel.Value * 12;
+                    MainWindow.busList.Add(newBus);                    
                     this.Close();
                 }
             }
@@ -67,7 +68,13 @@ namespace dotNet5781_03B_0933_8558
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+");
+            Regex regex = new Regex("[^0-9+/.]$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9+]$");
             e.Handled = regex.IsMatch(e.Text);
         }
 

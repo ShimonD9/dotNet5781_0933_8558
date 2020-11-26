@@ -88,7 +88,7 @@ namespace dotNet5781_03B_0933_8558
         /// </summary>
         public double Mileage
         {
-            get { return mileage; }
+            get { return Math.Round(mileage,2); }
 
             set
             {
@@ -106,7 +106,7 @@ namespace dotNet5781_03B_0933_8558
         /// </summary>
         public double KMLeftToRide
         {
-            get { return kmLeftToRide; }
+            get { return Math.Round(kmLeftToRide,2); }
             set
             {
                 kmLeftToRide = value;
@@ -157,7 +157,6 @@ namespace dotNet5781_03B_0933_8558
         }
 
         private double mileageSinceLastTreat;
-
         public double MileageSinceLastTreat
         {
             get { return MileageSinceLastTreatCalculation(); }

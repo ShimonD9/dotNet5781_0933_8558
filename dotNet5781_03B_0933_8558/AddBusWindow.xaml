@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0933_8558"
         mc:Ignorable="d"
-        Title="Add a new bus" Height="305.403" Width="379.763" ResizeMode="NoResize">
+        Title="Add a new bus" Height="337.403" Width="379.763" ResizeMode="NoResize">
 
 
     <StackPanel>
@@ -21,13 +21,14 @@
                 <RowDefinition Height ="*"/>
                 <RowDefinition Height ="*"/>
                 <RowDefinition Height ="*"/>
+                <RowDefinition Height ="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Grid.Column="0">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Enter the license number:" Width="149"/>
             </Grid>
 
             <Grid Grid.Row="0" Grid.Column="1">
-                <TextBox x:Name="license" Text="Select date!" VerticalAlignment="Center" Width="90" IsReadOnly="True" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+                <TextBox x:Name="license" Text="Select date!" PreviewTextInput="NumberValidationTextBoxNoDots"  VerticalAlignment="Center" Width="90" IsReadOnly="True" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0">
@@ -44,6 +45,14 @@
 
             <Grid Grid.Row="2" Grid.Column="1">
                 <TextBox Name="mileageAtLastTreat" Text="0" PreviewTextInput="NumberValidationTextBox"  TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
+            </Grid>
+
+            <Grid Grid.Row="3" Grid.Column="0">
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Choose the fuel precentage left:" Width="221"/>
+            </Grid>
+
+            <Grid Grid.Row="3" Grid.Column="1">
+                <Slider Name="fuel"  VerticalAlignment="Center" Minimum="0" Maximum="100" IsHitTestVisible="True" Width="90" HorizontalAlignment="Center"  AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" />
             </Grid>
         </Grid>
 
