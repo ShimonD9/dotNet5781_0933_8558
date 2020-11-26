@@ -44,6 +44,10 @@ namespace dotNet5781_03B_0933_8558
                 {
                     MessageBox.Show("The license you entered is too short!");
                 }
+                else if(MainWindow.FindIfBusExist(MainWindow.busList, license.Text))
+                {
+                    MessageBox.Show("The bus license you entered already exists in the company!");
+                }
                 else if (!Double.TryParse(mileageNow.GetLineText(0), out double milNow) || !Double.TryParse(mileageAtLastTreat.GetLineText(0), out double milTreat))
                 {
                     MessageBox.Show("You didn't fill all the required information");

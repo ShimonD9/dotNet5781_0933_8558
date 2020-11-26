@@ -24,12 +24,54 @@ namespace dotNet5781_03B_0933_8558
         public static Random rnd = new Random(DateTime.Now.Millisecond);
         public static List<Bus> busList = new List<Bus> { };
 
+
         public MainWindow()
         {
             BusesInitializer(ref busList);
             InitializeComponent();
             lbBuses.DataContext = busList;
         }
+
+        private void OpenAddBusWindow(object sender, RoutedEventArgs e)
+        {         
+            if (!Application.Current.Windows.OfType<AddBusWindow>().Any())
+            {
+                AddBusWindow addBusWindow = new AddBusWindow();
+                addBusWindow.ShowDialog();
+                lbBuses.Items.Refresh(); 
+            }
+        }
+
+        private void OpenPickUpBusWindow(object sender, RoutedEventArgs e)
+        {
+            if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
+            {
+                PickUpBusWindow pickUpBusWindow = new PickUpBusWindow();
+                pickUpBusWindow.Show();
+            }
+        }
+
+        private void RefuelTheBus(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Go search your mama");
+            //var button = (Button)sender;
+            //var list = (ListBox)button.Parent;
+            //Bus selectedBus = (Bus)list.SelectedItem;
+            //selectedBus.KMLeftToRide = 1200;
+            //list.Items.Refresh();
+        }
+
+        private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (!Application.Current.Windows.OfType<BusDetailsWindow>().Any())
+            {
+                var list = (ListBox)sender;
+                object item = list.SelectedItem;
+                BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
+                busDetailsWindow.Show();
+            }
+        }
+
 
         public static void BusesInitializer(ref List<Bus> busList)
         {
@@ -46,7 +88,7 @@ namespace dotNet5781_03B_0933_8558
                 {
                     for (int j = 1; j < stringChars.Length; j++)
                     {
-                        stringChars[j] = numbers[rnd.Next(numbers.Length)];                    
+                        stringChars[j] = numbers[rnd.Next(numbers.Length)];
                         license = new string(stringChars);
                     }
                     flag = FindIfBusExist(busList, license);
@@ -114,46 +156,6 @@ namespace dotNet5781_03B_0933_8558
                 }
             }
             return false;
-        }
-
-        private void OpenAddBusWindow(object sender, RoutedEventArgs e)
-        {         
-            if (!Application.Current.Windows.OfType<AddBusWindow>().Any())
-            {
-                AddBusWindow addBusWindow = new AddBusWindow();
-                addBusWindow.Show();
-                //lbBuses.Items.Refresh(); 
-            }
-        }
-
-        private void OpenPickUpBusWindow(object sender, RoutedEventArgs e)
-        {
-            if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
-            {
-                PickUpBusWindow pickUpBusWindow = new PickUpBusWindow();
-                pickUpBusWindow.Show();
-            }
-        }
-
-        private void RefuelTheBus(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Go search your mama");
-            //var button = (Button)sender;
-            //var list = (ListBox)button.Parent;
-            //Bus selectedBus = (Bus)list.SelectedItem;
-            //selectedBus.KMLeftToRide = 1200;
-            //list.Items.Refresh();
-        }
-
-        private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            if (!Application.Current.Windows.OfType<BusDetailsWindow>().Any())
-            {
-                var list = (ListBox)sender;
-                object item = list.SelectedItem;
-                BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
-                busDetailsWindow.Show();
-            }
         }
     }
 }

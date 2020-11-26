@@ -81,6 +81,7 @@
     <Compile Include="BusDetailsWindow.xaml.cs">
       <DependentUpon>BusDetailsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BusList.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
