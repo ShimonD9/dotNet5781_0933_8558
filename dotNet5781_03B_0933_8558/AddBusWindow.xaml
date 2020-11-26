@@ -35,7 +35,7 @@
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="1">
-                <TextBox Name="mileageNow" Text="0" TextAlignment="Center" VerticalAlignment="Center" Width="90" HorizontalAlignment="Center" />
+                <TextBox Name="mileageNow" Text="0"  PreviewTextInput="NumberValidationTextBox" TextAlignment="Center" VerticalAlignment="Center" Width="90" HorizontalAlignment="Center" />
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="0">
@@ -43,7 +43,7 @@
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="1">
-                <TextBox Name="mileageAtLastTreat" Text="0" TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
+                <TextBox Name="mileageAtLastTreat" Text="0" PreviewTextInput="NumberValidationTextBox"  TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
             </Grid>
         </Grid>
 

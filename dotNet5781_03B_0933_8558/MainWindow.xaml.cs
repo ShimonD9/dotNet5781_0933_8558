@@ -122,8 +122,7 @@ namespace dotNet5781_03B_0933_8558
             {
                 AddBusWindow addBusWindow = new AddBusWindow();
                 addBusWindow.Show();
-                lbBuses.InvalidateArrange();
-                lbBuses.UpdateLayout();
+                //lbBuses.Items.Refresh(); 
             }
         }
 

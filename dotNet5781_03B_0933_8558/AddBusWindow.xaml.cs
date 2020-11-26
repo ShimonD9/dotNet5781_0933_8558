@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -60,7 +61,13 @@ namespace dotNet5781_03B_0933_8558
             }
         }
 
-       private void dateStart_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            ..Regex regex = new Regex("[^0-9]+ [\.?]");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void dateStart_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             DateTime dateChosen;
             if (dateStart.SelectedDate.HasValue)
