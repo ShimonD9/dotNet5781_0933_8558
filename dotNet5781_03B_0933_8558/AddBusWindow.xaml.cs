@@ -22,12 +22,14 @@ namespace dotNet5781_03B_0933_8558
         public AddBusWindow()
         {
             InitializeComponent();
+            dateStart.DisplayDateEnd = DateTime.Now;
+            dateLastTreat.DisplayDateEnd = DateTime.Now;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           Bus newBus = new Bus(license.GetLineText(0), Double.Parse(mileageNow.GetLineText(0)), Double.Parse(mileageAtLastTreat.GetLineText(0)), dateStart.SelectedDate, dateLastTreat.SelectedDate);
-           MainWindow.busList.Add(newBus);
+           //Bus newBus = new Bus(license.GetLineText(0), Double.Parse(mileageNow.GetLineText(0)), Double.Parse(mileageAtLastTreat.GetLineText(0)), dateStart.SelectedDate, dateLastTreat.SelectedDate);
+           //MainWindow.busList.Add(newBus);
            this.Close();
         }
     }
