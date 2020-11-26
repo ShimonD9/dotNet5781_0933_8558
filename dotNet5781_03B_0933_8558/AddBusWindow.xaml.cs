@@ -28,9 +28,36 @@ namespace dotNet5781_03B_0933_8558
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           //Bus newBus = new Bus(license.GetLineText(0), Double.Parse(mileageNow.GetLineText(0)), Double.Parse(mileageAtLastTreat.GetLineText(0)), dateStart.SelectedDate, dateLastTreat.SelectedDate);
-           //MainWindow.busList.Add(newBus);
-           this.Close();
+            DateTime startDateChosen;
+            DateTime treatDateChosen;
+            if (!dateStart.SelectedDate.HasValue || !dateLastTreat.SelectedDate.HasValue)
+            {
+                MessageBox.Show("You didn't select a date!");
+            }
+            else
+            {
+                startDateChosen = dateStart.SelectedDate.Value;
+                treatDateChosen = dateLastTreat.SelectedDate.Value;
+                if (startDateChosen.Year < 2018 && license.Text.Length < 7
+                    || startDateChosen.Year > 2017 && license.Text.Length < 8)
+                {
+                    MessageBox.Show("The license you entered is too short!");
+                }
+                else if (mileageNow.Text == "" || mileageAtLastTreat.Text == "")
+                {
+                    MessageBox.Show("You didn't fill all the required information");
+                }
+                else if (double.Parse(mileageAtLastTreat.Text) > double.Parse(mileageNow.Text))
+                {
+                    MessageBox.Show("The total mileage cannot be smaller than the mileage at the last treat!");
+                }
+                else
+                {
+                    Bus newBus = new Bus(license.GetLineText(0), double.Parse(mileageNow.GetLineText(0)), double.Parse(mileageAtLastTreat.GetLineText(0)), startDateChosen, treatDateChosen);
+                    MainWindow.busList.Add(newBus);
+                    this.Close();
+                }
+            }
         }
 
        private void dateStart_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -42,12 +69,14 @@ namespace dotNet5781_03B_0933_8558
                 if (dateChosen.Year < 2018)
                 {
                     license.IsReadOnly = false;
+                    license.FontStyle = FontStyles.Normal;
                     license.Text = "";
                     license.MaxLength = 7;
                 }
                 else if(dateChosen.Year > 2017)
                 {
                     license.IsReadOnly = false;
+                    license.FontStyle = FontStyles.Normal;
                     license.Text = "";
                     license.MaxLength = 8;
                 }

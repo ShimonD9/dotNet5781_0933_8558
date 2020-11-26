@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0933_8558"
         mc:Ignorable="d"
-        Title="AddBusWindow" Height="352.403" Width="379.763" ResizeMode="NoResize">
+        Title="Add a new bus" Height="305.403" Width="379.763" ResizeMode="NoResize">
 
 
     <StackPanel>
@@ -27,7 +27,7 @@
             </Grid>
 
             <Grid Grid.Row="0" Grid.Column="1">
-                <TextBox x:Name="license" Text="Select date!" VerticalAlignment="Center" Width="90" IsReadOnly="True"/>
+                <TextBox x:Name="license" Text="Select date!" VerticalAlignment="Center" Width="90" IsReadOnly="True" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0">
@@ -35,7 +35,7 @@
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="1">
-                <TextBox Name="mileageNow"  VerticalAlignment="Center" Width="90" />
+                <TextBox Name="mileageNow" Text="0" TextAlignment="Center" VerticalAlignment="Center" Width="90" HorizontalAlignment="Center" />
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="0">
@@ -43,7 +43,7 @@
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="1">
-                <TextBox VerticalAlignment="Center" x:Name="mileageAtLastTreat" Width="90" />
+                <TextBox Name="mileageAtLastTreat" Text="0" TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
             </Grid>
         </Grid>
 
@@ -480,7 +480,7 @@
                                                                         <ContentControl x:Name="PART_Watermark" Focusable="False" IsHitTestVisible="False" Opacity="0" Padding="2">
                                                                             <ContentControl.Template>
                                                                                 <ControlTemplate>
-                                                                                    <TextBlock Text="Select the date of the last treatment"/>
+                                                                                    <TextBlock Text="Select the date of last treatment"/>
                                                                                 </ControlTemplate>
                                                                             </ContentControl.Template>
                                                                         </ContentControl>
