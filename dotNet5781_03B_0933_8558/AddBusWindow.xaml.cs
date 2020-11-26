@@ -32,5 +32,26 @@ namespace dotNet5781_03B_0933_8558
            //MainWindow.busList.Add(newBus);
            this.Close();
         }
+
+       private void dateStart_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime dateChosen;
+            if (dateStart.SelectedDate.HasValue)
+            { 
+                dateChosen = dateStart.SelectedDate.Value;
+                if (dateChosen.Year < 2018)
+                {
+                    license.IsReadOnly = false;
+                    license.Text = "";
+                    license.MaxLength = 7;
+                }
+                else if(dateChosen.Year > 2017)
+                {
+                    license.IsReadOnly = false;
+                    license.Text = "";
+                    license.MaxLength = 8;
+                }
+            }
+        }
     }
 }
