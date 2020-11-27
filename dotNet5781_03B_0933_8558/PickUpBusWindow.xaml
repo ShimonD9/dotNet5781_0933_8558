@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0933_8558"
         mc:Ignorable="d"
-        Title="PickUpBusWindow" Height="450" Width="800">
-    <Grid Margin="0,0,-47.6,-41.8">
+        Title="PickUpBusWindow" Height="250.794" Width="199.827" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row ="0">
+            <TextBlock Text="Please enter the number of kilometers the bus will travel:" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
+        </Grid>
+        <Grid Grid.Row ="1">
+            <TextBox VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="20" />
+        </Grid>
+
 
     </Grid>
 </Window>
