@@ -53,7 +53,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5">
+                <Button Grid.Column="0" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/dotNet5781_03B_0933_8558;component/Images/fuelBus1.png" />
@@ -61,7 +61,7 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5">
+                <Button Grid.Column="1" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/dotNet5781_03B_0933_8558;component/Images/busRepair.png" />
