@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,48 @@ namespace dotNet5781_03B_0933_8558
             MileageAtLastTreat = kmAtLastTreat;
             Status = BUS_STATUS.READY_FOR_TRAVEL; // Assuming every added bus is ready for travel
             KMLeftToRide = 1200; // Assuming every added bus is filled with gas
+
+            // Background worker:
+            //BackgroundWorker worker = new BackgroundWorker();
+            //worker.RunWorkerCompleted += (sender, args) => accountClosedHandler();
+            //worker.WorkerReportsProgress = true;
+            //worker.ProgressChanged += (sender, args) =>
+            //{
+            //    if (args.ProgressPercentage == 1)
+            //        applyInterest(); // it will update the Balance
+            //    else // for nice finish – upon pressing STOP button
+            //        Balance = 100 - args.ProgressPercentage;
+            //};
+            //            worker.DoWork
+            //+= (sender, args)
+            //{
+            //                myThread
+            //                = Thread.CurrentThread; shouldStop =
+            //try
+            //                {
+            //                    Thread.Sleep 3000 );
+            //                }
+            //                catch (Exception) { } // 3 sec
+            //                while (!_
+            //                shouldStop
+            //{
+            //                    worker.ReportProgress
+            //1
+            //try
+            //                    {
+            //                        Thread.Sleep 3000 );
+            //                    }
+            //                    catch (Exception) { } // 3 sec
+            //                }
+            //                worker.ReportProgress
+            //95
+            //for (int p =
+            //96; p <= 100; ++p) // 5 secs delay
+            //                {
+            //                    Thread.Sleep 1000 ); worker.ReportProgress(p);
+            //            };
+            //            worker.RunWorkerAsync
+            //            (); // Actually start the Background Worker: DoWork
         }
 
         private DateTime dateOfAbsorption;
@@ -88,7 +131,7 @@ namespace dotNet5781_03B_0933_8558
         /// </summary>
         public double Mileage
         {
-            get { return Math.Round(mileage,2); }
+            get { return Math.Round(mileage, 2); }
 
             set
             {
@@ -106,7 +149,7 @@ namespace dotNet5781_03B_0933_8558
         /// </summary>
         public double KMLeftToRide
         {
-            get { return Math.Round(kmLeftToRide,2); }
+            get { return Math.Round(kmLeftToRide, 2); }
             set
             {
                 kmLeftToRide = value;
@@ -125,7 +168,8 @@ namespace dotNet5781_03B_0933_8558
 
         public int DaysUntilNextTreat
         {
-            get { return (lastTreatmentDate.AddYears(1) - DateTime.Now).Days; }
+            get { 
+                return (lastTreatmentDate.AddYears(1) - DateTime.Now).Days; }
             set { daysUntilNextTreat = value; }
         }
 
@@ -172,6 +216,13 @@ namespace dotNet5781_03B_0933_8558
             set { mileageSinceLastTreat = MileageSinceLastTreatCalculation(); }
         }
 
+        private double kmToNextTreat;
+
+        public double KMtoNextTreat
+        {
+            get { return Math.Round(20000 - MileageSinceLastTreatCalculation(), 2); }
+            set { kmToNextTreat = value; }
+        }
 
         /// <summary>
         /// The function returns the total mileage minus the mileage at last treat; 

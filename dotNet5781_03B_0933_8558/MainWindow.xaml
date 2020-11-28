@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0933_8558"
         mc:Ignorable="d"
-        Title="Bus Company Manager" Height="700" Width="687" ResizeMode="NoResize">
+        Title="Bus Company Manager" Height="700" Width="723" ResizeMode="NoResize">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -27,6 +27,7 @@
                     <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
@@ -36,7 +37,7 @@
                 </Border>
 
                 <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1 1 1 1">
-                    <TextBlock  Text="KM left to travel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <TextBlock  Text="Fuel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch"/>
                 </Border>
 
                 <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1 1 1 1">
@@ -44,10 +45,14 @@
                 </Border>
 
                 <Border Grid.Column="3" BorderBrush="Black" BorderThickness="1 1 1 1">
-                    <TextBlock Text="Pick up to travel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <TextBlock  Text="KM until the next treatment" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch"/>
                 </Border>
 
                 <Border Grid.Column="4" BorderBrush="Black" BorderThickness="1 1 1 1">
+                    <TextBlock Text="Pick up to travel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch"/>
+                </Border>
+
+                <Border Grid.Column="5" BorderBrush="Black" BorderThickness="1 1 1 1">
                     <TextBlock  Text="Refuel the bus" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch"/>
                 </Border>
             </Grid>
@@ -58,6 +63,7 @@
                             <Grid Margin="0,2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="100" />
                                     <ColumnDefinition Width="100" />
                                     <ColumnDefinition Width="100" />
                                     <ColumnDefinition Width="50" />
@@ -77,6 +83,11 @@
                                 </Border>
 
                                 <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                    <TextBlock Name ="tbKMToTreat" FontSize="16" Text="{Binding Path='KMtoNextTreat'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
+                                </Border>
+
+
+                                <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0 1 1 1">
                                     <Button HorizontalAlignment="Center" Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200"  Click="OpenPickUpBusWindow">
                                         <Button.Content>
                                             <Image Source="/dotNet5781_03B_0933_8558;component/Images/takeBus.png" />
@@ -84,7 +95,7 @@
                                     </Button>
                                 </Border>
 
-                                <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0 1 1 1">
                                     <Button HorizontalAlignment="Center"  Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200" Click="RefuelTheBus">
                                         <Button.Content>
                                             <StackPanel Orientation="Horizontal">
