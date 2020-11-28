@@ -121,6 +121,15 @@ namespace dotNet5781_03B_0933_8558
             kmLeftToRide = 1200;
         }
 
+        private int daysUntilNextTreat;
+
+        public int DaysUntilNextTreat
+        {
+            get { return (lastTreatmentDate.AddYears(1) - DateTime.Now).Days; }
+            set { daysUntilNextTreat = value; }
+        }
+
+
         private DateTime lastTreatmentDate; // treatment date field
         /// <summary>
         /// The function stores the date of the treatment 

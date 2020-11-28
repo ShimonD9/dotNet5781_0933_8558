@@ -100,7 +100,7 @@ namespace dotNet5781_03B_0933_8558
 
                 busList.Add(newBus);
             }
-            busList[4].LastTreatmentDate = DateTime.Now.AddDays(-2);
+            busList[4].LastTreatmentDate = DateTime.Now.AddDays(-367); // One of the buses should be after the needed treatment (= so the bus is dangerous to travel)
 
 
             // After 2018:
