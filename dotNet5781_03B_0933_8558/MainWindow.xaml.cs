@@ -44,7 +44,9 @@ namespace dotNet5781_03B_0933_8558
 
         private void Button_OpenPickUpBusWindow(object sender, RoutedEventArgs e)
         {
-            if (lbBuses.SelectedItem != null)
+            var fxElt = sender as FrameworkElement;
+            Bus bus = fxElt.DataContext as Bus;
+            if (bus.Status == Bus.BUS_STATUS.READY_FOR_TRAVEL)
             {
                 if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
                 {
@@ -53,19 +55,19 @@ namespace dotNet5781_03B_0933_8558
                 }
             }
             else
-                MessageBox.Show("Select a bus, then click on the pick up button", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("The bus cannot travel currently", "You are so funny", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private void Button_RefuelTheBus(object sender, RoutedEventArgs e)
         {
-            if (lbBuses.SelectedItem != null)
+            var fxElt = sender as FrameworkElement;
+            Bus bus = fxElt.DataContext as Bus;
+            if (bus.KMLeftToRide == 1200)
             {
-                (lbBuses.SelectedItem as Bus).KMLeftToRide = 1200;
-                //lbBuses.Items.Refresh();
-                // Background - calling the worker of bus fuel
-            }   
-            else
-                MessageBox.Show("Select a bus, then click on the fuel button", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("The bus gas tank is already full!", "You are a loser", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else bus.KMLeftToRide = 1200;
+            // Background - calling the worker of bus fuel
         }
 
         private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
