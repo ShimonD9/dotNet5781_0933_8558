@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace dotNet5781_03B_0933_8558
 {
-    public class Bus
+    public class Bus : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// Bus constructor, initializing 6 fields in the ctor, based on 3 paramters
         /// </summary>
@@ -115,10 +117,12 @@ namespace dotNet5781_03B_0933_8558
                 if (DateOfAbsorption.Year >= 2018 && value.Length == 8) // 8 digits only after 2018
                 {
                     license = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("License"));
                 }
                 else if (DateOfAbsorption.Year < 2018 && value.Length == 7) // 7 digits only before 2018
                 {
                     license = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("License"));
                 }
                 else
                 {
@@ -139,6 +143,7 @@ namespace dotNet5781_03B_0933_8558
             {
                 if (value < 0) throw new Exception("The mileage input is incorrect."); // Throws message if the input is incorrect
                 mileage = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Mileage"));
             }
         }
 
@@ -155,6 +160,7 @@ namespace dotNet5781_03B_0933_8558
             set
             {
                 kmLeftToRide = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("KMLeftToRide"));
             }
         }
 
@@ -170,9 +176,8 @@ namespace dotNet5781_03B_0933_8558
 
         public int DaysUntilNextTreat
         {
-            get { 
-                return (lastTreatmentDate.AddYears(1) - DateTime.Now).Days; }
-            set { daysUntilNextTreat = value; }
+            get { return (lastTreatmentDate.AddYears(1) - DateTime.Now).Days; }
+            set { daysUntilNextTreat = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DaysUntilNextTreat")); }
         }
 
 
@@ -183,7 +188,7 @@ namespace dotNet5781_03B_0933_8558
         public DateTime LastTreatmentDate
         {
             get { return lastTreatmentDate.Date; }
-            set { lastTreatmentDate = value; }
+            set { lastTreatmentDate = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("LastTreatmentDate")); }
         }
 
 
@@ -194,7 +199,7 @@ namespace dotNet5781_03B_0933_8558
         public double MileageAtLastTreat
         {
             get { return mileageAtLastTreat; }
-            set { mileageAtLastTreat = value; }
+            set { mileageAtLastTreat = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("MileageAtLastTreat")); }
         }
 
         /// <summary>
@@ -215,15 +220,17 @@ namespace dotNet5781_03B_0933_8558
         public double MileageSinceLastTreat
         {
             get { return MileageSinceLastTreatCalculation(); }
-            set { mileageSinceLastTreat = MileageSinceLastTreatCalculation(); }
+            set { mileageSinceLastTreat = MileageSinceLastTreatCalculation(); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("MileageSinceLastTreat")); }
         }
 
         private double kmToNextTreat;
 
+
+
         public double KMtoNextTreat
         {
             get { return Math.Round(20000 - MileageSinceLastTreatCalculation(), 2); }
-            set { kmToNextTreat = value; }
+            set { kmToNextTreat = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("KMtoNextTreat")); }
         }
 
         /// <summary>

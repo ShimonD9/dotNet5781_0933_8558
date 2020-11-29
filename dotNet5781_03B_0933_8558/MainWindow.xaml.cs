@@ -33,27 +33,35 @@ namespace dotNet5781_03B_0933_8558
         }
 
         private void Button_OpenAddBusWindow(object sender, RoutedEventArgs e)
-        {         
+        {
             if (!Application.Current.Windows.OfType<AddBusWindow>().Any())
             {
                 AddBusWindow addBusWindow = new AddBusWindow();
                 addBusWindow.ShowDialog();
-                lbBuses.Items.Refresh(); 
+                lbBuses.Items.Refresh();
             }
         }
 
         private void Button_OpenPickUpBusWindow(object sender, RoutedEventArgs e)
         {
-            if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
+            if (lbBuses.SelectedItem != null)
             {
-                PickUpBusWindow pickUpBusWindow = new PickUpBusWindow();
-                pickUpBusWindow.Show();
+                if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
+                {
+                    PickUpBusWindow pickUpBusWindow = new PickUpBusWindow();
+                    pickUpBusWindow.Show();
+                }
             }
+            else
+                MessageBox.Show("Select a bus, then click on the pick up button", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private void Button_RefuelTheBus(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Go search your mama");
+            if (lbBuses.SelectedItem != null)
+                MessageBox.Show(lbBuses.SelectedItem.ToString());
+            else
+                MessageBox.Show("Select a bus, then click on the fuel button", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -62,10 +70,10 @@ namespace dotNet5781_03B_0933_8558
             {
                 var list = sender as ListBox;
                 if (list != null)
-                { 
-                object item = list.SelectedItem;
-                BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
-                busDetailsWindow.Show();
+                {
+                    object item = list.SelectedItem;
+                    BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
+                    busDetailsWindow.Show();
                 }
             }
         }
