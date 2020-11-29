@@ -23,5 +23,18 @@ namespace dotNet5781_03B_0933_8558
         {
             InitializeComponent();
         }
+
+
+        private void textBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            TextBox text = sender as TextBox;
+            if (text == null) return;
+            if (e == null) return;
+            if (e.Key == Key.Enter || e.Key == Key.Return)
+            {
+
+                this.Close();
+            }
+        }
     }
 }

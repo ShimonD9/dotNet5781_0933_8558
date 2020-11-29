@@ -88,7 +88,7 @@
 
 
                                 <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <Button HorizontalAlignment="Center" Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200"  Click="OpenPickUpBusWindow">
+                                    <Button HorizontalAlignment="Center" Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200"  Click="Button_OpenPickUpBusWindow">
                                         <Button.Content>
                                             <Image Source="/dotNet5781_03B_0933_8558;component/Images/takeBus.png" />
                                         </Button.Content>
@@ -96,7 +96,7 @@
                                 </Border>
 
                                 <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <Button HorizontalAlignment="Center"  Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200" Click="RefuelTheBus">
+                                    <Button HorizontalAlignment="Center"  Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200" Click="Button_RefuelTheBus">
                                         <Button.Content>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="/dotNet5781_03B_0933_8558;component/Images/fuelBus1.png" />
@@ -112,7 +112,7 @@
             </Grid>
         </Grid>
         <Button Name ="AddBus" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Height="62" Width="68" Margin="0,0,10,0" 
-                Click="OpenAddBusWindow">
+                Click="Button_OpenAddBusWindow">
             <Image Source="/dotNet5781_03B_0933_8558;component/Images/busAdd.png" Height="52" Width="57" />
         </Button>
     </Grid>

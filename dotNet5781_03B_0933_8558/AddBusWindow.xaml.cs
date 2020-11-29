@@ -33,7 +33,7 @@ namespace dotNet5781_03B_0933_8558
             DateTime treatDateChosen;
             if (!dateStart.SelectedDate.HasValue || !dateLastTreat.SelectedDate.HasValue)
             {
-                MessageBox.Show("You didn't select a date!");
+                MessageBox.Show("You didn't fill the required date fields!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
@@ -42,24 +42,26 @@ namespace dotNet5781_03B_0933_8558
                 if (startDateChosen.Year < 2018 && license.Text.Length < 7
                     || startDateChosen.Year > 2017 && license.Text.Length < 8)
                 {
-                    MessageBox.Show("The license you entered is too short!");
+                    MessageBox.Show("The license you entered is too short!","Cannot add the bus",MessageBoxButton.OK,MessageBoxImage.Warning);
                 }
                 else if (MainWindow.FindIfBusExist(MainWindow.busList, license.Text))
                 {
-                    MessageBox.Show("The bus license you entered already exists in the company!");
+                    MessageBox.Show("The bus license you entered already exists in the company!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 else if (!Double.TryParse(mileageNow.GetLineText(0), out double milNow) || !Double.TryParse(mileageAtLastTreat.GetLineText(0), out double milTreat))
                 {
-                    MessageBox.Show("You didn't fill correctly all the required information");
+                    MessageBox.Show("You didn't fill correctly all the required information", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 else if (double.Parse(mileageAtLastTreat.Text) > double.Parse(mileageNow.Text))
                 {
-                    MessageBox.Show("The total mileage cannot be smaller than the mileage at the last treat!");
+                    MessageBox.Show("The total mileage cannot be smaller than the mileage at the last treat!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 else
                 {
-                    Bus newBus = new Bus(license.GetLineText(0), milNow, milTreat, startDateChosen, treatDateChosen);
-                    newBus.KMLeftToRide = fuel.Value * 12;
+                    Bus newBus = new Bus(license.GetLineText(0), milNow, milTreat, startDateChosen, treatDateChosen)
+                    {
+                        KMLeftToRide = fuel.Value * 12
+                    };
                     MainWindow.busList.Insert(0, newBus);                    
                     this.Close();
                 }
@@ -68,13 +70,13 @@ namespace dotNet5781_03B_0933_8558
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9+/.]$");
+            Regex regex = new Regex("[^0-9/.]$");
             e.Handled = regex.IsMatch(e.Text);
         }
 
         private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9+]$");
+            Regex regex = new Regex("[^0-9]$");
             e.Handled = regex.IsMatch(e.Text);
         }
 
@@ -82,20 +84,17 @@ namespace dotNet5781_03B_0933_8558
         {
             DateTime dateChosen;
             if (dateStart.SelectedDate.HasValue)
-            { 
+            {
+                license.IsReadOnly = false;
+                license.FontStyle = FontStyles.Normal;
+                license.Text = "";
                 dateChosen = dateStart.SelectedDate.Value;
                 if (dateChosen.Year < 2018)
                 {
-                    license.IsReadOnly = false;
-                    license.FontStyle = FontStyles.Normal;
-                    license.Text = "";
                     license.MaxLength = 7;
                 }
-                else if(dateChosen.Year > 2017)
+                else if (dateChosen.Year > 2017)
                 {
-                    license.IsReadOnly = false;
-                    license.FontStyle = FontStyles.Normal;
-                    license.Text = "";
                     license.MaxLength = 8;
                 }
             }

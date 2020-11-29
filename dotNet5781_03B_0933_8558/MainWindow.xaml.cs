@@ -32,7 +32,7 @@ namespace dotNet5781_03B_0933_8558
             lbBuses.DataContext = busList;
         }
 
-        private void OpenAddBusWindow(object sender, RoutedEventArgs e)
+        private void Button_OpenAddBusWindow(object sender, RoutedEventArgs e)
         {         
             if (!Application.Current.Windows.OfType<AddBusWindow>().Any())
             {
@@ -42,7 +42,7 @@ namespace dotNet5781_03B_0933_8558
             }
         }
 
-        private void OpenPickUpBusWindow(object sender, RoutedEventArgs e)
+        private void Button_OpenPickUpBusWindow(object sender, RoutedEventArgs e)
         {
             if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
             {
@@ -51,7 +51,7 @@ namespace dotNet5781_03B_0933_8558
             }
         }
 
-        private void RefuelTheBus(object sender, RoutedEventArgs e)
+        private void Button_RefuelTheBus(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Go search your mama");
         }
@@ -60,10 +60,13 @@ namespace dotNet5781_03B_0933_8558
         {
             if (!Application.Current.Windows.OfType<BusDetailsWindow>().Any())
             {
-                var list = (ListBox)sender;
+                var list = sender as ListBox;
+                if (list != null)
+                { 
                 object item = list.SelectedItem;
                 BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
                 busDetailsWindow.Show();
+                }
             }
         }
 

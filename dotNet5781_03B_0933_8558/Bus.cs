@@ -25,7 +25,9 @@ namespace dotNet5781_03B_0933_8558
             Status = BUS_STATUS.READY_FOR_TRAVEL; // Assuming every added bus is ready for travel
             KMLeftToRide = 1200; // Assuming every added bus is filled with gas
 
-            // Background worker:
+
+
+            //Background worker:
             //BackgroundWorker worker = new BackgroundWorker();
             //worker.RunWorkerCompleted += (sender, args) => accountClosedHandler();
             //worker.WorkerReportsProgress = true;
