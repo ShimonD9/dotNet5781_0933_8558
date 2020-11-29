@@ -85,7 +85,7 @@ namespace dotNet5781_03B_0933_8558
             DateTime dateChosen;
             if (dateStart.SelectedDate.HasValue)
             {
-                license.IsReadOnly = false;
+                license.IsEnabled = true;
                 license.FontStyle = FontStyles.Normal;
                 license.Text = "";
                 dateChosen = dateStart.SelectedDate.Value;

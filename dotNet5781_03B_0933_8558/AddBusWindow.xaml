@@ -34,7 +34,7 @@
             </Grid>
 
             <Grid Grid.Row="0" Grid.Column="1">
-                <TextBox x:Name="license" Text="Select date!" PreviewTextInput="NumberValidationTextBoxNoDots"  VerticalAlignment="Center" Width="90" IsReadOnly="True" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+                <TextBox x:Name="license" Text="Select date!" IsEnabled="False" PreviewTextInput="NumberValidationTextBoxNoDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0">
