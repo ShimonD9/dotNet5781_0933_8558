@@ -26,57 +26,10 @@ namespace dotNet5781_03B_0933_8558
             MileageAtLastTreat = kmAtLastTreat;
             Status = BUS_STATUS.READY_FOR_TRAVEL; // Assuming every added bus is ready for travel
             KMLeftToRide = 1200; // Assuming every added bus is filled with gas
-
-
-
-            //Background worker:
-            //BackgroundWorker worker = new BackgroundWorker();
-            //worker.RunWorkerCompleted += (sender, args) => accountClosedHandler();
-            //worker.WorkerReportsProgress = true;
-            //worker.ProgressChanged += (sender, args) =>
-            //{
-            //    if (args.ProgressPercentage == 1)
-            //        applyInterest(); // it will update the Balance
-            //    else // for nice finish – upon pressing STOP button
-            //        Balance = 100 - args.ProgressPercentage;
-            //};
-            //            worker.DoWork
-            //+= (sender, args)
-            //{
-            //                myThread
-            //                = Thread.CurrentThread; shouldStop =
-            //try
-            //                {
-            //                    Thread.Sleep 3000 );
-            //                }
-            //                catch (Exception) { } // 3 sec
-            //                while (!_
-            //                shouldStop
-            //{
-            //                    worker.ReportProgress
-            //1
-            //try
-            //                    {
-            //                        Thread.Sleep 3000 );
-            //                    }
-            //                    catch (Exception) { } // 3 sec
-            //                }
-            //                worker.ReportProgress
-            //95
-            //for (int p =
-            //96; p <= 100; ++p) // 5 secs delay
-            //                {
-            //                    Thread.Sleep 1000 ); worker.ReportProgress(p);
-            //            };
-            //            worker.RunWorkerAsync
-            //            (); // Actually start the Background Worker: DoWork
         }
 
-        private DateTime dateOfAbsorption;
-        public DateTime DateOfAbsorption { get { return dateOfAbsorption; } set { dateOfAbsorption = value; } }
-
         private BUS_STATUS status;
-        public BUS_STATUS Status { get { return status; } set { status = value; } }
+        public BUS_STATUS Status { get { return status; } set { status = value;  } }
 
         public enum BUS_STATUS
         {
@@ -117,12 +70,12 @@ namespace dotNet5781_03B_0933_8558
                 if (DateOfAbsorption.Year >= 2018 && value.Length == 8) // 8 digits only after 2018
                 {
                     license = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("License"));
+                    if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("License")); }
                 }
                 else if (DateOfAbsorption.Year < 2018 && value.Length == 7) // 7 digits only before 2018
                 {
                     license = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("License"));
+                    if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("License")); }
                 }
                 else
                 {
@@ -143,7 +96,7 @@ namespace dotNet5781_03B_0933_8558
             {
                 if (value < 0) throw new Exception("The mileage input is incorrect."); // Throws message if the input is incorrect
                 mileage = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Mileage"));
+                if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("Mileage")); }
             }
         }
 
@@ -160,7 +113,7 @@ namespace dotNet5781_03B_0933_8558
             set
             {
                 kmLeftToRide = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("KMLeftToRide"));
+                if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("KMLeftToRide")); }
             }
         }
 
@@ -172,13 +125,9 @@ namespace dotNet5781_03B_0933_8558
             kmLeftToRide = 1200;
         }
 
-        private int daysUntilNextTreat;
 
-        public int DaysUntilNextTreat
-        {
-            get { return (lastTreatmentDate.AddYears(1) - DateTime.Now).Days; }
-            set { daysUntilNextTreat = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DaysUntilNextTreat")); }
-        }
+        private DateTime dateOfAbsorption;
+        public DateTime DateOfAbsorption { get { return dateOfAbsorption; } set { dateOfAbsorption = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("DateOfAbsorption")); } } }
 
 
         private DateTime lastTreatmentDate; // treatment date field
@@ -188,7 +137,15 @@ namespace dotNet5781_03B_0933_8558
         public DateTime LastTreatmentDate
         {
             get { return lastTreatmentDate.Date; }
-            set { lastTreatmentDate = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("LastTreatmentDate")); }
+            set { lastTreatmentDate = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("LastTreatmentDate")); } }
+        }
+
+        private int daysUntilNextTreat;
+
+        public int DaysUntilNextTreat
+        {
+            get { return (lastTreatmentDate.AddYears(1) - DateTime.Now).Days; }
+            set { daysUntilNextTreat = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("DaysUntilNextTreat")); } }
         }
 
 
@@ -199,7 +156,7 @@ namespace dotNet5781_03B_0933_8558
         public double MileageAtLastTreat
         {
             get { return mileageAtLastTreat; }
-            set { mileageAtLastTreat = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("MileageAtLastTreat")); }
+            set { mileageAtLastTreat = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("MileageAtLastTreat")); } }
         }
 
         /// <summary>
@@ -220,17 +177,14 @@ namespace dotNet5781_03B_0933_8558
         public double MileageSinceLastTreat
         {
             get { return MileageSinceLastTreatCalculation(); }
-            set { mileageSinceLastTreat = MileageSinceLastTreatCalculation(); PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("MileageSinceLastTreat")); }
+            set { mileageSinceLastTreat = MileageSinceLastTreatCalculation(); if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("MileageSinceLastTreat")); } }
         }
 
         private double kmToNextTreat;
-
-
-
         public double KMtoNextTreat
         {
             get { return Math.Round(20000 - MileageSinceLastTreatCalculation(), 2); }
-            set { kmToNextTreat = value; PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("KMtoNextTreat")); }
+            set { kmToNextTreat = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("KMtoNextTreat")); } }
         }
 
         /// <summary>

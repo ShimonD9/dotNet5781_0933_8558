@@ -59,7 +59,11 @@ namespace dotNet5781_03B_0933_8558
         private void Button_RefuelTheBus(object sender, RoutedEventArgs e)
         {
             if (lbBuses.SelectedItem != null)
-                MessageBox.Show(lbBuses.SelectedItem.ToString());
+            {
+                (lbBuses.SelectedItem as Bus).KMLeftToRide = 1200;
+                //lbBuses.Items.Refresh();
+                // Background - calling the worker of bus fuel
+            }   
             else
                 MessageBox.Show("Select a bus, then click on the fuel button", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
@@ -68,7 +72,7 @@ namespace dotNet5781_03B_0933_8558
         {
             if (!Application.Current.Windows.OfType<BusDetailsWindow>().Any())
             {
-                var list = sender as ListBox;
+                ListBox list = sender as ListBox;
                 if (list != null)
                 {
                     object item = list.SelectedItem;
