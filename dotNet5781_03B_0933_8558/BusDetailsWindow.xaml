@@ -12,14 +12,14 @@
             <GradientStop Color="#FFE1F054" Offset="0.087"/>
         </LinearGradientBrush>
     </Window.Background>
-    <Grid>
+    <Grid Name="BusDet" >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0">
             <Border BorderBrush="Black" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Grid Name="BusDet" ShowGridLines="True"  HorizontalAlignment="Center" Height="339" VerticalAlignment="Center" Width="333" Visibility="Visible">
+                <Grid ShowGridLines="True"  HorizontalAlignment="Center" Height="339" VerticalAlignment="Center" Width="333" Visibility="Visible">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -43,7 +43,7 @@
                     <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Mileage}"/>
                     <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=LastTreatmentDate}"/>
                     <TextBlock Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=MileageSinceLastTreat}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=KMLeftToRide}"/>
+                    <TextBlock Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=KMLeftToTravel}"/>
                 </Grid>
             </Border>
         </Border>
@@ -53,7 +53,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5">
+                <Button Grid.Column="0" Cursor="Hand" IsEnabled="{Binding Path='IsReady'}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/dotNet5781_03B_0933_8558;component/Images/fuelBus1.png" />
@@ -61,7 +61,7 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Grid.Column="1" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5">
+                <Button Grid.Column="1" Cursor="Hand" IsEnabled="{Binding Path='IsReady'}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_Click_1">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/dotNet5781_03B_0933_8558;component/Images/busRepair.png" />

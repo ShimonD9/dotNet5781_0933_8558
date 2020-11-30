@@ -12,8 +12,6 @@ namespace dotNet5781_03B_0933_8558
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private Thread myThread = null;
-
         /// <summary>
         /// Bus constructor, initializing 6 fields in the ctor, based on 3 paramters
         /// </summary>
@@ -27,7 +25,7 @@ namespace dotNet5781_03B_0933_8558
             Mileage = km;
             LastTreatmentDate = dateOfLastTreat;
             MileageAtLastTreat = kmAtLastTreat;
-            KMLeftToRide = 1200; // Assuming every added bus is filled with gas
+            KMLeftToTravel = 1200; // Assuming every added bus is filled with gas
             Update_Status();
         }
 
@@ -43,11 +41,14 @@ namespace dotNet5781_03B_0933_8558
 
         public void Update_Status()
         {
-            if (MileageSinceLastTreat < 20000 && lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && KMLeftToRide > 0)
+            if (MileageSinceLastTreat < 20000 && lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && KMLeftToTravel > 0)
+            {
                 Status = BUS_STATUS.READY_FOR_TRAVEL;
+                IsReady = true;
+            }
             else if (MileageSinceLastTreat > 20000 || lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
                 Status = BUS_STATUS.DANGEROUS;
-            else if (KMLeftToRide < 0)
+            else if (KMLeftToTravel < 0)
                 Status = BUS_STATUS.NOT_READY_FOR_TRAVEL;
         }
 
@@ -116,47 +117,49 @@ namespace dotNet5781_03B_0933_8558
             }
         }
 
-        private double kmLeftToRide; // kmLeftToRide (equivalent to fuel condition)
+        private double kmLeftToTravel; // kmLeftToRide (equivalent to fuel condition)
         /// <summary>
         /// The property of the kmLeftToRide field -
         /// the getters returns the field,
         /// and the setter reduces the kilometers by the value, if the ride is possible
         /// if the km left is not enough for the new ride, it throws appropriate message
         /// </summary>
-        public double KMLeftToRide
+        public double KMLeftToTravel
         {
-            get { return Math.Round(kmLeftToRide, 2); }
+            get { return Math.Round(kmLeftToTravel, 2); }
             set
             {
-                kmLeftToRide = value;                
-                if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("KMLeftToRide")); }
+                kmLeftToTravel = value;                
+                if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("KMLeftToTravel")); }
             }
         }
 
 
-        private BackgroundWorker refuelWorker = new BackgroundWorker();
+        private readonly BackgroundWorker refuelWorker = new BackgroundWorker();
         /// <summary>
         /// The function restarts the kmLeftToRide with 1200 km
         /// </summary>
         public void Refuel()
         {
 
-            double part = (1200 - KMLeftToRide) / 12;
+            double part = (1200 - kmLeftToTravel) / 12;
 
             refuelWorker.WorkerReportsProgress = true;
 
             refuelWorker.ProgressChanged += (sender, args) =>
             {            
-                KMLeftToRide += part;
+                KMLeftToTravel += part;
             };
 
             refuelWorker.DoWork += (sender, args) =>
             {
                 Status = BUS_STATUS.AT_REFUEL;
-                for (int i = 0; i < 12; ++i) // 5 secs delay
+                IsReady = false;
+                for (int i = 0; i < 12; ++i)
                 {
                     if (refuelWorker.CancellationPending == true)
                     {
+
                     }
                     else 
                     {
@@ -172,9 +175,11 @@ namespace dotNet5781_03B_0933_8558
             refuelWorker.RunWorkerCompleted += (sender, args) => {
                 if (args.Cancelled == true)
                 {
+
                 }
                 else
                 {
+                    KMLeftToTravel = 1200; // Rounding it to 1200 in case the sum up is 1999.5 for example (it might happen because of the rounding in the KMLeftToRide getter)
                     Update_Status();
                 }
             };
@@ -260,7 +265,7 @@ namespace dotNet5781_03B_0933_8558
         /// <returns> Returns the string to print the object </returns>
         public override string ToString()
         {
-            return string.Format("License = {0}, Date = {1}, Last treatment date = {2}, KM left to ride = {3} km, Total mileage = {4} km, Mileage since last treatment = {5} km", License, DateOfAbsorption.ToShortDateString(), lastTreatmentDate.ToShortDateString(), KMLeftToRide, Mileage, MileageSinceLastTreat);
+            return string.Format("License = {0}, Date = {1}, Last treatment date = {2}, KM left to ride = {3} km, Total mileage = {4} km, Mileage since last treatment = {5} km", License, DateOfAbsorption.ToShortDateString(), lastTreatmentDate.ToShortDateString(), KMLeftToTravel, Mileage, MileageSinceLastTreat);
         }
 
     }

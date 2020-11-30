@@ -81,7 +81,7 @@
                                 </Border>
 
                                 <Border Grid.Column="1" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <ProgressBar Name ="pbFuel"  Value="{Binding Path='KMLeftToRide'}" Grid.Column="1" BorderThickness="1" Minimum="0" Maximum="1200" Margin="10"/>
+                                    <ProgressBar Name ="pbFuel"  Value="{Binding Path='KMLeftToTravel'}" Grid.Column="1" BorderThickness="1" Minimum="0" Maximum="1200" Margin="10"/>
                                 </Border>
 
                                 <Border Grid.Column="2" BorderBrush="Black" BorderThickness="0 1 1 1">

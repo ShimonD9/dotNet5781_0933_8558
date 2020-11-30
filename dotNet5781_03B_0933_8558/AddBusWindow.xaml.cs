@@ -60,7 +60,7 @@ namespace dotNet5781_03B_0933_8558
                 {
                     Bus newBus = new Bus(license.GetLineText(0), milNow, milTreat, startDateChosen, treatDateChosen)
                     {
-                        KMLeftToRide = fuel.Value * 12
+                        KMLeftToTravel = fuel.Value * 12
                     };
                     MainWindow.busList.Insert(0, newBus);                    
                     this.Close();

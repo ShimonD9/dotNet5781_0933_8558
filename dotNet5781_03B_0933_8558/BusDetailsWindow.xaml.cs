@@ -29,5 +29,24 @@ namespace dotNet5781_03B_0933_8558
             InitializeComponent();
             BusDet.DataContext = item;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var fxElt = sender as FrameworkElement;
+            Bus bus = fxElt.DataContext as Bus;
+            if (bus.KMLeftToTravel == 1200)
+            {
+                MessageBox.Show("The bus gas tank is already full!", "You are a loser", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                bus.Refuel();
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

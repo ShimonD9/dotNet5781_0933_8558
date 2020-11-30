@@ -65,17 +65,14 @@ namespace dotNet5781_03B_0933_8558
         {
             var fxElt = sender as FrameworkElement;
             Bus bus = fxElt.DataContext as Bus;
-            if (bus.KMLeftToRide == 1200)
+            if (bus.KMLeftToTravel == 1200)
             {
                 MessageBox.Show("The bus gas tank is already full!", "You are a loser", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
-                //(sender as Button).IsEnabled = false;
                 bus.Refuel();
-                //(sender as Button).IsEnabled = true;
             }
-            // Background - calling the worker of bus fuel
         }
 
         private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -156,7 +153,7 @@ namespace dotNet5781_03B_0933_8558
 
                 busList.Add(newBus);
             }
-            busList[8].KMLeftToRide = 50; // A bus with small amount of fuel 
+            busList[8].KMLeftToTravel = 50; // A bus with small amount of fuel 
             busList[9].MileageAtLastTreat = busList[9].Mileage - 19500; // For the bus that needs to make treatment soon because it reaches 20,000 km since last treatment
         }
 
