@@ -139,8 +139,7 @@ namespace dotNet5781_03B_0933_8558
         public void Refuel()
         {
             Status = BUS_STATUS.AT_REFUEL;
-            double part = (1200 - KMLeftToRide) / 12;
-            //refuelWorker.RunWorkerCompleted += (sender, args) => accountClosedHandler();
+            double part = (1200 - KMLeftToRide) / 12;            
             refuelWorker.WorkerReportsProgress = true;
             refuelWorker.ProgressChanged += (sender, args) =>
             {            
@@ -149,7 +148,7 @@ namespace dotNet5781_03B_0933_8558
 
             refuelWorker.DoWork += (sender, args) =>
             {
-                myThread = Thread.CurrentThread;          
+                myThread = Thread.CurrentThread;
                 //while (!worker.CancellationPending) //(!_shouldStop)
                 //{
                 //    worker.ReportProgress(1);
@@ -162,6 +161,7 @@ namespace dotNet5781_03B_0933_8558
                 }
             };
             refuelWorker.RunWorkerAsync();
+            refuelWorker.RunWorkerCompleted += (sender, args) => { };
             Update_Status();
         }
 

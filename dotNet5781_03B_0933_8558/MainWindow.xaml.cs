@@ -25,13 +25,14 @@ namespace dotNet5781_03B_0933_8558
         //BackgroundWorker refuel = new BackgroundWorker();
         public static Random rnd = new Random(DateTime.Now.Millisecond);
         public static List<Bus> busList = new List<Bus> { };
-        BackgroundWorker refuel;
 
         public MainWindow()
         {
             BusesInitializer(ref busList);
             InitializeComponent();
             lbBuses.DataContext = busList;
+            
+            
         }
 
         private void Button_OpenAddBusWindow(object sender, RoutedEventArgs e)
@@ -70,7 +71,9 @@ namespace dotNet5781_03B_0933_8558
             }
             else
             {
+                (sender as Button).IsEnabled = false;
                 bus.Refuel();
+               // (sender as Button).IsEnabled = true;
             }
             // Background - calling the worker of bus fuel
         }
