@@ -106,7 +106,7 @@
                                 </Border>
 
                                 <Border Grid.Column="6" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <Button Name = "bRefuel" HorizontalAlignment="Center"  Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200" Click="Button_RefuelTheBus">
+                                    <Button Name = "bRefuel" HorizontalAlignment="Center"  IsEnabled="{Binding Path='IsReady'}" Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200" Click="Button_RefuelTheBus">
                                         <Button.Content>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="/dotNet5781_03B_0933_8558;component/Images/fuelBus1.png" />

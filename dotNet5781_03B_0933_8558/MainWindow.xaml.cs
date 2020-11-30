@@ -71,7 +71,7 @@ namespace dotNet5781_03B_0933_8558
             }
             else
             {
-                (sender as Button).IsEnabled = false;
+                //(sender as Button).IsEnabled = false;
                 bus.Refuel();
                 //(sender as Button).IsEnabled = true;
             }

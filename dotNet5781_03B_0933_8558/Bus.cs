@@ -31,7 +31,7 @@ namespace dotNet5781_03B_0933_8558
             Update_Status();
         }
 
-        public bool IsReady { get { return Status == BUS_STATUS.READY_FOR_TRAVEL;  } set { } }
+        public bool IsReady { get { return Status == BUS_STATUS.READY_FOR_TRAVEL;  } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("IsReady")); } } }
 
         private BUS_STATUS status;
         public BUS_STATUS Status { get { return status; } set { status = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("Status")); } } }
