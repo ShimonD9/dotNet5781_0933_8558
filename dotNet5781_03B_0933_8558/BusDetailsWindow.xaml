@@ -61,7 +61,7 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Grid.Column="1" Cursor="Hand" IsEnabled="{Binding Path='IsReady'}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_Click_1">
+                <Button Grid.Column="1" Cursor="Hand" IsEnabled="{Binding Path='IsTreatment'}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_Click_1">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/dotNet5781_03B_0933_8558;component/Images/busRepair.png" />

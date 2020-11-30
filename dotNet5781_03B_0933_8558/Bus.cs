@@ -29,14 +29,16 @@ namespace dotNet5781_03B_0933_8558
             Update_Status();
         }
 
-        public bool IsReady { get { return Status == BUS_STATUS.READY_FOR_TRAVEL;  } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("IsReady")); } } }
+        public bool IsReady { get { return Status == BUS_STATUS.READY_FOR_TRAVEL; } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("IsReady")); } } }
+
+        public bool IsTreatment { get { if ((Status == BUS_STATUS.DANGEROUS) || (Status == BUS_STATUS.READY_FOR_TRAVEL)) return true; return false; } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("IsTretment")); } } }
 
         private BUS_STATUS status;
         public BUS_STATUS Status { get { return status; } set { status = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("Status")); } } }
 
         public enum BUS_STATUS
         {
-            READY_FOR_TRAVEL, NOT_READY_FOR_TRAVEL, DANGEROUS, AT_TRAVEL, AT_TREATMENT, AT_REFUEL 
+            READY_FOR_TRAVEL, NOT_READY_FOR_TRAVEL, DANGEROUS, AT_TRAVEL, AT_TREATMENT, AT_REFUEL
         }
 
         public void Update_Status()
@@ -129,7 +131,7 @@ namespace dotNet5781_03B_0933_8558
             get { return Math.Round(kmLeftToTravel, 2); }
             set
             {
-                kmLeftToTravel = value;                
+                kmLeftToTravel = value;
                 if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("KMLeftToTravel")); }
             }
         }
@@ -147,7 +149,7 @@ namespace dotNet5781_03B_0933_8558
             refuelWorker.WorkerReportsProgress = true;
 
             refuelWorker.ProgressChanged += (sender, args) =>
-            {            
+            {
                 KMLeftToTravel += part;
             };
 
@@ -161,7 +163,7 @@ namespace dotNet5781_03B_0933_8558
                     {
 
                     }
-                    else 
+                    else
                     {
                         refuelWorker.ReportProgress(i);
                         try { Thread.Sleep(1000); } catch (Exception) { }
@@ -172,7 +174,8 @@ namespace dotNet5781_03B_0933_8558
             if (refuelWorker.IsBusy != true)
                 refuelWorker.RunWorkerAsync();
 
-            refuelWorker.RunWorkerCompleted += (sender, args) => {
+            refuelWorker.RunWorkerCompleted += (sender, args) =>
+            {
                 if (args.Cancelled == true)
                 {
 
@@ -185,12 +188,63 @@ namespace dotNet5781_03B_0933_8558
             };
         }
 
+        private readonly BackgroundWorker treatmentWorker = new BackgroundWorker();
+        public void Treatment()
+        {
+
+            treatmentWorker.WorkerReportsProgress = true;
+
+            treatmentWorker.ProgressChanged += (sender, args) =>
+            {
+
+            };
+
+            treatmentWorker.DoWork += (sender, args) =>
+            {
+                Status = BUS_STATUS.AT_TREATMENT;
+                IsReady = false;
+                if (treatmentWorker.CancellationPending == true)
+                {
+
+                }
+                else
+                {
+                    treatmentWorker.ReportProgress(0);
+                    try { Thread.Sleep(15000); } catch (Exception) { }
+                }
+            };
+
+            if (treatmentWorker.IsBusy != true)
+                treatmentWorker.RunWorkerAsync();
+
+            treatmentWorker.RunWorkerCompleted += (sender, args) =>
+            {
+                if (args.Cancelled == true)
+                {
+
+                }
+                else
+                {
+                    LastTreatmentDate = DateTime.Now;
+                    KMtoNextTreat = 20000;                   
+                    Update_Status();
+                }
+            };
+        }
 
         private DateTime dateOfAbsorption;
-        public DateTime DateOfAbsorption { get { return dateOfAbsorption; } 
-            set { dateOfAbsorption = value;
-                if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("DateOfAbsorption"));
-                } } }
+        public DateTime DateOfAbsorption
+        {
+            get { return dateOfAbsorption; }
+            set
+            {
+                dateOfAbsorption = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("DateOfAbsorption"));
+                }
+            }
+        }
 
 
         private DateTime lastTreatmentDate; // treatment date field
@@ -200,8 +254,10 @@ namespace dotNet5781_03B_0933_8558
         public DateTime LastTreatmentDate
         {
             get { return lastTreatmentDate.Date; }
-            set { lastTreatmentDate = value;
-                Update_Status(); 
+            set
+            {
+                lastTreatmentDate = value;
+                Update_Status();
                 if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("LastTreatmentDate")); }
             }
         }
