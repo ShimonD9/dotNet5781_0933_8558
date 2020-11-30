@@ -31,7 +31,7 @@ namespace dotNet5781_03B_0933_8558
 
         public bool IsReady { get { return Status == BUS_STATUS.READY_FOR_TRAVEL; } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("IsReady")); } } }
 
-        public bool IsTreatment { get { if ((Status == BUS_STATUS.DANGEROUS) || (Status == BUS_STATUS.READY_FOR_TRAVEL)) return true; return false; } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("IsTretment")); } } }
+        public bool NeedsTreatment { get { if ((Status == BUS_STATUS.DANGEROUS) || (Status == BUS_STATUS.READY_FOR_TRAVEL)) return true; return false; } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("IsTretment")); } } }
 
         private BUS_STATUS status;
         public BUS_STATUS Status { get { return status; } set { status = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("Status")); } } }
@@ -210,7 +210,7 @@ namespace dotNet5781_03B_0933_8558
                 else
                 {
                     treatmentWorker.ReportProgress(0);
-                    try { Thread.Sleep(15000); } catch (Exception) { }
+                    try { Thread.Sleep(5000); } catch (Exception) { }
                 }
             };
 
@@ -225,8 +225,12 @@ namespace dotNet5781_03B_0933_8558
                 }
                 else
                 {
+                    MileageAtLastTreat = Mileage;
+                    MileageSinceLastTreat = 0;
+                    KMtoNextTreat = 0;
                     LastTreatmentDate = DateTime.Now;
-                    KMtoNextTreat = 20000;                   
+                    DaysUntilNextTreat = 365;
+                    
                     Update_Status();
                 }
             };
