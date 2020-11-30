@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace dotNet5781_03B_0933_8558
 {
@@ -21,9 +22,10 @@ namespace dotNet5781_03B_0933_8558
     /// </summary>
     public partial class MainWindow : Window
     {
+        //BackgroundWorker refuel = new BackgroundWorker();
         public static Random rnd = new Random(DateTime.Now.Millisecond);
         public static List<Bus> busList = new List<Bus> { };
-
+        BackgroundWorker refuel;
 
         public MainWindow()
         {
@@ -66,7 +68,10 @@ namespace dotNet5781_03B_0933_8558
             {
                 MessageBox.Show("The bus gas tank is already full!", "You are a loser", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            else bus.Refuel();
+            else
+            {
+                bus.Refuel();
+            }
             // Background - calling the worker of bus fuel
         }
 

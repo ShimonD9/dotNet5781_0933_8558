@@ -4,12 +4,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace dotNet5781_03B_0933_8558
 {
     public class Bus : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private BackgroundWorker refuelWorker = new BackgroundWorker();
+        private Thread myThread = null;
 
         /// <summary>
         /// Bus constructor, initializing 6 fields in the ctor, based on 3 paramters
@@ -125,8 +128,7 @@ namespace dotNet5781_03B_0933_8558
             get { return Math.Round(kmLeftToRide, 2); }
             set
             {
-                kmLeftToRide = value;
-                Update_Status();
+                kmLeftToRide = value;                
                 if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("KMLeftToRide")); }
             }
         }
@@ -136,7 +138,30 @@ namespace dotNet5781_03B_0933_8558
         /// </summary>
         public void Refuel()
         {
-            KMLeftToRide = 1200;
+            Status = BUS_STATUS.AT_REFUEL;
+            double part = (1200 - KMLeftToRide) / 12;
+            //refuelWorker.RunWorkerCompleted += (sender, args) => accountClosedHandler();
+            refuelWorker.WorkerReportsProgress = true;
+            refuelWorker.ProgressChanged += (sender, args) =>
+            {            
+                KMLeftToRide += part;
+            };
+
+            refuelWorker.DoWork += (sender, args) =>
+            {
+                myThread = Thread.CurrentThread;          
+                //while (!worker.CancellationPending) //(!_shouldStop)
+                //{
+                //    worker.ReportProgress(1);
+                //    try { Thread.Sleep(3000); } catch (Exception) { } // 3 secs
+                //}
+                for (int i = 0; i < 12; ++i) // 5 secs delay
+                {
+                    refuelWorker.ReportProgress(i);
+                    Thread.Sleep(1000);
+                }
+            };
+            refuelWorker.RunWorkerAsync();
             Update_Status();
         }
 
