@@ -11,7 +11,7 @@ namespace dotNet5781_03B_0933_8558
     public class Bus : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private BackgroundWorker refuelWorker = new BackgroundWorker();
+
         private Thread myThread = null;
 
         /// <summary>
@@ -133,14 +133,18 @@ namespace dotNet5781_03B_0933_8558
             }
         }
 
+
+        private BackgroundWorker refuelWorker = new BackgroundWorker();
         /// <summary>
         /// The function restarts the kmLeftToRide with 1200 km
         /// </summary>
         public void Refuel()
         {
-            Status = BUS_STATUS.AT_REFUEL;
-            double part = (1200 - KMLeftToRide) / 12;            
+
+            double part = (1200 - KMLeftToRide) / 12;
+
             refuelWorker.WorkerReportsProgress = true;
+
             refuelWorker.ProgressChanged += (sender, args) =>
             {            
                 KMLeftToRide += part;
@@ -148,21 +152,32 @@ namespace dotNet5781_03B_0933_8558
 
             refuelWorker.DoWork += (sender, args) =>
             {
-                myThread = Thread.CurrentThread;
-                //while (!worker.CancellationPending) //(!_shouldStop)
-                //{
-                //    worker.ReportProgress(1);
-                //    try { Thread.Sleep(3000); } catch (Exception) { } // 3 secs
-                //}
+                Status = BUS_STATUS.AT_REFUEL;
                 for (int i = 0; i < 12; ++i) // 5 secs delay
                 {
-                    refuelWorker.ReportProgress(i);
-                    Thread.Sleep(1000);
+                    if (refuelWorker.CancellationPending == true)
+                    {
+                    }
+                    else 
+                    {
+                        refuelWorker.ReportProgress(i);
+                        try { Thread.Sleep(1000); } catch (Exception) { }
+                    }
                 }
             };
-            refuelWorker.RunWorkerAsync();
-            refuelWorker.RunWorkerCompleted += (sender, args) => { };
-            Update_Status();
+
+            if (refuelWorker.IsBusy != true)
+                refuelWorker.RunWorkerAsync();
+
+            refuelWorker.RunWorkerCompleted += (sender, args) => {
+                if (args.Cancelled == true)
+                {
+                }
+                else
+                {
+                    Update_Status();
+                }
+            };
         }
 
 

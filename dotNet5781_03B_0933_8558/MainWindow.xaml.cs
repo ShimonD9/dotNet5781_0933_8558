@@ -73,7 +73,7 @@ namespace dotNet5781_03B_0933_8558
             {
                 (sender as Button).IsEnabled = false;
                 bus.Refuel();
-               // (sender as Button).IsEnabled = true;
+                //(sender as Button).IsEnabled = true;
             }
             // Background - calling the worker of bus fuel
         }
