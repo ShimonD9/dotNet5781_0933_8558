@@ -66,7 +66,7 @@ namespace dotNet5781_03B_0933_8558
             {
                 MessageBox.Show("The bus gas tank is already full!", "You are a loser", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            else bus.KMLeftToRide = 1200;
+            else bus.Refuel();
             // Background - calling the worker of bus fuel
         }
 

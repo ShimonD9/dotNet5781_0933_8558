@@ -88,18 +88,17 @@
                                     <TextBlock Name ="tbDaysToTreat" FontSize="16" Text="{Binding Path='DaysUntilNextTreat'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
                                 </Border>
 
+
                                 <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                    <TextBlock Name ="tbKMToTreat" FontSize="16" Text="{Binding Path='KMtoNextTreat'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
+                                </Border>
+                                
+                                <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0 1 1 1">
                                     <TextBlock Name ="tbStatus" FontSize="8" Text="{Binding Path='Status'}" HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="10"/>
                                 </Border>
 
-
-                                <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <TextBlock Name ="tbKMToTreat" FontSize="16" Text="{Binding Path='KMtoNextTreat'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
-                                </Border>
-
-
                                 <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <Button HorizontalAlignment="Center" Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200"  Click="Button_OpenPickUpBusWindow">
+                                    <Button HorizontalAlignment="Center" Cursor="Hand" IsEnabled="{Binding Path='IsReady'}" VerticalAlignment="Center" Height="40" Width="200"  Click="Button_OpenPickUpBusWindow">
                                         <Button.Content>
                                             <Image Source="/dotNet5781_03B_0933_8558;component/Images/takeBus.png" />
                                         </Button.Content>

@@ -24,16 +24,28 @@ namespace dotNet5781_03B_0933_8558
             Mileage = km;
             LastTreatmentDate = dateOfLastTreat;
             MileageAtLastTreat = kmAtLastTreat;
-            Status = BUS_STATUS.READY_FOR_TRAVEL; // Assuming every added bus is ready for travel
             KMLeftToRide = 1200; // Assuming every added bus is filled with gas
+            Update_Status();
         }
 
+        public bool IsReady { get { return Status == BUS_STATUS.READY_FOR_TRAVEL;  } set { } }
+
         private BUS_STATUS status;
-        public BUS_STATUS Status { get { return status; } set { status = value;  } }
+        public BUS_STATUS Status { get { return status; } set { status = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("Status")); } } }
 
         public enum BUS_STATUS
         {
-            READY_FOR_TRAVEL, AT_TRAVEL, AT_TREATMENT, AT_REFUEL // מוכן לנסיעה, באמצע נסיעה, בתדלוק, בטיפול.
+            READY_FOR_TRAVEL, NOT_READY_FOR_TRAVEL, DANGEROUS, AT_TRAVEL, AT_TREATMENT, AT_REFUEL 
+        }
+
+        public void Update_Status()
+        {
+            if (MileageSinceLastTreat < 20000 && lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && KMLeftToRide > 0)
+                Status = BUS_STATUS.READY_FOR_TRAVEL;
+            else if (MileageSinceLastTreat > 20000 || lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
+                Status = BUS_STATUS.DANGEROUS;
+            else if (KMLeftToRide < 0)
+                Status = BUS_STATUS.NOT_READY_FOR_TRAVEL;
         }
 
         private String license;
@@ -94,8 +106,9 @@ namespace dotNet5781_03B_0933_8558
 
             set
             {
-                if (value < 0) throw new Exception("The mileage input is incorrect."); // Throws message if the input is incorrect
+                // if (value < 0) throw new Exception("The mileage input is incorrect."); // Throws message if the input is incorrect
                 mileage = value;
+                Update_Status();
                 if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("Mileage")); }
             }
         }
@@ -113,6 +126,7 @@ namespace dotNet5781_03B_0933_8558
             set
             {
                 kmLeftToRide = value;
+                Update_Status();
                 if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("KMLeftToRide")); }
             }
         }
@@ -122,12 +136,16 @@ namespace dotNet5781_03B_0933_8558
         /// </summary>
         public void Refuel()
         {
-            kmLeftToRide = 1200;
+            KMLeftToRide = 1200;
+            Update_Status();
         }
 
 
         private DateTime dateOfAbsorption;
-        public DateTime DateOfAbsorption { get { return dateOfAbsorption; } set { dateOfAbsorption = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("DateOfAbsorption")); } } }
+        public DateTime DateOfAbsorption { get { return dateOfAbsorption; } 
+            set { dateOfAbsorption = value;
+                if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("DateOfAbsorption"));
+                } } }
 
 
         private DateTime lastTreatmentDate; // treatment date field
@@ -137,15 +155,16 @@ namespace dotNet5781_03B_0933_8558
         public DateTime LastTreatmentDate
         {
             get { return lastTreatmentDate.Date; }
-            set { lastTreatmentDate = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("LastTreatmentDate")); } }
+            set { lastTreatmentDate = value;
+                Update_Status(); 
+                if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("LastTreatmentDate")); }
+            }
         }
-
-        private int daysUntilNextTreat;
 
         public int DaysUntilNextTreat
         {
             get { return (lastTreatmentDate.AddYears(1) - DateTime.Now).Days; }
-            set { daysUntilNextTreat = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("DaysUntilNextTreat")); } }
+            set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("DaysUntilNextTreat")); } }
         }
 
 
@@ -156,7 +175,7 @@ namespace dotNet5781_03B_0933_8558
         public double MileageAtLastTreat
         {
             get { return mileageAtLastTreat; }
-            set { mileageAtLastTreat = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("MileageAtLastTreat")); } }
+            set { mileageAtLastTreat = value; Update_Status(); if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("MileageAtLastTreat")); } }
         }
 
         /// <summary>
@@ -164,36 +183,25 @@ namespace dotNet5781_03B_0933_8558
         /// </summary>
         /// <param name="kmForNextRide" - used to decide if the bus can travel the requested km></param>
         /// <returns></returns>
-        public bool CheckIfDangerous(double kmForNextRide = 0)
+        public bool CheckIfCannotTravel(double kmForNextRide = 0)
         {
-            if ((MileageSinceLastTreatCalculation() + kmForNextRide > 20000)         // The bus cannot travel more than 20,000 km since the last treatment
+            if ((MileageSinceLastTreat + kmForNextRide > 20000)         // The bus cannot travel more than 20,000 km since the last treatment
                 ||                                                       // OR, if the last treatment happened more than a year a ago 
             (lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0))    // To check this, we add a year to the last treatment date, and compare it to the current date. If the value returned is 0 or -1, it means a year (or more) passed since the last treatment
-                return true;                                             // Returns true, meaning the bus is dangerous for ride
+                return true;                                             // Returns true, meaning the bus cannot travel
             return false;                                                // Else, returns false
         }
 
-        private double mileageSinceLastTreat;
         public double MileageSinceLastTreat
         {
-            get { return MileageSinceLastTreatCalculation(); }
-            set { mileageSinceLastTreat = MileageSinceLastTreatCalculation(); if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("MileageSinceLastTreat")); } }
+            get { return Math.Round(Mileage - MileageAtLastTreat, 2); }
+            set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("MileageSinceLastTreat")); } }
         }
 
-        private double kmToNextTreat;
         public double KMtoNextTreat
         {
-            get { return Math.Round(20000 - MileageSinceLastTreatCalculation(), 2); }
-            set { kmToNextTreat = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("KMtoNextTreat")); } }
-        }
-
-        /// <summary>
-        /// The function returns the total mileage minus the mileage at last treat; 
-        /// </summary>
-        /// <returns></returns>
-        public double MileageSinceLastTreatCalculation()
-        {
-            return Math.Round(Mileage - MileageAtLastTreat, 2);
+            get { return Math.Round(20000 - MileageSinceLastTreat, 2); }
+            set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("KMtoNextTreat")); } }
         }
 
         /// <summary>
@@ -212,7 +220,7 @@ namespace dotNet5781_03B_0933_8558
         /// <returns> Returns the string to print the object </returns>
         public override string ToString()
         {
-            return string.Format("License = {0}, Date = {1}, Last treatment date = {2}, KM left to ride = {3} km, Total mileage = {4} km, Mileage since last treatment = {5} km", License, DateOfAbsorption.ToShortDateString(), lastTreatmentDate.ToShortDateString(), KMLeftToRide, Mileage, MileageSinceLastTreatCalculation());
+            return string.Format("License = {0}, Date = {1}, Last treatment date = {2}, KM left to ride = {3} km, Total mileage = {4} km, Mileage since last treatment = {5} km", License, DateOfAbsorption.ToShortDateString(), lastTreatmentDate.ToShortDateString(), KMLeftToRide, Mileage, MileageSinceLastTreat);
         }
 
     }
