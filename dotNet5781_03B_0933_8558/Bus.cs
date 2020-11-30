@@ -29,30 +29,6 @@ namespace dotNet5781_03B_0933_8558
             Update_Status();
         }
 
-        public bool IsReady { get { return Status == BUS_STATUS.READY_FOR_TRAVEL; } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("IsReady")); } } }
-
-        public bool NeedsTreatment { get { if ((Status == BUS_STATUS.DANGEROUS) || (Status == BUS_STATUS.READY_FOR_TRAVEL)) return true; return false; } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("IsTretment")); } } }
-
-        private BUS_STATUS status;
-        public BUS_STATUS Status { get { return status; } set { status = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("Status")); } } }
-
-        public enum BUS_STATUS
-        {
-            READY_FOR_TRAVEL, NOT_READY_FOR_TRAVEL, DANGEROUS, AT_TRAVEL, AT_TREATMENT, AT_REFUEL
-        }
-
-        public void Update_Status()
-        {
-            if (MileageSinceLastTreat < 20000 && lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && KMLeftToTravel > 0)
-            {
-                Status = BUS_STATUS.READY_FOR_TRAVEL;
-                IsReady = true;
-            }
-            else if (MileageSinceLastTreat > 20000 || lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
-                Status = BUS_STATUS.DANGEROUS;
-            else if (KMLeftToTravel < 0)
-                Status = BUS_STATUS.NOT_READY_FOR_TRAVEL;
-        }
 
         private String license;
         /// <summary>
@@ -102,6 +78,74 @@ namespace dotNet5781_03B_0933_8558
             }
         }
 
+        /////////////////////////////// Status:  ///////////////////////////////
+
+        public bool IsReady { get { return Status == BUS_STATUS.READY_FOR_TRAVEL; } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("IsReady")); } } }
+
+        public bool NeedsTreatment { get { if ((Status == BUS_STATUS.DANGEROUS) || (Status == BUS_STATUS.READY_FOR_TRAVEL)) return true; return false; } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("NeedsTreatment")); } } }
+
+        private BUS_STATUS status;
+        public BUS_STATUS Status { get { return status; } set { status = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("Status")); } } }
+
+        public enum BUS_STATUS
+        {
+            READY_FOR_TRAVEL, NOT_READY_FOR_TRAVEL, DANGEROUS, AT_TRAVEL, AT_TREATMENT, AT_REFUEL
+        }
+
+        public void Update_Status()
+        {
+            if (MileageSinceLastTreat < 20000 && lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && KMLeftToTravel > 0)
+            {
+                Status = BUS_STATUS.READY_FOR_TRAVEL;
+                IsReady = true;
+                NeedsTreatment = false;
+            }
+            else if (MileageSinceLastTreat > 20000 || lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
+                Status = BUS_STATUS.DANGEROUS;
+            else if (KMLeftToTravel < 0)
+                Status = BUS_STATUS.NOT_READY_FOR_TRAVEL;
+        }
+
+
+        /////////////////////////////// Dates: ///////////////////////////////
+
+        private DateTime dateOfAbsorption;
+        public DateTime DateOfAbsorption
+        {
+            get { return dateOfAbsorption; }
+            set
+            {
+                dateOfAbsorption = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("DateOfAbsorption"));
+                }
+            }
+        }
+
+        private DateTime lastTreatmentDate; // treatment date field
+        /// <summary>
+        /// The function stores the date of the treatment 
+        /// </summary>
+        public DateTime LastTreatmentDate
+        {
+            get { return lastTreatmentDate.Date; }
+            set
+            {
+                lastTreatmentDate = value;
+                Update_Status();
+                if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("LastTreatmentDate")); }
+            }
+        }
+
+        public int DaysUntilNextTreat
+        {
+            get { return (lastTreatmentDate.AddYears(1) - DateTime.Now).Days; }
+            set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("DaysUntilNextTreat")); } }
+        }
+
+        /////////////////////////////// Mileage and km: ///////////////////////////////
+
         private double mileage; // Total mileage (kilometraj) field
         /// <summary>
         /// The mileage property - returns the mileage, or sets it with the value (only if it not less than zero)
@@ -119,12 +163,40 @@ namespace dotNet5781_03B_0933_8558
             }
         }
 
+        private double mileageAtLastTreat; // mileage at last treat field
+        /// <summary>
+        /// Property of mileageAtLastTreat field (simple get and set)
+        /// </summary>
+        public double MileageAtLastTreat
+        {
+            get { return mileageAtLastTreat; }
+            set
+            {
+                mileageAtLastTreat = value;
+                MileageSinceLastTreat = 0; // For invoking the MileageSinceLastTreat property
+                Update_Status(); if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("MileageAtLastTreat")); }
+            }
+        }
+
+        public double MileageSinceLastTreat
+        {
+            get { return Math.Round(Mileage - MileageAtLastTreat, 2); }
+            set
+            {
+                KMtoNextTreat = 0; // For invoking the KMtoNextTreat property
+                if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("MileageSinceLastTreat")); }
+            }
+        }
+
+        public double KMtoNextTreat
+        {
+            get { return Math.Round(20000 - MileageSinceLastTreat, 2); }
+            set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("KMtoNextTreat")); } }
+        }
+
         private double kmLeftToTravel; // kmLeftToRide (equivalent to fuel condition)
         /// <summary>
-        /// The property of the kmLeftToRide field -
-        /// the getters returns the field,
-        /// and the setter reduces the kilometers by the value, if the ride is possible
-        /// if the km left is not enough for the new ride, it throws appropriate message
+        /// The property of the kmLeftToRide field
         /// </summary>
         public double KMLeftToTravel
         {
@@ -137,13 +209,14 @@ namespace dotNet5781_03B_0933_8558
         }
 
 
+        /////////////////////////////// Background workers: ///////////////////////////////
+
         private readonly BackgroundWorker refuelWorker = new BackgroundWorker();
         /// <summary>
         /// The function restarts the kmLeftToRide with 1200 km
         /// </summary>
         public void Refuel()
         {
-
             double part = (1200 - kmLeftToTravel) / 12;
 
             refuelWorker.WorkerReportsProgress = true;
@@ -189,6 +262,7 @@ namespace dotNet5781_03B_0933_8558
         }
 
         private readonly BackgroundWorker treatmentWorker = new BackgroundWorker();
+
         public void Treatment()
         {
 
@@ -203,14 +277,18 @@ namespace dotNet5781_03B_0933_8558
             {
                 Status = BUS_STATUS.AT_TREATMENT;
                 IsReady = false;
+                NeedsTreatment = false;
                 if (treatmentWorker.CancellationPending == true)
                 {
 
                 }
                 else
                 {
-                    treatmentWorker.ReportProgress(0);
-                    try { Thread.Sleep(5000); } catch (Exception) { }
+                    for (int i = 5; i > 0; i--)
+                    {
+                        try { Thread.Sleep(1000); } catch (Exception) { }
+                        treatmentWorker.ReportProgress(i);
+                    }
                 }
             };
 
@@ -225,63 +303,27 @@ namespace dotNet5781_03B_0933_8558
                 }
                 else
                 {
+                    if (this.KMLeftToTravel < 1200)
+                        Refuel();
                     MileageAtLastTreat = Mileage;
-                    MileageSinceLastTreat = 0;
-                    KMtoNextTreat = 0;
                     LastTreatmentDate = DateTime.Now;
                     DaysUntilNextTreat = 365;
-                    
-                    Update_Status();
                 }
             };
         }
 
-        private DateTime dateOfAbsorption;
-        public DateTime DateOfAbsorption
-        {
-            get { return dateOfAbsorption; }
-            set
-            {
-                dateOfAbsorption = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("DateOfAbsorption"));
-                }
-            }
-        }
+        /////////////////////////////// Other methods: ///////////////////////////////
 
-
-        private DateTime lastTreatmentDate; // treatment date field
         /// <summary>
-        /// The function stores the date of the treatment 
+        /// The functions compares two license numbers
         /// </summary>
-        public DateTime LastTreatmentDate
+        /// <param name="str"> the given license for comprison</param>
+        /// <returns></returns>
+        public bool CompareLicenses(String str)
         {
-            get { return lastTreatmentDate.Date; }
-            set
-            {
-                lastTreatmentDate = value;
-                Update_Status();
-                if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("LastTreatmentDate")); }
-            }
+            return (this.license == str);
         }
 
-        public int DaysUntilNextTreat
-        {
-            get { return (lastTreatmentDate.AddYears(1) - DateTime.Now).Days; }
-            set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("DaysUntilNextTreat")); } }
-        }
-
-
-        private double mileageAtLastTreat; // mileage at last treat field
-        /// <summary>
-        /// Property of mileageAtLastTreat field (simple get and set)
-        /// </summary>
-        public double MileageAtLastTreat
-        {
-            get { return mileageAtLastTreat; }
-            set { mileageAtLastTreat = value; Update_Status(); if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("MileageAtLastTreat")); } }
-        }
 
         /// <summary>
         /// The function decides if the bus can travel, based on the mileage or the time passed since the last treatment
@@ -295,28 +337,6 @@ namespace dotNet5781_03B_0933_8558
             (lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0))    // To check this, we add a year to the last treatment date, and compare it to the current date. If the value returned is 0 or -1, it means a year (or more) passed since the last treatment
                 return true;                                             // Returns true, meaning the bus cannot travel
             return false;                                                // Else, returns false
-        }
-
-        public double MileageSinceLastTreat
-        {
-            get { return Math.Round(Mileage - MileageAtLastTreat, 2); }
-            set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("MileageSinceLastTreat")); } }
-        }
-
-        public double KMtoNextTreat
-        {
-            get { return Math.Round(20000 - MileageSinceLastTreat, 2); }
-            set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("KMtoNextTreat")); } }
-        }
-
-        /// <summary>
-        /// The functions compares two license numbers
-        /// </summary>
-        /// <param name="str"> the given license for comprison</param>
-        /// <returns></returns>
-        public bool CompareLicenses(String str)
-        {
-            return (this.license == str);
         }
 
         /// <summary>

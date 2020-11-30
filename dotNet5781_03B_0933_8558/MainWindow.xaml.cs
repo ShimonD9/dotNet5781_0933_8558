@@ -118,7 +118,7 @@ namespace dotNet5781_03B_0933_8558
 
                 double km = Math.Round(rnd.NextDouble() * 200000 + 20000, 2);
                 double kmAtLastTreatment = Math.Round(km - rnd.NextDouble() * 10000, 2);
-                Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 200)));
+                Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 350)));
 
                 busList.Add(newBus);
             }
@@ -149,7 +149,7 @@ namespace dotNet5781_03B_0933_8558
 
                 double km = Math.Round(rnd.NextDouble() * 200000 + 20000, 2);
                 double kmAtLastTreatment = Math.Round(km - rnd.NextDouble() * 10000, 2);
-                Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 300)));
+                Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 350)));
 
                 busList.Add(newBus);
             }
