@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0933_8558"
         mc:Ignorable="d"
-        Title="Bus Company Manager" Height="700" Width="940.5" ResizeMode="NoResize" Name="UI" Loaded="MainWindow_Loaded">
+        Title="Bus Company Manager" Height="700" Width="940.5"  Name="UI" ResizeMode="CanMinimize" Loaded="MainWindow_Loaded">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -77,22 +77,25 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1 1 1 1">
-                                    <TextBlock Name ="tbLicense" Text="{Binding Path = 'License'}" HorizontalAlignment="Stretch" TextAlignment="Center"  />
+                                    <TextBlock Name ="tbLicense" Text="{Binding Path = 'License'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="{Binding Path='StatusColor'}" FontSize="12" FontWeight="Bold" TextAlignment="Center"  />
                                 </Border>
 
                                 <Border Grid.Column="1" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <ProgressBar Name ="pbFuel"  Value="{Binding Path='KMLeftToTravel'}" Grid.Column="1" BorderThickness="1" Minimum="0" Maximum="1200" Margin="10"/>
+                                    <ProgressBar Name ="pbFuel"  Value="{Binding Path='KMLeftToTravel'}" BorderThickness="1" Minimum="0" Maximum="1200" Margin="10"/>
                                 </Border>
 
                                 <Border Grid.Column="2" BorderBrush="Black" BorderThickness="0 1 1 1">
                                     <TextBlock Name ="tbDaysToTreat" FontSize="16" Text="{Binding Path='DaysUntilNextTreat'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
                                 </Border>
 
-
                                 <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0 1 1 1">
                                     <TextBlock Name ="tbKMToTreat" FontSize="16" Text="{Binding Path='KMtoNextTreat'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
                                 </Border>
 
+                                <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                    <ProgressBar Value="{Binding Path='WorkEndsIn'}" Grid.Column="1" BorderThickness="1" Minimum="0" Maximum="100" Margin="10"/>
+                                </Border>
+                                
                                 <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0 1 1 1">
                                     <TextBlock Name ="tbStatus" FontSize="8" Text="{Binding Path='Status'}" HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="10"/>
                                 </Border>

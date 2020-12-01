@@ -92,6 +92,9 @@ namespace dotNet5781_03B_0933_8558
             READY_FOR_TRAVEL, NOT_READY_FOR_TRAVEL, DANGEROUS, AT_TRAVEL, AT_TREATMENT, AT_REFUEL
         }
 
+        private string statusColor;
+        public string StatusColor { get { return statusColor; } set { statusColor = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("StatusColor")); } } }
+
         public void Update_Status()
         {
             if (MileageSinceLastTreat < 20000 && lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && KMLeftToTravel > 0)
@@ -99,12 +102,19 @@ namespace dotNet5781_03B_0933_8558
                 Status = BUS_STATUS.READY_FOR_TRAVEL;
                 IsReady = true;
                 NeedsTreatment = false;
+                StatusColor = "LightGreen";
             }
             else if (MileageSinceLastTreat > 20000 || lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
+            {
                 Status = BUS_STATUS.DANGEROUS;
+                StatusColor = "OrangeRed";
+            }
             else if (KMLeftToTravel < 0)
+            { 
                 Status = BUS_STATUS.NOT_READY_FOR_TRAVEL;
-        }
+                StatusColor = "OrangeRed";
+            }
+    }
 
 
         /////////////////////////////// Dates: ///////////////////////////////
@@ -237,13 +247,24 @@ namespace dotNet5781_03B_0933_8558
 
         /////////////////////////////// Background workers: ///////////////////////////////
 
+        private int workEndsIn;
+        public int WorkEndsIn
+        {
+            get { return workEndsIn; }
+            set
+            {
+                workEndsIn = value; // For invoking the KMtoNextTreat property
+                if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("WorkEndsIn")); }
+            }
+        }
+
         private readonly BackgroundWorker refuelWorker = new BackgroundWorker();
         /// <summary>
         /// The function restarts the kmLeftToRide with 1200 km
         /// </summary>
         public void Refuel()
         {
-            double part = (1200 - kmLeftToTravel) / 12;
+            double part = (1200 - kmLeftToTravel) / 120;
 
             refuelWorker.WorkerReportsProgress = true;
 
@@ -255,8 +276,9 @@ namespace dotNet5781_03B_0933_8558
             refuelWorker.DoWork += (sender, args) =>
             {
                 Status = BUS_STATUS.AT_REFUEL;
+                StatusColor = "OrangeRed";
                 IsReady = false;
-                for (int i = 0; i < 12; ++i)
+                for (int i = 0; i < 120; ++i)
                 {
                     if (refuelWorker.CancellationPending == true)
                     {
@@ -265,7 +287,7 @@ namespace dotNet5781_03B_0933_8558
                     else
                     {
                         refuelWorker.ReportProgress(i);
-                        try { Thread.Sleep(1000); } catch (Exception) { }
+                        try { Thread.Sleep(100); } catch (Exception) { }
                     }
                 }
             };
@@ -296,7 +318,7 @@ namespace dotNet5781_03B_0933_8558
 
             treatmentWorker.ProgressChanged += (sender, args) =>
             {
-
+                WorkEndsIn = 100 * args.ProgressPercentage / 1440;
             };
 
             treatmentWorker.DoWork += (sender, args) =>
@@ -310,9 +332,9 @@ namespace dotNet5781_03B_0933_8558
                 }
                 else
                 {
-                    for (int i = 5; i > 0; i--)
+                    for (int i = 1; i < 1441; i++)
                     {
-                        try { Thread.Sleep(1000); } catch (Exception) { }
+                        try { Thread.Sleep(100); } catch (Exception) { }
                         treatmentWorker.ReportProgress(i);
                     }
                 }
@@ -334,15 +356,16 @@ namespace dotNet5781_03B_0933_8558
                     MileageAtLastTreat = Mileage;
                     LastTreatmentDate = MainWindow.useMyRunningDate;
                     DaysUntilNextTreat = 365;
+                    WorkEndsIn = 0;
                 }
             };
         }
 
         private readonly BackgroundWorker travelWorker = new BackgroundWorker();
 
-    public void Travel(double travel,int time)
+        public void Travel(double travel, double travelTime)
         {
-            
+
             travelWorker.WorkerReportsProgress = true;
 
             travelWorker.ProgressChanged += (sender, args) =>
@@ -363,7 +386,7 @@ namespace dotNet5781_03B_0933_8558
                 {
                     for (int i = 5; i > 0; i--)
                     {
-                       // try { Thread.Sleep(); } catch (Exception) { }
+                        // try { Thread.Sleep(); } catch (Exception) { }
                         treatmentWorker.ReportProgress(i);
                     }
                 }
@@ -380,7 +403,7 @@ namespace dotNet5781_03B_0933_8558
                 }
                 else
                 {
-              
+
                 }
             };
         }
@@ -403,11 +426,13 @@ namespace dotNet5781_03B_0933_8558
         /// </summary>
         /// <param name="kmForNextRide" - used to decide if the bus can travel the requested km></param>
         /// <returns></returns>
-        public bool CheckIfCannotTravel(double kmForNextRide = 0)
+        public bool CheckIfCannotTravel(double kmForNextRide)
         {
             if ((MileageSinceLastTreat + kmForNextRide > 20000)         // The bus cannot travel more than 20,000 km since the last treatment
                 ||                                                       // OR, if the last treatment happened more than a year a ago 
-            (lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0))    // To check this, we add a year to the last treatment date, and compare it to the current date. If the value returned is 0 or -1, it means a year (or more) passed since the last treatment
+            (lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
+            ||
+            KMLeftToTravel < kmForNextRide)                       // To check this, we add a year to the last treatment date, and compare it to the current date. If the value returned is 0 or -1, it means a year (or more) passed since the last treatment
                 return true;                                             // Returns true, meaning the bus cannot travel
             return false;                                                // Else, returns false
         }
