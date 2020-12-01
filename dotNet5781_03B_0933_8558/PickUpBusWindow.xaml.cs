@@ -61,9 +61,5 @@ namespace dotNet5781_03B_0933_8558
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
     }
 }
