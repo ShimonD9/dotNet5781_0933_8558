@@ -33,36 +33,36 @@
                     <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
 
-                <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1 1 1 1">
-                    <TextBlock  Text="License" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" FontWeight="Bold"/>
+                <Border Grid.Column="0" BorderBrush="Black" Background="MediumPurple" BorderThickness="1 1 1 1">
+                    <TextBlock  Text="License" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
                 </Border>
 
-                <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1 1 1 1">
-                    <TextBlock  Text="Fuel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" FontWeight="Bold"/>
+                <Border Grid.Column="1" BorderBrush="Black" Background="MediumPurple" BorderThickness="1 1 1 1">
+                    <TextBlock  Text="Fuel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
                 </Border>
 
-                <Border Grid.Column="2" BorderBrush="Black" BorderThickness="1 1 1 1">
-                    <TextBlock  Text="Days until the next treatment" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" FontWeight="Bold"/>
+                <Border Grid.Column="2" BorderBrush="Black" Background="MediumPurple" BorderThickness="1 1 1 1">
+                    <TextBlock  Text="Days until the next treatment" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
                 </Border>
 
-                <Border Grid.Column="3" BorderBrush="Black" BorderThickness="1 1 1 1">
-                    <TextBlock  Text="KM until the next treatment" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" FontWeight="Bold"/>
+                <Border Grid.Column="3" BorderBrush="Black" Background="MediumPurple" BorderThickness="1 1 1 1">
+                    <TextBlock  Text="KM until the next treatment" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
                 </Border>
 
-                <Border Grid.Column="4" BorderBrush="Black" BorderThickness="1 1 1 1">
-                    <TextBlock  Text="Status" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" FontWeight="Bold"/>
+                <Border Grid.Column="4" BorderBrush="Black" Background="MediumPurple" BorderThickness="1 1 1 1">
+                    <TextBlock  Text="Status" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
                 </Border>
 
-                <Border Grid.Column="5" BorderBrush="Black" BorderThickness="1 1 1 1">
-                    <TextBlock Text="Pick up to travel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" FontWeight="Bold"/>
+                <Border Grid.Column="5" BorderBrush="Black" Background="MediumPurple" BorderThickness="1 1 1 1">
+                    <TextBlock Text="Ride the bus" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
                 </Border>
 
-                <Border Grid.Column="6" BorderBrush="Black" BorderThickness="1 1 1 1">
-                    <TextBlock  Text="Refuel the bus" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" FontWeight="Bold"/>
+                <Border Grid.Column="6" BorderBrush="Black" Background="MediumPurple" BorderThickness="1 1 1 1">
+                    <TextBlock  Text="Refuel the bus" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
                 </Border>
             </Grid>
             <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
-                <ListView Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Stretch" Background="#FFEAEAEA" MouseDoubleClick="LBBuses_MouseDoubleClick">
+                <ListView Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Stretch" Background="LightGray" MouseDoubleClick="LBBuses_MouseDoubleClick">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,2">
@@ -76,27 +76,27 @@
                                     <ColumnDefinition Width="50" />
                                 </Grid.ColumnDefinitions>
 
-                                <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1 1 1 1">
-                                    <TextBlock Name ="tbLicense" Text="{Binding Path = 'License'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="{Binding Path='StatusColor'}" FontSize="12" FontWeight="Bold" TextAlignment="Center"  />
+                                <Border Grid.Column="0" BorderBrush="Black" Background="{Binding Path='StatusColor'}" BorderThickness="1 1 1 1">
+                                    <TextBlock Name ="tbLicense" Text="{Binding Path = 'License'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
                                 </Border>
 
-                                <Border Grid.Column="1" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <ProgressBar Name ="pbFuel"  Foreground="SeaGreen" Value="{Binding Path='KMLeftToTravel'}" BorderThickness="1" Minimum="0" Maximum="1200" Margin="10"/>
+                                <Border Grid.Column="1" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
+                                    <ProgressBar Name ="pbFuel" Foreground="SeaGreen" Value="{Binding Path='KMLeftToTravel'}" BorderThickness="1" Minimum="0" Maximum="1200" Margin="10"/>
                                 </Border>
 
-                                <Border Grid.Column="2" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                <Border Grid.Column="2" BorderBrush="Black"  Background="LemonChiffon" BorderThickness="0 1 1 1">
                                     <TextBlock Name ="tbDaysToTreat" FontSize="16" Text="{Binding Path='DaysUntilNextTreat'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
                                 </Border>
 
-                                <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                <Border Grid.Column="3" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
                                     <TextBlock Name ="tbKMToTreat" FontSize="16" Text="{Binding Path='KMtoNextTreat'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
                                 </Border>
 
-                                <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                <Border Grid.Column="4" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
                                     <ProgressBar Value="{Binding Path='WorkEndsIn'}" Grid.Column="1" BorderThickness="1" Minimum="0" Maximum="100" Margin="5"/>
                                 </Border>
-                                
-                                <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0 1 1 1">
+
+                                <Border Grid.Column="4" BorderBrush="Black"  BorderThickness="0 1 1 1">
                                     <TextBlock Name ="tbStatus" FontSize="9" Text="{Binding Path='Status'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
                                 </Border>
 
