@@ -15,7 +15,7 @@
             <TextBlock Text="Please enter the number of kilometers the bus will travel:" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="WrapWithOverflow"/>
         </Grid>
         <Grid Grid.Row ="1">
-            <TextBox VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="20" PreviewKeyDown="textBox_PreviewKeyDown" />
+            <TextBox VerticalAlignment="Center" HorizontalContentAlignment="Center" Margin="20" MaxLength="7" PreviewTextInput="NumberValidationTextBox" PreviewKeyDown="textBox_PreviewKeyDown" />
         </Grid>
 
 

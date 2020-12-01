@@ -338,6 +338,53 @@ namespace dotNet5781_03B_0933_8558
             };
         }
 
+        private readonly BackgroundWorker travelWorker = new BackgroundWorker();
+
+    public void Travel(double travel,int time)
+        {
+            
+            travelWorker.WorkerReportsProgress = true;
+
+            travelWorker.ProgressChanged += (sender, args) =>
+            {
+
+            };
+
+            travelWorker.DoWork += (sender, args) =>
+            {
+                Status = BUS_STATUS.AT_TRAVEL;
+                IsReady = false;
+                NeedsTreatment = false;
+                if (treatmentWorker.CancellationPending == true)
+                {
+
+                }
+                else
+                {
+                    for (int i = 5; i > 0; i--)
+                    {
+                       // try { Thread.Sleep(); } catch (Exception) { }
+                        treatmentWorker.ReportProgress(i);
+                    }
+                }
+            };
+
+            if (travelWorker.IsBusy != true)
+                travelWorker.RunWorkerAsync();
+
+            travelWorker.RunWorkerCompleted += (sender, args) =>
+            {
+                if (args.Cancelled == true)
+                {
+
+                }
+                else
+                {
+              
+                }
+            };
+        }
+
         /////////////////////////////// Other methods: ///////////////////////////////
 
         /// <summary>
