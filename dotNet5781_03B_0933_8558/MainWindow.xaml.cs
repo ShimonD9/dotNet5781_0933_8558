@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using System.Threading;
 
 namespace dotNet5781_03B_0933_8558
 {
@@ -20,9 +21,9 @@ namespace dotNet5781_03B_0933_8558
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        //BackgroundWorker refuel = new BackgroundWorker();
+      
         public static Random rnd = new Random(DateTime.Now.Millisecond);
         public static List<Bus> busList = new List<Bus> { };
 
@@ -31,8 +32,6 @@ namespace dotNet5781_03B_0933_8558
             BusesInitializer(ref busList);
             InitializeComponent();
             lbBuses.DataContext = busList;
-            
-            
         }
 
         private void Button_OpenAddBusWindow(object sender, RoutedEventArgs e)
@@ -174,5 +173,78 @@ namespace dotNet5781_03B_0933_8558
             }
             return false;
         }
+
+
+        //////////////////////////////////////////////// CLOCK ////////////////////////////////////////////////
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+        private DateTime runningDate = DateTime.Now;
+        public static DateTime useMyRunningDate;
+        public DateTime RunningDate
+        {
+            get { return runningDate; }
+            set { runningDate = value; useMyRunningDate = value; OnPropertyChanged("RunningDate"); }
+        }
+
+        public static bool shouldStop = false;
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            RunClock();      
+        }
+
+        private readonly BackgroundWorker clockWorker = new BackgroundWorker();
+
+        public void RunClock()
+        {
+
+            clockWorker.WorkerReportsProgress = true;
+
+            clockWorker.ProgressChanged += (sender, args) =>
+            {
+                RunningDate = RunningDate.AddMinutes(1);
+            };
+
+            clockWorker.DoWork += (sender, args) =>
+            {
+
+                if (clockWorker.CancellationPending == true)
+                {
+
+                }
+                else
+                {
+                    while(shouldStop == false)
+                    {
+                        try { Thread.Sleep(100); } catch (Exception) { }
+                        clockWorker.ReportProgress(0);
+                    }
+                }
+            };
+
+            if (clockWorker.IsBusy != true)
+                clockWorker.RunWorkerAsync();
+
+            clockWorker.RunWorkerCompleted += (sender, args) =>
+            {
+                if (args.Cancelled == true)
+                {
+
+                }
+                else
+                {
+                    
+                }
+            };
+        }
+
     }
 }

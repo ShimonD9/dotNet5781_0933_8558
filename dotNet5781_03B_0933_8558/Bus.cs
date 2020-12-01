@@ -109,6 +109,18 @@ namespace dotNet5781_03B_0933_8558
 
         /////////////////////////////// Dates: ///////////////////////////////
 
+        public string AbsorptionShortDate
+        {
+            get { return dateOfAbsorption.ToShortDateString(); }
+            set
+            {
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("AbsorptionShortDate"));
+                }
+            }
+        }
+
         private DateTime dateOfAbsorption;
         public DateTime DateOfAbsorption
         {
@@ -116,9 +128,22 @@ namespace dotNet5781_03B_0933_8558
             set
             {
                 dateOfAbsorption = value;
+                AbsorptionShortDate = "0"; // To invoke the property changed of AbsorptionShortDate
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("DateOfAbsorption"));
+                }
+            }
+        }
+
+        public string TreatmentShortDate
+        {
+            get { return lastTreatmentDate.ToShortDateString(); }
+            set
+            {
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("TreatmentShortDate"));
                 }
             }
         }
@@ -129,10 +154,11 @@ namespace dotNet5781_03B_0933_8558
         /// </summary>
         public DateTime LastTreatmentDate
         {
-            get { return lastTreatmentDate.Date; }
+            get { return lastTreatmentDate; }
             set
             {
                 lastTreatmentDate = value;
+                TreatmentShortDate = "0"; // To invoke the property changed of TreatmentShortDate
                 Update_Status();
                 if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("LastTreatmentDate")); }
             }
@@ -306,7 +332,7 @@ namespace dotNet5781_03B_0933_8558
                     if (this.KMLeftToTravel < 1200)
                         Refuel();
                     MileageAtLastTreat = Mileage;
-                    LastTreatmentDate = DateTime.Now;
+                    LastTreatmentDate = MainWindow.useMyRunningDate;
                     DaysUntilNextTreat = 365;
                 }
             };
