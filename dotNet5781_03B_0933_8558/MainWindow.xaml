@@ -81,7 +81,7 @@
                                 </Border>
 
                                 <Border Grid.Column="1" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <ProgressBar Name ="pbFuel"  Value="{Binding Path='KMLeftToTravel'}" BorderThickness="1" Minimum="0" Maximum="1200" Margin="10"/>
+                                    <ProgressBar Name ="pbFuel"  Foreground="SeaGreen" Value="{Binding Path='KMLeftToTravel'}" BorderThickness="1" Minimum="0" Maximum="1200" Margin="10"/>
                                 </Border>
 
                                 <Border Grid.Column="2" BorderBrush="Black" BorderThickness="0 1 1 1">
@@ -93,11 +93,11 @@
                                 </Border>
 
                                 <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <ProgressBar Value="{Binding Path='WorkEndsIn'}" Grid.Column="1" BorderThickness="1" Minimum="0" Maximum="100" Margin="10"/>
+                                    <ProgressBar Value="{Binding Path='WorkEndsIn'}" Grid.Column="1" BorderThickness="1" Minimum="0" Maximum="100" Margin="5"/>
                                 </Border>
                                 
                                 <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <TextBlock Name ="tbStatus" FontSize="8" Text="{Binding Path='Status'}" HorizontalAlignment="Stretch" TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="10"/>
+                                    <TextBlock Name ="tbStatus" FontSize="9" Text="{Binding Path='Status'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
                                 </Border>
 
                                 <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0 1 1 1">
