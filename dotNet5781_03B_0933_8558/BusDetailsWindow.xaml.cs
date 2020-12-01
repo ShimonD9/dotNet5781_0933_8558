@@ -42,6 +42,7 @@ namespace dotNet5781_03B_0933_8558
             else
             {
                 bus.Refuel();
+                this.Close();
             }
         }
 
@@ -56,6 +57,7 @@ namespace dotNet5781_03B_0933_8558
             else
             {
                 bus.Treatment();
+                this.Close();
             }
         }
     }

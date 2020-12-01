@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0933_8558"
         mc:Ignorable="d"
-        Title="Bus Company Manager" Height="700" Width="940.5"  Name="UI" ResizeMode="CanMinimize" Loaded="MainWindow_Loaded">
+        Title="Bus Company Manager" Height="700" Width="859.5"  Name="UI" ResizeMode="CanMinimize" Loaded="MainWindow_Loaded">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -101,7 +101,7 @@
                                 </Border>
 
                                 <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <Button HorizontalAlignment="Center" Cursor="Hand" IsEnabled="{Binding Path='IsReady'}" VerticalAlignment="Center" Height="40" Width="200"  Click="Button_OpenPickUpBusWindow">
+                                    <Button HorizontalAlignment="Center" Cursor="Hand" Background="LemonChiffon" IsEnabled="{Binding Path='IsReady'}" VerticalAlignment="Center" Height="40" Width="200"  Click="Button_OpenPickUpBusWindow">
                                         <Button.Content>
                                             <Image Source="/dotNet5781_03B_0933_8558;component/Images/takeBus.png" />
                                         </Button.Content>
@@ -109,7 +109,7 @@
                                 </Border>
 
                                 <Border Grid.Column="6" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <Button Name = "bRefuel" HorizontalAlignment="Center"  IsEnabled="{Binding Path='IsReady'}" Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200" Click="Button_RefuelTheBus">
+                                    <Button Name = "bRefuel" HorizontalAlignment="Center"  Background="LemonChiffon"  IsEnabled="{Binding Path='IsReady'}" Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200" Click="Button_RefuelTheBus">
                                         <Button.Content>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="/dotNet5781_03B_0933_8558;component/Images/fuelBus1.png" />
@@ -130,14 +130,14 @@
                 <RowDefinition Height="0.1*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1 1 1 0">
-                <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="Time simulator:" TextAlignment="Center" FontSize="20" FontStyle="Oblique"/>
+            <Border Grid.Row="0" BorderBrush="Black" Background="Crimson" BorderThickness="3 3 3 0">
+                <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="Time simulator:" TextAlignment="Center" FontSize="20" FontWeight="Bold" FontStyle="Oblique"/>
             </Border>
-            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1 0 1 1">
+            <Border Grid.Row="1" BorderBrush="Black" Background="BlanchedAlmond" BorderThickness="3 0 3 3">
                 <TextBlock Name="tbClock" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Path='RunningDate'}" TextAlignment="Center" FontSize="14" FontStyle="Oblique"/>
             </Border>
             <Border Grid.Row="2">
-                <Button Name ="AddBus" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Height="62" Width="68" Margin="0,0,10,0" 
+                <Button Name ="AddBus" Cursor="Hand"  Background="LemonChiffon" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Height="62" Width="68" Margin="0,0,10,0" 
                 Click="Button_OpenAddBusWindow">
                     <Image Source="/dotNet5781_03B_0933_8558;component/Images/busAdd.png" Height="52" Width="57" />
                 </Button>

@@ -23,8 +23,11 @@ namespace dotNet5781_03B_0933_8558
         public AddBusWindow()
         {
             InitializeComponent();
-            dateStart.DisplayDateEnd = DateTime.Now;
-            dateLastTreat.DisplayDateEnd = DateTime.Now;
+            dateStart.DisplayDateEnd = MainWindow.useMyRunningDate;
+            dateLastTreat.DisplayDateEnd = MainWindow.useMyRunningDate;
+            dateStart.DisplayDate = MainWindow.useMyRunningDate;
+            dateLastTreat.DisplayDate = MainWindow.useMyRunningDate;
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
