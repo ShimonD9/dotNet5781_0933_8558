@@ -211,6 +211,8 @@ namespace dotNet5781_03B_0933_8558
             clockWorker.ProgressChanged += (sender, args) =>
             {
                 RunningDate = RunningDate.AddMinutes(1);
+                foreach (Bus b in busList)
+                    b.DaysUntilNextTreat = (b.LastTreatmentDate.AddYears(1) - RunningDate).Days;
             };
 
             clockWorker.DoWork += (sender, args) =>

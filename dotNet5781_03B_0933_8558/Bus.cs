@@ -174,10 +174,11 @@ namespace dotNet5781_03B_0933_8558
             }
         }
 
+        private int daysUntilNextTreat;
         public int DaysUntilNextTreat
         {
-            get { return (lastTreatmentDate.AddYears(1) - DateTime.Now).Days; }
-            set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("DaysUntilNextTreat")); } }
+            get { return daysUntilNextTreat; }
+            set { daysUntilNextTreat = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("DaysUntilNextTreat")); } }
         }
 
         /////////////////////////////// Mileage and km: ///////////////////////////////
