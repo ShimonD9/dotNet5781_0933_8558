@@ -109,7 +109,7 @@ namespace dotNet5781_03B_0933_8558
                 Status = BUS_STATUS.DANGEROUS;
                 StatusColor = "OrangeRed";
             }
-            else if (KMLeftToTravel < 0)
+            else if (KMLeftToTravel <= 0)
             {
                 Status = BUS_STATUS.NEEDS_REFUEL;
                 StatusColor = "OrangeRed";
@@ -418,9 +418,7 @@ namespace dotNet5781_03B_0933_8558
                     Mileage = prev1 + travel;
                     MileageSinceLastTreat = prev2 + travel;
                     KMLeftToTravel = prev3 - travel;
-                    Update_Status();
-
-                    
+                    Update_Status();          
                 }
             };
         }

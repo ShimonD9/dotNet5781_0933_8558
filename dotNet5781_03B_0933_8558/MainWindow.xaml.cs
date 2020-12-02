@@ -23,7 +23,7 @@ namespace dotNet5781_03B_0933_8558
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-      
+
         public static Random rnd = new Random(DateTime.Now.Millisecond);
         public static List<Bus> busList = new List<Bus> { };
 
@@ -48,16 +48,11 @@ namespace dotNet5781_03B_0933_8558
         {
             var fxElt = sender as FrameworkElement;
             Bus bus = fxElt.DataContext as Bus;
-            if (bus.Status == Bus.BUS_STATUS.READY_FOR_TRAVEL)
+            if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
             {
-                if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
-                {
-                    PickUpBusWindow pickUpBusWindow = new PickUpBusWindow(bus);
-                    pickUpBusWindow.Show();
-                }
+                PickUpBusWindow pickUpBusWindow = new PickUpBusWindow(bus);
+                pickUpBusWindow.ShowDialog();
             }
-            else
-                MessageBox.Show("The bus cannot travel currently", "You are so funny", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private void Button_RefuelTheBus(object sender, RoutedEventArgs e)
@@ -88,7 +83,7 @@ namespace dotNet5781_03B_0933_8558
             }
         }
 
-        
+
         public static void BusesInitializer(ref List<Bus> busList)
         {
             bool flag;
@@ -198,7 +193,7 @@ namespace dotNet5781_03B_0933_8558
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            RunClock();      
+            RunClock();
         }
 
         private readonly BackgroundWorker clockWorker = new BackgroundWorker();
@@ -224,7 +219,7 @@ namespace dotNet5781_03B_0933_8558
                 }
                 else
                 {
-                    while(shouldStop == false)
+                    while (shouldStop == false)
                     {
                         try { Thread.Sleep(100); } catch (Exception) { }
                         clockWorker.ReportProgress(0);
@@ -243,7 +238,7 @@ namespace dotNet5781_03B_0933_8558
                 }
                 else
                 {
-                    
+
                 }
             };
         }

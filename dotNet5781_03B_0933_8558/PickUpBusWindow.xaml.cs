@@ -51,8 +51,8 @@ namespace dotNet5781_03B_0933_8558
                 {
                     double travelTime = Math.Round(MainWindow.rnd.NextDouble() * 30 + 20, 2);
                     bus.Travel(km, travelTime);
+                    this.Close();
                 }
-                this.Close();
             }
         }
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
