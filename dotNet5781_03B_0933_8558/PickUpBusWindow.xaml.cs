@@ -46,7 +46,7 @@ namespace dotNet5781_03B_0933_8558
                 else if (km > 1200)
                     MessageBox.Show("The bus is unable to travel more than 1200 km.", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 else if (bus.CheckIfCannotTravel(km))
-                    MessageBox.Show("The bus doesn't have enough fuel for the requested travel", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("The bus unable to ride this amount of km (due to refuel / treat) ", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 else
                 {
                     double travelTime = Math.Round(MainWindow.rnd.NextDouble() * 30 + 20, 2);

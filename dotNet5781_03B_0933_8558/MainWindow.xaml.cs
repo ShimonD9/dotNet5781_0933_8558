@@ -44,16 +44,6 @@ namespace dotNet5781_03B_0933_8558
             }
         }
 
-        private void Button_OpenPickUpBusWindow(object sender, RoutedEventArgs e)
-        {
-            var fxElt = sender as FrameworkElement;
-            Bus bus = fxElt.DataContext as Bus;
-            if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
-            {
-                PickUpBusWindow pickUpBusWindow = new PickUpBusWindow(bus);
-                pickUpBusWindow.ShowDialog();
-            }
-        }
 
         private void Button_RefuelTheBus(object sender, RoutedEventArgs e)
         {
@@ -68,6 +58,19 @@ namespace dotNet5781_03B_0933_8558
                 bus.Refuel();
             }
         }
+
+        private void Button_OpenPickUpBusWindow(object sender, RoutedEventArgs e)
+        {
+            var fxElt = sender as FrameworkElement;
+            Bus bus = fxElt.DataContext as Bus;
+            if (bus.Status == Bus.BUS_STATUS.READY_FOR_TRAVEL && !Application.Current.Windows.OfType<PickUpBusWindow>().Any())
+            {
+
+                PickUpBusWindow pickUpBusWindow = new PickUpBusWindow(bus);
+                pickUpBusWindow.ShowDialog();
+            }
+        }
+
 
         private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

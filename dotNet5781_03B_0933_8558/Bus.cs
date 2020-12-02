@@ -84,6 +84,8 @@ namespace dotNet5781_03B_0933_8558
 
         public bool NeedsTreatment { get { if ((Status == BUS_STATUS.DANGEROUS) || (Status == BUS_STATUS.READY_FOR_TRAVEL)) return true; return false; } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("NeedsTreatment")); } } }
 
+        public bool NeedsRefuel { get { if ((Status == BUS_STATUS.NEEDS_REFUEL) || (Status == BUS_STATUS.READY_FOR_TRAVEL)) return true; return false; } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("NeedsRefuel")); } } }
+
         private BUS_STATUS status;
         public BUS_STATUS Status { get { return status; } set { status = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("Status")); } } }
 
@@ -100,11 +102,13 @@ namespace dotNet5781_03B_0933_8558
             if (MileageSinceLastTreat < 20000 && lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && KMLeftToTravel > 0)
             {
                 Status = BUS_STATUS.READY_FOR_TRAVEL;
-                IsReady = true;
-                NeedsTreatment = false;
                 StatusColor = "LightGreen";
+                // For the is_enabled buttons:
+                IsReady = true;
+                NeedsRefuel = true;
+                NeedsTreatment = false;
             }
-            else if (MileageSinceLastTreat > 20000 || lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
+            else if (MileageSinceLastTreat >= 20000 || lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
             {
                 Status = BUS_STATUS.DANGEROUS;
                 StatusColor = "OrangeRed";
@@ -112,6 +116,7 @@ namespace dotNet5781_03B_0933_8558
             else if (KMLeftToTravel <= 0)
             {
                 Status = BUS_STATUS.NEEDS_REFUEL;
+                NeedsRefuel = true;
                 StatusColor = "OrangeRed";
             }
         }
@@ -237,7 +242,7 @@ namespace dotNet5781_03B_0933_8558
         /// </summary>
         public double KMLeftToTravel
         {
-            get { return Math.Round(kmLeftToTravel,3); }
+            get { return Math.Round(kmLeftToTravel, 2); }
             set
             {
                 kmLeftToTravel = value;
@@ -280,6 +285,7 @@ namespace dotNet5781_03B_0933_8558
                 Status = BUS_STATUS.AT_REFUEL;
                 StatusColor = "OrangeRed";
                 IsReady = false;
+                NeedsRefuel = false;
                 for (int i = 0; i < 120; ++i)
                 {
                     if (refuelWorker.CancellationPending == true)
@@ -327,6 +333,7 @@ namespace dotNet5781_03B_0933_8558
             {
                 Status = BUS_STATUS.AT_TREATMENT;
                 IsReady = false;
+                NeedsRefuel = false;
                 NeedsTreatment = false;
                 if (treatmentWorker.CancellationPending == true)
                 {
@@ -388,8 +395,10 @@ namespace dotNet5781_03B_0933_8558
             travelWorker.DoWork += (sender, args) =>
             {
                 Status = BUS_STATUS.AT_TRAVEL;
+                StatusColor = "OrangeRed";
                 IsReady = false;
                 NeedsTreatment = false;
+                NeedsRefuel = false;
                 if (travelWorker.CancellationPending == true)
                 {
 
