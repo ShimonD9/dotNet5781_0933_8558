@@ -110,11 +110,11 @@ namespace dotNet5781_03B_0933_8558
                 StatusColor = "OrangeRed";
             }
             else if (KMLeftToTravel < 0)
-            { 
+            {
                 Status = BUS_STATUS.NEEDS_REFUEL;
                 StatusColor = "OrangeRed";
             }
-    }
+        }
 
 
         /////////////////////////////// Dates: ///////////////////////////////
@@ -188,13 +188,13 @@ namespace dotNet5781_03B_0933_8558
         /// </summary>
         public double Mileage
         {
-            get { return Math.Round(mileage, 2); }
+            get { return Math.Round(mileage,2); }
 
             set
             {
                 // if (value < 0) throw new Exception("The mileage input is incorrect."); // Throws message if the input is incorrect
                 mileage = value;
-                Update_Status();
+               
                 if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("Mileage")); }
             }
         }
@@ -205,7 +205,7 @@ namespace dotNet5781_03B_0933_8558
         /// </summary>
         public double MileageAtLastTreat
         {
-            get { return mileageAtLastTreat; }
+            get { return Math.Round(mileageAtLastTreat,2); }
             set
             {
                 mileageAtLastTreat = value;
@@ -216,7 +216,7 @@ namespace dotNet5781_03B_0933_8558
 
         public double MileageSinceLastTreat
         {
-            get { return Math.Round(Mileage - MileageAtLastTreat, 2); }
+            get { return Math.Round(Mileage - MileageAtLastTreat,2); }
             set
             {
                 KMtoNextTreat = 0; // For invoking the KMtoNextTreat property
@@ -226,7 +226,7 @@ namespace dotNet5781_03B_0933_8558
 
         public double KMtoNextTreat
         {
-            get { return Math.Round(20000 - MileageSinceLastTreat, 2); }
+            get { return Math.Round(20000 - MileageSinceLastTreat,2); }
             set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("KMtoNextTreat")); } }
         }
 
@@ -236,7 +236,7 @@ namespace dotNet5781_03B_0933_8558
         /// </summary>
         public double KMLeftToTravel
         {
-            get { return Math.Round(kmLeftToTravel, 2); }
+            get { return Math.Round(kmLeftToTravel,3); }
             set
             {
                 kmLeftToTravel = value;
@@ -258,12 +258,13 @@ namespace dotNet5781_03B_0933_8558
             }
         }
 
-        private readonly BackgroundWorker refuelWorker = new BackgroundWorker();
+        private BackgroundWorker refuelWorker;
         /// <summary>
         /// The function restarts the kmLeftToRide with 1200 km
         /// </summary>
         public void Refuel()
         {
+            refuelWorker = new BackgroundWorker();
             double part = (1200 - kmLeftToTravel) / 120;
 
             refuelWorker.WorkerReportsProgress = true;
@@ -286,7 +287,7 @@ namespace dotNet5781_03B_0933_8558
                     }
                     else
                     {
-                        refuelWorker.ReportProgress(i);
+                        refuelWorker.ReportProgress(0);
                         try { Thread.Sleep(100); } catch (Exception) { }
                     }
                 }
@@ -309,11 +310,11 @@ namespace dotNet5781_03B_0933_8558
             };
         }
 
-        private readonly BackgroundWorker treatmentWorker = new BackgroundWorker();
+        private BackgroundWorker treatmentWorker;
 
         public void Treatment()
         {
-
+            treatmentWorker = new BackgroundWorker();
             treatmentWorker.WorkerReportsProgress = true;
 
             treatmentWorker.ProgressChanged += (sender, args) =>
@@ -361,16 +362,26 @@ namespace dotNet5781_03B_0933_8558
             };
         }
 
-        private readonly BackgroundWorker travelWorker = new BackgroundWorker();
+        private BackgroundWorker travelWorker;
 
         public void Travel(double travel, double travelTime)
         {
-
+            travelWorker = new BackgroundWorker();
             travelWorker.WorkerReportsProgress = true;
+            double prev1 = Mileage;          
+            double prev2 = MileageSinceLastTreat;
+            double prev3 = KMLeftToTravel;
+
+            double minutes = (travel / travelTime) * 60;
+            double part = travel / minutes;
+            double integer = Math.Floor(minutes);
+            double remainder =minutes - integer;
 
             travelWorker.ProgressChanged += (sender, args) =>
             {
-
+                Mileage += part;
+                MileageSinceLastTreat += part;
+                KMLeftToTravel -= part;
             };
 
             travelWorker.DoWork += (sender, args) =>
@@ -378,16 +389,16 @@ namespace dotNet5781_03B_0933_8558
                 Status = BUS_STATUS.AT_TRAVEL;
                 IsReady = false;
                 NeedsTreatment = false;
-                if (treatmentWorker.CancellationPending == true)
+                if (travelWorker.CancellationPending == true)
                 {
 
                 }
                 else
                 {
-                    for (int i = 5; i > 0; i--)
+                    for (int i = 0; i < integer; i++)
                     {
-                        // try { Thread.Sleep(); } catch (Exception) { }
-                        treatmentWorker.ReportProgress(i);
+                        try { Thread.Sleep(100); } catch (Exception) { }
+                        travelWorker.ReportProgress(0);
                     }
                 }
             };
@@ -403,7 +414,12 @@ namespace dotNet5781_03B_0933_8558
                 }
                 else
                 {
+                    Mileage = prev1 + travel;
+                    MileageSinceLastTreat = prev2 + travel;
+                    KMLeftToTravel = prev3 - travel;
+                    Update_Status();
 
+                    
                 }
             };
         }
