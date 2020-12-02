@@ -215,7 +215,6 @@ namespace dotNet5781_03B_0933_8558
 
             clockWorker.DoWork += (sender, args) =>
             {
-
                 if (clockWorker.CancellationPending == true)
                 {
 
