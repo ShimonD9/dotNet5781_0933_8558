@@ -286,7 +286,7 @@ namespace dotNet5781_03B_0933_8558
                 StatusColor = "OrangeRed";
                 IsReady = false;
                 NeedsRefuel = false;
-                for (int i = 0; i < 120; ++i)
+                for (int i = 0; i < 120; ++i) // 2 hours = 120 minutes
                 {
                     if (refuelWorker.CancellationPending == true)
                     {
@@ -341,7 +341,7 @@ namespace dotNet5781_03B_0933_8558
                 }
                 else
                 {
-                    for (int i = 1; i < 1441; i++)
+                    for (int i = 1; i < 1441; i++) // 24 hours = 1440 minutes
                     {
                         try { Thread.Sleep(100); } catch (Exception) { }
                         treatmentWorker.ReportProgress(i);
@@ -383,13 +383,13 @@ namespace dotNet5781_03B_0933_8558
             double minutes = (travel / travelTime) * 60;
             double part = travel / minutes;
             double integer = Math.Floor(minutes);
-            double remainder =minutes - integer;
 
             travelWorker.ProgressChanged += (sender, args) =>
             {
                 Mileage += part;
                 MileageSinceLastTreat += part;
                 KMLeftToTravel -= part;
+                WorkEndsIn = (int)(100 * args.ProgressPercentage / integer);
             };
 
             travelWorker.DoWork += (sender, args) =>
@@ -405,10 +405,10 @@ namespace dotNet5781_03B_0933_8558
                 }
                 else
                 {
-                    for (int i = 0; i < integer; i++)
+                    for (int i = 1; i < integer + 1; i++)
                     {
                         try { Thread.Sleep(100); } catch (Exception) { }
-                        travelWorker.ReportProgress(0);
+                        travelWorker.ReportProgress(i);
                     }
                 }
             };
@@ -427,6 +427,7 @@ namespace dotNet5781_03B_0933_8558
                     Mileage = prev1 + travel;
                     MileageSinceLastTreat = prev2 + travel;
                     KMLeftToTravel = prev3 - travel;
+                    WorkEndsIn = 0;
                     Update_Status();          
                 }
             };
