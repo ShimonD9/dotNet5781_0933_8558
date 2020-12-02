@@ -89,7 +89,7 @@ namespace dotNet5781_03B_0933_8558
 
         public enum BUS_STATUS
         {
-            READY_FOR_TRAVEL, NOT_READY_FOR_TRAVEL, DANGEROUS, AT_TRAVEL, AT_TREATMENT, AT_REFUEL
+            READY_FOR_TRAVEL, NEEDS_REFUEL, DANGEROUS, AT_TRAVEL, AT_TREATMENT, AT_REFUEL
         }
 
         private string statusColor;
@@ -111,7 +111,7 @@ namespace dotNet5781_03B_0933_8558
             }
             else if (KMLeftToTravel < 0)
             { 
-                Status = BUS_STATUS.NOT_READY_FOR_TRAVEL;
+                Status = BUS_STATUS.NEEDS_REFUEL;
                 StatusColor = "OrangeRed";
             }
     }
