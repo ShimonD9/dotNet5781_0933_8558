@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_0933_8558"
         mc:Ignorable="d"
-        Title="Bus Company Manager" Height="700" Width="859.5"  Name="UI" ResizeMode="CanMinimize" Loaded="MainWindow_Loaded">
+        Title="Bus Company Manager" Height="643" Width="859.5"  Name="UI" ResizeMode="CanMinimize" Loaded="MainWindow_Loaded">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="0.1*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" VerticalAlignment="Bottom" Height="50" Margin="27,0,20,0">
@@ -62,7 +62,7 @@
                 </Border>
             </Grid>
             <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
-                <ListView Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Stretch" Background="LightGray" MouseDoubleClick="LBBuses_MouseDoubleClick">
+                <ListView Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Stretch" Background="DarkSeaGreen" MouseDoubleClick="LBBuses_MouseDoubleClick">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,2">
@@ -85,7 +85,7 @@
                                 </Border>
 
                                 <Border Grid.Column="1" BorderBrush="Black"  BorderThickness="0 1 1 1">
-                                    <TextBlock Name ="tbFuel" FontSize="20" FontWeight="DemiBold" Text="{Binding Path='KMLeftToTravel'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
+                                    <TextBlock Name ="tbFuel" FontSize="20" Text="{Binding Path='KMLeftToTravel'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
                                 </Border>
 
                                 <Border Grid.Column="2" BorderBrush="Black"  Background="LemonChiffon" BorderThickness="0 1 1 1">

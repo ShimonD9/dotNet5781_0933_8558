@@ -63,9 +63,8 @@ namespace dotNet5781_03B_0933_8558
         {
             var fxElt = sender as FrameworkElement;
             Bus bus = fxElt.DataContext as Bus;
-            if (bus.Status == Bus.BUS_STATUS.READY_FOR_TRAVEL && !Application.Current.Windows.OfType<PickUpBusWindow>().Any())
+            if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
             {
-
                 PickUpBusWindow pickUpBusWindow = new PickUpBusWindow(bus);
                 pickUpBusWindow.ShowDialog();
             }
