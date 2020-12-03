@@ -112,12 +112,13 @@ namespace dotNet5781_03B_0933_8558
             {
                 Status = BUS_STATUS.DANGEROUS;
                 StatusColor = "OrangeRed";
+                NeedsTreatment = true;
             }
             else if (KMLeftToTravel <= 0)
             {
                 Status = BUS_STATUS.NEEDS_REFUEL;
-                NeedsRefuel = true;
                 StatusColor = "OrangeRed";
+                NeedsRefuel = true;
             }
         }
 
@@ -286,6 +287,7 @@ namespace dotNet5781_03B_0933_8558
                 StatusColor = "OrangeRed";
                 IsReady = false;
                 NeedsRefuel = false;
+                NeedsTreatment = false;
                 for (int i = 0; i < 120; ++i) // 2 hours = 120 minutes
                 {
                     if (refuelWorker.CancellationPending == true)
@@ -360,12 +362,18 @@ namespace dotNet5781_03B_0933_8558
                 }
                 else
                 {
-                    if (this.KMLeftToTravel < 1200)
-                        Refuel();
+                    ////if (this.KMLeftToTravel < 1200)
+                    ////    Refuel();
+                    //else
+                        
                     MileageAtLastTreat = Mileage;
                     LastTreatmentDate = MainWindow.useMyRunningDate;
                     DaysUntilNextTreat = 365;
                     WorkEndsIn = 0;
+                    if (this.KMLeftToTravel < 1200)
+                        Refuel();
+                    else
+                        Update_Status();
                 }
             };
         }
@@ -388,7 +396,8 @@ namespace dotNet5781_03B_0933_8558
             {
                 Mileage += part;
                 MileageSinceLastTreat += part;
-                KMLeftToTravel -= part;
+                if (KMLeftToTravel < part)
+                    KMLeftToTravel -= part;
                 WorkEndsIn = (int)(100 * args.ProgressPercentage / integer);
             };
 
