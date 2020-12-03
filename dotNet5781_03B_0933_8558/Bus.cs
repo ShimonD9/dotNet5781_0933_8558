@@ -113,12 +113,14 @@ namespace dotNet5781_03B_0933_8558
                 Status = BUS_STATUS.DANGEROUS;
                 StatusColor = "OrangeRed";
                 NeedsTreatment = true;
+                NeedsRefuel = false;
             }
             else if (KMLeftToTravel <= 0)
             {
                 Status = BUS_STATUS.NEEDS_REFUEL;
                 StatusColor = "OrangeRed";
                 NeedsRefuel = true;
+                NeedsTreatment = false;
             }
         }
 
@@ -233,7 +235,7 @@ namespace dotNet5781_03B_0933_8558
 
         public double KMtoNextTreat
         {
-            get { return Math.Round(20000 - MileageSinceLastTreat,2); }
+            get { if (20000 - MileageSinceLastTreat >= 0) return Math.Round(20000 - MileageSinceLastTreat, 2); return 0; }
             set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("KMtoNextTreat")); } }
         }
 
@@ -396,7 +398,7 @@ namespace dotNet5781_03B_0933_8558
             {
                 Mileage += part;
                 MileageSinceLastTreat += part;
-                if (KMLeftToTravel < part)
+                if (KMLeftToTravel - part >= 0)
                     KMLeftToTravel -= part;
                 WorkEndsIn = (int)(100 * args.ProgressPercentage / integer);
             };
