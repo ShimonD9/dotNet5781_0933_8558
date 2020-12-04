@@ -99,7 +99,7 @@ namespace dotNet5781_03B_0933_8558
 
         public void Update_Status()
         {
-            if (MileageSinceLastTreat < 20000 && lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && KMLeftToTravel > 0)
+            if (MileageSinceLastTreat < 20000 && lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) >= 0 && KMLeftToTravel > 0)
             {
                 Status = BUS_STATUS.READY_FOR_TRAVEL;
                 StatusColor = "LightGreen";

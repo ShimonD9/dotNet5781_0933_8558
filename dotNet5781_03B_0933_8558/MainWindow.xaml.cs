@@ -209,7 +209,10 @@ namespace dotNet5781_03B_0933_8558
             {
                 RunningDate = RunningDate.AddMinutes(1);
                 foreach (Bus b in busList)
+                { 
                     b.DaysUntilNextTreat = (b.LastTreatmentDate.AddYears(1) - RunningDate).Days;
+                    b.Update_Status();
+                }
             };
 
             clockWorker.DoWork += (sender, args) =>
