@@ -118,7 +118,7 @@ namespace dotNet5781_03B_0933_8558
 
                 busList.Add(newBus);
             }
-            busList[4].LastTreatmentDate = DateTime.Now.AddDays(-367); // One of the buses should be after the needed treatment (= so the bus is dangerous to travel)
+            busList[4].LastTreatmentDate = DateTime.Now.AddDays(-366); // One of the buses should be after the needed treatment (= so the bus is dangerous to travel)
 
 
             // After 2018:
@@ -191,6 +191,17 @@ namespace dotNet5781_03B_0933_8558
             set { runningDate = value; useMyRunningDate = value; OnPropertyChanged("RunningDate"); }
         }
 
+        public static void updateBuses(DateTime RunningDate)
+        {
+            foreach (Bus b in busList)
+            {
+                DateTime dateOnly = new DateTime(RunningDate.Year, RunningDate.Month, RunningDate.Day);
+                b.DaysUntilNextTreat = (b.LastTreatmentDate.AddYears(1) - dateOnly).Days;
+                if (b.Status == Bus.BUS_STATUS.READY_FOR_TRAVEL || b.Status == Bus.BUS_STATUS.NEEDS_REFUEL)
+                    b.Update_Status();
+            }
+        }
+
         public static bool shouldStop = false;
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -208,11 +219,7 @@ namespace dotNet5781_03B_0933_8558
             clockWorker.ProgressChanged += (sender, args) =>
             {
                 RunningDate = RunningDate.AddMinutes(1);
-                foreach (Bus b in busList)
-                { 
-                    b.DaysUntilNextTreat = (b.LastTreatmentDate.AddYears(1) - RunningDate).Days;
-                    b.Update_Status();
-                }
+                updateBuses(RunningDate);
             };
 
             clockWorker.DoWork += (sender, args) =>

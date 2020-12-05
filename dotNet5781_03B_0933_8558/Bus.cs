@@ -22,11 +22,10 @@ namespace dotNet5781_03B_0933_8558
         {
             DateOfAbsorption = dateEntry;
             License = licenseInput;
-            Mileage = km;
-            LastTreatmentDate = dateOfLastTreat;
-            MileageAtLastTreat = kmAtLastTreat;
             KMLeftToTravel = 1200; // Assuming every added bus is filled with gas
-            Update_Status();
+            Mileage = km;
+            MileageAtLastTreat = kmAtLastTreat;
+            LastTreatmentDate = dateOfLastTreat;
         }
 
 
@@ -99,7 +98,7 @@ namespace dotNet5781_03B_0933_8558
 
         public void Update_Status()
         {
-            if (MileageSinceLastTreat < 20000 && lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) >= 0 && KMLeftToTravel > 0)
+            if (MileageSinceLastTreat < 20000 && lastTreatmentDate.AddYears(1).CompareTo(MainWindow.useMyRunningDate) > 0 && KMLeftToTravel > 0)
             {
                 Status = BUS_STATUS.READY_FOR_TRAVEL;
                 StatusColor = "LightGreen";
@@ -108,17 +107,19 @@ namespace dotNet5781_03B_0933_8558
                 NeedsRefuel = true;
                 NeedsTreatment = false;
             }
-            else if (MileageSinceLastTreat >= 20000 || lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
+            else if (MileageSinceLastTreat >= 20000 || lastTreatmentDate.AddYears(1).CompareTo(MainWindow.useMyRunningDate) <= 0)
             {
                 Status = BUS_STATUS.DANGEROUS;
                 StatusColor = "OrangeRed";
                 NeedsTreatment = true;
+                IsReady = false;
                 NeedsRefuel = false;
             }
             else if (KMLeftToTravel <= 0)
             {
                 Status = BUS_STATUS.NEEDS_REFUEL;
                 StatusColor = "OrangeRed";
+                IsReady = false;
                 NeedsRefuel = true;
                 NeedsTreatment = false;
             }

@@ -50,7 +50,7 @@ namespace dotNet5781_03B_0933_8558
         {
             var fxElt = sender as FrameworkElement;
             Bus bus = fxElt.DataContext as Bus;
-            if (bus.MileageSinceLastTreat < 20000 && bus.LastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) >= 0)
+            if (bus.MileageSinceLastTreat < 20000 && bus.LastTreatmentDate.AddYears(1).CompareTo(MainWindow.useMyRunningDate) > 0)
             {
                 MessageBox.Show("The bus doesn't need a treatment yet", "Treatment Error!", MessageBoxButton.OK, MessageBoxImage.Warning);
             }           
