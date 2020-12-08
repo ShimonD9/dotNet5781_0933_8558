@@ -37,7 +37,7 @@ namespace dotNet5781_03B_0933_8558
             Bus bus = fxElt.DataContext as Bus;
             if (bus.KMLeftToTravel == 1200)
             {
-                MessageBox.Show("The bus gas tank is already full!", "Refuel Error!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("The gas tank is already full!", "Refuel Error!", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
