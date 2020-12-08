@@ -88,66 +88,67 @@ namespace dotNet5781_03B_0933_8558
 
         public static void BusesInitializer(ref List<Bus> busList)
         {
-            bool flag;
+            bool flag;                  //for checking if there is two buses with the same license
             string license = null;
             // Before 2018:
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)                     //add 5 buses befor 2018
             {
-                var numbers = "1234567890";
-                char[] stringChars = new char[7];
+                var numbers = "1234567890";                 //numbers to randomise for the license
+                char[] stringChars = new char[7];   
                 stringChars[0] = numbers[rnd.Next(numbers.Length - 1)]; // To avoid 0 at the beginning of the license
                 flag = true;
                 while (flag)  // Makes sure there are no two buses with same license number
                 {
-                    for (int j = 1; j < stringChars.Length; j++)
+                    for (int j = 1; j < stringChars.Length; j++)    //loop for taking each number from the string separately
                     {
-                        stringChars[j] = numbers[rnd.Next(numbers.Length)];
-                        license = new string(stringChars);
+                        stringChars[j] = numbers[rnd.Next(numbers.Length)];     //randomise number
+                        license = new string(stringChars);                      //create the license
                     }
-                    flag = FindIfBusExist(busList, license);
+                    flag = FindIfBusExist(busList, license);                    //check if there is already a bus woth the same number
                 }
 
-                var year = rnd.Next(1990, 2018);
-                var month = rnd.Next(1, 13);
-                var days = rnd.Next(1, DateTime.DaysInMonth(year, month) + 1);
-                DateTime absorptionDate = new DateTime(year, month, days);
-
-                double km = Math.Round(rnd.NextDouble() * 50000 + 20000, 2); // Minimum of 20,000 mileage, maximum of 70,000
+                var year = rnd.Next(1990, 2018);                                    //random year
+                var month = rnd.Next(1, 13);                                        //random month
+                var days = rnd.Next(1, DateTime.DaysInMonth(year, month) + 1);      //random day
+                DateTime absorptionDate = new DateTime(year, month, days);          //create the starting date of the bus
+                //randomise the km for travel ,for traetment ect
+                double km = Math.Round(rnd.NextDouble() * 50000 + 20000, 2);        // Minimum of 20,000 mileage, maximum of 70,000
                 double kmAtLastTreatment = Math.Round(km - rnd.NextDouble() * 20000, 2); // Minimum of 0, maximum of 70,000, respectively
                 Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 350)).Date);
 
-                busList.Add(newBus);
+                busList.Add(newBus);        //add the bus
             }
             busList[4].LastTreatmentDate = DateTime.Now.AddDays(-366).Date; // One of the buses should be after the needed treatment (= so the bus is dangerous to travel)
 
 
             // After 2018:
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++)                 //add 5 buses after 2018
             {
-                var numbers = "1234567890";
+                var numbers = "1234567890";             //numbers to randomise for the license
                 char[] stringChars = new char[8];
                 stringChars[0] = numbers[rnd.Next(numbers.Length - 1)]; // To avoid 0 at the beginning of the license
                 flag = true;
                 while (flag)  // Makes sure there are no two buses with same license number
                 {
-                    for (int j = 1; j < stringChars.Length; j++)
+                    for (int j = 1; j < stringChars.Length; j++)         //loop for taking each number from the string separately
                     {
-                        stringChars[j] = numbers[rnd.Next(numbers.Length)];
-                        license = new string(stringChars);
+                        stringChars[j] = numbers[rnd.Next(numbers.Length)];     //taking one number every each round
+                        license = new string(stringChars);                      //create the license
                     }
                     flag = FindIfBusExist(busList, license);
                 }
 
+                //randomise date for the bus
                 var year = rnd.Next(2018, 2022);
                 var month = rnd.Next(1, 13);
                 var days = rnd.Next(1, DateTime.DaysInMonth(year, month) + 1);
                 DateTime absorptionDate = new DateTime(year, month, days);
-
+                //randomise the km for travel ,for traetment ect
                 double km = Math.Round(rnd.NextDouble() * 50000 + 20000, 2); // Minimum of 20,000 mileage, maximum of 70,000
                 double kmAtLastTreatment = Math.Round(km - rnd.NextDouble() * 20000, 2); // Minimum of 0, maximum of 70,000, respectively
                 Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 350)).Date);
 
-                busList.Add(newBus);
+                busList.Add(newBus);    //add the bus
             }
             busList[8].KMLeftToTravel = 50; // A bus with small amount of fuel 
             busList[9].MileageAtLastTreat = busList[9].Mileage - 19500; // For the bus that needs to make treatment soon because it reaches 20,000 km since last treatment
@@ -163,7 +164,7 @@ namespace dotNet5781_03B_0933_8558
         {
             foreach (Bus bus in buses)
             {
-                if (bus.CompareLicenses(license))
+                if (bus.CompareLicenses(license))       //in case two licens with the same number was found
                 {
                     return true;
                 }
