@@ -114,11 +114,11 @@ namespace dotNet5781_03B_0933_8558
 
                 double km = Math.Round(rnd.NextDouble() * 50000 + 20000, 2); // Minimum of 20,000 mileage, maximum of 70,000
                 double kmAtLastTreatment = Math.Round(km - rnd.NextDouble() * 20000, 2); // Minimum of 0, maximum of 70,000, respectively
-                Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 350)));
+                Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 350)).Date);
 
                 busList.Add(newBus);
             }
-            busList[4].LastTreatmentDate = DateTime.Now.AddDays(-366); // One of the buses should be after the needed treatment (= so the bus is dangerous to travel)
+            busList[4].LastTreatmentDate = DateTime.Now.AddDays(-366).Date; // One of the buses should be after the needed treatment (= so the bus is dangerous to travel)
 
 
             // After 2018:
@@ -145,7 +145,7 @@ namespace dotNet5781_03B_0933_8558
 
                 double km = Math.Round(rnd.NextDouble() * 50000 + 20000, 2); // Minimum of 20,000 mileage, maximum of 70,000
                 double kmAtLastTreatment = Math.Round(km - rnd.NextDouble() * 20000, 2); // Minimum of 0, maximum of 70,000, respectively
-                Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 350)));
+                Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 350)).Date);
 
                 busList.Add(newBus);
             }
