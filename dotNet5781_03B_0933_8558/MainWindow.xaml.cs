@@ -51,7 +51,7 @@ namespace dotNet5781_03B_0933_8558
             if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
             {
                 PickUpBusWindow pickUpBusWindow = new PickUpBusWindow(bus);
-                pickUpBusWindow.ShowDialog();
+                pickUpBusWindow.Show();
             }
         }
 
