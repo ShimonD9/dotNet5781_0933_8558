@@ -53,7 +53,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Cursor="Hand" IsEnabled="{Binding Path='IsReady'}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_Fuel">
+                <Button Grid.Column="0" Cursor="Hand" IsEnabled="{Binding Path='NeedsRefuel'}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_Fuel">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/dotNet5781_03B_0933_8558;component/Images/fuelBus1.png" />
@@ -65,7 +65,7 @@
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/dotNet5781_03B_0933_8558;component/Images/busRepair.png" />
-                            <TextBlock Name="tbTreatment" Text="Maintain the bus" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" Margin="10"/>
+                            <TextBlock Name="tbTreatment" Text="Maintenance" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" Margin="10"/>
                         </StackPanel>
                     </Button.Content>
                 </Button>

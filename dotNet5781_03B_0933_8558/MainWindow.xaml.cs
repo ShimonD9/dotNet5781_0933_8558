@@ -44,16 +44,6 @@ namespace dotNet5781_03B_0933_8558
             }
         }
 
-        private void Button_OpenPickUpBusWindow(object sender, RoutedEventArgs e)
-        {
-            var fxElt = sender as FrameworkElement;
-            Bus bus = fxElt.DataContext as Bus;
-            if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
-            {
-                PickUpBusWindow pickUpBusWindow = new PickUpBusWindow(bus);
-                pickUpBusWindow.Show();
-            }
-        }
 
         private void Button_RefuelTheBus(object sender, RoutedEventArgs e)
         {
@@ -61,13 +51,25 @@ namespace dotNet5781_03B_0933_8558
             Bus bus = fxElt.DataContext as Bus;
             if (bus.KMLeftToTravel == 1200)
             {
-                MessageBox.Show("The bus gas tank is already full!", "You are a loser", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("The gas tank is already full!", "You are a loser", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
                 bus.Refuel();
             }
         }
+
+        private void Button_OpenPickUpBusWindow(object sender, RoutedEventArgs e)
+        {
+            var fxElt = sender as FrameworkElement;
+            Bus bus = fxElt.DataContext as Bus;
+            if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
+            {
+                PickUpBusWindow pickUpBusWindow = new PickUpBusWindow(bus);
+                pickUpBusWindow.ShowDialog();
+            }
+        }
+
 
         private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -110,13 +112,13 @@ namespace dotNet5781_03B_0933_8558
                 var days = rnd.Next(1, DateTime.DaysInMonth(year, month) + 1);
                 DateTime absorptionDate = new DateTime(year, month, days);
 
-                double km = Math.Round(rnd.NextDouble() * 200000 + 20000, 2);
-                double kmAtLastTreatment = Math.Round(km - rnd.NextDouble() * 10000, 2);
-                Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 350)));
+                double km = Math.Round(rnd.NextDouble() * 50000 + 20000, 2); // Minimum of 20,000 mileage, maximum of 70,000
+                double kmAtLastTreatment = Math.Round(km - rnd.NextDouble() * 20000, 2); // Minimum of 0, maximum of 70,000, respectively
+                Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 350)).Date);
 
                 busList.Add(newBus);
             }
-            busList[4].LastTreatmentDate = DateTime.Now.AddDays(-367); // One of the buses should be after the needed treatment (= so the bus is dangerous to travel)
+            busList[4].LastTreatmentDate = DateTime.Now.AddDays(-366).Date; // One of the buses should be after the needed treatment (= so the bus is dangerous to travel)
 
 
             // After 2018:
@@ -141,9 +143,9 @@ namespace dotNet5781_03B_0933_8558
                 var days = rnd.Next(1, DateTime.DaysInMonth(year, month) + 1);
                 DateTime absorptionDate = new DateTime(year, month, days);
 
-                double km = Math.Round(rnd.NextDouble() * 200000 + 20000, 2);
-                double kmAtLastTreatment = Math.Round(km - rnd.NextDouble() * 10000, 2);
-                Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 350)));
+                double km = Math.Round(rnd.NextDouble() * 50000 + 20000, 2); // Minimum of 20,000 mileage, maximum of 70,000
+                double kmAtLastTreatment = Math.Round(km - rnd.NextDouble() * 20000, 2); // Minimum of 0, maximum of 70,000, respectively
+                Bus newBus = new Bus(license, km, kmAtLastTreatment, absorptionDate, DateTime.Now.AddDays(-1 * rnd.Next(1, 350)).Date);
 
                 busList.Add(newBus);
             }
@@ -189,6 +191,17 @@ namespace dotNet5781_03B_0933_8558
             set { runningDate = value; useMyRunningDate = value; OnPropertyChanged("RunningDate"); }
         }
 
+        public static void updateBuses(DateTime RunningDate)
+        {
+            foreach (Bus b in busList)
+            {
+                DateTime dateOnly = new DateTime(RunningDate.Year, RunningDate.Month, RunningDate.Day);
+                b.DaysUntilNextTreat = (b.LastTreatmentDate.AddYears(1) - dateOnly).Days;
+                if (b.Status == Bus.BUS_STATUS.READY_FOR_TRAVEL || b.Status == Bus.BUS_STATUS.NEEDS_REFUEL)
+                    b.Update_Status();
+            }
+        }
+
         public static bool shouldStop = false;
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -206,13 +219,11 @@ namespace dotNet5781_03B_0933_8558
             clockWorker.ProgressChanged += (sender, args) =>
             {
                 RunningDate = RunningDate.AddMinutes(1);
-                foreach (Bus b in busList)
-                    b.DaysUntilNextTreat = (b.LastTreatmentDate.AddYears(1) - RunningDate).Days;
+                updateBuses(RunningDate);
             };
 
             clockWorker.DoWork += (sender, args) =>
             {
-
                 if (clockWorker.CancellationPending == true)
                 {
 

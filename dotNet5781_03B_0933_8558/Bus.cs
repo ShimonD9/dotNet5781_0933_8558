@@ -22,11 +22,10 @@ namespace dotNet5781_03B_0933_8558
         {
             DateOfAbsorption = dateEntry;
             License = licenseInput;
-            Mileage = km;
-            LastTreatmentDate = dateOfLastTreat;
-            MileageAtLastTreat = kmAtLastTreat;
             KMLeftToTravel = 1200; // Assuming every added bus is filled with gas
-            Update_Status();
+            Mileage = km;
+            MileageAtLastTreat = kmAtLastTreat;
+            LastTreatmentDate = dateOfLastTreat;
         }
 
 
@@ -84,6 +83,8 @@ namespace dotNet5781_03B_0933_8558
 
         public bool NeedsTreatment { get { if ((Status == BUS_STATUS.DANGEROUS) || (Status == BUS_STATUS.READY_FOR_TRAVEL)) return true; return false; } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("NeedsTreatment")); } } }
 
+        public bool NeedsRefuel { get { if ((Status == BUS_STATUS.NEEDS_REFUEL) || (Status == BUS_STATUS.READY_FOR_TRAVEL)) return true; return false; } set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("NeedsRefuel")); } } }
+
         private BUS_STATUS status;
         public BUS_STATUS Status { get { return status; } set { status = value; if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("Status")); } } }
 
@@ -97,22 +98,30 @@ namespace dotNet5781_03B_0933_8558
 
         public void Update_Status()
         {
-            if (MileageSinceLastTreat < 20000 && lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && KMLeftToTravel > 0)
+            if (MileageSinceLastTreat < 20000 && lastTreatmentDate.AddYears(1).CompareTo(MainWindow.useMyRunningDate) > 0 && KMLeftToTravel > 0)
             {
                 Status = BUS_STATUS.READY_FOR_TRAVEL;
-                IsReady = true;
-                NeedsTreatment = false;
                 StatusColor = "LightGreen";
+                // For the is_enabled buttons:
+                IsReady = true;
+                NeedsRefuel = true;
+                NeedsTreatment = false;
             }
-            else if (MileageSinceLastTreat > 20000 || lastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
+            else if (MileageSinceLastTreat >= 20000 || lastTreatmentDate.AddYears(1).CompareTo(MainWindow.useMyRunningDate) <= 0)
             {
                 Status = BUS_STATUS.DANGEROUS;
                 StatusColor = "OrangeRed";
+                NeedsTreatment = true;
+                IsReady = false;
+                NeedsRefuel = false;
             }
             else if (KMLeftToTravel <= 0)
             {
                 Status = BUS_STATUS.NEEDS_REFUEL;
                 StatusColor = "OrangeRed";
+                IsReady = false;
+                NeedsRefuel = true;
+                NeedsTreatment = false;
             }
         }
 
@@ -227,7 +236,7 @@ namespace dotNet5781_03B_0933_8558
 
         public double KMtoNextTreat
         {
-            get { return Math.Round(20000 - MileageSinceLastTreat,2); }
+            get { if (20000 - MileageSinceLastTreat >= 0) return Math.Round(20000 - MileageSinceLastTreat, 2); return 0; }
             set { if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs("KMtoNextTreat")); } }
         }
 
@@ -237,7 +246,7 @@ namespace dotNet5781_03B_0933_8558
         /// </summary>
         public double KMLeftToTravel
         {
-            get { return Math.Round(kmLeftToTravel,3); }
+            get { return Math.Round(kmLeftToTravel, 2); }
             set
             {
                 kmLeftToTravel = value;
@@ -280,7 +289,9 @@ namespace dotNet5781_03B_0933_8558
                 Status = BUS_STATUS.AT_REFUEL;
                 StatusColor = "OrangeRed";
                 IsReady = false;
-                for (int i = 0; i < 120; ++i)
+                NeedsRefuel = false;
+                NeedsTreatment = false;
+                for (int i = 0; i < 120; ++i) // 2 hours = 120 minutes
                 {
                     if (refuelWorker.CancellationPending == true)
                     {
@@ -327,6 +338,7 @@ namespace dotNet5781_03B_0933_8558
             {
                 Status = BUS_STATUS.AT_TREATMENT;
                 IsReady = false;
+                NeedsRefuel = false;
                 NeedsTreatment = false;
                 if (treatmentWorker.CancellationPending == true)
                 {
@@ -334,7 +346,7 @@ namespace dotNet5781_03B_0933_8558
                 }
                 else
                 {
-                    for (int i = 1; i < 1441; i++)
+                    for (int i = 1; i < 1441; i++) // 24 hours = 1440 minutes
                     {
                         try { Thread.Sleep(100); } catch (Exception) { }
                         treatmentWorker.ReportProgress(i);
@@ -353,12 +365,18 @@ namespace dotNet5781_03B_0933_8558
                 }
                 else
                 {
-                    if (this.KMLeftToTravel < 1200)
-                        Refuel();
+                    ////if (this.KMLeftToTravel < 1200)
+                    ////    Refuel();
+                    //else
+                        
                     MileageAtLastTreat = Mileage;
                     LastTreatmentDate = MainWindow.useMyRunningDate;
                     DaysUntilNextTreat = 365;
                     WorkEndsIn = 0;
+                    if (this.KMLeftToTravel < 1200)
+                        Refuel();
+                    else
+                        Update_Status();
                 }
             };
         }
@@ -376,30 +394,33 @@ namespace dotNet5781_03B_0933_8558
             double minutes = (travel / travelTime) * 60;
             double part = travel / minutes;
             double integer = Math.Floor(minutes);
-            double remainder =minutes - integer;
 
             travelWorker.ProgressChanged += (sender, args) =>
             {
                 Mileage += part;
                 MileageSinceLastTreat += part;
-                KMLeftToTravel -= part;
+                if (KMLeftToTravel - part >= 0)
+                    KMLeftToTravel -= part;
+                WorkEndsIn = (int)(100 * args.ProgressPercentage / integer);
             };
 
             travelWorker.DoWork += (sender, args) =>
             {
                 Status = BUS_STATUS.AT_TRAVEL;
+                StatusColor = "OrangeRed";
                 IsReady = false;
                 NeedsTreatment = false;
+                NeedsRefuel = false;
                 if (travelWorker.CancellationPending == true)
                 {
 
                 }
                 else
                 {
-                    for (int i = 0; i < integer; i++)
+                    for (int i = 1; i < integer + 1; i++)
                     {
                         try { Thread.Sleep(100); } catch (Exception) { }
-                        travelWorker.ReportProgress(0);
+                        travelWorker.ReportProgress(i);
                     }
                 }
             };
@@ -418,6 +439,7 @@ namespace dotNet5781_03B_0933_8558
                     Mileage = prev1 + travel;
                     MileageSinceLastTreat = prev2 + travel;
                     KMLeftToTravel = prev3 - travel;
+                    WorkEndsIn = 0;
                     Update_Status();          
                 }
             };
