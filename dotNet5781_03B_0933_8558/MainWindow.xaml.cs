@@ -21,56 +21,83 @@ namespace dotNet5781_03B_0933_8558
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window, INotifyPropertyChanged // Inotify - for the clock simulator
     {
 
-        public static Random rnd = new Random(DateTime.Now.Millisecond);
         public static List<Bus> busList = new List<Bus> { };
 
         public MainWindow()
         {
-            BusesInitializer(ref busList);
             InitializeComponent();
-            lbBuses.DataContext = busList;
+            BusesInitializer(ref busList); // The bus list is being initialized
+            lbBuses.DataContext = busList; // The list view data context is initialized with the bus list
         }
 
+        /// <summary>
+        /// The window loaded event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            RunClock(); // Calls the similator clock background worker
+        }
+
+        /// <summary>
+        /// The add bus button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_OpenAddBusWindow(object sender, RoutedEventArgs e)
         {
-            if (!Application.Current.Windows.OfType<AddBusWindow>().Any())
+            if (!Application.Current.Windows.OfType<AddBusWindow>().Any()) // To prevent the openning of another same window
             {
-                AddBusWindow addBusWindow = new AddBusWindow();
+                AddBusWindow addBusWindow = new AddBusWindow(); // Creates the new window, and then shows it
                 addBusWindow.ShowDialog();
-                lbBuses.Items.Refresh();
+                lbBuses.Items.Refresh(); // For seeing the new bus added on the list view
             }
         }
 
-
+        /// <summary>
+        /// The refuel bus button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_RefuelTheBus(object sender, RoutedEventArgs e)
         {
             var fxElt = sender as FrameworkElement;
             Bus bus = fxElt.DataContext as Bus;
-            if (bus.KMLeftToTravel == 1200)
+            if (bus.KMLeftToTravel == 1200) // In case doesn't need refuel, pops a message
             {
                 MessageBox.Show("The gas tank is already full!", "You are a loser", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
-                bus.Refuel();
+                bus.Refuel(); // Calls the background worker to refuel the bus (the worker is in bus.cs)
             }
         }
 
+        /// <summary>
+        /// The pick up bus for a ride button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_OpenPickUpBusWindow(object sender, RoutedEventArgs e)
         {
             var fxElt = sender as FrameworkElement;
             Bus bus = fxElt.DataContext as Bus;
-            if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any())
+            if (!Application.Current.Windows.OfType<PickUpBusWindow>().Any()) // To prevent the openning of another same window
             {
-                PickUpBusWindow pickUpBusWindow = new PickUpBusWindow(bus);
+                PickUpBusWindow pickUpBusWindow = new PickUpBusWindow(bus); // Creates the new window, and then shows it
                 pickUpBusWindow.ShowDialog();
             }
         }
 
-
+        /// <summary>
+        /// The double click on list view for details event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (!Application.Current.Windows.OfType<BusDetailsWindow>().Any())
@@ -78,7 +105,7 @@ namespace dotNet5781_03B_0933_8558
                 ListBox list = sender as ListBox;
                 if (list != null)
                 {
-                    object item = list.SelectedItem;
+                    object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
                     BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
                     busDetailsWindow.Show();
                 }
@@ -86,6 +113,7 @@ namespace dotNet5781_03B_0933_8558
         }
 
 
+        public static Random rnd = new Random(DateTime.Now.Millisecond); // For creating random buses
         public static void BusesInitializer(ref List<Bus> busList)
         {
             bool flag;                  //for checking if there is two buses with the same license
@@ -174,8 +202,8 @@ namespace dotNet5781_03B_0933_8558
 
 
         //////////////////////////////////////////////// CLOCK ////////////////////////////////////////////////
-
-
+        
+        // For updating the simulator clock on the GUI we used the PropertyChanged method
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string property)
         {
@@ -184,32 +212,35 @@ namespace dotNet5781_03B_0933_8558
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
-        private DateTime runningDate = DateTime.Now;
+
+        // The field created to be shared on other parts of the project
         public static DateTime useMyRunningDate;
+
+        // The field of runningDate first initialized
+        private DateTime runningDate = DateTime.Now;
+        
+        // The property of the field
         public DateTime RunningDate
         {
             get { return runningDate; }
             set { runningDate = value; useMyRunningDate = value; OnPropertyChanged("RunningDate"); }
         }
 
+        // The buses days left to treatment && status updated in this method
         public static void updateBuses(DateTime RunningDate)
         {
             foreach (Bus b in busList)
             {
                 DateTime dateOnly = new DateTime(RunningDate.Year, RunningDate.Month, RunningDate.Day);
-                b.DaysUntilNextTreat = (b.LastTreatmentDate.AddYears(1) - dateOnly).Days;
-                if (b.Status == Bus.BUS_STATUS.READY_FOR_TRAVEL || b.Status == Bus.BUS_STATUS.NEEDS_REFUEL)
-                    b.Update_Status();
+                b.DaysUntilNextTreat = (b.LastTreatmentDate.AddYears(1) - dateOnly).Days; // Updates the days to treatment each new day
+                if (b.Status == Bus.BUS_STATUS.READY_FOR_TRAVEL || b.Status == Bus.BUS_STATUS.NEEDS_REFUEL) // The status is being updated to dangerous only in those cases (if the days left are 0 or less)
+                    b.Update_Status(); 
             }
         }
 
         public static bool shouldStop = false;
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            RunClock();
-        }
-
+        // The background worker for the clock:
         private readonly BackgroundWorker clockWorker = new BackgroundWorker();
 
         public void RunClock()
@@ -219,7 +250,7 @@ namespace dotNet5781_03B_0933_8558
 
             clockWorker.ProgressChanged += (sender, args) =>
             {
-                RunningDate = RunningDate.AddMinutes(1);
+                RunningDate = RunningDate.AddMinutes(1); // Updates the minutes (each minutes = 0.1 seconds in real time)
                 updateBuses(RunningDate);
             };
 

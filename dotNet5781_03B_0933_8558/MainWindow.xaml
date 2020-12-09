@@ -10,7 +10,7 @@
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="Black" Offset="1"/>
-                <GradientStop Color="#FF1FFFFF" Offset="0.943"/>
+                <GradientStop Color="LightSlateGray" Offset="0.92"/>
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
@@ -54,15 +54,15 @@
                 </Border>
 
                 <Border Grid.Column="5" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                    <TextBlock Text="Ride the bus" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <TextBlock Text="Travel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                 </Border>
 
                 <Border Grid.Column="6" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                    <TextBlock  Text="Refuel the bus" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
+                    <TextBlock  Text="Refuel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                 </Border>
             </Grid>
             <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
-                <ListView Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Stretch" Background="DarkSeaGreen" MouseDoubleClick="LBBuses_MouseDoubleClick">
+                <ListView Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="LBBuses_MouseDoubleClick">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid Margin="0,2">
@@ -105,7 +105,7 @@
                                 </Border>
 
                                 <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <Button HorizontalAlignment="Center" Cursor="Hand" Background="BlueViolet" IsEnabled="{Binding Path='IsReady'}" VerticalAlignment="Center" Height="40" Width="200"  Click="Button_OpenPickUpBusWindow">
+                                    <Button HorizontalAlignment="Center" Cursor="Hand" Background="CadetBlue" IsEnabled="{Binding Path='IsReady'}" VerticalAlignment="Center" Height="40" Width="200"  Click="Button_OpenPickUpBusWindow">
                                         <Button.Content>
                                             <Image Source="/dotNet5781_03B_0933_8558;component/Images/takeBus.png" />
                                         </Button.Content>
@@ -113,7 +113,7 @@
                                 </Border>
 
                                 <Border Grid.Column="6" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                    <Button Name = "bRefuel" HorizontalAlignment="Center"  Background="BlueViolet"  IsEnabled="{Binding Path='NeedsRefuel'}" Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200" Click="Button_RefuelTheBus">
+                                    <Button Name = "bRefuel" HorizontalAlignment="Center"  Background="CadetBlue"  IsEnabled="{Binding Path='NeedsRefuel'}" Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200" Click="Button_RefuelTheBus">
                                         <Button.Content>
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="/dotNet5781_03B_0933_8558;component/Images/fuelBus1.png" />
@@ -134,11 +134,11 @@
                 <RowDefinition Height="0.1*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0" BorderBrush="Black" Background="Crimson" BorderThickness="3 3 3 0">
+            <Border Grid.Row="0" BorderBrush="Black" Background="BlanchedAlmond" BorderThickness="3 3 3 0">
                 <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="Time simulator:" TextAlignment="Center" FontSize="20" FontWeight="Bold" FontStyle="Oblique"/>
             </Border>
-            <Border Grid.Row="1" BorderBrush="Black" Background="BlanchedAlmond" BorderThickness="3 0 3 3">
-                <TextBlock Name="tbClock" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Path='RunningDate'}" TextAlignment="Center" FontSize="14" FontStyle="Oblique"/>
+            <Border Grid.Row="1" BorderBrush="Black" Background="BurlyWood" BorderThickness="3 0 3 3">
+                <TextBlock Name="tbClock" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding Path='RunningDate'}" TextAlignment="Center" FontSize="14" FontStyle="Oblique" FontWeight="Bold"/>
             </Border>
             <Border Grid.Row="2">
                 <Button Name ="AddBus" Cursor="Hand"  Background="LemonChiffon" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Height="62" Width="68" Margin="0,0,10,0" 

@@ -26,13 +26,19 @@ namespace dotNet5781_03B_0933_8558
             InitializeComponent();
         }
 
+        // A second builder, to get the item selected in the list box
         public PickUpBusWindow(object item)
         {
             InitializeComponent();
-            pickUp.DataContext = item;
+            pickUp.DataContext = item; // The data context of the grid is initialized with the item, later be used
         }
 
 
+        /// <summary>
+        /// Preview key down event, for the 'enter' bonus
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             var fxElt = sender as FrameworkElement;
@@ -42,6 +48,7 @@ namespace dotNet5781_03B_0933_8558
             if (e == null) return;
             if (e.Key == Key.Enter || e.Key == Key.Return)
             {
+                // Checks if the input is correct, and pops a message if not
                 if (!double.TryParse(text.Text, out double km))
                     MessageBox.Show("Please enter a correct number of km!", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 else if (km > 1200)
@@ -52,13 +59,19 @@ namespace dotNet5781_03B_0933_8558
                     MessageBox.Show("The bus is unable to travel this distance, due to expected treatment!", "Input Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 else
                 {
-                    double KMH = Math.Round(MainWindow.rnd.NextDouble() * 30 + 20, 2);
+                    double KMH = Math.Round(MainWindow.rnd.NextDouble() * 30 + 20, 2); // A random function for the km per hour, rounded to 2 decimal digits
                     bus.Travel(km, KMH);
-                    MessageBox.Show("The average speed of the bus is:  " + KMH.ToString() + " Km / h", "Information:", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("The average speed of the bus is:  " + KMH.ToString() + " Km / h", "Information:", MessageBoxButton.OK, MessageBoxImage.Information); // Pops the info message about the km per hour 
                     this.Close();
                 }
             }
         }
+
+        /// <summary>
+        /// Using regex to unable any input that isn't a number or a dot
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9/.]$");

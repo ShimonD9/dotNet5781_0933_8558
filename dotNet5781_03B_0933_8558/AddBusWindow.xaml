@@ -68,6 +68,8 @@
 
     </StackPanel>
 
+
+    <!--Getting into the date picker style twice, to change the watermark so it'll show the request:-->
     <Window.Resources>
         <Style x:Key="DatePickerStyle1" TargetType="{x:Type DatePicker}">
             <Setter Property="Foreground" Value="#FF333333"/>

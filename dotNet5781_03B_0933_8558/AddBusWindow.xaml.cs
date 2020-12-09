@@ -23,6 +23,8 @@ namespace dotNet5781_03B_0933_8558
         public AddBusWindow()
         {
             InitializeComponent();
+
+            // Setting the dates in the date pickers so it will show the last date according the simulator running time:
             dateStart.DisplayDateEnd = MainWindow.useMyRunningDate;
             dateLastTreat.DisplayDateEnd = MainWindow.useMyRunningDate;
             dateStart.DisplayDate = MainWindow.useMyRunningDate;
@@ -30,11 +32,16 @@ namespace dotNet5781_03B_0933_8558
 
         }
 
+        /// <summary>
+        /// The adding bus button method
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DateTime startDateChosen;
             DateTime treatDateChosen;
-            if (!dateStart.SelectedDate.HasValue || !dateLastTreat.SelectedDate.HasValue)
+            if (!dateStart.SelectedDate.HasValue || !dateLastTreat.SelectedDate.HasValue) // Checks if the user chose a date
             {
                 MessageBox.Show("You didn't fill the required date fields!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
@@ -42,6 +49,7 @@ namespace dotNet5781_03B_0933_8558
             {
                 startDateChosen = dateStart.SelectedDate.Value;
                 treatDateChosen = dateLastTreat.SelectedDate.Value;
+                // Checks if the inputs are correct, and pops an appropriate message if not:
                 if (startDateChosen.Year < 2018 && license.Text.Length < 7
                     || startDateChosen.Year > 2017 && license.Text.Length < 8)
                 {
@@ -63,13 +71,15 @@ namespace dotNet5781_03B_0933_8558
                 {
                     Bus newBus = new Bus(license.GetLineText(0), milNow, milTreat, startDateChosen, treatDateChosen)
                     {
-                        KMLeftToTravel = fuel.Value * 12
+                        KMLeftToTravel = fuel.Value * 12 // The info from the slider
                     };
-                    MainWindow.busList.Insert(0, newBus);                    
+                    MainWindow.busList.Insert(0, newBus);    // Inserts the new bus to the beginning of the list                 
                     this.Close();
                 }
             }
         }
+
+        // Using regex to unable wrongs inputs in the text box:
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
@@ -83,6 +93,12 @@ namespace dotNet5781_03B_0933_8558
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        
+        /// <summary>
+        /// The change of date event, helps with some style issues
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dateStart_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             DateTime dateChosen;
