@@ -21,7 +21,7 @@ namespace dotNet5781_03B_0933_8558
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged // Inotify - for the clock simulator
+    public partial class MainWindow : Window, INotifyPropertyChanged // Inotify - for the clock simulator property changes
     {
 
         public static List<Bus> busList = new List<Bus> { };
