@@ -101,9 +101,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\dotNet5781_02_0933_8558\dotNet5781_02_0933_8558.csproj">
+    <ProjectReference Include="..\dotNet5781_02_0933_8558\_dotNet5781_02_0933_8558.csproj">
       <Project>{4e0352fc-453b-4b4a-8a6e-cff3d066c073}</Project>
-      <Name>dotNet5781_02_0933_8558</Name>
+      <Name>_dotNet5781_02_0933_8558</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
