@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DS
+namespace BL
 {
-    public class Class1
+    class IBL
     {
     }
 }

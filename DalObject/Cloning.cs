@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DalApi
+namespace DalObject
 {
-    public class Class1
+    class Cloning
     {
     }
 }
