@@ -8,7 +8,7 @@ namespace DO
 {
     class BusStop
     {
-        public int BusStopKey { get; set; }
+        public int BusStopKey { get; set; }   // Entity Identifier (Key)
         public string BusStopName { get; set; }
         public string BusStopAddress { get; set; }
         public double Latitude { get; set; }

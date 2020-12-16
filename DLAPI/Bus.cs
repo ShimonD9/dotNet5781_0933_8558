@@ -9,7 +9,7 @@ namespace DO
 {
     public class Bus
     {
-        public string License { get; set; }
+        public string License { get; set; } // Entity Identifier (Key)
         public DateTime LicenseDate { get; set; }
         public double Mileage { get; set; }
         public double Fuel { get; set; }

@@ -8,8 +8,8 @@ namespace DO
 {
     class ConsecutiveStations
     {
-        public int BusStopKeyA { get; set; }
-        public int BusStopKeyB { get; set; }
+        public int BusStopKeyA { get; set; }   // Entity Key A
+        public int BusStopKeyB { get; set; }   // Entity Key B
         public double Distance { get; set; }
         public TimeSpan TravelTime { get; set; }
         /// <summary>

@@ -8,8 +8,8 @@ namespace DO
 {
     class BusLineStation
     {
-        public int BusLineRunningNumber { get; set; }
-        public int BusStopKey { get; set; }
+        public int BusLineRunningNumber { get; set; }  // Entity Key A
+        public int BusStopKey { get; set; }  /// Entity Key B
         public int BusStopNumberAtLine { get; set; }
 
         public override string ToString()           // Printing details of a station
