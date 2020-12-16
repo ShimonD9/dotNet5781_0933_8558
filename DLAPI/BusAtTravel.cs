@@ -17,6 +17,15 @@ namespace DO
         public TimeSpan PrevStationArrivalTime { get; set; }
         public TimeSpan NextStationArrivalTime { get; set; }
         public int BusDriverID { get; set; }
+        /// <summary>
+        /// Formats a string which represents the Bus object
+        /// </summary>
+        /// <returns> Returns the string to print the object </returns>
+        public override string ToString()
+        {
+            return string.Format("Bus Identifier= {0},License= {1},Bus Line Number Identifier = {2},Formal Departure Time = {3}, Actual Departure Time = {4}, Prev Bus Line Station Number = {5}, Prev Station Arrival Time = {6}, Next Station Arrival Time = {7}, Bus DriverID = {8}",
+                BusIdentifier, License, BusLineNumberIdentifier, FormalDepartureTime, ActualDepartureTime, PrevBusLineStationNumber, PrevStationArrivalTime, NextStationArrivalTime, BusDriverID);
+        }
 
     }
 }
