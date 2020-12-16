@@ -41,8 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bus.cs" />
+    <Compile Include="BusLine.cs" />
+    <Compile Include="BusLineStation.cs" />
+    <Compile Include="BusStop.cs" />
+    <Compile Include="ConsecutiveStations.cs" />
     <Compile Include="DalConfig.cs" />
     <Compile Include="DalFactory.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="IClonable.cs" />
     <Compile Include="IDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
