@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace DalApi
 {
-    class IClonable
-    {
-    }
+        /// <summary>
+        /// Marker interface for all DO classes
+        /// </summary>
+        public interface IClonable { }
 }
