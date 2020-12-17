@@ -25,9 +25,9 @@ namespace DS
 
         static void InitAllLists()
         {
-            ListPersons = new List<Person>
+            ListBuses = new List<Bus>
             {
-                new Person
+                new Bus
                 {
                     Name = "David",
                     ID = 36,
@@ -38,7 +38,7 @@ namespace DS
                     BirthDate = DateTime.Parse("24.03.85")
                 },
 
-                new Person
+                new Bus
                 {
                     Name = "Yossi",
                     ID = 23,
@@ -47,65 +47,61 @@ namespace DS
                     City = "Jerusalem",
                     PersonalStatus = PersonalStatus.SINGLE,
                     BirthDate = DateTime.Parse("13.10.95")
-                },
-
-                new Person
-                {
-                    Name = "Roni",
-                    ID = 15,
-                    Street = " Dayan",
-                    HouseNumber = 33,
-                    City = "Eilat",
-                    PersonalStatus = PersonalStatus.MARRIED,
-                    BirthDate = DateTime.Parse("13.10.95")
                 }
             };
 
-
-            ListStudents = new List<Student>
+            ListBusAtTravels = new List<BusAtTravel>
             {
-                new Student
+                new BusAtTravel
                 {
-                    ID = 36,
-                    StartYear = 2018,
-                    Status = StudentStatus.ACTIVE,
-                    Graduation = StudentGraduate.BSC
-                },
-                new Student
-                {
-                    ID = 23,
-                    StartYear = 2017,
-                    Status = StudentStatus.FINISHED,
-                    Graduation = StudentGraduate.PHD
+
                 }
             };
 
-            ListCourses = new List<Course>
+            ListBusLines = new List<BusLine>
             {
-                new Course
+                new BusLine
                 {
-                    ID = 1,
-                    Number = 153007,
-                    Name = "MiniProject with Windows Systems",
-                    LectureHours = 3,
-                    PracticeHours = 1,
-                    CreditPoint = 3,
-                    Year = 2010,
-                    Semester = Semester.A
+
                 }
             };
 
-            ListStudInCourses = new List<StudentInCourse>
+            ListBusLineStations = new List<BusLineStation>
             {
-                new StudentInCourse
+                new BusLineStation
                 {
-                    CourseId = 1,
-                    Grade = 100,
-                    PersonId = 36
+
                 }
             };
+            ListBusStops = new List<BusStop>
+            {
+                new BusStop
+                {
 
+                }
 
+            }
+            ListConsecutiveStations = new List<ConsecutiveStations>
+            {
+                new ConsecutiveStations
+                {
+
+                }
+            }
+             ListLineDepartures = new List<LineDeparture>
+             {
+                 new LineDeparture
+                 {
+
+                 }
+             }
+              ListUsers = new List<User>
+              {
+                  new User
+                  {
+
+                  }
+              }
         }
     }
 }
