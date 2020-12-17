@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-    class LineDeparture
+    public class LineDeparture
     {
         public int BusIdentifier { get; set; }  // Entity Key A
         public TimeSpan StartTime { get; set; }

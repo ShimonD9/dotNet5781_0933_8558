@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-    class ConsecutiveStations
+    public class ConsecutiveStations
     {
         public int BusStopKeyA { get; set; }   // Entity Key A
         public int BusStopKeyB { get; set; }   // Entity Key B

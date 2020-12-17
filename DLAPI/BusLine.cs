@@ -7,7 +7,7 @@ using static DO.Enums;
 
 namespace DO
 {
-    class BusLine
+    public class BusLine
     {
         public int BusLineIdentifier { get; set; }  // Entity Identifier (Key) - Automatic running number
         public int BusLineNumber { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-    class BusLineStation
+    public class BusLineStation
     {
         public int BusLineRunningNumber { get; set; }  // Entity Key A
         public int BusStopKey { get; set; }  /// Entity Key B

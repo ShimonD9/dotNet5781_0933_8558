@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DO
 {
-    class BusAtTravel
+    public class BusAtTravel
     {
         public int BusIdentifier { get; set; } // Entity Identifier (Key) - Automatic running number
         public string License { get; set; }  // Entity Key A
