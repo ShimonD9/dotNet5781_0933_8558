@@ -11,5 +11,13 @@ namespace DO
         public string UserName { get; set; }
         public string Password { get; set; }
         public bool ManageAccess { get; set; }
+        /// <summary>
+        /// Formats a string which represents the Bus object
+        /// </summary>
+        /// <returns> Returns the string to print the object </returns>
+        public override string ToString()
+        {
+            return string.Format("User Name = {0}, Password= {1},Manage Access = {2}", UserName, Password, ManageAccess);
+        }
     }
 }
