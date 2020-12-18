@@ -8,7 +8,8 @@ namespace DO
 {
     public class LineDeparture
     {
-        public int BusIdentifier { get; set; }  // Entity Key A
+        public int DepartureID { get; set; }  // Entity Key A
+        public int BusLineID { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; } // Only if Frequency > 0
         public int Frequency { get; set; } // If 0 - A single travel
@@ -18,7 +19,7 @@ namespace DO
         /// <returns> Returns the string to print the object </returns>
         public override string ToString()
         {
-            return string.Format("Bus Identifier = {0}, Start Time= {1},End Time = {2},Frequency = {3}", BusIdentifier, StartTime, EndTime, Frequency);
+            return string.Format("Bus Identifier = {0}, Start Time= {1},End Time = {2},Frequency = {3}", BusLineID, StartTime, EndTime, Frequency);
         }
     }
 }
