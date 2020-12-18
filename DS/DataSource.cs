@@ -29,13 +29,8 @@ namespace DS
             {
                 new Bus
                 {
-                    Name = "David",
-                    ID = 36,
-                    Street = "Harekefet",
-                    HouseNumber = 44,
-                    City = "Tel-Aviv",
-                    PersonalStatus = PersonalStatus.MARRIED,
-                    BirthDate = DateTime.Parse("24.03.85")
+              License="1234567",
+                LicenseDate= 10.12.2016,
                 },
 
                 new Bus
