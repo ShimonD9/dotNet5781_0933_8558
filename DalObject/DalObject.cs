@@ -23,248 +23,248 @@ namespace DL
 
         //Implement IDL methods, CRUD
         #region Bus
-        IEnumerable<Bus> GetAllBuses()
+        public IEnumerable<Bus> GetAllBuses()
         {
             throw new NotImplementedException();
         }
-        IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
+        public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
         {
             throw new NotImplementedException();
         }
-        Bus GetBus(int license)
+        public Bus GetBus(int license)
         {
             throw new NotImplementedException();
         }
-        void AddBus(Bus bus)
+        public void AddBus(Bus bus)
         {
             throw new NotImplementedException();
         }
-        void UpdateBus(Bus bus)
+        public void UpdateBus(Bus bus)
         {
             throw new NotImplementedException();
         }
-        void UpdateBus(int license, Action<Bus> update)  // method that knows to updt specific fields in Person
+        public void UpdateBus(int license, Action<Bus> update)  // method that knows to updt specific fields in Person
         {
             throw new NotImplementedException();
         }
-        void DeleteBus(int license)
+        public void DeleteBus(int license)
         {
             throw new NotImplementedException();
         }
         #endregion 
 
         #region BusAtTravel
-        IEnumerable<BusAtTravel> GetAllBusesAtTravel()
+        public IEnumerable<BusAtTravel> GetAllBusesAtTravel()
         {
             throw new NotImplementedException();
         }
-        IEnumerable<BusAtTravel> GetAllBusesAtTravelBy(Predicate<BusAtTravel> predicate)
+        public IEnumerable<BusAtTravel> GetAllBusesAtTravelBy(Predicate<BusAtTravel> predicate)
         {
             throw new NotImplementedException();
         }
-        BusAtTravel GetBusAtTravel(int license)
+        public BusAtTravel GetBusAtTravel(int license)
         {
             throw new NotImplementedException();
         }
-        void AddBusAtTravel(BusAtTravel bus)
+        public void AddBusAtTravel(BusAtTravel bus)
         {
             throw new NotImplementedException();
         }
-        void UpdateBusAtTravel(BusAtTravel bus)
+        public void UpdateBusAtTravel(BusAtTravel bus)
         {
             throw new NotImplementedException();
         }
-        void UpdateBusAtTravel(int license, Action<BusAtTravel> update) // method that knows to updt specific fields in Person
+        public void UpdateBusAtTravel(int license, Action<BusAtTravel> update) // method that knows to updt specific fields in Person
         {
             throw new NotImplementedException();
         }
-        void DeleteBusAtTravel(int license)
+        public void DeleteBusAtTravel(int license)
         {
             throw new NotImplementedException();
         }
         #endregion
 
         #region BusLine
-        IEnumerable<BusLine> GetAllBusLines()
+        public IEnumerable<BusLine> GetAllBusLines()
         {
             throw new NotImplementedException();
         }
-        IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate)
+        public IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate)
         {
             throw new NotImplementedException();
         }
-        BusLine GetBusLine(int license)
+        public BusLine GetBusLine(int license)
         {
             throw new NotImplementedException();
         }
-        void AddBusLine(BusLine busLine)
+        public void AddBusLine(BusLine busLine)
         {
             throw new NotImplementedException();
         }
-        void UpdateBusLine(BusLine busLine)
+        public void UpdateBusLine(BusLine busLine)
         {
             throw new NotImplementedException();
         }
-        void UpdateBusLine(int license, Action<BusLine> update) // method that knows to updt specific fields in Person
+        public void UpdateBusLine(int license, Action<BusLine> update) // method that knows to updt specific fields in Person
         {
             throw new NotImplementedException();
         }
-        void DeleteBusLine(int license)
+        public void DeleteBusLine(int license)
         {
             throw new NotImplementedException();
         }
         #endregion
 
         #region BusLineStation
-        IEnumerable<BusLineStation> GetAllBusLineStations()
+        public IEnumerable<BusLineStation> GetAllBusLineStations()
         {
             throw new NotImplementedException();
         }
-        IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
+        public IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
         {
             throw new NotImplementedException();
         }
-        BusLineStation GetBusLineStation(int license)
+        public BusLineStation GetBusLineStation(int license)
         {
             throw new NotImplementedException();
         }
-        void AddBusLineStation(BusLineStation busLineStation)
+        public void AddBusLineStation(BusLineStation busLineStation)
         {
             throw new NotImplementedException();
         }
-        void UpdateBusLineStation(BusLineStation busLineStation)
+        public void UpdateBusLineStation(BusLineStation busLineStation)
         {
             throw new NotImplementedException();
         }
-        void UpdateBusLineStation(int license, Action<BusLineStation> update) // method that knows to updt specific fields in Person
+        public void UpdateBusLineStation(int license, Action<BusLineStation> update) // method that knows to updt specific fields in Person
         {
             throw new NotImplementedException();
         }
-        void DeleteBusLineStation(int license)
+        public void DeleteBusLineStation(int license)
         {
             throw new NotImplementedException();
         }
         #endregion
 
         #region BusStop
-        IEnumerable<BusStop> GetAllBusStops()
+        public IEnumerable<BusStop> GetAllBusStops()
         {
             throw new NotImplementedException();
         }
-        IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate)
+        public IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate)
         {
             throw new NotImplementedException();
         }
-        BusStop GetBusStop(int license)
+        public BusStop GetBusStop(int license)
         {
             throw new NotImplementedException();
         }
-        void AddBusStop(BusStop busStop)
+        public void AddBusStop(BusStop busStop)
         {
             throw new NotImplementedException();
         }
-        void UpdateBusStop(BusStop busStop)
+        public void UpdateBusStop(BusStop busStop)
         {
             throw new NotImplementedException();
         }
-        void UpdateBusStop(int license, Action<BusStop> update) // method that knows to updt specific fields in Person
+        public void UpdateBusStop(int license, Action<BusStop> update) // method that knows to updt specific fields in Person
         {
             throw new NotImplementedException();
         }
-        void DeleteBusStop(int license)
+        public void DeleteBusStop(int license)
         {
             throw new NotImplementedException();
         }
         #endregion
 
         #region ConsecutiveStations
-        IEnumerable<ConsecutiveStations> GetAllConsecutiveStations()
+        public IEnumerable<ConsecutiveStations> GetAllConsecutiveStations()
         {
             throw new NotImplementedException();
         }
-        IEnumerable<ConsecutiveStations> GetAllConsecutiveStationsBy(Predicate<ConsecutiveStations> predicate)
+        public IEnumerable<ConsecutiveStations> GetAllConsecutiveStationsBy(Predicate<ConsecutiveStations> predicate)
         {
             throw new NotImplementedException();
         }
-        ConsecutiveStations GetConsecutiveStations(int license)
+        public ConsecutiveStations GetConsecutiveStations(int license)
         {
             throw new NotImplementedException();
         }
-        void AddConsecutiveStations(ConsecutiveStations consecutiveStations)
+        public void AddConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
             throw new NotImplementedException();
         }
-        void UpdateConsecutiveStations(ConsecutiveStations consecutiveStations)
+        public void UpdateConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
             throw new NotImplementedException();
         }
-        void UpdateConsecutiveStations(int license, Action<ConsecutiveStations> update) // method that knows to updt specific fields in Person
+        public void UpdateConsecutiveStations(int license, Action<ConsecutiveStations> update) // method that knows to updt specific fields in Person
         {
             throw new NotImplementedException();
         }
-        void DeleteConsecutiveStations(int license)
+        public void DeleteConsecutiveStations(int license)
         {
             throw new NotImplementedException();
         }
         #endregion
 
         #region LineDeparture
-        IEnumerable<LineDeparture> GetAllLineDeparture()
+        public IEnumerable<LineDeparture> GetAllLineDeparture()
         {
             throw new NotImplementedException();
         }
-        IEnumerable<LineDeparture> GetAllLineDepartureBy(Predicate<LineDeparture> predicate)
+        public IEnumerable<LineDeparture> GetAllLineDepartureBy(Predicate<LineDeparture> predicate)
         {
             throw new NotImplementedException();
         }
-        LineDeparture GetLineDeparture(int license)
+        public LineDeparture GetLineDeparture(int license)
         {
             throw new NotImplementedException();
         }
-        void AddLineDeparture(LineDeparture lineDeparture)
+        public void AddLineDeparture(LineDeparture lineDeparture)
         {
             throw new NotImplementedException();
         }
-        void UpdateLineDeparture(LineDeparture lineDeparture)
+        public void UpdateLineDeparture(LineDeparture lineDeparture)
         {
             throw new NotImplementedException();
         }
-        void UpdateLineDeparture(int license, Action<LineDeparture> update) // method that knows to updt specific fields in Person
+        public void UpdateLineDeparture(int license, Action<LineDeparture> update) // method that knows to updt specific fields in Person
         {
             throw new NotImplementedException();
         }
-        void DeleteLineDeparture(int license)
+        public void DeleteLineDeparture(int license)
         {
             throw new NotImplementedException();
         }
         #endregion
 
         #region User
-        IEnumerable<Bus> GetAllUsers()
+        public IEnumerable<Bus> GetAllUsers()
         {
             throw new NotImplementedException();
         }
-        IEnumerable<Bus> GetAllUsersBy(Predicate<Bus> predicate)
+        public IEnumerable<Bus> GetAllUsersBy(Predicate<Bus> predicate)
         {
             throw new NotImplementedException();
         }
-        User GetUser(int license)
+        public User GetUser(int license)
         {
             throw new NotImplementedException();
         }
-        void AddUser(User user)
+        public void AddUser(User user)
         {
             throw new NotImplementedException();
         }
-        void UpdateUser(User user)
+        public void UpdateUser(User user)
         {
 
         }
-        void UpdateUser(int license, Action<User> update) // method that knows to updt specific fields in Person
+        public void UpdateUser(int license, Action<User> update) // method that knows to updt specific fields in Person
         {
             throw new NotImplementedException();
         }
-        void DeleteUser(int license)
+        public void DeleteUser(int license)
         {
             throw new NotImplementedException();
         }

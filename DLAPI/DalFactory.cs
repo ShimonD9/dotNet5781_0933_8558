@@ -11,7 +11,7 @@ namespace DalApi
     /// Static Factory class for creating Dal tier implementation object according to
     /// configuration in file config.xml
     /// </summary>
-    public static class DLFactory
+    public static class DalFactory
     {
         /// <summary>
         /// The function creates Dal tier implementation object according to Dal type
