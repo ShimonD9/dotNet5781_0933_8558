@@ -12,11 +12,10 @@ using DS;
 namespace DL
 {
     sealed class DalObject : IDal    //internal
-
     {
         #region singelton
         static readonly DalObject instance = new DalObject();
-        static DalObject() { }// static ctor to ensure instance init is done just before first usage
+        static DalObject() { } // static ctor to ensure instance init is done just before first usage
         DalObject() { } // default => private
         public static DalObject Instance { get => instance; }// The public Instance property to use
         #endregion
@@ -25,19 +24,29 @@ namespace DL
         #region Bus
         public IEnumerable<Bus> GetAllBuses()
         {
-            throw new NotImplementedException();
+            return from bus in DataSource.ListBuses
+                   select bus.Clone();
         }
+
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
         {
             throw new NotImplementedException();
         }
+
         public Bus GetBus(int license)
         {
-            throw new NotImplementedException();
+            Bus bus = DataSource.ListBuses.Find(b => b.License == license);
+            if (bus != null)
+                return bus.Clone();
+            else
+                throw new DO.BadIdException(license, $"bad person id: {license}");
         }
+
         public void AddBus(Bus bus)
         {
-            throw new NotImplementedException();
+            if (DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License) != null)
+                throw new DO.BadIdException(bus.License, "Duplicate person ID");
+            DataSource.ListBuses.Add(bus.Clone());
         }
         public void UpdateBus(Bus bus)
         {
@@ -52,6 +61,7 @@ namespace DL
             throw new NotImplementedException();
         }
         #endregion 
+
 
         #region BusAtTravel
         public IEnumerable<BusAtTravel> GetAllBusesAtTravel()
@@ -277,128 +287,3 @@ namespace DL
 
 
 
-
-
-
-
-
-
-
-//{
-//    #region singelton
-//    static readonly DalObject instance = new DalObject();
-//    static DalObject() { }// static ctor to ensure instance init is done just before first usage
-//    DalObject() { } // default => private
-//    public static DalObject Instance { get => instance; }// The public Instance property to use
-//    #endregion
-
-//    //Implement IDL methods, CRUD
-//    #region Person
-//    public Person GetPerson(int id)
-//    {
-//        Person per = DataSource.ListPersons.Find(p => p.ID == id);
-
-//        if (per != null)
-//            return per.Clone();
-//        else
-//            throw new DO.BadPersonIdException(id, $"bad person id: {id}");
-//    }
-//    public IEnumerable<Person> GetAllPersons()
-//    {
-//        return from person in DataSource.ListPersons
-//               select person.Clone();
-//    }
-//    public IEnumerable<Person> GetAllPersonsBy(Predicate<Person> predicate)
-//    {
-//        throw new NotImplementedException();
-//    }
-//    public void AddPerson(Person person)
-//    {
-//        if (DataSource.ListPersons.FirstOrDefault(p => p.ID == person.ID) != null)
-//            throw new DO.BadPersonIdException(person.ID, "Duplicate person ID");
-//        DataSource.ListPersons.Add(person.Clone());
-//    }
-
-//    public void DeletePerson(int id)
-//    {
-//        throw new NotImplementedException();
-//    }
-
-//    public void UpdatePerson(Person p)
-//    {
-//        throw new NotImplementedException();
-//    }
-
-//    public void UpdatePerson(int id, Action<Person> update)
-//    {
-//        throw new NotImplementedException();
-//    }
-//    #endregion Person
-
-//    #region Student
-//    public Student GetStudent(int id)
-//    {
-//        Student stu = DataSource.ListStudents.Find(p => p.ID != id);
-//        try { Thread.Sleep(2000); } catch (ThreadInterruptedException ex) { }
-//        if (stu != null)
-//            return stu.Clone();
-//        else
-//            throw new DO.BadPersonIdException(id, $"bad student id: {id}");
-//    }
-//    public void AddStudent(Student student)
-//    {
-//        if (DataSource.ListStudents.FirstOrDefault(s => s.ID == student.ID) != null)
-//            throw new DO.BadPersonIdException(student.ID, "Duplicate student ID");
-//        if (DataSource.ListPersons.FirstOrDefault(p => p.ID == student.ID) == null)
-//            throw new DO.BadPersonIdException(student.ID, "Missing person ID");
-//        DataSource.ListStudents.Add(student.Clone());
-//    }
-//    public IEnumerable<object> GetStudentIDs(Func<int, string, object> generate)
-//    {
-//        return from student in DataSource.ListStudents
-//               select generate(student.ID, GetPerson(student.ID).Name);
-//    }
-
-
-//    public void UpdateStudent(Student student)
-//    {
-//        throw new NotImplementedException();
-//    }
-
-//    public void UpdateStudent(int id, Action<Student> update)
-//    {
-//        throw new NotImplementedException();
-//    }
-
-//    public void DeleteStudent(int id)
-//    {
-//        throw new NotImplementedException();
-//    }
-//    #endregion Student
-
-//    #region StudentInCourse
-//    public IEnumerable<StudentInCourse> GetStudentInCourseList(Predicate<StudentInCourse> predicate)
-//    {
-//        //option A - not good!!! 
-//        //produces final list instead of deferred query and does not allow proper cloning:
-//        // return DataSource.listStudInCourses.FindAll(predicate);
-
-//        // option B - ok!!
-//        //Returns deferred query + clone:
-//        //return DataSource.listStudInCourses.Where(sic => predicate(sic)).Select(sic => sic.Clone());
-
-//        // option c - ok!!
-//        //Returns deferred query + clone:
-//        return from sic in DataSource.ListStudInCourses
-//               where predicate(sic)
-//               select sic.Clone();
-//    }
-//    #endregion StudentInCourse
-
-//    #region Course
-//    public Course GetCourse(int id)
-//    {
-//        return DataSource.ListCourses.Find(c => c.ID == id).Clone();
-//    }
-//    #endregion Course
-//}
