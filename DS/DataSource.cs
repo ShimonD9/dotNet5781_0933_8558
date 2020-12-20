@@ -29,7 +29,7 @@ namespace DS
             {
                 new Bus
                 {
-                License="1324544",
+                License=1324544,
                 LicenseDate = DateTime.Parse("10.12.2016"),
                 Mileage = 200030,
                 Fuel = 1150,
@@ -40,7 +40,7 @@ namespace DS
 
                 new Bus
                 {
-                License="93029403",
+                License=93029403,
                 LicenseDate = DateTime.Parse("10.11.2019"),
                 Mileage = 301010,
                 Fuel = 0,
@@ -55,7 +55,7 @@ namespace DS
                 new BusAtTravel
                 {
                     BusIdentifier = 0,
-                    License = "93029403",
+                    License = 93029403,
                     BusLineNumberIdentifier = 101,
                     FormalDepartureTime = TimeSpan.Parse("10:20:00"),
                     ActualDepartureTime = TimeSpan.Parse("10:22:00"),

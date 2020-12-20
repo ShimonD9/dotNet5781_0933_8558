@@ -9,7 +9,7 @@ namespace DO
     public class BusLineStation
     {
         public int BusLineID { get; set; }  // Entity Key A (not line number)
-        public int BusStopKey { get; set; }  /// Entity Key B
+        public int BusStopKey { get; set; }  // Entity Key B
         public int LineStationIndex { get; set; }
         public int PrevStation { get; set; }
         public int NextStation { get; set; }

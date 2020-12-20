@@ -63,7 +63,7 @@ namespace DalApi
         #region ConsecutiveStations
         IEnumerable<ConsecutiveStations> GetAllConsecutiveStations();
         IEnumerable<ConsecutiveStations> GetAllConsecutiveStationsBy(Predicate<ConsecutiveStations> predicate);
-        ConsecutiveStations GetConsecutiveStations(int license);
+        ConsecutiveStations GetConsecutiveStations(int busConsecutiveA);
         void AddConsecutiveStations(ConsecutiveStations consecutiveStations);
         void UpdateConsecutiveStations(ConsecutiveStations consecutiveStations);
         void UpdateConsecutiveStations(int license, Action<ConsecutiveStations> update); // method that knows to updt specific fields in Person
@@ -83,11 +83,11 @@ namespace DalApi
         #region User
         IEnumerable<Bus> GetAllUsers();
         IEnumerable<Bus> GetAllUsersBy(Predicate<Bus> predicate);
-        User GetUser(int license);
+        User GetUser(string userName);
         void AddUser(User user);
         void UpdateUser(User user);
-        void UpdateUser(int license, Action<User> update); // method that knows to updt specific fields in Person
-        void DeleteUser(int license);
+        void UpdateUser(string license, Action<User> update); // method that knows to updt specific fields in Person
+        void DeleteUser(string license);
         #endregion
     }
 }

@@ -9,7 +9,7 @@ namespace DO
     public class BusAtTravel
     {
         public int BusIdentifier { get; set; } // Entity Identifier (Key) - Automatic running number
-        public string License { get; set; }  // Entity Key A
+        public int License { get; set; }  // Entity Key A
         public int BusLineNumberIdentifier { get; set; }  // Entity Key B
         public TimeSpan FormalDepartureTime { get; set; }  // Entity Key C
         public TimeSpan ActualDepartureTime { get; set; }

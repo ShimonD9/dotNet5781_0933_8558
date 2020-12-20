@@ -39,13 +39,13 @@ namespace DL
             if (bus != null)
                 return bus.Clone();
             else
-                throw new DO.BadIdException(license, $"bad person id: {license}");
+                throw new DO.BadIdException(license, $"bad id: {license}");
         }
 
         public void AddBus(Bus bus)
         {
             if (DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License) != null)
-                throw new DO.BadIdException(bus.License, "Duplicate person ID");
+                throw new DO.BadIdException(bus.License, "Duplicate bus ID");
             DataSource.ListBuses.Add(bus.Clone());
         }
         public void UpdateBus(Bus bus)
@@ -62,11 +62,11 @@ namespace DL
         }
         #endregion 
 
-
         #region BusAtTravel
         public IEnumerable<BusAtTravel> GetAllBusesAtTravel()
         {
-            throw new NotImplementedException();
+            return from busAtTravel in DataSource.ListBusAtTravels
+                   select busAtTravel.Clone();
         }
         public IEnumerable<BusAtTravel> GetAllBusesAtTravelBy(Predicate<BusAtTravel> predicate)
         {
@@ -74,11 +74,17 @@ namespace DL
         }
         public BusAtTravel GetBusAtTravel(int license)
         {
-            throw new NotImplementedException();
+            BusAtTravel bus = DataSource.ListBusAtTravels.Find(b => b.License == license);
+            if (bus != null)
+                return bus.Clone();
+            else
+                throw new DO.BadIdException(license, $"bad id: {license}");
         }
         public void AddBusAtTravel(BusAtTravel bus)
         {
-            throw new NotImplementedException();
+            if (DataSource.ListBusAtTravels.FirstOrDefault(b => b.License == bus.License) != null)
+                throw new DO.BadIdException(bus.License, "Duplicate bus ID");
+            DataSource.ListBusAtTravels.Add(bus.Clone());
         }
         public void UpdateBusAtTravel(BusAtTravel bus)
         {
@@ -97,19 +103,26 @@ namespace DL
         #region BusLine
         public IEnumerable<BusLine> GetAllBusLines()
         {
-            throw new NotImplementedException();
+            return from busLine in DataSource.ListBusLines
+                   select busLine.Clone();
         }
         public IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate)
         {
             throw new NotImplementedException();
         }
-        public BusLine GetBusLine(int license)
+        public BusLine GetBusLine(int busLineNumber)
         {
-            throw new NotImplementedException();
+            BusLine bus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLineNumber);
+            if (bus != null)
+                return bus.Clone();
+            else
+                throw new DO.BadIdException(busLineNumber, $"bad id: {busLineNumber}");
         }
         public void AddBusLine(BusLine busLine)
         {
-            throw new NotImplementedException();
+            if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber) != null)
+                throw new DO.BadIdException(busLine.BusLineNumber, "Duplicate bus ID");
+            DataSource.ListBusLines.Add(busLine.Clone());
         }
         public void UpdateBusLine(BusLine busLine)
         {
@@ -128,19 +141,26 @@ namespace DL
         #region BusLineStation
         public IEnumerable<BusLineStation> GetAllBusLineStations()
         {
-            throw new NotImplementedException();
+            return from busLineStation in DataSource.ListBusLineStations
+                   select busLineStation.Clone();
         }
         public IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
         {
             throw new NotImplementedException();
         }
-        public BusLineStation GetBusLineStation(int license)
+        public BusLineStation GetBusLineStation(int busLineId)
         {
-            throw new NotImplementedException();
+            BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusLineID == busLineId);
+            if (bus != null)
+                return bus.Clone();
+            else
+                throw new DO.BadIdException(busLineId, $"bad id: {busLineId}");
         }
         public void AddBusLineStation(BusLineStation busLineStation)
         {
-            throw new NotImplementedException();
+            if (DataSource.ListBusLineStations.FirstOrDefault(b => b.BusLineID == busLineStation.BusLineID) != null)
+                throw new DO.BadIdException(busLineStation.BusLineID, "Duplicate bus ID");
+            DataSource.ListBusLineStations.Add(busLineStation.Clone());
         }
         public void UpdateBusLineStation(BusLineStation busLineStation)
         {
@@ -159,19 +179,26 @@ namespace DL
         #region BusStop
         public IEnumerable<BusStop> GetAllBusStops()
         {
-            throw new NotImplementedException();
+            return from busStopLine in DataSource.ListBusStops
+                   select busStopLine.Clone();
         }
         public IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate)
         {
             throw new NotImplementedException();
         }
-        public BusStop GetBusStop(int license)
+        public BusStop GetBusStop(int busStopKey)
         {
-            throw new NotImplementedException();
+            BusStop bus = DataSource.ListBusStops.Find(b => b.BusStopKey == busStopKey);
+            if (bus != null)
+                return bus.Clone();
+            else
+                throw new DO.BadIdException(busStopKey, $"bad id: {busStopKey}");
         }
         public void AddBusStop(BusStop busStop)
         {
-            throw new NotImplementedException();
+            if (DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey== busStop.BusStopKey) != null)
+                throw new DO.BadIdException(busStop.BusStopKey, "Duplicate bus ID");
+            DataSource.ListBusStops.Add(busStop.Clone());
         }
         public void UpdateBusStop(BusStop busStop)
         {
@@ -190,19 +217,26 @@ namespace DL
         #region ConsecutiveStations
         public IEnumerable<ConsecutiveStations> GetAllConsecutiveStations()
         {
-            throw new NotImplementedException();
+            return from busConsecutiveStations in DataSource.ListConsecutiveStations
+                   select busConsecutiveStations.Clone();
         }
         public IEnumerable<ConsecutiveStations> GetAllConsecutiveStationsBy(Predicate<ConsecutiveStations> predicate)
         {
             throw new NotImplementedException();
         }
-        public ConsecutiveStations GetConsecutiveStations(int license)
+        public ConsecutiveStations GetConsecutiveStations(int busConsecutive)
         {
-            throw new NotImplementedException();
+            ConsecutiveStations bus = DataSource.ListConsecutiveStations.Find(b => b.BusStopKeyA == busConsecutive);
+            if (bus != null)
+                return bus.Clone();
+            else
+                throw new DO.BadIdException(busConsecutive, $"bad id: {busConsecutive}");
         }
         public void AddConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
-            throw new NotImplementedException();
+            if (DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA) != null)
+                throw new DO.BadIdException(consecutiveStations.BusStopKeyA, "Duplicate bus ID");
+            DataSource.ListConsecutiveStations.Add(consecutiveStations.Clone());
         }
         public void UpdateConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
@@ -221,19 +255,26 @@ namespace DL
         #region LineDeparture
         public IEnumerable<LineDeparture> GetAllLineDeparture()
         {
-            throw new NotImplementedException();
+            return from busLineDeparture in DataSource.ListLineDepartures
+                   select busLineDeparture.Clone();
         }
         public IEnumerable<LineDeparture> GetAllLineDepartureBy(Predicate<LineDeparture> predicate)
         {
             throw new NotImplementedException();
         }
-        public LineDeparture GetLineDeparture(int license)
+        public LineDeparture GetLineDeparture(int busLineID)
         {
-            throw new NotImplementedException();
+            LineDeparture bus = DataSource.ListLineDepartures.Find(b => b.BusLineID == busLineID);
+            if (bus != null)
+                return bus.Clone();
+            else
+                throw new DO.BadIdException(busLineID, $"bad id: {busLineID}");
         }
         public void AddLineDeparture(LineDeparture lineDeparture)
         {
-            throw new NotImplementedException();
+            if (DataSource.ListLineDepartures.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID) != null)
+                throw new DO.BadIdException(lineDeparture.BusLineID, "Duplicate bus ID");
+            DataSource.ListLineDepartures.Add(lineDeparture.Clone());
         }
         public void UpdateLineDeparture(LineDeparture lineDeparture)
         {
@@ -250,31 +291,38 @@ namespace DL
         #endregion
 
         #region User
-        public IEnumerable<Bus> GetAllUsers()
+        public IEnumerable<User> GetAllUsers()
+        {
+            return from user in DataSource.ListUsers
+                   select user.Clone();
+        }
+        public IEnumerable<User> GetAllUsersBy(Predicate<Bus> predicate)
         {
             throw new NotImplementedException();
         }
-        public IEnumerable<Bus> GetAllUsersBy(Predicate<Bus> predicate)
+        public User GetUser(string userName)
         {
-            throw new NotImplementedException();
-        }
-        public User GetUser(int license)
-        {
-            throw new NotImplementedException();
+            User user = DataSource.ListUsers.Find(b => b.UserName == userName);
+            if (user != null)
+                return user.Clone();
+            else
+                throw new DO.BadIdUserException(userName, $"bad id: {userName}");
         }
         public void AddUser(User user)
         {
-            throw new NotImplementedException();
+            if (DataSource.ListUsers.FirstOrDefault(b => b.UserName == user.UserName) != null)
+                throw new DO.BadIdUserException(user.UserName, "Duplicate bus ID");
+            DataSource.ListUsers.Add(user.Clone());
         }
         public void UpdateUser(User user)
         {
 
         }
-        public void UpdateUser(int license, Action<User> update) // method that knows to updt specific fields in Person
+        public void UpdateUser(string userName, Action<User> update) // method that knows to updt specific fields in Person
         {
             throw new NotImplementedException();
         }
-        public void DeleteUser(int license)
+        public void DeleteUser(string userName)
         {
             throw new NotImplementedException();
         }
