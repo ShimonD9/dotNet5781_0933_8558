@@ -15,6 +15,8 @@ namespace DO
         public BadIdException(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", bad id: {ID}";
     }
+
+
     public class BadIdUserException : Exception
     {
         public string ID;
