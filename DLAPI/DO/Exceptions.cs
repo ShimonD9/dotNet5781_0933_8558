@@ -23,6 +23,6 @@ namespace DO
         public BadIdUserException(string id) : base() => ID = id;
         public BadIdUserException(string id, string message) : base(message) => ID = id;
         public BadIdUserException(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
-        public override string ToString() => base.ToString() + $", bad id: {ID}";
+        public override string ToString() => base.ToString() + $", bad dog : {ID}";
     }
 }

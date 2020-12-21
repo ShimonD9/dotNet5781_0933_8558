@@ -8,7 +8,7 @@ namespace DO
 {
     public class LineDeparture
     {
-        public int DepartureID { get; set; }  // Entity Key A
+        public int DepartureID { get; set; }  // Entity Key A - Running number
         public int BusLineID { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; } // Only if Frequency > 0

@@ -50,27 +50,11 @@ namespace DS
                 }
             };
 
-            ListBusAtTravels = new List<BusAtTravel>
-            {
-                new BusAtTravel
-                {
-                    BusIdentifier = 0,
-                    License = 93029403,
-                    BusLineNumberIdentifier = 101,
-                    FormalDepartureTime = TimeSpan.Parse("10:20:00"),
-                    ActualDepartureTime = TimeSpan.Parse("10:22:00"),
-                    PrevBusLineStationNumber = 66033,
-                    PrevStationArrivalTime = TimeSpan.Parse("10:15:00"),
-                    NextStationArrivalTime = TimeSpan.Parse("10:30:00"),
-                    BusDriverID = 310468558,
-                }
-            };
-
             ListBusLines = new List<BusLine>
             {
                 new BusLine
                 {
-                    BusLineIdentifier = 0,
+                    BusLineID = Config.RunningNumBusLine,
                     BusLineNumber = 340,
                     Area = Enums.AREA.Center,
                     FirstBusStopKey = 60000,
@@ -82,13 +66,14 @@ namespace DS
             {
                 new BusLineStation
                 {
-                    BusLineID = 0,
+                    BusLineID = ListBusLines[0].BusLineID,
                     BusStopKey = 60000,
                     LineStationIndex = 0,
                     PrevStation = 0,
                     NextStation = 21323
                 }
             };
+
             ListBusStops = new List<BusStop>
             {
                 new BusStop
@@ -115,12 +100,30 @@ namespace DS
                 }
             };
 
+
+            ListBusAtTravels = new List<BusAtTravel>
+            {
+                new BusAtTravel
+                {
+                    BusAtTravelID = Config.RunningNumBusAtTravel,
+                    License = 93029403,
+                    BusLineNumberIdentifier = 101,
+                    FormalDepartureTime = TimeSpan.Parse("10:20:00"),
+                    ActualDepartureTime = TimeSpan.Parse("10:22:00"),
+                    PrevBusLineStationNumber = 66033,
+                    PrevStationArrivalTime = TimeSpan.Parse("10:15:00"),
+                    NextStationArrivalTime = TimeSpan.Parse("10:30:00"),
+                    BusDriverID = 310468558,
+                }
+            };
+
+
             ListLineDepartures = new List<LineDeparture>
              {
                  new LineDeparture
                  {
-                    DepartureID = 0,
-                    BusLineID = 0,
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[0].BusLineID,
                     StartTime = TimeSpan.Parse("10:00:00"),
                     EndTime = TimeSpan.Parse("23:00:00"),
                     Frequency = 50,
@@ -132,14 +135,14 @@ namespace DS
                   new User
                   {
                        UserName = "Maga4",
-                       Password = "Matate6",
+                       Password = "1234",
                        ManageAccess = false,
                   },
 
                   new User
                   {
                        UserName = "Director",
-                       Password = "Menael10",
+                       Password = "7890",
                        ManageAccess = true,
                   }
               };

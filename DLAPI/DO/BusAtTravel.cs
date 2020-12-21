@@ -8,7 +8,7 @@ namespace DO
 {
     public class BusAtTravel
     {
-        public int BusIdentifier { get; set; } // Entity Identifier (Key) - Automatic running number
+        public int BusAtTravelID { get; set; } // Entity Identifier (Key) - Automatic running number
         public int License { get; set; }  // Entity Key A
         public int BusLineNumberIdentifier { get; set; }  // Entity Key B
         public TimeSpan FormalDepartureTime { get; set; }  // Entity Key C
@@ -24,7 +24,7 @@ namespace DO
         public override string ToString()
         {
             return string.Format("Bus Identifier= {0},License= {1},Bus Line Number Identifier = {2},Formal Departure Time = {3}, Actual Departure Time = {4}, Prev Bus Line Station Number = {5}, Prev Station Arrival Time = {6}, Next Station Arrival Time = {7}, Bus DriverID = {8}",
-                BusIdentifier, License, BusLineNumberIdentifier, FormalDepartureTime, ActualDepartureTime, PrevBusLineStationNumber, PrevStationArrivalTime, NextStationArrivalTime, BusDriverID);
+                BusAtTravelID, License, BusLineNumberIdentifier, FormalDepartureTime, ActualDepartureTime, PrevBusLineStationNumber, PrevStationArrivalTime, NextStationArrivalTime, BusDriverID);
         }
 
     }

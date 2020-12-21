@@ -296,10 +296,12 @@ namespace DL
             return from user in DataSource.ListUsers
                    select user.Clone();
         }
+
         public IEnumerable<User> GetAllUsersBy(Predicate<Bus> predicate)
         {
             throw new NotImplementedException();
         }
+
         public User GetUser(string userName)
         {
             User user = DataSource.ListUsers.Find(b => b.UserName == userName);
@@ -308,20 +310,24 @@ namespace DL
             else
                 throw new DO.BadIdUserException(userName, $"bad id: {userName}");
         }
+
         public void AddUser(User user)
         {
             if (DataSource.ListUsers.FirstOrDefault(b => b.UserName == user.UserName) != null)
                 throw new DO.BadIdUserException(user.UserName, "Duplicate bus ID");
             DataSource.ListUsers.Add(user.Clone());
         }
+
         public void UpdateUser(User user)
         {
 
         }
+
         public void UpdateUser(string userName, Action<User> update) // method that knows to updt specific fields in Person
         {
             throw new NotImplementedException();
         }
+
         public void DeleteUser(string userName)
         {
             throw new NotImplementedException();
