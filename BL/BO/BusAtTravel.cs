@@ -16,6 +16,7 @@ namespace BO
         public int PrevBusLineStationNumber { get; set; }
         public TimeSpan PrevStationArrivalTime { get; set; }
         public TimeSpan NextStationArrivalTime { get; set; }
+        public bool ObjectActive { get; set; }
         public int BusDriverID { get; set; }
         /// <summary>
         /// Formats a string which represents the Bus object

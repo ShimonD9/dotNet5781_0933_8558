@@ -36,6 +36,7 @@ namespace DS
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
                 LastTreatmentDate = DateTime.Parse("10.12.2020"),
                 MileageAtLastTreat = 200020,
+                ObjectActive=true,
                 },
 
                 new Bus
@@ -47,6 +48,7 @@ namespace DS
                 BusStatus = Enums.BUS_STATUS.NEEDS_REFUEL,
                 LastTreatmentDate = DateTime.Parse("10.12.2020"),
                 MileageAtLastTreat = 300020,
+                ObjectActive=true,
                 }
             };
 
@@ -59,6 +61,7 @@ namespace DS
                     Area = Enums.AREA.Center,
                     FirstBusStopKey = 60000,
                     LastBusStopKey = 20333,
+                    ObjectActive=true,
                 }
             };
 
@@ -70,7 +73,8 @@ namespace DS
                     BusStopKey = 60000,
                     LineStationIndex = 0,
                     PrevStation = 0,
-                    NextStation = 21323
+                    NextStation = 21323,
+                    ObjectActive=true,
                 }
             };
 
@@ -85,6 +89,7 @@ namespace DS
                     Longitude = 33.32,
                     Sunshade = false,
                     DigitalPanel = true,
+                    ObjectActive=true,
                 }
 
             };
@@ -114,6 +119,7 @@ namespace DS
                     PrevStationArrivalTime = TimeSpan.Parse("10:15:00"),
                     NextStationArrivalTime = TimeSpan.Parse("10:30:00"),
                     BusDriverID = 310468558,
+                    ObjectActive=true,
                 }
             };
 
@@ -127,6 +133,7 @@ namespace DS
                     StartTime = TimeSpan.Parse("10:00:00"),
                     EndTime = TimeSpan.Parse("23:00:00"),
                     Frequency = 50,
+                    ObjectActive=true,
                  }
              };
 
@@ -137,6 +144,7 @@ namespace DS
                        UserName = "Maga4",
                        Password = "1234",
                        ManageAccess = false,
+                       ObjectActive=true,
                   },
 
                   new User
@@ -144,6 +152,7 @@ namespace DS
                        UserName = "Director",
                        Password = "7890",
                        ManageAccess = true,
+                       ObjectActive=true,
                   }
               };
         }

@@ -15,6 +15,7 @@ namespace DO
         public double Longitude { get; set; }
         public bool Sunshade { get; set; } // גגון
         public bool DigitalPanel { get; set; } // פאנל דיגיטלי
+        public bool ObjectActive { get; set; }
         /// <summary>
         /// Formats a string which represents the Bus object
         /// </summary>

@@ -59,7 +59,6 @@ namespace DalApi
         void DeleteBusStop(int license);
         #endregion
 
-
         #region ConsecutiveStations
         IEnumerable<ConsecutiveStations> GetAllConsecutiveStations();
         IEnumerable<ConsecutiveStations> GetAllConsecutiveStationsBy(Predicate<ConsecutiveStations> predicate);

@@ -52,13 +52,17 @@ namespace DL
         {
             throw new NotImplementedException();
         }
-        public void UpdateBus(int license, Action<Bus> update)  // method that knows to updt specific fields in Person
+        public void UpdateBus(int license, Action<Bus> update)  // method that knows to update specific fields in Person
         {
             throw new NotImplementedException();
         }
         public void DeleteBus(int license)
         {
-            throw new NotImplementedException();
+            Bus bus = DataSource.ListBuses.Find(b => b.License == license);
+            if (bus != null)
+                bus.ObjectActive = false;
+            else
+                throw new DO.BadIdException(license, $"bad id: {license}");
         }
         #endregion 
 
@@ -96,7 +100,11 @@ namespace DL
         }
         public void DeleteBusAtTravel(int license)
         {
-            throw new NotImplementedException();
+            BusAtTravel bus = DataSource.ListBusAtTravels.Find(b => b.License == license);
+            if (bus != null)
+                bus.ObjectActive = false;
+            else
+                throw new DO.BadIdException(license, $"bad id: {license}");
         }
         #endregion
 
@@ -132,9 +140,13 @@ namespace DL
         {
             throw new NotImplementedException();
         }
-        public void DeleteBusLine(int license)
+        public void DeleteBusLine(int busLineNumber)
         {
-            throw new NotImplementedException();
+            BusLine bus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLineNumber);
+            if (bus != null)
+                bus.ObjectActive = false;
+            else
+                throw new DO.BadIdException(busLineNumber, $"bad id: {busLineNumber}");
         }
         #endregion
 
@@ -148,13 +160,13 @@ namespace DL
         {
             throw new NotImplementedException();
         }
-        public BusLineStation GetBusLineStation(int busLineId)
+        public BusLineStation GetBusLineStation(int busStopKey)
         {
-            BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusLineID == busLineId);
+            BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopKey);
             if (bus != null)
                 return bus.Clone();
             else
-                throw new DO.BadIdException(busLineId, $"bad id: {busLineId}");
+                throw new DO.BadIdException(busStopKey, $"bad id: {busStopKey}");
         }
         public void AddBusLineStation(BusLineStation busLineStation)
         {
@@ -170,9 +182,13 @@ namespace DL
         {
             throw new NotImplementedException();
         }
-        public void DeleteBusLineStation(int license)
+        public void DeleteBusLineStation(int busStopKey)
         {
-            throw new NotImplementedException();
+            BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopKey);
+            if (bus != null)
+                bus.ObjectActive = false;
+            else
+                throw new DO.BadIdException(busStopKey, $"bad id: {busStopKey}");
         }
         #endregion
 
@@ -208,9 +224,13 @@ namespace DL
         {
             throw new NotImplementedException();
         }
-        public void DeleteBusStop(int license)
+        public void DeleteBusStop(int busStopKey)
         {
-            throw new NotImplementedException();
+            BusStop bus = DataSource.ListBusStops.Find(b => b.BusStopKey == busStopKey);
+            if (bus != null)
+                bus.ObjectActive = false;
+            else
+                throw new DO.BadIdException(busStopKey, $"bad id: {busStopKey}");
         }
         #endregion
 
@@ -284,9 +304,13 @@ namespace DL
         {
             throw new NotImplementedException();
         }
-        public void DeleteLineDeparture(int license)
+        public void DeleteLineDeparture(int busLineID)
         {
-            throw new NotImplementedException();
+            LineDeparture bus = DataSource.ListLineDepartures.Find(b => b.BusLineID == busLineID);
+            if (bus != null)
+                bus.ObjectActive = false;
+            else
+                throw new DO.BadIdException(busLineID, $"bad id: {busLineID}");
         }
         #endregion
 
@@ -320,7 +344,7 @@ namespace DL
 
         public void UpdateUser(User user)
         {
-
+            throw new NotImplementedException();
         }
 
         public void UpdateUser(string userName, Action<User> update) // method that knows to updt specific fields in Person
@@ -330,7 +354,11 @@ namespace DL
 
         public void DeleteUser(string userName)
         {
-            throw new NotImplementedException();
+            User user = DataSource.ListUsers.Find(b => b.UserName == userName);
+            if (user != null)
+                user.ObjectActive = false;
+            else
+                throw new DO.BadIdUserException(userName, $"bad id: {userName}");
         }
         #endregion
 

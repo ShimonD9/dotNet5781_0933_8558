@@ -13,6 +13,7 @@ namespace BO
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; } // Only if Frequency > 0
         public int Frequency { get; set; } // If 0 - A single travel. If 6 - it means, every 6 minutes
+        public bool ObjectActive { get; set; }
         /// <summary>
         /// Formats a string which represents the Bus object
         /// </summary>

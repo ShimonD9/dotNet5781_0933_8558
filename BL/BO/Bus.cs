@@ -16,6 +16,7 @@ namespace BO
         public BUS_STATUS BusStatus { get; set; }
         public DateTime LastTreatmentDate { get; set; }
         public double MileageAtLastTreat { get; set; }
+        public bool ObjectActive { get; set; }
         /// <summary>
         /// Formats a string which represents the Bus object
         /// </summary>

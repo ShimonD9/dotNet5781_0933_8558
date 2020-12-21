@@ -14,6 +14,7 @@ namespace DO
         public AREA Area { get; set; }
         public int FirstBusStopKey { get; set; }
         public int LastBusStopKey { get; set; }
+        public bool ObjectActive { get; set; }
         /// <summary>
         /// Formats a string which represents the Bus object
         /// </summary>

@@ -13,6 +13,7 @@ namespace DO
         public int LineStationIndex { get; set; }
         public int PrevStation { get; set; }
         public int NextStation { get; set; }
+        public bool ObjectActive { get; set; }
 
         public override string ToString()           // Printing details of a station
         {

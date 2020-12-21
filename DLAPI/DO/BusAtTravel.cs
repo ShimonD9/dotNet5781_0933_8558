@@ -17,6 +17,7 @@ namespace DO
         public TimeSpan PrevStationArrivalTime { get; set; }
         public TimeSpan NextStationArrivalTime { get; set; }
         public int BusDriverID { get; set; }
+        public bool ObjectActive { get; set; }
         /// <summary>
         /// Formats a string which represents the Bus object
         /// </summary>
