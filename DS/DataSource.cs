@@ -101,7 +101,8 @@ namespace DS
                     BusStopKeyA = 60000,
                     BusStopKeyB = 21323,
                     Distance = 1.3,
-                    TravelTime = TimeSpan.Parse("00:03:10")
+                    TravelTime = TimeSpan.Parse("00:03:10"),
+                     ObjectActive=true,
                 }
             };
 

@@ -30,7 +30,9 @@ namespace DL
 
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
         {
-            throw new NotImplementedException();
+            return from bus in DataSource.ListBuses
+                   where predicate(bus)
+                   select bus.Clone();
         }
 
         public Bus GetBus(int license)
@@ -50,11 +52,16 @@ namespace DL
         }
         public void UpdateBus(Bus bus)
         {
-            throw new NotImplementedException();
+            Bus busUpdate = DataSource.ListBuses.Find(b => b.License == bus.License);
+            if (busUpdate != null)
+                busUpdate = bus.Clone();
+            else
+                throw new DO.BadIdException(bus.License, $"bad id: {bus.License}");
         }
-        public void UpdateBus(int license, Action<Bus> update)  // method that knows to update specific fields in Person
+        public void UpdateBus(int licenseNumber, Action<Bus> update)  // method that knows to update specific fields in Person
         {
-            throw new NotImplementedException();
+            Bus busUpdate = GetBus(licenseNumber);
+            update(busUpdate);
         }
         public void DeleteBus(int license)
         {
@@ -74,7 +81,9 @@ namespace DL
         }
         public IEnumerable<BusAtTravel> GetAllBusesAtTravelBy(Predicate<BusAtTravel> predicate)
         {
-            throw new NotImplementedException();
+            return from busAtTravel in DataSource.ListBusAtTravels
+                   where predicate(busAtTravel)
+                   select busAtTravel.Clone();
         }
         public BusAtTravel GetBusAtTravel(int license)
         {
@@ -92,11 +101,16 @@ namespace DL
         }
         public void UpdateBusAtTravel(BusAtTravel bus)
         {
-            throw new NotImplementedException();
+            BusAtTravel busUpdate = DataSource.ListBusAtTravels.Find(b => b.License == bus.License);
+            if (busUpdate != null)
+                busUpdate = bus.Clone();
+            else
+                throw new DO.BadIdException(bus.License, $"bad id: {bus.License}");
         }
-        public void UpdateBusAtTravel(int license, Action<BusAtTravel> update) // method that knows to updt specific fields in Person
+        public void UpdateBusAtTravel(int licenseNumber, Action<BusAtTravel> update) // method that knows to updt specific fields in Person
         {
-            throw new NotImplementedException();
+            BusAtTravel busUpdate = GetBusAtTravel(licenseNumber);
+            update(busUpdate);
         }
         public void DeleteBusAtTravel(int license)
         {
@@ -116,7 +130,9 @@ namespace DL
         }
         public IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate)
         {
-            throw new NotImplementedException();
+            return from busLine in DataSource.ListBusLines
+                   where predicate(busLine)
+                   select busLine.Clone();
         }
         public BusLine GetBusLine(int busLineNumber)
         {
@@ -134,11 +150,16 @@ namespace DL
         }
         public void UpdateBusLine(BusLine busLine)
         {
-            throw new NotImplementedException();
+            BusLine busUpdate = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLine.BusLineNumber);
+            if (busUpdate != null)
+                busUpdate = busLine.Clone();
+            else
+                throw new DO.BadIdException(busLine.BusLineNumber, $"bad id: {busLine.BusLineNumber}");
         }
-        public void UpdateBusLine(int license, Action<BusLine> update) // method that knows to updt specific fields in Person
+        public void UpdateBusLine(int busLineNumber, Action<BusLine> update) // method that knows to updt specific fields in Person
         {
-            throw new NotImplementedException();
+            BusLine busUpdate = GetBusLine(busLineNumber);
+            update(busUpdate);
         }
         public void DeleteBusLine(int busLineNumber)
         {
@@ -158,7 +179,9 @@ namespace DL
         }
         public IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
         {
-            throw new NotImplementedException();
+            return from busLineStation in DataSource.ListBusLineStations
+                   where predicate(busLineStation)
+                   select busLineStation.Clone();
         }
         public BusLineStation GetBusLineStation(int busStopKey)
         {
@@ -176,11 +199,16 @@ namespace DL
         }
         public void UpdateBusLineStation(BusLineStation busLineStation)
         {
-            throw new NotImplementedException();
+            BusLineStation busUpdate = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busLineStation.BusStopKey);
+            if (busUpdate != null)
+                busUpdate = busLineStation.Clone();
+            else
+                throw new DO.BadIdException(busLineStation.BusStopKey, $"bad id: {busLineStation.BusStopKey}");
         }
-        public void UpdateBusLineStation(int license, Action<BusLineStation> update) // method that knows to updt specific fields in Person
+        public void UpdateBusLineStation(int busStopKey, Action<BusLineStation> update) // method that knows to updt specific fields in Person
         {
-            throw new NotImplementedException();
+            BusLineStation busUpdate = GetBusLineStation(busStopKey);
+            update(busUpdate);
         }
         public void DeleteBusLineStation(int busStopKey)
         {
@@ -200,7 +228,9 @@ namespace DL
         }
         public IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate)
         {
-            throw new NotImplementedException();
+            return from busStop in DataSource.ListBusStops
+                   where predicate(busStop)
+                   select busStop.Clone();
         }
         public BusStop GetBusStop(int busStopKey)
         {
@@ -212,17 +242,22 @@ namespace DL
         }
         public void AddBusStop(BusStop busStop)
         {
-            if (DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey== busStop.BusStopKey) != null)
+            if (DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey) != null)
                 throw new DO.BadIdException(busStop.BusStopKey, "Duplicate bus ID");
             DataSource.ListBusStops.Add(busStop.Clone());
         }
         public void UpdateBusStop(BusStop busStop)
         {
-            throw new NotImplementedException();
+            BusStop busUpdate = DataSource.ListBusStops.Find(b => b.BusStopKey == busStop.BusStopKey);
+            if (busUpdate != null)
+                busUpdate = busStop.Clone();
+            else
+                throw new DO.BadIdException(busStop.BusStopKey, $"bad id: {busStop.BusStopKey}");
         }
-        public void UpdateBusStop(int license, Action<BusStop> update) // method that knows to updt specific fields in Person
+        public void UpdateBusStop(int busStopKey, Action<BusStop> update) // method that knows to updt specific fields in Person
         {
-            throw new NotImplementedException();
+            BusStop busUpdate = GetBusStop(busStopKey);
+            update(busUpdate);
         }
         public void DeleteBusStop(int busStopKey)
         {
@@ -242,7 +277,9 @@ namespace DL
         }
         public IEnumerable<ConsecutiveStations> GetAllConsecutiveStationsBy(Predicate<ConsecutiveStations> predicate)
         {
-            throw new NotImplementedException();
+            return from busConsecutiveStations in DataSource.ListConsecutiveStations
+                   where predicate(busConsecutiveStations)
+                   select busConsecutiveStations.Clone();
         }
         public ConsecutiveStations GetConsecutiveStations(int busConsecutive)
         {
@@ -260,17 +297,26 @@ namespace DL
         }
         public void UpdateConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
-            throw new NotImplementedException();
+            ConsecutiveStations consecutiveUpdate = DataSource.ListConsecutiveStations.Find(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA);
+            if (consecutiveUpdate != null)
+                consecutiveUpdate = consecutiveStations.Clone();
+            else
+                throw new DO.BadIdException(consecutiveStations.BusStopKeyA, $"bad id: {consecutiveStations.BusStopKeyA}");
         }
-        public void UpdateConsecutiveStations(int license, Action<ConsecutiveStations> update) // method that knows to updt specific fields in Person
+        public void UpdateConsecutiveStations(int busConsecutive, Action<ConsecutiveStations> update) // method that knows to updt specific fields in Person
         {
-            throw new NotImplementedException();
+            ConsecutiveStations busConsecutiveUpdate = GetConsecutiveStations(busConsecutive);
+            update(busConsecutiveUpdate);
         }
-        public void DeleteConsecutiveStations(int license)
+        public void DeleteConsecutiveStations(int busConsecutiveKey)
         {
-            throw new NotImplementedException();
+            ConsecutiveStations busConsecutive = DataSource.ListConsecutiveStations.Find(b => b.BusStopKeyA == busConsecutiveKey);
+            if (busConsecutive != null)
+                busConsecutive.ObjectActive = false;
+            else
+                throw new DO.BadIdException(busConsecutiveKey, $"bad id: {busConsecutiveKey}");
         }
-        #endregion
+        #endregion  //בדיקה לעומק איך לבצע מימוש!!
 
         #region LineDeparture
         public IEnumerable<LineDeparture> GetAllLineDeparture()
@@ -280,7 +326,9 @@ namespace DL
         }
         public IEnumerable<LineDeparture> GetAllLineDepartureBy(Predicate<LineDeparture> predicate)
         {
-            throw new NotImplementedException();
+            return from busLineDeparture in DataSource.ListLineDepartures
+                   where predicate(busLineDeparture)
+                   select busLineDeparture.Clone();
         }
         public LineDeparture GetLineDeparture(int busLineID)
         {
@@ -298,11 +346,16 @@ namespace DL
         }
         public void UpdateLineDeparture(LineDeparture lineDeparture)
         {
-            throw new NotImplementedException();
+            LineDeparture busUpdate = DataSource.ListLineDepartures.Find(b => b.BusLineID == lineDeparture.BusLineID);
+            if (busUpdate != null)
+                busUpdate = lineDeparture.Clone();
+            else
+                throw new DO.BadIdException(lineDeparture.BusLineID, $"bad id: {lineDeparture.BusLineID}");
         }
-        public void UpdateLineDeparture(int license, Action<LineDeparture> update) // method that knows to updt specific fields in Person
+        public void UpdateLineDeparture(int busLineID, Action<LineDeparture> update) // method that knows to updt specific fields in Person
         {
-            throw new NotImplementedException();
+            LineDeparture busUpdate = GetLineDeparture(busLineID);
+            update(busUpdate);
         }
         public void DeleteLineDeparture(int busLineID)
         {
@@ -323,7 +376,9 @@ namespace DL
 
         public IEnumerable<User> GetAllUsersBy(Predicate<Bus> predicate)
         {
-            throw new NotImplementedException();
+            return from user in DataSource.ListUsers
+                   where predicate(user)
+                   select user.Clone();
         }
 
         public User GetUser(string userName)
@@ -344,12 +399,17 @@ namespace DL
 
         public void UpdateUser(User user)
         {
-            throw new NotImplementedException();
+            User userUpdate = DataSource.ListUsers.Find(b => b.UserName == user.UserName);
+            if (userUpdate != null)
+                userUpdate = user.Clone();
+            else
+                throw new DO.BadIdUserException(user.UserName, $"bad id: {user.UserName}");
         }
 
         public void UpdateUser(string userName, Action<User> update) // method that knows to updt specific fields in Person
         {
-            throw new NotImplementedException();
+            User userUpdate = GetUser(userName);
+            update(userUpdate);
         }
 
         public void DeleteUser(string userName)
