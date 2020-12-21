@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Bus.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -99,6 +102,18 @@
       <Project>{6f223799-78ee-433b-a878-3dd68d5b7b7e}</Project>
       <Name>BL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\busAdd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\takeBus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\fuelBus1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bus.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -24,5 +24,19 @@ namespace PlGui
         {
             InitializeComponent();
         }
+
+        private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //if (!Application.Current.Windows.OfType<BusDetailsWindow>().Any())
+            //{
+            //    ListBox list = sender as ListBox;
+            //    if (list != null)
+            //    {
+            //        object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
+            //        BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
+            //        busDetailsWindow.Show();
+            //    }
+            //}
+        }
     }
 }
