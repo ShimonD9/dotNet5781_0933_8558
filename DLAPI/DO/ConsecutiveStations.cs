@@ -12,6 +12,7 @@ namespace DO
         public int BusStopKeyB { get; set; }   // Entity Key B
         public double Distance { get; set; }
         public TimeSpan TravelTime { get; set; }
+        public bool ObjectActive { get; set; }
         /// <summary>
         /// Formats a string which represents the Bus object
         /// </summary>
