@@ -49,7 +49,224 @@ namespace DS
                 LastTreatmentDate = DateTime.Parse("10.12.2020"),
                 MileageAtLastTreat = 300020,
                 ObjectActive=true,
-                }
+                },
+
+                new Bus
+                {
+                License=63045719,
+                LicenseDate = DateTime.Parse("10.3.2018"),
+                Mileage = 130030,
+                Fuel = 1100,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("11.4.2020"),
+                MileageAtLastTreat = 130010,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=7707707,
+                LicenseDate = DateTime.Parse("10.1.2012"),
+                Mileage = 500030,
+                Fuel = 1200,
+                BusStatus = Enums.BUS_STATUS.DANGEROUS,
+                LastTreatmentDate = DateTime.Parse("10.12.2016"),
+                MileageAtLastTreat = 400040,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
+                new Bus
+                {
+                License=1324544,
+                LicenseDate = DateTime.Parse("10.12.2016"),
+                Mileage = 200030,
+                Fuel = 1150,
+                BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
+                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                MileageAtLastTreat = 200020,
+                ObjectActive=true,
+                },
+
             };
 
             ListBusLines = new List<BusLine>
