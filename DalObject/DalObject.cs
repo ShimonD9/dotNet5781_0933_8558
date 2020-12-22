@@ -374,7 +374,7 @@ namespace DL
                    select user.Clone();
         }
 
-        public IEnumerable<User> GetAllUsersBy(Predicate<Bus> predicate)
+        public IEnumerable<User> GetAllUsersBy(Predicate<User> predicate)
         {
             return from user in DataSource.ListUsers
                    where predicate(user)

@@ -81,7 +81,7 @@ namespace DalApi
 
         #region User
         IEnumerable<User> GetAllUsers();
-        IEnumerable<User> GetAllUsersBy(Predicate<Bus> predicate);
+        IEnumerable<User> GetAllUsersBy(Predicate<User> predicate);
         User GetUser(string userName);
         void AddUser(User user);
         void UpdateUser(User user);

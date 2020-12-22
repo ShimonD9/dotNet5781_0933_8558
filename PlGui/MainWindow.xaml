@@ -9,7 +9,7 @@
     <Grid>
         <TabControl HorizontalAlignment="Stretch" Height="800" VerticalAlignment="Stretch" Width="800">
             <TabItem Header="Buses">
-                <Grid Background="#FFE5E5E5" Margin="0,0,0,27">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,30">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.2*"/>
                         <RowDefinition Height="*"/>
@@ -121,9 +121,8 @@
                         </ListView>
                     </Grid>
                     <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="20,0,20,46">
-                        <Button Name ="AddBus" Cursor="Hand"  Background="LemonChiffon" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Height="62" Width="68" Margin="0,0,10,0" 
-                            <!--Click="Button_OpenAddBusWindow"-->>
-                            <Image Source="/dotNet5781_03B_0933_8558;component/Images/busAdd.png" Height="52" Width="57" />
+                        <Button Name ="AddBus" Cursor="Hand"  Background="LemonChiffon" Click="Button_OpenAddBusWindow" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Height="62" Width="68" Margin="0,0,10,0" >
+                            <Image Source="/PlGui;component/Images/busAdd.png" Height="52" Width="57" />
                         </Button>
                     </Grid>
                 </Grid>
@@ -133,6 +132,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.2*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" VerticalAlignment="Bottom" Height="50" Margin="27,0,20,0">
                         <Grid.ColumnDefinitions>
@@ -210,6 +210,9 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </Grid>
+                    <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="20,0,20,46">
+                        <Button Name ="AddBusLine"  Content="Add new bus line" Cursor="Hand" FontSize="16" FontWeight="Bold"  Background="LemonChiffon" Click="Button_OpenAddBusLineWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="140" />
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Bus Stops">
@@ -217,6 +220,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.2*"/>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" VerticalAlignment="Bottom" Height="50" Margin="27,0,20,0">
                         <Grid.ColumnDefinitions>
@@ -301,6 +305,9 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
+                    </Grid>
+                    <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="20,0,20,46">
+                        <Button Name ="AddBusStop" Content="Add new bus stop" Cursor="Hand" FontSize="16" FontWeight="Bold" Background="LemonChiffon" Click="Button_OpenAddBusStopWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="140" />
                     </Grid>
                 </Grid>
             </TabItem>
