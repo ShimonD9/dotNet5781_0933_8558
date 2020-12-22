@@ -497,7 +497,7 @@ namespace DL
                 throw new DO.BadIdUserException(user.UserName, "Duplicate bus ID");
             else if (DataSource.ListUsers.FirstOrDefault(b => b.UserName == user.UserName).ObjectActive == false)
             {
-                User addUser = DataSource.ListUsers.Find(b => b.UserName == user.UserName;
+                User addUser = DataSource.ListUsers.Find(b => b.UserName == user.UserName);
                 addUser.ObjectActive = true;
                 addUser = user.Clone();
             }

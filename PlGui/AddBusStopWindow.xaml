@@ -1,0 +1,85 @@
+﻿<Window x:Class="PlGui.AddBusStopWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PlGui"
+        mc:Ignorable="d"
+        Title="Add a new bus stop" Height="373.391" Width="322.763" ResizeMode="CanMinimize">
+
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="1"/>
+            <GradientStop Color="#FF54C543" Offset="0.898"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="0.5*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height ="*"/>
+                <RowDefinition Height ="*"/>
+                <RowDefinition Height ="*"/>
+                <RowDefinition Height ="*"/>
+                <RowDefinition Height ="*"/>
+                <RowDefinition Height ="*"/>
+
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the bus stop code:" Width="149" Margin="5"/>
+            </Grid>
+
+            <Grid Grid.Row="0" Grid.Column="1">
+                <TextBox x:Name="tbBusStopCode" PreviewTextInput="NumberValidationTextBoxNoDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the bus stop name:" Width="149"  Margin="5"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="1">
+                <TextBox Name="tbBusStopName" Text="0"  PreviewTextInput="NumberValidationTextBox" TextAlignment="Center" VerticalAlignment="Center" Width="90" HorizontalAlignment="Center" />
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="0">
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter bus stop address:" Width="221"  Margin="5"/>
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="1">
+                <TextBox Name="tbBusStopAddress" Text="0" PreviewTextInput="NumberValidationTextBox"  TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
+            </Grid>
+
+            <Grid Grid.Row="3" Grid.Column="0">
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the bus stop Latitude:" Width="221"  Margin="5"/>
+            </Grid>
+
+            <Grid Grid.Row="3" Grid.Column="1">
+                <TextBox Name="tbLatitude" Text="0" PreviewTextInput="NumberValidationTextBox"  TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
+            </Grid>
+
+            <Grid Grid.Row="4" Grid.Column="0">
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the bus stop Longitude:" Width="221"  Margin="5"/>
+            </Grid>
+
+            <Grid Grid.Row="4" Grid.Column="1">
+                <TextBox Name="tbLongitude" Text="0" PreviewTextInput="NumberValidationTextBox"  TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
+            </Grid>
+
+            <Grid Grid.Row="5" Grid.Column="0">
+                <CheckBox Name="ckbDigitalPanel" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Digital panel" Margin="5"/>
+            </Grid>
+            
+            <Grid Grid.Row="6" Grid.Column="0">
+                <CheckBox Name="ckbSunshade" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Sunshade" Margin="5"/>
+            </Grid>
+
+        </Grid>
+
+        <Button Content="Add the new bus stop to the list" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Margin="20" Click="Button_Click"/>
+    </StackPanel>
+</Window>
+

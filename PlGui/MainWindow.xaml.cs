@@ -62,10 +62,10 @@ namespace PlGui
         /// <param name="e"></param>
         private void Button_OpenAddBusLineWindow(object sender, RoutedEventArgs e)
         {
-            if (!Application.Current.Windows.OfType<AddBusWindow>().Any()) // To prevent the openning of another same window
+            if (!Application.Current.Windows.OfType<AddBusLineWindow>().Any()) // To prevent the openning of another same window
             {
-                AddBusWindow addBusWindow = new AddBusWindow(); // Creates the new window, and then shows it
-                addBusWindow.ShowDialog();
+                AddBusLineWindow addBusLineWindow = new AddBusLineWindow(); // Creates the new window, and then shows it
+                addBusLineWindow.ShowDialog();
                 //lbBuses.Items.Refresh(); // For seeing the new bus added on the list view
             }
         }
@@ -77,10 +77,10 @@ namespace PlGui
         /// <param name="e"></param>
         private void Button_OpenAddBusStopWindow(object sender, RoutedEventArgs e)
         {
-            if (!Application.Current.Windows.OfType<AddBusWindow>().Any()) // To prevent the openning of another same window
+            if (!Application.Current.Windows.OfType<AddBusStopWindow>().Any()) // To prevent the openning of another same window
             {
-                AddBusWindow addBusWindow = new AddBusWindow(); // Creates the new window, and then shows it
-                addBusWindow.ShowDialog();
+                AddBusStopWindow addBusStopWindow = new AddBusStopWindow(); // Creates the new window, and then shows it
+                addBusStopWindow.ShowDialog();
                 //lbBuses.Items.Refresh(); // For seeing the new bus added on the list view
             }
         }
