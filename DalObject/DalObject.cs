@@ -38,23 +38,35 @@ namespace DL
         public Bus GetBus(int license)
         {
             Bus bus = DataSource.ListBuses.Find(b => b.License == license);
-            if (bus != null)
+            if (bus != null && bus.ObjectActive)
                 return bus.Clone();
+            else if(!bus.ObjectActive)
+                throw new DO.InactiveBusException(license, $"the bus is  inactive");
             else
-                throw new DO.BadIdException(license, $"bad id: {license}");
+                throw new DO.BadIdException(bus.License, $"bad id: {bus.License}");
         }
 
         public void AddBus(Bus bus)
         {
-            if (DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License) != null)
+            if (DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License) != null &&
+                DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License).ObjectActive == true)
                 throw new DO.BadIdException(bus.License, "Duplicate bus ID");
+            else if (DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License).ObjectActive == false)
+            {
+                Bus addBus = DataSource.ListBuses.Find(b => b.License == bus.License);
+                addBus.ObjectActive = true;
+                addBus = bus.Clone();
+            }
+            else
             DataSource.ListBuses.Add(bus.Clone());
         }
-        public void UpdateBus(Bus bus)
+        public void UpdateBus(Bus bus) //busUpdate
         {
             Bus busUpdate = DataSource.ListBuses.Find(b => b.License == bus.License);
-            if (busUpdate != null)
+            if (busUpdate != null && busUpdate.ObjectActive)
                 busUpdate = bus.Clone();
+            else if (!busUpdate.ObjectActive)
+                throw new DO.InactiveBusException(bus.License, $"the bus is  inactive");
             else
                 throw new DO.BadIdException(bus.License, $"bad id: {bus.License}");
         }
@@ -66,10 +78,12 @@ namespace DL
         public void DeleteBus(int license)
         {
             Bus bus = DataSource.ListBuses.Find(b => b.License == license);
-            if (bus != null)
+            if (bus != null && bus.ObjectActive)
                 bus.ObjectActive = false;
+            else if (!bus.ObjectActive)
+                throw new DO.InactiveBusException(bus.License, $"the bus is  inactive");
             else
-                throw new DO.BadIdException(license, $"bad id: {license}");
+                throw new DO.BadIdException(bus.License, $"bad id: {bus.License}");
         }
         #endregion 
 
@@ -88,22 +102,34 @@ namespace DL
         public BusAtTravel GetBusAtTravel(int license)
         {
             BusAtTravel bus = DataSource.ListBusAtTravels.Find(b => b.License == license);
-            if (bus != null)
+            if (bus != null && bus.ObjectActive)
                 return bus.Clone();
+            else if (!bus.ObjectActive)
+                throw new DO.InactiveBusException(license, $"the bus is  inactive");
             else
-                throw new DO.BadIdException(license, $"bad id: {license}");
+                throw new DO.BadIdException(bus.License, $"bad id: {bus.License}");
         }
         public void AddBusAtTravel(BusAtTravel bus)
         {
-            if (DataSource.ListBusAtTravels.FirstOrDefault(b => b.License == bus.License) != null)
+            if (DataSource.ListBusAtTravels.FirstOrDefault(b => b.License == bus.License) != null &&
+               DataSource.ListBusAtTravels.FirstOrDefault(b => b.License == bus.License).ObjectActive == true)
                 throw new DO.BadIdException(bus.License, "Duplicate bus ID");
-            DataSource.ListBusAtTravels.Add(bus.Clone());
+            else if (DataSource.ListBusAtTravels.FirstOrDefault(b => b.License == bus.License).ObjectActive == false)
+            {
+                BusAtTravel addBus = DataSource.ListBusAtTravels.Find(b => b.License == bus.License);
+                addBus.ObjectActive = true;
+                addBus = bus.Clone();
+            }
+            else
+                DataSource.ListBusAtTravels.Add(bus.Clone());
         }
         public void UpdateBusAtTravel(BusAtTravel bus)
         {
             BusAtTravel busUpdate = DataSource.ListBusAtTravels.Find(b => b.License == bus.License);
-            if (busUpdate != null)
+            if (busUpdate != null && busUpdate.ObjectActive)
                 busUpdate = bus.Clone();
+            else if (!bus.ObjectActive)
+                throw new DO.InactiveBusException(bus.License, $"the bus is  inactive");
             else
                 throw new DO.BadIdException(bus.License, $"bad id: {bus.License}");
         }
@@ -115,10 +141,12 @@ namespace DL
         public void DeleteBusAtTravel(int license)
         {
             BusAtTravel bus = DataSource.ListBusAtTravels.Find(b => b.License == license);
-            if (bus != null)
+            if (bus != null && bus.ObjectActive)
                 bus.ObjectActive = false;
+            else if (!bus.ObjectActive)
+                throw new DO.InactiveBusException(bus.License, $"the bus is  inactive");
             else
-                throw new DO.BadIdException(license, $"bad id: {license}");
+                throw new DO.BadIdException(bus.License, $"bad id: {bus.License}");
         }
         #endregion
 
@@ -137,22 +165,34 @@ namespace DL
         public BusLine GetBusLine(int busLineNumber)
         {
             BusLine bus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLineNumber);
-            if (bus != null)
+            if (bus != null && bus.ObjectActive)
                 return bus.Clone();
+            else if (!bus.ObjectActive)
+                throw new DO.InactiveBusException(busLineNumber, $"the bus is  inactive");
             else
                 throw new DO.BadIdException(busLineNumber, $"bad id: {busLineNumber}");
         }
         public void AddBusLine(BusLine busLine)
         {
-            if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber) != null)
+            if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber) != null &&
+               DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == true)
                 throw new DO.BadIdException(busLine.BusLineNumber, "Duplicate bus ID");
-            DataSource.ListBusLines.Add(busLine.Clone());
+            else if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == false)
+            {
+                BusLine addBus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLine.BusLineNumber);
+                addBus.ObjectActive = true;
+                addBus = busLine.Clone();
+            }
+            else
+                DataSource.ListBusLines.Add(busLine.Clone());
         }
         public void UpdateBusLine(BusLine busLine)
         {
             BusLine busUpdate = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLine.BusLineNumber);
-            if (busUpdate != null)
+            if (busUpdate != null && busUpdate.ObjectActive)
                 busUpdate = busLine.Clone();
+            else if (!busUpdate.ObjectActive)
+                throw new DO.InactiveBusException(busLine.BusLineNumber, $"the bus is  inactive");
             else
                 throw new DO.BadIdException(busLine.BusLineNumber, $"bad id: {busLine.BusLineNumber}");
         }
@@ -164,8 +204,10 @@ namespace DL
         public void DeleteBusLine(int busLineNumber)
         {
             BusLine bus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLineNumber);
-            if (bus != null)
+            if (bus != null && bus.ObjectActive)
                 bus.ObjectActive = false;
+            else if (!bus.ObjectActive)
+                throw new DO.InactiveBusException(busLineNumber, $"the bus is  inactive");
             else
                 throw new DO.BadIdException(busLineNumber, $"bad id: {busLineNumber}");
         }
@@ -186,24 +228,36 @@ namespace DL
         public BusLineStation GetBusLineStation(int busStopKey)
         {
             BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopKey);
-            if (bus != null)
+            if (bus != null && bus.ObjectActive)
                 return bus.Clone();
+            else if (!bus.ObjectActive)
+                throw new DO.InactiveBusException(busStopKey, $"the bus is  inactive");
             else
                 throw new DO.BadIdException(busStopKey, $"bad id: {busStopKey}");
         }
         public void AddBusLineStation(BusLineStation busLineStation)
         {
-            if (DataSource.ListBusLineStations.FirstOrDefault(b => b.BusLineID == busLineStation.BusLineID) != null)
-                throw new DO.BadIdException(busLineStation.BusLineID, "Duplicate bus ID");
-            DataSource.ListBusLineStations.Add(busLineStation.Clone());
+            if (DataSource.ListBusLineStations.FirstOrDefault(b => b.BusStopKey == busLineStation.BusStopKey) != null &&
+               DataSource.ListBusLineStations.FirstOrDefault(b => b.BusStopKey == busLineStation.BusStopKey).ObjectActive == true)
+                throw new DO.BadIdException(busLineStation.BusStopKey, "Duplicate bus ID");
+            else if (DataSource.ListBusLineStations.FirstOrDefault(b => b.BusStopKey == busLineStation.BusStopKey).ObjectActive == false)
+            {
+                BusLineStation addBus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busLineStation.BusStopKey);
+                addBus.ObjectActive = true;
+                addBus = busLineStation.Clone();
+            }
+            else
+                DataSource.ListBusLineStations.Add(busLineStation.Clone());
         }
         public void UpdateBusLineStation(BusLineStation busLineStation)
         {
             BusLineStation busUpdate = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busLineStation.BusStopKey);
-            if (busUpdate != null)
+            if (busUpdate != null && busUpdate.ObjectActive)
                 busUpdate = busLineStation.Clone();
+            else if (!busUpdate.ObjectActive)
+                throw new DO.InactiveBusException(busUpdate.BusStopKey, $"the bus is  inactive");
             else
-                throw new DO.BadIdException(busLineStation.BusStopKey, $"bad id: {busLineStation.BusStopKey}");
+                throw new DO.BadIdException(busUpdate.BusStopKey, $"bad id: {busUpdate.BusStopKey}");
         }
         public void UpdateBusLineStation(int busStopKey, Action<BusLineStation> update) // method that knows to updt specific fields in Person
         {
@@ -213,8 +267,10 @@ namespace DL
         public void DeleteBusLineStation(int busStopKey)
         {
             BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopKey);
-            if (bus != null)
+            if (bus != null && bus.ObjectActive)
                 bus.ObjectActive = false;
+            else if (!bus.ObjectActive)
+                throw new DO.InactiveBusException(busStopKey, $"the bus is  inactive");
             else
                 throw new DO.BadIdException(busStopKey, $"bad id: {busStopKey}");
         }
@@ -235,24 +291,36 @@ namespace DL
         public BusStop GetBusStop(int busStopKey)
         {
             BusStop bus = DataSource.ListBusStops.Find(b => b.BusStopKey == busStopKey);
-            if (bus != null)
+            if (bus != null && bus.ObjectActive)
                 return bus.Clone();
+            else if (!bus.ObjectActive)
+                throw new DO.InactiveBusException(busStopKey, $"the bus is  inactive");
             else
                 throw new DO.BadIdException(busStopKey, $"bad id: {busStopKey}");
         }
         public void AddBusStop(BusStop busStop)
         {
-            if (DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey) != null)
+            if (DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey) != null &&
+              DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey).ObjectActive == true)
                 throw new DO.BadIdException(busStop.BusStopKey, "Duplicate bus ID");
-            DataSource.ListBusStops.Add(busStop.Clone());
+            else if (DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey).ObjectActive == false)
+            {
+                BusStop addBus = DataSource.ListBusStops.Find(b => b.BusStopKey == busStop.BusStopKey);
+                addBus.ObjectActive = true;
+                addBus = busStop.Clone();
+            }
+            else
+                DataSource.ListBusStops.Add(busStop.Clone());
         }
         public void UpdateBusStop(BusStop busStop)
         {
             BusStop busUpdate = DataSource.ListBusStops.Find(b => b.BusStopKey == busStop.BusStopKey);
-            if (busUpdate != null)
+            if (busUpdate != null && busUpdate.ObjectActive)
                 busUpdate = busStop.Clone();
+            else if (!busUpdate.ObjectActive)
+                throw new DO.InactiveBusException(busUpdate.BusStopKey, $"the bus is  inactive");
             else
-                throw new DO.BadIdException(busStop.BusStopKey, $"bad id: {busStop.BusStopKey}");
+                throw new DO.BadIdException(busUpdate.BusStopKey, $"bad id: {busUpdate.BusStopKey}");
         }
         public void UpdateBusStop(int busStopKey, Action<BusStop> update) // method that knows to updt specific fields in Person
         {
@@ -262,8 +330,10 @@ namespace DL
         public void DeleteBusStop(int busStopKey)
         {
             BusStop bus = DataSource.ListBusStops.Find(b => b.BusStopKey == busStopKey);
-            if (bus != null)
+            if (bus != null &&  bus.ObjectActive)
                 bus.ObjectActive = false;
+            else if (!bus.ObjectActive)
+                throw new DO.InactiveBusException(busStopKey, $"the bus is  inactive");
             else
                 throw new DO.BadIdException(busStopKey, $"bad id: {busStopKey}");
         }
@@ -284,22 +354,34 @@ namespace DL
         public ConsecutiveStations GetConsecutiveStations(int busConsecutive)
         {
             ConsecutiveStations bus = DataSource.ListConsecutiveStations.Find(b => b.BusStopKeyA == busConsecutive);
-            if (bus != null)
+            if (bus != null && bus.ObjectActive)
                 return bus.Clone();
+            else if (!bus.ObjectActive)
+                throw new DO.InactiveBusException(busConsecutive, $"the bus is  inactive");
             else
                 throw new DO.BadIdException(busConsecutive, $"bad id: {busConsecutive}");
         }
         public void AddConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
-            if (DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA) != null)
+            if (DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA) != null &&
+              DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA).ObjectActive == true)
                 throw new DO.BadIdException(consecutiveStations.BusStopKeyA, "Duplicate bus ID");
-            DataSource.ListConsecutiveStations.Add(consecutiveStations.Clone());
+            else if (DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA).ObjectActive == false)
+            {
+                ConsecutiveStations addBus = DataSource.ListConsecutiveStations.Find(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA);
+                addBus.ObjectActive = true;
+                addBus = consecutiveStations.Clone();
+            }
+            else
+                DataSource.ListConsecutiveStations.Add(consecutiveStations.Clone());
         }
         public void UpdateConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
             ConsecutiveStations consecutiveUpdate = DataSource.ListConsecutiveStations.Find(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA);
-            if (consecutiveUpdate != null)
+            if (consecutiveUpdate != null && consecutiveUpdate.ObjectActive)
                 consecutiveUpdate = consecutiveStations.Clone();
+            else if (!consecutiveUpdate.ObjectActive)
+                throw new DO.InactiveBusException(consecutiveStations.BusStopKeyA, $"the bus is  inactive");
             else
                 throw new DO.BadIdException(consecutiveStations.BusStopKeyA, $"bad id: {consecutiveStations.BusStopKeyA}");
         }
@@ -311,8 +393,10 @@ namespace DL
         public void DeleteConsecutiveStations(int busConsecutiveKey)
         {
             ConsecutiveStations busConsecutive = DataSource.ListConsecutiveStations.Find(b => b.BusStopKeyA == busConsecutiveKey);
-            if (busConsecutive != null)
+            if (busConsecutive != null && busConsecutive.ObjectActive)
                 busConsecutive.ObjectActive = false;
+            else if (!busConsecutive.ObjectActive)
+                throw new DO.InactiveBusException(busConsecutiveKey, $"the bus is  inactive");
             else
                 throw new DO.BadIdException(busConsecutiveKey, $"bad id: {busConsecutiveKey}");
         }
@@ -333,24 +417,36 @@ namespace DL
         public LineDeparture GetLineDeparture(int busLineID)
         {
             LineDeparture bus = DataSource.ListLineDepartures.Find(b => b.BusLineID == busLineID);
-            if (bus != null)
+            if (bus != null && bus.ObjectActive)
                 return bus.Clone();
+            else if (!bus.ObjectActive)
+                throw new DO.InactiveBusException(busLineID, $"the bus is  inactive");
             else
                 throw new DO.BadIdException(busLineID, $"bad id: {busLineID}");
         }
         public void AddLineDeparture(LineDeparture lineDeparture)
         {
-            if (DataSource.ListLineDepartures.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID) != null)
+            if (DataSource.ListLineDepartures.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID) != null &&
+              DataSource.ListLineDepartures.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID).ObjectActive == true)
                 throw new DO.BadIdException(lineDeparture.BusLineID, "Duplicate bus ID");
-            DataSource.ListLineDepartures.Add(lineDeparture.Clone());
+            else if (DataSource.ListLineDepartures.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID).ObjectActive == false)
+            {
+                LineDeparture addBus = DataSource.ListLineDepartures.Find(b => b.BusLineID == lineDeparture.BusLineID);
+                addBus.ObjectActive = true;
+                addBus = lineDeparture.Clone();
+            }
+            else
+                DataSource.ListLineDepartures.Add(lineDeparture.Clone());
         }
         public void UpdateLineDeparture(LineDeparture lineDeparture)
         {
             LineDeparture busUpdate = DataSource.ListLineDepartures.Find(b => b.BusLineID == lineDeparture.BusLineID);
-            if (busUpdate != null)
+            if (busUpdate != null && busUpdate.ObjectActive)
                 busUpdate = lineDeparture.Clone();
+            else if (!busUpdate.ObjectActive)
+                throw new DO.InactiveBusException(busUpdate.BusLineID, $"the bus is  inactive");
             else
-                throw new DO.BadIdException(lineDeparture.BusLineID, $"bad id: {lineDeparture.BusLineID}");
+                throw new DO.BadIdException(busUpdate.BusLineID, $"bad id: {busUpdate.BusLineID}");
         }
         public void UpdateLineDeparture(int busLineID, Action<LineDeparture> update) // method that knows to updt specific fields in Person
         {
@@ -360,8 +456,10 @@ namespace DL
         public void DeleteLineDeparture(int busLineID)
         {
             LineDeparture bus = DataSource.ListLineDepartures.Find(b => b.BusLineID == busLineID);
-            if (bus != null)
+            if (bus != null && bus.ObjectActive)
                 bus.ObjectActive = false;
+            else if (!bus.ObjectActive)
+                throw new DO.InactiveBusException(busLineID, $"the bus is  inactive");
             else
                 throw new DO.BadIdException(busLineID, $"bad id: {busLineID}");
         }
@@ -384,24 +482,36 @@ namespace DL
         public User GetUser(string userName)
         {
             User user = DataSource.ListUsers.Find(b => b.UserName == userName);
-            if (user != null)
+            if (user != null && user.ObjectActive)
                 return user.Clone();
+            else if (!user.ObjectActive)
+                throw new DO.InactiveUserException(userName, $"the bus is  inactive");
             else
-                throw new DO.BadIdUserException(userName, $"bad id: {userName}");
+                throw new DO.InactiveUserException(userName, $"bad id: {userName}");
         }
 
         public void AddUser(User user)
         {
-            if (DataSource.ListUsers.FirstOrDefault(b => b.UserName == user.UserName) != null)
+            if (DataSource.ListUsers.FirstOrDefault(b => b.UserName == user.UserName) != null &&
+              DataSource.ListUsers.FirstOrDefault(b => b.UserName == user.UserName).ObjectActive == true)
                 throw new DO.BadIdUserException(user.UserName, "Duplicate bus ID");
-            DataSource.ListUsers.Add(user.Clone());
+            else if (DataSource.ListUsers.FirstOrDefault(b => b.UserName == user.UserName).ObjectActive == false)
+            {
+                User addUser = DataSource.ListUsers.Find(b => b.UserName == user.UserName;
+                addUser.ObjectActive = true;
+                addUser = user.Clone();
+            }
+            else
+                DataSource.ListUsers.Add(user.Clone());
         }
 
         public void UpdateUser(User user)
         {
             User userUpdate = DataSource.ListUsers.Find(b => b.UserName == user.UserName);
-            if (userUpdate != null)
+            if (userUpdate != null && userUpdate.ObjectActive)
                 userUpdate = user.Clone();
+            else if (!userUpdate.ObjectActive)
+                throw new DO.InactiveUserException(user.UserName, $"the bus is  inactive");
             else
                 throw new DO.BadIdUserException(user.UserName, $"bad id: {user.UserName}");
         }
@@ -415,8 +525,10 @@ namespace DL
         public void DeleteUser(string userName)
         {
             User user = DataSource.ListUsers.Find(b => b.UserName == userName);
-            if (user != null)
+            if (user != null && user.ObjectActive)
                 user.ObjectActive = false;
+            else if (!user.ObjectActive)
+                throw new DO.InactiveUserException(userName, $"the bus is  inactive");
             else
                 throw new DO.BadIdUserException(userName, $"bad id: {userName}");
         }
