@@ -52,7 +52,7 @@
     <Compile Include="BO\Enums.cs" />
     <Compile Include="BO\LineDeparture.cs" />
     <Compile Include="BO\User.cs" />
-    <Compile Include="Cloning.cs" />
+    <Compile Include="DeepCopyUtilities.cs" />
     <Compile Include="IBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
