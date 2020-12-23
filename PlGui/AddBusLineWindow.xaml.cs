@@ -23,6 +23,7 @@ namespace PlGui
         public AddBusLineWindow()
         {
             InitializeComponent();
+            cbArea.ItemsSource = Enum.GetValues(typeof(Enums.AREA));
         }
 
 
