@@ -289,34 +289,681 @@ namespace DS
 
             };
 
-            ListBusLines = new List<BusLine>
-            {
-                new BusLine
-                {
-                    BusLineID = Config.RunningNumBusLine,
-                    BusLineNumber = 340,
-                    Area = Enums.AREA.Center,
-                    FirstBusStopKey = 60000,
-                    LastBusStopKey = 20333,
-                    ObjectActive=true,
-                }
-            };
-
             ListBusStops = new List<BusStop>
             {
                 new BusStop
                 {
-                    BusStopKey = 60000,
-                    BusStopName = "גן ילדים שושנה",
+                    BusStopKey = 26475,
+                    BusStopName = "חזון אי''ש/מרום נווה",
+                    BusStopAddress = "חזון אי''ש 90 בני ברק",
+                    Latitude = 32.07311,
+                    Longitude = 34.832921,
+                    Sunshade = true,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 20150,
+                    BusStopName = "אבו חצירא/הרב פתאיה",
+                    BusStopAddress = "הרב ישראל אבו חצירא 24 בני ברק",
+                    Latitude = 32.095152,
+                    Longitude = 34.830981,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60204,
+                    BusStopName = "משך חוכמה ז",
                     BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
                     Latitude = 33.212,
                     Longitude = 33.32,
                     Sunshade = false,
                     DigitalPanel = true,
                     ObjectActive=true,
-                }
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60278,
+                    BusStopName = "רשב''י א",
+                    BusStopAddress = "רבי שמעון בר יוחאי 47 מודיעין עילית",
+                    Latitude = 31.937852,
+                    Longitude = 35.045995,
+                    Sunshade = true,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 20164,
+                    BusStopName = "אזור התעשייה",
+                    BusStopAddress = "מבצע קדש בני ברק",
+                    Latitude = 32.10235,
+                    Longitude = 34.827827,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60403,
+                    BusStopName = "מעלות החכמה",
+                    BusStopAddress = "רשי מודיעין עילית",
+                    Latitude = 31.930906,
+                    Longitude = 35.049892,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 21165,
+                    BusStopName = "מגדל ויטה/דרך בן גוריון",
+                    BusStopAddress = "דרך בן גוריון 11 בני ברק",
+                    Latitude = 32.094143,
+                    Longitude = 34.822193,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60213,
+                    BusStopName = "אבני נזר ב",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60214,
+                    BusStopName = "אבני נזר ח",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60216,
+                    BusStopName = "אבני נזר/חפץ חיים",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60217,
+                    BusStopName = "חפץ חיים/נתיבות המשפט",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60222,
+                    BusStopName = "אור החיים ג",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60223,
+                    BusStopName = "אור החיים ד",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60224,
+                    BusStopName = "אור החיים ז",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60225,
+                    BusStopName = "אור החיים/אוהלי ספר",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60226,
+                    BusStopName = "אבני נזר/אור החיים",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60227,
+                    BusStopName = "מרכז קסם/אבני נזר",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60228,
+                    BusStopName = "חפץ חיים/קצות חושן",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60229,
+                    BusStopName = "חפץ חיים ז",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60233,
+                    BusStopName = "מסילת יוסף ב",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60234,
+                    BusStopName = "מסילת יוסף/מרומי שדה",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60237,
+                    BusStopName = "גן ילדים/נתיבות המשפט",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60238,
+                    BusStopName = "נתיבות המשפט ח",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60239,
+                    BusStopName = "נתיבות המשפט י''ג",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60240,
+                    BusStopName = "נתיבות המשפט/מסילת יוסף",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60241,
+                    BusStopName = "נתיבות המשפט ז",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60243,
+                    BusStopName = "כיכר בית תפילה/נתיבות המשפט",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60244,
+                    BusStopName = "נתיבות המשפט ה",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60245,
+                    BusStopName = "נתיבות המשפט י''ז",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60247,
+                    BusStopName = "נתיבות המשפט/כיכר גפן",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60248,
+                    BusStopName = "נתיבות המשפט/מרומי שדה",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60249,
+                    BusStopName = "נתיבות המשפט ל",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60250,
+                    BusStopName = "נתיבות המשפט כ",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60252,
+                    BusStopName = "נתיבות המשפט/חת''ם סופר",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60254,
+                    BusStopName = "חפץ חיים/אבני נזר",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60255,
+                    BusStopName = "שדרות בית הלל/שדרות בית שמאי",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60256,
+                    BusStopName = "אבי עזרי ב",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60257,
+                    BusStopName = "אבי עזרי א",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60258,
+                    BusStopName = "כיכר נאות הפסגה/רש''י",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60261,
+                    BusStopName = "חפץ חיים ג",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60262,
+                    BusStopName = "חפץ חיים/קצות חושן",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60263,
+                    BusStopName = "חפץ חיים/אבני נזר",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60266,
+                    BusStopName = "מסילת ישרים ג",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60268,
+                    BusStopName = "מרכז מסחרי/שדרות יחזקאל",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60270,
+                    BusStopName = "צומת אלעזר",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 60271,
+                    BusStopName = "שד. יחזקאל/רב ושמואל",
+                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
+                    Latitude = 33.212,
+                    Longitude = 33.32,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+
+
 
             };
+
+            ListBusLines = new List<BusLine>
+            {
+                new BusLine
+                {
+                    BusLineID = Config.RunningNumBusLine,
+                    BusLineNumber = 210,
+                    Area = Enums.AREA.Center,
+                    FirstBusStopKey = 26475,
+                    LastBusStopKey = 60204,
+                    ObjectActive=true,
+                },
+
+                new BusLine
+                {
+                    BusLineID = Config.RunningNumBusLine,
+                    BusLineNumber = 220,
+                    Area = Enums.AREA.Center,
+                    FirstBusStopKey = 65299,
+                    LastBusStopKey = 20150,
+                    ObjectActive=true,
+                },
+
+                new BusLine
+                {
+                    BusLineID = Config.RunningNumBusLine,
+                    BusLineNumber = 230,
+                    Area = Enums.AREA.Center,
+                    FirstBusStopKey = 60278,
+                    LastBusStopKey = 20163,
+                    ObjectActive=true,
+                },
+
+                new BusLine
+                {
+                    BusLineID = Config.RunningNumBusLine,
+                    BusLineNumber = 240,
+                    Area = Enums.AREA.Center,
+                    FirstBusStopKey = 60403,
+                    LastBusStopKey = 21165,
+                    ObjectActive=true,
+                },
+
+                // Stopped here:
+                new BusLine
+                {
+                    BusLineID = Config.RunningNumBusLine,
+                    BusLineNumber = 310,
+                    Area = Enums.AREA.Jerusalem,
+                    FirstBusStopKey = 60000,
+                    LastBusStopKey = 20333,
+                    ObjectActive=true,
+                },
+
+                new BusLine
+                {
+                    BusLineID = Config.RunningNumBusLine,
+                    BusLineNumber = 320,
+                    Area = Enums.AREA.Jerusalem,
+                    FirstBusStopKey = 60000,
+                    LastBusStopKey = 20333,
+                    ObjectActive=true,
+                },
+
+                new BusLine
+                {
+                    BusLineID = Config.RunningNumBusLine,
+                    BusLineNumber = 330,
+                    Area = Enums.AREA.Jerusalem,
+                    FirstBusStopKey = 60000,
+                    LastBusStopKey = 20333,
+                    ObjectActive=true,
+                },
+
+                new BusLine
+                {
+                    BusLineID = Config.RunningNumBusLine,
+                    BusLineNumber = 340,
+                    Area = Enums.AREA.Jerusalem,
+                    FirstBusStopKey = 60000,
+                    LastBusStopKey = 20333,
+                    ObjectActive=true,
+                },
+
+                new BusLine
+                {
+                    BusLineID = Config.RunningNumBusLine,
+                    BusLineNumber = 581,
+                    Area = Enums.AREA.North,
+                    FirstBusStopKey = 60000,
+                    LastBusStopKey = 20333,
+                    ObjectActive=true,
+                },
+
+                new BusLine
+                {
+                    BusLineID = Config.RunningNumBusLine,
+                    BusLineNumber = 5,
+                    Area = Enums.AREA.Center,
+                    FirstBusStopKey = 60000,
+                    LastBusStopKey = 20333,
+                    ObjectActive=true,
+                },
+
+                new BusLine
+                {
+                    BusLineID = Config.RunningNumBusLine,
+                    BusLineNumber = 891,
+                    Area = Enums.AREA.South,
+                    FirstBusStopKey = 60000,
+                    LastBusStopKey = 20333,
+                    ObjectActive=true,
+                },
+
+
+            };
+
 
             ListBusLineStations = new List<BusLineStation>
             {
