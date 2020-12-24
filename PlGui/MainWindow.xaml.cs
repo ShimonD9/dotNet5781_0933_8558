@@ -18,11 +18,16 @@ namespace PlGui
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    partial class MainWindow : Window
     {
+        public ViewModel.MainWindow viewModel;
+
         public MainWindow()
         {
             InitializeComponent();
+            viewModel = new ViewModel.MainWindow();
+            //viewModel.Reset();
+            DataContext = viewModel;
         }
 
         private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)

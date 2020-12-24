@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Bus.ico</ApplicationIcon>
+    <ApplicationIcon>Images\Bus.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -58,6 +58,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="PO\Bus.cs" />
+    <Compile Include="ViewModel\DeepCopyUtilities.cs" />
+    <Compile Include="ViewModel\MainWindow.cs" />
     <Page Include="AddBusLineWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -135,7 +138,7 @@
     <Resource Include="Images\fuelBus1.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Bus.ico" />
+    <Resource Include="Images\Bus.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
