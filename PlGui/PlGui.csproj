@@ -59,8 +59,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="PO\Bus.cs" />
-    <Compile Include="ViewModel\DeepCopyUtilities.cs" />
-    <Compile Include="ViewModel\MainWindow.cs" />
+    <Compile Include="DeepCopyUtilities.cs" />
     <Page Include="AddBusLineWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

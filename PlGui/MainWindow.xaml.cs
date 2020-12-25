@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BLApi;
 
 namespace PlGui
 {
@@ -20,14 +21,27 @@ namespace PlGui
     /// </summary>
     partial class MainWindow : Window
     {
-        public ViewModel.MainWindow viewModel;
-
         public MainWindow()
         {
             InitializeComponent();
-            viewModel = new ViewModel.MainWindow();
-            //viewModel.Reset();
-            DataContext = viewModel;
+            IBL bl = BLFactory.GetBL("1");
+            //DataContext = viewModel;
+        }
+        static readonly DependencyProperty BusProperty = DependencyProperty.Register("Bus", typeof(PO.Bus), typeof(MainWindow));
+        public PO.Bus Bus { get => (PO.Bus)GetValue(BusProperty); set => SetValue(BusProperty, value); }
+
+        public BO.Bus BusBO
+        {
+            set
+            {
+                if (value == null)
+                    Bus = new PO.Bus();
+                else
+                {
+                    value.DeepCopyTo(Bus);
+                }
+
+            }
         }
 
         private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)

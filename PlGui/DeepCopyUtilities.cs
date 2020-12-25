@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace ViewModel
+namespace PlGui
 {
     public static class DeepCopyUtilities
     {
