@@ -26,6 +26,7 @@ namespace BL
         #region Bus
         public IEnumerable<Bus> GetAllBuses()
         {
+            return from doBus in dl.GetAllBuses() select busDoBoAdapter(doBus);
             throw new NotImplementedException();
             //return from bus in DS.ListBuses
             //       select bus.Clone();

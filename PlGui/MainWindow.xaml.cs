@@ -21,12 +21,14 @@ namespace PlGui
     /// </summary>
     partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
             IBL bl = BLFactory.GetBL("1");
-            //DataContext = viewModel;
+            DataContext = bl.GetAllBuses();
         }
+
         static readonly DependencyProperty BusProperty = DependencyProperty.Register("Bus", typeof(PO.Bus), typeof(MainWindow));
         public PO.Bus Bus { get => (PO.Bus)GetValue(BusProperty); set => SetValue(BusProperty, value); }
 
