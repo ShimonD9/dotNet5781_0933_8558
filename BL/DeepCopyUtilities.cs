@@ -23,6 +23,7 @@ namespace BL
                     propTo.SetValue(to, value);
             }
         }
+
         public static object CopyPropertiesToNew<S>(this S from, Type type)
         {
             object to = Activator.CreateInstance(type); // new object of Type

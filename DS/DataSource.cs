@@ -323,7 +323,7 @@ namespace DS
                     Latitude = 33.212,
                     Longitude = 33.32,
                     Sunshade = false,
-                    DigitalPanel = true,
+                    DigitalPanel = false,
                     ObjectActive=true,
                 },
 
@@ -346,7 +346,7 @@ namespace DS
                     BusStopAddress = "מבצע קדש בני ברק",
                     Latitude = 32.10235,
                     Longitude = 34.827827,
-                    Sunshade = false,
+                    Sunshade = true,
                     DigitalPanel = true,
                     ObjectActive=true,
                 },
@@ -407,7 +407,7 @@ namespace DS
                     Latitude = 33.212,
                     Longitude = 33.32,
                     Sunshade = false,
-                    DigitalPanel = true,
+                    DigitalPanel = false,
                     ObjectActive=true,
                 },
 
@@ -442,8 +442,8 @@ namespace DS
                     BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
                     Latitude = 33.212,
                     Longitude = 33.32,
-                    Sunshade = false,
-                    DigitalPanel = true,
+                    Sunshade = true,
+                    DigitalPanel = false,
                     ObjectActive=true,
                 },
 

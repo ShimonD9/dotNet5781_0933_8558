@@ -58,6 +58,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BusDetailsWindow.xaml.cs">
+      <DependentUpon>BusDetailsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PO\Bus.cs" />
     <Compile Include="DeepCopyUtilities.cs" />
     <Page Include="AddBusLineWindow.xaml">
@@ -69,6 +72,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddBusWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BusDetailsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -138,6 +145,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Bus.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\busRepair.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

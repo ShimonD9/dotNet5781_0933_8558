@@ -21,7 +21,7 @@ namespace PO
         public DateTime LicenseDate { get => (DateTime)GetValue(LicenseDateProperty); set => SetValue(LicenseDateProperty, value); }
         public double Mileage { get => (double)GetValue(MileageProperty); set => SetValue(MileageProperty, value); }
         public double Fuel { get => (double)GetValue(FuelProperty); set => SetValue(FuelProperty, value); }
-        public BO.Enums.BUS_STATUS BusStatus { get => (BO.Enums.BUS_STATUS)GetValue(BusStatusProperty); set => SetValue(BusStatusProperty, value); }
+        public PO.Enums.BUS_STATUS BusStatus { get => (PO.Enums.BUS_STATUS)GetValue(BusStatusProperty); set => SetValue(BusStatusProperty, value); }
         public DateTime LastTreatmentDate { get => (DateTime)GetValue(LastTreatmentDateProperty); set => SetValue(LastTreatmentDateProperty, value); }
         public double MileageAtLastTreat { get => (double)GetValue(MileageAtLastTreatProperty); set => SetValue(MileageAtLastTreatProperty, value); }
     }

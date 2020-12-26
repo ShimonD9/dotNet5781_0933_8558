@@ -21,12 +21,12 @@ namespace PlGui
     /// </summary>
     partial class MainWindow : Window
     {
-
         public MainWindow()
         {
             InitializeComponent();
             IBL bl = BLFactory.GetBL("1");
-            DataContext = bl.GetAllBuses();
+            lbBuses.DataContext = bl.GetAllBuses();
+            lbBusStops.DataContext = bl.GetAllBusStops();
         }
 
         static readonly DependencyProperty BusProperty = DependencyProperty.Register("Bus", typeof(PO.Bus), typeof(MainWindow));
@@ -48,25 +48,24 @@ namespace PlGui
 
         private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //if (!Application.Current.Windows.OfType<BusDetailsWindow>().Any())
-            //{
-            //    ListBox list = sender as ListBox;
-            //    if (list != null)
-            //    {
-            //        object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
-            //        BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
-            //        busDetailsWindow.Show();
-            //    }
-            //}
+            if (!Application.Current.Windows.OfType<BusDetailsWindow>().Any())
+            {
+                ListBox list = sender as ListBox;
+                if (list != null)
+                {
+                    object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
+                    BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
+                    busDetailsWindow.Show();
+                }
+            }
         }
 
-
-        /// <summary>
-        /// The add bus button click event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Button_OpenAddBusWindow(object sender, RoutedEventArgs e)
+            /// <summary>
+            /// The add bus button click event
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
+            private void Button_OpenAddBusWindow(object sender, RoutedEventArgs e)
         {
             if (!Application.Current.Windows.OfType<AddBusWindow>().Any()) // To prevent the openning of another same window
             {
