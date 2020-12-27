@@ -60,31 +60,29 @@ namespace BL
             //return studentDoBoAdapter(studentDO);
         }
 
-        public void AddBus(Bus bus)
+        public void AddBus(DO.Bus bus)
         {
-            throw new NotImplementedException();
-            //if (DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License) != null &&
-            //    DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License).ObjectActive == true)
-            //    throw new DO.BadIdException(bus.License, "Duplicate bus ID");
-            //else if (DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License).ObjectActive == false)
-            //{
-            //    Bus addBus = DataSource.ListBuses.Find(b => b.License == bus.License);
-            //    addBus.ObjectActive = true;
-            //    addBus = bus.Clone();
-            //}
-            //else
-            //    DataSource.ListBuses.Add(bus.Clone());
+            try
+            {
+                dl.AddBus(bus);
+            }
+            catch (DO.BadIdException ex)
+            {
+                throw new BO.BadIdException("Licesns does not exist", ex);
+            }
+
         }
-        public void UpdateBus(Bus bus) //busUpdate
+        public void UpdateBus(DO.Bus bus) //busUpdate
         {
-            throw new NotImplementedException();
-            //Bus busUpdate = DataSource.ListBuses.Find(b => b.License == bus.License);
-            //if (busUpdate != null && busUpdate.ObjectActive)
-            //    busUpdate = bus.Clone();
-            //else if (!busUpdate.ObjectActive)
-            //    throw new DO.InactiveBusException(bus.License, $"the bus is  inactive");
-            //else
-            //    throw new DO.BadIdException(bus.License, $"bad id: {bus.License}");
+            try
+            {
+                dl.UpdateBus(bus);
+            }
+            catch (DO.BadIdException ex)
+            {
+                throw new BO.BadIdException("Licesns does not exist Or bus inactive", ex);
+            }
+
         }
         public void UpdateBus(int licenseNumber, Action<Bus> update)  // method that knows to update specific fields in Person
         {
