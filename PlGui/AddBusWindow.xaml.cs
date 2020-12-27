@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BO;
+using BLApi;
 
 
 namespace PlGui
@@ -21,9 +23,14 @@ namespace PlGui
     /// </summary>
     public partial class AddBusWindow : Window
     {
+        BO.Bus newBus;
+        IBL myBL;
+
         public AddBusWindow()
         {
             InitializeComponent();
+            myBL = BLFactory.GetBL("1");
+            newBus = new BO.Bus();
         }
 
         /// <summary>
@@ -33,6 +40,7 @@ namespace PlGui
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+           
             DateTime startDateChosen;
             DateTime treatDateChosen;
             if (!dateStart.SelectedDate.HasValue || !dateLastTreat.SelectedDate.HasValue) // Checks if the user chose a date
@@ -44,32 +52,44 @@ namespace PlGui
                 startDateChosen = dateStart.SelectedDate.Value;
                 treatDateChosen = dateLastTreat.SelectedDate.Value;
                 // Checks if the inputs are correct, and pops an appropriate message if not:
-                if (startDateChosen.Year < 2018 && license.Text.Length < 7
-                    || startDateChosen.Year > 2017 && license.Text.Length < 8)
+                try
                 {
-                    MessageBox.Show("The license you entered is too short!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    if (startDateChosen.Year < 2018 && license.Text.Length < 7
+                    || startDateChosen.Year > 2017 && license.Text.Length < 8)
+                    {
+                        MessageBox.Show("The license you entered is too short!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else if (!Double.TryParse(mileageNow.GetLineText(0), out double milNow) || !Double.TryParse(mileageAtLastTreat.GetLineText(0), out double milTreat))
+                    {
+                        MessageBox.Show("You didn't fill correctly all the required information", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else if (double.Parse(mileageAtLastTreat.Text) > double.Parse(mileageNow.Text))
+                    {
+                        MessageBox.Show("The total mileage cannot be smaller than the mileage at the last treat!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else
+                    {
+                        newBus.License = int.Parse(license.GetLineText(0));
+                        newBus.Mileage = milNow;
+                        newBus.MileageAtLastTreat = milTreat;
+                        newBus.LicenseDate = startDateChosen;
+                        newBus.LastTreatmentDate = treatDateChosen;
+                        newBus.Fuel = fuel.Value * 12;  // The info from the slider
+                        newBus.ObjectActive = true;
+                        if (milNow - milTreat < 20000 && treatDateChosen.AddYears(1).CompareTo(DateTime.Now) > 0 && fuel.Value > 0)
+                            newBus.BusStatus = BO.Enums.BUS_STATUS.READY_FOR_TRAVEL;
+                        else if (milNow - milTreat >= 20000 || treatDateChosen.AddYears(1).CompareTo(DateTime.Now) <= 0)
+                            newBus.BusStatus = BO.Enums.BUS_STATUS.DANGEROUS;
+                        else if (fuel.Value == 0)
+                            newBus.BusStatus = BO.Enums.BUS_STATUS.NEEDS_REFUEL;
+                        myBL.AddBus(newBus);    // Inserts the new bus to the beginning of the list                 
+                        this.Close();
+                    }
                 }
-                //else if (MainWindow.FindIfBusExist(MainWindow.busList, license.Text))
-                //{
-                //    MessageBox.Show("The bus license you entered already exists in the company!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //}
-                //else if (!Double.TryParse(mileageNow.GetLineText(0), out double milNow) || !Double.TryParse(mileageAtLastTreat.GetLineText(0), out double milTreat))
-                //{
-                //    MessageBox.Show("You didn't fill correctly all the required information", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //}
-                //else if (double.Parse(mileageAtLastTreat.Text) > double.Parse(mileageNow.Text))
-                //{
-                //    MessageBox.Show("The total mileage cannot be smaller than the mileage at the last treat!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
-                //}
-                //else
-                //{
-                //    Bus newBus = new Bus(license.GetLineText(0), milNow, milTreat, startDateChosen, treatDateChosen)
-                //    {
-                //        KMLeftToTravel = fuel.Value * 12 // The info from the slider
-                //    };
-                //    MainWindow.busList.Insert(0, newBus);    // Inserts the new bus to the beginning of the list                 
-                //    this.Close();
-                //}
+                catch (BO.BadIdException)
+                {
+                    MessageBox.Show("The bus license you entered already exists in the company!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
             }
         }
 

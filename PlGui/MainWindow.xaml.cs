@@ -71,7 +71,7 @@ namespace PlGui
             {
                 AddBusWindow addBusWindow = new AddBusWindow(); // Creates the new window, and then shows it
                 addBusWindow.ShowDialog();
-                //lbBuses.Items.Refresh(); // For seeing the new bus added on the list view
+                lbBuses.Items.Refresh(); // For seeing the new bus added on the list view
             }
         }
 

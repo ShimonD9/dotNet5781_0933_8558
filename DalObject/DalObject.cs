@@ -51,14 +51,15 @@ namespace DL
             if (DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License) != null &&
                 DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License).ObjectActive == true)
                 throw new DO.BadIdException(bus.License, "Duplicate bus ID");
-            else if (DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License).ObjectActive == false)
+            else if (DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License) != null &&
+                DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License).ObjectActive == false)
             {
                 Bus addBus = DataSource.ListBuses.Find(b => b.License == bus.License);
                 addBus.ObjectActive = true;
                 addBus = bus.Clone();
             }
             else
-            DataSource.ListBuses.Add(bus.Clone());
+            DataSource.ListBuses.Insert(0, bus.Clone());
         }
         public void UpdateBus(Bus bus) //busUpdate
         {

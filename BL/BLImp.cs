@@ -12,16 +12,26 @@ using BO;
 
 namespace BL
 {
-    sealed class BLImp : IBL //internal
+    class BLImp : IBL //internal
     {
         IDal dl = DalFactory.GetDL();
+
         BO.Bus busDoBoAdapter(DO.Bus busDO)
         {
             BO.Bus busBO = new BO.Bus();
-            int id = busDO.License;
+            //int id = busDO.License;
             busDO.CopyPropertiesTo(busBO);
             return busBO;
         }
+
+        DO.Bus busBoDoAdapter(BO.Bus busBO)
+        {
+            DO.Bus busDO = new DO.Bus();
+            //int id = busDO.License;
+            busBO.CopyPropertiesTo(busDO);
+            return busDO;
+        }
+
 
         BO.BusStop busStopDoBoAdapter(DO.BusStop busStopDO)
         {
@@ -60,23 +70,23 @@ namespace BL
             //return studentDoBoAdapter(studentDO);
         }
 
-        public void AddBus(DO.Bus bus)
+        public void AddBus(BO.Bus busBO)
         {
             try
             {
-                dl.AddBus(bus);
+                dl.AddBus(busBoDoAdapter(busBO));
             }
             catch (DO.BadIdException ex)
             {
                 throw new BO.BadIdException("Licesns does not exist", ex);
             }
-
         }
-        public void UpdateBus(DO.Bus bus) //busUpdate
+
+        public void UpdateBus(BO.Bus busBO) //busUpdate
         {
             try
             {
-                dl.UpdateBus(bus);
+                dl.UpdateBus(busBoDoAdapter(busBO));
             }
             catch (DO.BadIdException ex)
             {
