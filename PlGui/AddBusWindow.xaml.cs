@@ -74,13 +74,13 @@ namespace PlGui
                         newBus.MileageAtLastTreat = milTreat;
                         newBus.LicenseDate = startDateChosen;
                         newBus.LastTreatmentDate = treatDateChosen;
-                        newBus.Fuel = fuel.Value * 12;  // The info from the slider
+                        newBus.Fuel = Math.Round(fuel.Value * 12,2);  // The info from the slider
                         newBus.ObjectActive = true;
-                        if (milNow - milTreat < 20000 && treatDateChosen.AddYears(1).CompareTo(DateTime.Now) > 0 && fuel.Value > 0)
+                        if (milNow - milTreat < 20000 && treatDateChosen.AddYears(1).CompareTo(DateTime.Now) > 0 && newBus.Fuel > 0)
                             newBus.BusStatus = BO.Enums.BUS_STATUS.READY_FOR_TRAVEL;
                         else if (milNow - milTreat >= 20000 || treatDateChosen.AddYears(1).CompareTo(DateTime.Now) <= 0)
                             newBus.BusStatus = BO.Enums.BUS_STATUS.DANGEROUS;
-                        else if (fuel.Value == 0)
+                        else if (newBus.Fuel == 0)
                             newBus.BusStatus = BO.Enums.BUS_STATUS.NEEDS_REFUEL;
                         myBL.AddBus(newBus);    // Inserts the new bus to the beginning of the list                 
                         this.Close();
