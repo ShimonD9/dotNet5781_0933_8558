@@ -74,11 +74,12 @@ namespace BL
         {
             try
             {
-                dl.AddBus(busBoDoAdapter(busBO));
+                DO.Bus newBus = busBoDoAdapter(busBO);
+                (DalFactory.GetDL()).AddBus(newBus);
             }
             catch (DO.BadIdException ex)
             {
-                throw new BO.BadIdException("Licesns does not exist", ex);
+                throw new BO.BadIdException("Licesns already exist", ex);
             }
         }
 

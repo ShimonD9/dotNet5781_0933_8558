@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,10 +22,11 @@ namespace PlGui
     /// </summary>
     partial class MainWindow : Window
     {
+        IBL bl;
         public MainWindow()
         {
             InitializeComponent();
-            IBL bl = BLFactory.GetBL("1");
+            bl = BLFactory.GetBL("1");
             lbBuses.DataContext = bl.GetAllBuses();
             lbBusStops.DataContext = bl.GetAllBusStops();
         }
@@ -71,7 +73,7 @@ namespace PlGui
             {
                 AddBusWindow addBusWindow = new AddBusWindow(); // Creates the new window, and then shows it
                 addBusWindow.ShowDialog();
-                lbBuses.Items.Refresh(); // For seeing the new bus added on the list view
+                lbBuses.ItemsSource = bl.GetAllBuses();
             }
         }
 
@@ -86,6 +88,7 @@ namespace PlGui
             {
                 AddBusLineWindow addBusLineWindow = new AddBusLineWindow(); // Creates the new window, and then shows it
                 addBusLineWindow.ShowDialog();
+                lbBuses.ItemsSource = bl.GetAllBuses();
                 //lbBuses.Items.Refresh(); // For seeing the new bus added on the list view
             }
         }

@@ -229,8 +229,8 @@
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="140" />
                             <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="50" />
                         </Grid.ColumnDefinitions>
 
                         <Border Grid.Column="0" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
@@ -253,10 +253,10 @@
                             <TextBlock  Text="address" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
                         </Border>
                         <Border Grid.Column="5" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                            <TextBlock  Text="Sunshade" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                            <TextBlock  Text="Sunshade" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold"/>
                         </Border>
                         <Border Grid.Column="6" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                            <TextBlock  Text="Digital panel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                            <TextBlock  Text="Digital panel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold"/>
                         </Border>
                     </Grid>
                     <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
@@ -265,20 +265,20 @@
                                 <DataTemplate>
                                     <Grid Margin="0,2">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="80" />
                                             <ColumnDefinition Width="100" />
                                             <ColumnDefinition Width="100" />
                                             <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="140" />
                                             <ColumnDefinition Width="100" />
                                             <ColumnDefinition Width="50" />
                                             <ColumnDefinition Width="50" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1 1 1 1">
+                                        <Border Grid.Column="0" BorderBrush="Black" Background="LemonChiffon" BorderThickness="1 1 1 1">
                                             <TextBlock Name ="tbBusStopKey" FontSize="9" Text="{Binding Path='BusStopKey'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
                                         </Border>
 
-                                        <Border Grid.Column="1" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
+                                        <Border Grid.Column="1" BorderBrush="Black"  BorderThickness="0 1 1 1">
                                             <TextBlock Name ="tbLatitude" FontSize="9" Text="{Binding Path='Latitude'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
                                         </Border>
 
@@ -286,20 +286,20 @@
                                             <TextBlock Name ="tbLongitude" FontSize="9" Text="{Binding Path='Longitude'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
                                         </Border>
 
-                                        <Border Grid.Column="3" BorderBrush="Black"  Background="LemonChiffon" BorderThickness="0 1 1 1">
+                                        <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0 1 1 1">
                                             <TextBlock Name ="tbBusStopName" FontSize="9" Text="{Binding Path='BusStopName'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
                                         </Border>
 
-                                        <Border Grid.Column="4" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
+                                        <Border Grid.Column="4" BorderBrush="Black"  BorderThickness="0 1 1 1">
                                             <TextBlock Name ="tbAddress" FontSize="9" Text="{Binding Path='BusStopAddress'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
                                         </Border>
 
-                                        <Border Grid.Column="5" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
-                                            <CheckBox Name ="cbSunshade" FontSize="9" IsEnabled="false" IsChecked="{Binding Path='Sunshade'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  Grid.Column="1" Margin="5"/>
+                                        <Border Grid.Column="5" BorderBrush="Black"  BorderThickness="0 1 1 1">
+                                            <CheckBox Name ="cbSunshade" FontSize="9" IsEnabled="false" IsChecked="{Binding Path='Sunshade'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Grid.Column="1" Margin="5"/>
                                         </Border>
 
                                         <Border Grid.Column="6" BorderBrush="Black"  BorderThickness="0 1 1 1">
-                                            <CheckBox Name ="cbDigitalPanel" FontSize="9" IsEnabled="false" IsChecked="{Binding Path='DigitalPanel'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  Grid.Column="1" Margin="5"/>
+                                            <CheckBox Name ="cbDigitalPanel" FontSize="9" IsEnabled="false" IsChecked="{Binding Path='DigitalPanel'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Grid.Column="1" Margin="5"/>
                                         </Border>
 
                                     </Grid>
