@@ -775,7 +775,14 @@ namespace DS
                  // #36
                 new BusStop
                 {
-
+                    BusStopKey = 60319,
+                    BusStopName = "גרין פארק/הרב מפוניבז",
+                    BusStopAddress = "שדרות הרב מפוניביז 4 מודיעין עילית",
+                    Latitude = 31.924332,
+                    Longitude = 35.046591,
+                    Sunshade = false,
+                    DigitalPanel = true,
+                    ObjectActive=true,
                 },
 
                  // #37
