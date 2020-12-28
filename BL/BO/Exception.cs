@@ -14,6 +14,14 @@ namespace BO
             base(message, innerException) => ID = ((DO.ExceptionDALBadLicsens)innerException).ID;
         public override string ToString() => base.ToString() + $", bad lisence id: {ID}";
     }
-    
+
+    public class ExceptionBLBadUserId : Exception
+    {
+        public string ID;
+        public ExceptionBLBadUserId(string message, Exception innerException) :
+            base(message, innerException) => ID = ((DO.ExceptionDALBadIdUser)innerException).ID;
+        public override string ToString() => base.ToString() + $", bad lisence id: {ID}";
+    }
+
 }
 
