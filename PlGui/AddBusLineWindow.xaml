@@ -39,13 +39,13 @@
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="1">
-                <ComboBox Name ="cbArea"  HorizontalAlignment="Stretch" Margin="10" FontSize="10" Background="#FFFFFFE1" BorderBrush="White" OpacityMask="#FFE45252"/>
+                <ComboBox Name ="cbArea"  DisplayMemberPath="BusStopKey" HorizontalAlignment="Stretch" Margin="10" FontSize="10" Background="#FFFFFFE1" BorderBrush="White" OpacityMask="#FFE45252"/>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="0">
                     <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Choose the first bus stop:" Width="221"  Margin="5"/>
                 </Grid>
             <Grid Grid.Row="2" Grid.Column="1">
-                <ComboBox Name ="cbFirstBusStop" HorizontalAlignment="Stretch" Margin="10" FontSize="10" Background="#FFFFFFE1" BorderBrush="White" OpacityMask="#FFE45252" SelectionChanged="cbFirstBusStopSelectionChanged"/>
+                <ComboBox Name ="cbFirstBusStop" DisplayMemberPath="BusStopKey" HorizontalAlignment="Stretch" Margin="10" FontSize="10" Background="#FFFFFFE1" BorderBrush="White" OpacityMask="#FFE45252" SelectionChanged="cbFirstBusStopSelectionChanged"/>
             </Grid>
 
             <Grid Grid.Row="3" Grid.Column="0">
@@ -53,7 +53,7 @@
                 </Grid>
             
             <Grid Grid.Row="3" Grid.Column="1">
-                <ComboBox Name ="cbLastBusStop"  HorizontalAlignment="Stretch" Margin="10" FontSize="10" Background="#FFFFFFE1" BorderBrush="White" OpacityMask="#FFE45252" SelectionChanged="cbLastBusStopSelectionChanged"/>
+                <ComboBox Name ="cbLastBusStop" DisplayMemberPath="BusStopKey" HorizontalAlignment="Stretch" Margin="10" FontSize="10" Background="#FFFFFFE1" BorderBrush="White" OpacityMask="#FFE45252" SelectionChanged="cbLastBusStopSelectionChanged"/>
             </Grid>
  
 

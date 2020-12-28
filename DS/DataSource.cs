@@ -377,35 +377,23 @@ namespace DS
 
                 new BusStop
                 {
-                    BusStopKey = 60213,
-                    BusStopName = "אבני נזר ב",
-                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
-                    Latitude = 33.212,
-                    Longitude = 33.32,
-                    Sunshade = false,
+                    BusStopKey = 4009,
+                    BusStopName = "צומת רמות/גולדה",
+                    BusStopAddress = "שדרות גולדה מאיר ירושלים",
+                    Latitude = 31.808253,
+                    Longitude = 35.204001,
+                    Sunshade = true,
                     DigitalPanel = true,
                     ObjectActive=true,
                 },
 
                 new BusStop
                 {
-                    BusStopKey = 60214,
-                    BusStopName = "אבני נזר ח",
-                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
-                    Latitude = 33.212,
-                    Longitude = 33.32,
-                    Sunshade = false,
-                    DigitalPanel = true,
-                    ObjectActive=true,
-                },
-
-                new BusStop
-                {
-                    BusStopKey = 60216,
-                    BusStopName = "אבני נזר/חפץ חיים",
-                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
-                    Latitude = 33.212,
-                    Longitude = 33.32,
+                    BusStopKey = 61416,
+                    BusStopName = "רמב''ן/שדרות בית שמאי",
+                    BusStopAddress = "רמב''ן מודיעין עילית",
+                    Latitude = 31.934343,
+                    Longitude = 35.052361,
                     Sunshade = false,
                     DigitalPanel = false,
                     ObjectActive=true,
@@ -413,35 +401,11 @@ namespace DS
 
                 new BusStop
                 {
-                    BusStopKey = 60217,
-                    BusStopName = "חפץ חיים/נתיבות המשפט",
-                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
-                    Latitude = 33.212,
-                    Longitude = 33.32,
-                    Sunshade = false,
-                    DigitalPanel = true,
-                    ObjectActive=true,
-                },
-
-                new BusStop
-                {
-                    BusStopKey = 60222,
-                    BusStopName = "אור החיים ג",
-                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
-                    Latitude = 33.212,
-                    Longitude = 33.32,
-                    Sunshade = false,
-                    DigitalPanel = true,
-                    ObjectActive=true,
-                },
-
-                new BusStop
-                {
-                    BusStopKey = 60223,
-                    BusStopName = "אור החיים ד",
-                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
-                    Latitude = 33.212,
-                    Longitude = 33.32,
+                    BusStopKey = 60817,
+                    BusStopName = "שדרות בית שמאי/שדרות בית הלל",
+                    BusStopAddress = "שדרות בית שמאי 1 מודיעין עילית",
+                    Latitude = 31.934442,
+                    Longitude = 35.050766,
                     Sunshade = true,
                     DigitalPanel = false,
                     ObjectActive=true,
@@ -449,11 +413,47 @@ namespace DS
 
                 new BusStop
                 {
-                    BusStopKey = 60224,
-                    BusStopName = "אור החיים ז",
-                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
-                    Latitude = 33.212,
-                    Longitude = 33.32,
+                    BusStopKey = 60226,
+                    BusStopName = "אבני נזר/אור החיים",
+                    BusStopAddress = "אבני נזר 32 מודיעין עילית",
+                    Latitude = 31.931486,
+                    Longitude = 35.03977,
+                    Sunshade = true,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 65411,
+                    BusStopName = "אבי עזרי ז",
+                    BusStopAddress = "אבי עזרי 28 מודיעין עילית",
+                    Latitude = 31.923308,
+                    Longitude = 35.053342,
+                    Sunshade = true,
+                    DigitalPanel = false,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 63988,
+                    BusStopName = "מסילת ישרים/דרך קרית ספר",
+                    BusStopAddress = "מסילת ישרים 1 מודיעין עילית",
+                    Latitude = 31.935677,
+                    Longitude = 35.037737,
+                    Sunshade = true,
+                    DigitalPanel = true,
+                    ObjectActive=true,
+                },
+
+                new BusStop
+                {
+                    BusStopKey = 61378,
+                    BusStopName = "אבי עזרי/מסוף",
+                    BusStopAddress = "אבי עזרי 32 מודיעין עילית",
+                    Latitude = 31.923647,
+                    Longitude = 35.054196,
                     Sunshade = false,
                     DigitalPanel = true,
                     ObjectActive=true,
@@ -461,12 +461,12 @@ namespace DS
 
                 new BusStop
                 {
-                    BusStopKey = 60225,
-                    BusStopName = "אור החיים/אוהלי ספר",
-                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
-                    Latitude = 33.212,
-                    Longitude = 33.32,
-                    Sunshade = false,
+                    BusStopKey = 12284,
+                    BusStopName = "שדרות הפלמח/חטיבת כרמלי",
+                    BusStopAddress = "שדרות הפלמ''ח 2 אשדוד",
+                    Latitude = 31.804129,
+                    Longitude = 34.660742,
+                    Sunshade = true,
                     DigitalPanel = true,
                     ObjectActive=true,
                 },
@@ -739,10 +739,10 @@ namespace DS
                 {
                     BusStopKey = 60257,
                     BusStopName = "אבי עזרי א",
-                    BusStopAddress = "יהודה הנשיא 30 מודיעין עילית",
-                    Latitude = 33.212,
-                    Longitude = 33.32,
-                    Sunshade = false,
+                    BusStopAddress = "אבי עזרי 9 מודיעין עילית",
+                    Latitude = 31.923385,
+                    Longitude = 35.053287,
+                    Sunshade = true,
                     DigitalPanel = true,
                     ObjectActive=true,
                 },
@@ -890,34 +890,13 @@ namespace DS
                     ObjectActive=true,
                 },
 
-                // Stopped here:
                 new BusLine
                 {
                     BusLineID = Config.RunningNumBusLine,
                     BusLineNumber = 310,
                     Area = Enums.AREA.Jerusalem,
-                    FirstBusStopKey = 60000,
-                    LastBusStopKey = 20333,
-                    ObjectActive=true,
-                },
-
-                new BusLine
-                {
-                    BusLineID = Config.RunningNumBusLine,
-                    BusLineNumber = 320,
-                    Area = Enums.AREA.Jerusalem,
-                    FirstBusStopKey = 60000,
-                    LastBusStopKey = 20333,
-                    ObjectActive=true,
-                },
-
-                new BusLine
-                {
-                    BusLineID = Config.RunningNumBusLine,
-                    BusLineNumber = 330,
-                    Area = Enums.AREA.Jerusalem,
-                    FirstBusStopKey = 60000,
-                    LastBusStopKey = 20333,
+                    FirstBusStopKey = 4009,
+                    LastBusStopKey = 60204,
                     ObjectActive=true,
                 },
 
@@ -926,18 +905,38 @@ namespace DS
                     BusLineID = Config.RunningNumBusLine,
                     BusLineNumber = 340,
                     Area = Enums.AREA.Jerusalem,
-                    FirstBusStopKey = 60000,
-                    LastBusStopKey = 20333,
+                    FirstBusStopKey = 4009,
+                    LastBusStopKey = 61416,
                     ObjectActive=true,
                 },
 
                 new BusLine
                 {
                     BusLineID = Config.RunningNumBusLine,
-                    BusLineNumber = 581,
+                    BusLineNumber = 1,
+                    Area = Enums.AREA.Jerusalem,
+                    FirstBusStopKey = 60257,
+                    LastBusStopKey = 61416,
+                    ObjectActive=true,
+                },
+
+                new BusLine
+                {
+                    BusLineID = Config.RunningNumBusLine,
+                    BusLineNumber = 2,
+                    Area = Enums.AREA.Jerusalem,
+                    FirstBusStopKey = 60817,
+                    LastBusStopKey = 60226,
+                    ObjectActive=true,
+                },
+
+                new BusLine
+                {
+                    BusLineID = Config.RunningNumBusLine,
+                    BusLineNumber = 6,
                     Area = Enums.AREA.North,
-                    FirstBusStopKey = 60000,
-                    LastBusStopKey = 20333,
+                    FirstBusStopKey = 60817,
+                    LastBusStopKey = 65411,
                     ObjectActive=true,
                 },
 
@@ -946,8 +945,8 @@ namespace DS
                     BusLineID = Config.RunningNumBusLine,
                     BusLineNumber = 5,
                     Area = Enums.AREA.Center,
-                    FirstBusStopKey = 60000,
-                    LastBusStopKey = 20333,
+                    FirstBusStopKey = 63988,
+                    LastBusStopKey = 61378,
                     ObjectActive=true,
                 },
 
@@ -956,27 +955,148 @@ namespace DS
                     BusLineID = Config.RunningNumBusLine,
                     BusLineNumber = 891,
                     Area = Enums.AREA.South,
-                    FirstBusStopKey = 60000,
-                    LastBusStopKey = 20333,
+                    FirstBusStopKey = 12284,
+                    LastBusStopKey = 65411,
                     ObjectActive=true,
                 },
 
 
             };
 
+            ListBusLineStations = new List<BusLineStation> { };
 
-            ListBusLineStations = new List<BusLineStation>
+            for (int i = 0; i < 10; i++) // Creating 20 bus line stations according to the 10 bus lines (with first bus stop and last bus stop, and 8 bus stops between)
             {
-                new BusLineStation
-                {
-                    BusLineID = ListBusLines[0].BusLineID,
-                    BusStopKey = 60000,
-                    LineStationIndex = 0,
-                    PrevStation = 0,
-                    NextStation = 21323,
-                    ObjectActive=true,
-                }
-            };
+                // #1 busLineStation
+                ListBusLineStations.Add(
+                    new BusLineStation
+                    {
+                        BusLineID = ListBusLines[i].BusLineID, 
+                        BusStopKey = ListBusLines[i].FirstBusStopKey,
+                        LineStationIndex = 0,
+                        PrevStation = 0,
+                        NextStation = 0,
+                        ObjectActive = true
+                    }
+                );
+
+                // #2 busLineStation
+                ListBusLineStations.Add(
+                    new BusLineStation
+                    {
+                        BusLineID = ListBusLines[i].BusLineID,
+                        BusStopKey = 0,
+                        LineStationIndex = 1,
+                        PrevStation = ListBusLines[i].FirstBusStopKey,
+                        NextStation = 0,
+                        ObjectActive = true
+                    }
+                );
+
+                // #3 busLineStation
+                ListBusLineStations.Add(
+                    new BusLineStation
+                    {
+                        BusLineID = ListBusLines[i].BusLineID,
+                        BusStopKey = 0,
+                        LineStationIndex = 2,
+                        PrevStation = 0,
+                        NextStation = 0,
+                        ObjectActive = true
+                    }
+                );
+
+                // #4 busLineStation
+                ListBusLineStations.Add(
+                    new BusLineStation
+                    {
+                        BusLineID = ListBusLines[i].BusLineID,
+                        BusStopKey = 0,
+                        LineStationIndex = 3,
+                        PrevStation = 0,
+                        NextStation = 0,
+                        ObjectActive = true
+                    }
+                );
+
+                // #5 busLineStation
+                ListBusLineStations.Add(
+                    new BusLineStation
+                    {
+                        BusLineID = ListBusLines[i].BusLineID,
+                        BusStopKey = 0,
+                        LineStationIndex = 4,
+                        PrevStation = 0,
+                        NextStation = 0,
+                        ObjectActive = true
+                    }
+                );
+
+                // #6 busLineStation
+                ListBusLineStations.Add(
+                    new BusLineStation
+                    {
+                        BusLineID = ListBusLines[i].BusLineID,
+                        BusStopKey = 0,
+                        LineStationIndex = 5,
+                        PrevStation = 0,
+                        NextStation = 0,
+                        ObjectActive = true
+                    }
+                );
+
+                // #7 busLineStation
+                ListBusLineStations.Add(
+                    new BusLineStation
+                    {
+                        BusLineID = ListBusLines[i].BusLineID,
+                        BusStopKey = 0,
+                        LineStationIndex = 6,
+                        PrevStation = 0,
+                        NextStation = 0,
+                        ObjectActive = true
+                    }
+                );
+
+                // #8 busLineStation
+                ListBusLineStations.Add(
+                    new BusLineStation
+                    {
+                        BusLineID = ListBusLines[i].BusLineID,
+                        BusStopKey = 0,
+                        LineStationIndex = 7,
+                        PrevStation = 0,
+                        NextStation = 0,
+                        ObjectActive = true
+                    }
+                );
+
+                // #9 busLineStation
+                ListBusLineStations.Add(
+                    new BusLineStation
+                    {
+                        BusLineID = ListBusLines[i].BusLineID,
+                        BusStopKey = 0,
+                        LineStationIndex = 8,
+                        PrevStation = 0,
+                        NextStation = ListBusLines[i].LastBusStopKey,
+                        ObjectActive = true
+                    }
+                );
+
+                // #10 busLineStation
+                ListBusLineStations.Add(
+                    new BusLineStation
+                    {
+                        BusLineID = ListBusLines[i].BusLineID,
+                        BusStopKey = ListBusLines[i].LastBusStopKey,
+                        LineStationIndex = 9,
+                        PrevStation = 0,
+                        NextStation = 0,
+                        ObjectActive = true
+                    }
+                );
+            }
 
             ListConsecutiveStations = new List<ConsecutiveStations>
             {
@@ -989,6 +1109,20 @@ namespace DS
                      ObjectActive=true,
                 }
             };
+
+
+            ListLineDepartures = new List<LineDeparture>
+             {
+                 new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[0].BusLineID,
+                    StartTime = TimeSpan.Parse("10:00:00"),
+                    EndTime = TimeSpan.Parse("23:00:00"),
+                    Frequency = 50,
+                    ObjectActive=true,
+                 }
+             };
 
             ListBusAtTravels = new List<BusAtTravel>
             {
@@ -1006,19 +1140,6 @@ namespace DS
                     ObjectActive=true,
                 }
             };
-
-            ListLineDepartures = new List<LineDeparture>
-             {
-                 new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[0].BusLineID,
-                    StartTime = TimeSpan.Parse("10:00:00"),
-                    EndTime = TimeSpan.Parse("23:00:00"),
-                    Frequency = 50,
-                    ObjectActive=true,
-                 }
-             };
 
             ListUsers = new List<User>
               {
