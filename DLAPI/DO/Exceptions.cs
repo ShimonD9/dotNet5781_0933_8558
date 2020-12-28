@@ -7,36 +7,36 @@ using System.Threading.Tasks;
 namespace DO
 {
     [Serializable]
-    public class BadIdException : Exception
+    public class ExceptionDALBadLicsens : Exception
     {
         public int ID;
-        public BadIdException(int id) : base() => ID = id;
-        public BadIdException(int id, string message) : base(message) => ID = id;
-        public BadIdException(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public ExceptionDALBadLicsens(int id) : base() => ID = id;
+        public ExceptionDALBadLicsens(int id, string message) : base(message) => ID = id;
+        public ExceptionDALBadLicsens(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", bad id: {ID}";
     }
-    public class BadIdUserException : Exception
+    public class ExceptionDALBadIdUser : Exception
     {
         public string ID;
-        public BadIdUserException(string id) : base() => ID = id;
-        public BadIdUserException(string id, string message) : base(message) => ID = id;
-        public BadIdUserException(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public ExceptionDALBadIdUser(string id) : base() => ID = id;
+        public ExceptionDALBadIdUser(string id, string message) : base(message) => ID = id;
+        public ExceptionDALBadIdUser(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", bad dog : {ID}";
     }
-    public class InactiveBusException : Exception
+    public class ExceptionDALInactiveBus : Exception
     {
         public int ID;
-        public InactiveBusException(int id) : base() => ID = id;
-        public InactiveBusException(int id, string message) : base(message) => ID = id;
-        public InactiveBusException(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public ExceptionDALInactiveBus(int id) : base() => ID = id;
+        public ExceptionDALInactiveBus(int id, string message) : base(message) => ID = id;
+        public ExceptionDALInactiveBus(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", bad dog : {ID}";
     }
-    public class InactiveUserException : Exception
+    public class ExceptionDALInactiveUser : Exception
     {
         public string ID;
-        public InactiveUserException(string id) : base() => ID = id;
-        public InactiveUserException(string id, string message) : base(message) => ID = id;
-        public InactiveUserException(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public ExceptionDALInactiveUser(string id) : base() => ID = id;
+        public ExceptionDALInactiveUser(string id, string message) : base(message) => ID = id;
+        public ExceptionDALInactiveUser(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", bad dog : {ID}";
     }
 
