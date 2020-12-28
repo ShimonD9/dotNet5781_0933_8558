@@ -49,17 +49,17 @@ namespace BL
         }
 
         public Bus GetBus(int license)
-        {           
-                DO.Bus busDO;
-                try
-                {
+        {
+            DO.Bus busDO;
+            try
+            {
                 busDO = dl.GetBus(license);
-                }
-                catch (DO.ExceptionDALBadLicsens ex)
-                {
-                    throw new BO.ExceptionBLBadLicense("License does not exist", ex);
-                }
-                return busDoBoAdapter(busDO);         
+            }
+            catch (DO.ExceptionDALBadLicsens ex)
+            {
+                throw new BO.ExceptionBLBadLicense("License does not exist", ex);
+            }
+            return busDoBoAdapter(busDO);
         }
 
         public void BusStatusUpdate(BO.Bus busBo)
@@ -134,7 +134,7 @@ namespace BL
             return busStopBO;
         }
 
-        DO.BusStop busBoDoAdapter(BO.BusStop busStopBO)
+        DO.BusStop busStopBoDoAdapter(BO.BusStop busStopBO)
         {
             DO.BusStop busStopDO = new DO.BusStop();
             //int id = busDO.License;
@@ -146,11 +146,148 @@ namespace BL
             return from doBusStop in dl.GetAllBusStops() select busStopDoBoAdapter(doBusStop);
         }
 
-        //public void AddBusStop(BO.BusStop busStopBO)
-        //{
+        public BusStop GetBusStop(int bosStopKeyDO)
+        {
+            DO.BusStop bosStopDO;
+            try
+            {
+                bosStopDO = dl.GetBusStop(bosStopKeyDO);
+            }
+            catch (DO.ExceptionDALBadLicsens ex)
+            {
+                throw new BO.ExceptionBLBadLicense("bus stop key does not exist", ex);
+            }
+            return busStopDoBoAdapter(bosStopDO);
+        }
 
-        //}
+        public void UpdateBusStop(BO.BusStop busStopBO) //busUpdate
+        {
+            try
+            {
+                dl.UpdateBusStop(busStopBoDoAdapter(busStopBO));
+            }
+            catch (DO.ExceptionDALBadLicsens ex)
+            {
+                throw new BO.ExceptionBLBadLicense("bus stop key not exist Or bus inactive", ex);
+            }
+
+        }
+
+        public void AddBusStop(BO.BusStop busStopBO)
+        {
+            try
+            {
+                DO.BusStop newBus = busStopBoDoAdapter(busStopBO);
+                (DalFactory.GetDL()).AddBusStop(newBus);
+            }
+            catch (DO.ExceptionDALBadLicsens ex)
+            {
+                throw new BO.ExceptionBLBadLicense("License already exist", ex);
+            }
+        }
+
+        public void DeleteBusStop(int license)
+        {
+            try
+            {
+                dl.DeleteBusStop(license);
+            }
+            catch (DO.ExceptionDALBadLicsens ex)
+            {
+                throw new BO.ExceptionBLBadLicense("bus stop key does not exist Or bus inactive", ex);
+            }
+        }
 
         #endregion
+
+        #region User
+        BO.User userDoBoAdapter(DO.User userDO)
+        {
+            BO.User userBO = new BO.User();
+            //int code = userDO.UserName;
+            userDO.CopyPropertiesTo(userBO);
+            return userBO;
+        }
+
+        DO.User userBoDoAdapter(BO.User userBO)
+        {
+            DO.User userDO = new DO.User();
+            //int id = busDO.License;
+            userBO.CopyPropertiesTo(userDO);
+            return userDO;
+        }
+        public IEnumerable<User> GetAllUsers()
+        {
+            return from doUser in dl.GetAllUsers() select userDoBoAdapter(doUser);
+        }
+        public IEnumerable<User> GetAllUsersBy(Predicate<User> predicate)
+        {
+            return from user in dl.GetAllUsers()
+                   where predicate(userDoBoAdapter(user))
+                   select userDoBoAdapter(user);
+        }
+
+        public User GetUser(string userName)
+        {
+            DO.User userDO;
+            try
+            {
+                userDO = dl.GetUser(userName);
+            }
+            catch (DO.ExceptionDALBadIdUser ex)
+            {
+                throw new BO.ExceptionBLBadUserId("user dose not exist", ex);
+            }
+            return userDoBoAdapter(userDO);
+
+        }
+
+        public void AddUser(User userBO)
+        {
+            try
+            {
+                DO.User newUser = userBoDoAdapter(userBO);
+                (DalFactory.GetDL()).AddUser(newUser);
+            }
+            catch (DO.ExceptionDALBadIdUser ex)
+            {
+                throw new BO.ExceptionBLBadUserId("user already exist", ex);
+            }
+        }
+
+        public void UpdateUser(User userBO)
+        {
+                try
+                {
+                    dl.UpdateUser(userBoDoAdapter(userBO));
+                }
+                catch (DO.ExceptionDALBadIdUser ex)
+                {
+                    throw new BO.ExceptionBLBadUserId("user does not exist Or inactive", ex);
+                }
+        }
+
+        public void UpdateUser(string userName, Action<User> update) // method that knows to updt specific fields in Person
+        {
+            User userUpdate = GetUser(userName);
+            update(userUpdate);
+        }
+
+        public void DeleteUser(string userName)
+        {
+            try
+            {
+                dl.DeleteUser(userName);
+            }
+            catch (DO.ExceptionDALBadIdUser ex)
+            {
+                throw new BO.ExceptionBLBadUserId("user does not exist Or inactive", ex);
+            }
+        }
+        #endregion
     }
+
+
+
+
 }
