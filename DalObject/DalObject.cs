@@ -48,7 +48,6 @@ namespace DL
 
         public void AddBus(Bus bus)
         {
-            int i = 30;
             if (DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License) != null &&
                 DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License).ObjectActive == true)
                 throw new DO.BadIdException(bus.License, "Duplicate bus ID");

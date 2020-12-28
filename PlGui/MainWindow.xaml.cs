@@ -22,11 +22,10 @@ namespace PlGui
     /// </summary>
     partial class MainWindow : Window
     {
-        IBL bl;
+        IBL bl = BLFactory.GetBL("1");
         public MainWindow()
         {
             InitializeComponent();
-            bl = BLFactory.GetBL("1");
             lbBuses.DataContext = bl.GetAllBuses();
             lbBusStops.DataContext = bl.GetAllBusStops();
         }

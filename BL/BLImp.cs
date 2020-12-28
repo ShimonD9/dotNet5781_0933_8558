@@ -16,6 +16,11 @@ namespace BL
     {
         IDal dl = DalFactory.GetDL();
 
+
+
+
+        #region Bus
+
         BO.Bus busDoBoAdapter(DO.Bus busDO)
         {
             BO.Bus busBO = new BO.Bus();
@@ -31,21 +36,12 @@ namespace BL
             busBO.CopyPropertiesTo(busDO);
             return busDO;
         }
-
-
-        BO.BusStop busStopDoBoAdapter(DO.BusStop busStopDO)
-        {
-            BO.BusStop busStopBO = new BO.BusStop();
-            int code = busStopDO.BusStopKey;
-            busStopDO.CopyPropertiesTo(busStopBO);
-            return busStopBO;
-        }
-
-        #region Bus
         public IEnumerable<Bus> GetAllBuses()
         {
             return from doBus in dl.GetAllBuses() select busDoBoAdapter(doBus);
         }
+
+
 
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
         {
@@ -70,16 +66,27 @@ namespace BL
             //return studentDoBoAdapter(studentDO);
         }
 
+        public void BusStatusUpdate(BO.Bus busBo)
+        {
+            if (busBo.Mileage - busBo.MileageAtLastTreat < 20000 && busBo.LastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && busBo.Fuel > 0)
+                busBo.BusStatus = BO.Enums.BUS_STATUS.READY_FOR_TRAVEL;
+            else if (busBo.Mileage - busBo.MileageAtLastTreat >= 20000 || busBo.LastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
+                busBo.BusStatus = BO.Enums.BUS_STATUS.DANGEROUS;
+            else if (busBo.Fuel == 0)
+                busBo.BusStatus = BO.Enums.BUS_STATUS.NEEDS_REFUEL;
+        }
+
         public void AddBus(BO.Bus busBO)
         {
             try
             {
+                BusStatusUpdate(busBO);
                 DO.Bus newBus = busBoDoAdapter(busBO);
                 (DalFactory.GetDL()).AddBus(newBus);
             }
             catch (DO.BadIdException ex)
             {
-                throw new BO.BadIdException("Licesns already exist", ex);
+                throw new BO.BadIdException("License already exist", ex);
             }
         }
 
@@ -116,6 +123,15 @@ namespace BL
 
 
         #region BusStop
+
+        BO.BusStop busStopDoBoAdapter(DO.BusStop busStopDO)
+        {
+            BO.BusStop busStopBO = new BO.BusStop();
+            int code = busStopDO.BusStopKey;
+            busStopDO.CopyPropertiesTo(busStopBO);
+            return busStopBO;
+        }
+
         public IEnumerable<BusStop> GetAllBusStops()
         {
             return from doBusStop in dl.GetAllBusStops() select busStopDoBoAdapter(doBusStop);

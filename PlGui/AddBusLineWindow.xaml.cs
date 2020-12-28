@@ -12,7 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BLApi;
 namespace PlGui
 {
     /// <summary>
@@ -20,10 +20,13 @@ namespace PlGui
     /// </summary>
     public partial class AddBusLineWindow : Window
     {
+        IBL bl = BLFactory.GetBL("1");
         public AddBusLineWindow()
         {
             InitializeComponent();
             cbArea.ItemsSource = Enum.GetValues(typeof(PO.Enums.AREA));
+            cbSecondBusStop.IsEnabled = false;
+            cbFirstBusStop.ItemsSource = bl.GetAllBusStops();
         }
 
 
@@ -50,5 +53,11 @@ namespace PlGui
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        private void cbFirstBusSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cbSecondBusStop.IsEnabled = true;
+            // Not completed (how skipWhile works??)
+            cbSecondBusStop.ItemsSource = bl.GetAllBusStops().SkipWhile(busStop => busStop.BusStopKey == (cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey);
+        }
     }
 }
