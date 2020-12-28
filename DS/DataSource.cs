@@ -1124,7 +1124,7 @@ namespace DS
 
                 ListConsecutiveStations.Add(
                     new ConsecutiveStations
-                     {
+                    {
                         BusStopKeyA = ListBusLines[i].FirstBusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 14].BusStopKey,
                         Distance = 1.3,
@@ -1321,15 +1321,16 @@ namespace DS
                 ListConsecutiveStations.Add(
                     new ConsecutiveStations
                     {
-                         BusStopKeyA = ListBusStops[2 * i + 21].BusStopKey,
-                         BusStopKeyB = ListBusLines[i].BusLineID,
-                         Distance = 1.3,
-                         TravelTime = TimeSpan.Parse("00:03:10"),
-                         ObjectActive = true,
+                        BusStopKeyA = ListBusStops[2 * i + 21].BusStopKey,
+                        BusStopKeyB = ListBusLines[i].BusLineID,
+                        Distance = 1.3,
+                        TravelTime = TimeSpan.Parse("00:03:10"),
+                        ObjectActive = true,
                     }
                 );
+            }
 
-                ListLineDepartures = new List<LineDeparture>
+            ListLineDepartures = new List<LineDeparture>
              {
                  new LineDeparture
                  {
@@ -1342,7 +1343,7 @@ namespace DS
                  }
              };
 
-                ListBusAtTravels = new List<BusAtTravel>
+            ListBusAtTravels = new List<BusAtTravel>
             {
                 new BusAtTravel
                 {
@@ -1359,7 +1360,7 @@ namespace DS
                 }
             };
 
-                ListUsers = new List<User>
+            ListUsers = new List<User>
               {
                   new User
                   {
@@ -1377,7 +1378,6 @@ namespace DS
                        ObjectActive=true,
                   }
               };
-            }
         }
     }
 }
