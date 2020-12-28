@@ -25,8 +25,8 @@ namespace PlGui
         {
             InitializeComponent();
             cbArea.ItemsSource = Enum.GetValues(typeof(PO.Enums.AREA));
-            cbSecondBusStop.IsEnabled = false;
-            cbFirstBusStop.ItemsSource = bl.GetAllBusStops();
+            cbLastBusStop.IsEnabled = false;
+            cbFirstBusStop.ItemsSource = bl.GetAllBusStops().OrderBy(busStop => busStop.BusStopKey);
         }
 
 
@@ -53,11 +53,18 @@ namespace PlGui
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void cbFirstBusSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cbFirstBusStopSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cbSecondBusStop.IsEnabled = true;
-            // Not completed (how skipWhile works??)
-            cbSecondBusStop.ItemsSource = bl.GetAllBusStops().SkipWhile(busStop => busStop.BusStopKey == (cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey);
+            cbLastBusStop.IsEnabled = true;
+            if (cbFirstBusStop.SelectedItem != null) // In case it will be changed to null because of the second combo box method
+                cbLastBusStop.ItemsSource = bl.GetAllBusStops()
+                    .Where(busStop => busStop.BusStopKey != (cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey)
+                    .OrderBy(busStop => busStop.BusStopKey);
+        }
+
+        private void cbLastBusStopSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
