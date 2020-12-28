@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using DalApi;
 using BLApi;
 using System.Threading;
-
 using BO;
 
 
@@ -41,8 +40,6 @@ namespace BL
             return from doBus in dl.GetAllBuses() select busDoBoAdapter(doBus);
         }
 
-
-
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
         {
             throw new NotImplementedException();
@@ -52,18 +49,17 @@ namespace BL
         }
 
         public Bus GetBus(int license)
-        {
-            throw new NotImplementedException();
-            //DO.Bus busDO;
-            //try
-            //{
-            //    busDO = dl.GetBus(license);
-            //}
-            //catch (DO.BadIdException ex)
-            //{
-            //    throw new BO.BadIdException("Person id does not exist or he is not a student", ex);
-            //}
-            //return studentDoBoAdapter(studentDO);
+        {           
+                DO.Bus busDO;
+                try
+                {
+                busDO = dl.GetBus(license);
+                }
+                catch (DO.ExceptionDALBadLicsens ex)
+                {
+                    throw new BO.ExceptionBLBadLicense("License does not exist", ex);
+                }
+                return busDoBoAdapter(busDO);         
         }
 
         public void BusStatusUpdate(BO.Bus busBo)
@@ -84,9 +80,9 @@ namespace BL
                 DO.Bus newBus = busBoDoAdapter(busBO);
                 (DalFactory.GetDL()).AddBus(newBus);
             }
-            catch (DO.BadIdException ex)
+            catch (DO.ExceptionDALBadLicsens ex)
             {
-                throw new BO.BadIdException("License already exist", ex);
+                throw new BO.ExceptionBLBadLicense("License already exist", ex);
             }
         }
 
@@ -96,28 +92,34 @@ namespace BL
             {
                 dl.UpdateBus(busBoDoAdapter(busBO));
             }
-            catch (DO.BadIdException ex)
+            catch (DO.ExceptionDALBadLicsens ex)
             {
-                throw new BO.BadIdException("Licesns does not exist Or bus inactive", ex);
+                throw new BO.ExceptionBLBadLicense("Licesns does not exist Or bus inactive", ex);
             }
 
         }
-        public void UpdateBus(int licenseNumber, Action<Bus> update)  // method that knows to update specific fields in Person
+        public void UpdateBus(int licenseNumber, Action<BO.Bus> update)  // method that knows to update specific fields in Person
         {
-            throw new NotImplementedException();
-            //Bus busUpdate = GetBus(licenseNumber);
-            //update(busUpdate);
+            try
+            {
+                DO.Bus busUpdateDO = dl.GetBus(licenseNumber);
+                update(busDoBoAdapter(busUpdateDO));
+            }
+            catch (DO.ExceptionDALBadLicsens ex)
+            {
+                throw new BO.ExceptionBLBadLicense("Licesns does not exist Or bus inactive", ex);
+            }
         }
         public void DeleteBus(int license)
         {
-            throw new NotImplementedException();
-            //Bus bus = DataSource.ListBuses.Find(b => b.License == license);
-            //if (bus != null && bus.ObjectActive)
-            //    bus.ObjectActive = false;
-            //else if (!bus.ObjectActive)
-            //    throw new DO.InactiveBusException(bus.License, $"the bus is  inactive");
-            //else
-            //    throw new DO.BadIdException(bus.License, $"bad id: {bus.License}");
+            try
+            {
+                dl.DeleteBus(license);
+            }
+            catch (DO.ExceptionDALBadLicsens ex)
+            {
+                throw new BO.ExceptionBLBadLicense("Licesns does not exist Or bus inactive", ex);
+            }
         }
         #endregion
 
@@ -132,10 +134,23 @@ namespace BL
             return busStopBO;
         }
 
+        DO.BusStop busBoDoAdapter(BO.BusStop busStopBO)
+        {
+            DO.BusStop busStopDO = new DO.BusStop();
+            //int id = busDO.License;
+            busStopBO.CopyPropertiesTo(busStopDO);
+            return busStopDO;
+        }
         public IEnumerable<BusStop> GetAllBusStops()
         {
             return from doBusStop in dl.GetAllBusStops() select busStopDoBoAdapter(doBusStop);
         }
+
+        //public void AddBusStop(BO.BusStop busStopBO)
+        //{
+
+        //}
+
         #endregion
     }
 }

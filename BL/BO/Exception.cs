@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace BO
 {
     [Serializable]
-    public class BadIdException : Exception
+    public class ExceptionBLBadLicense : Exception
     {
         public int ID;
-        public BadIdException(string message, Exception innerException) :
-            base(message, innerException) => ID = ((DO.BadIdException)innerException).ID;
+        public ExceptionBLBadLicense(string message, Exception innerException) :
+            base(message, innerException) => ID = ((DO.ExceptionDALBadLicsens)innerException).ID;
         public override string ToString() => base.ToString() + $", bad lisence id: {ID}";
     }
     
