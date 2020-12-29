@@ -30,5 +30,35 @@ namespace BLApi
         //void DeleteBusStop(int license);
         #endregion
 
+        #region BusLineStation
+        IEnumerable<BusLineStation> GetAllBusLineStations();
+        IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate);
+        BusLineStation GetBusLineStation(int license);
+        void AddBusLineStation(BusLineStation busLineStation);
+        void UpdateBusLineStation(BusLineStation busLineStation);
+        void UpdateBusLineStation(int license, Action<BusLineStation> update); // method that knows to updt specific fields in Person
+        void DeleteBusLineStation(int license);
+        #endregion
+
+        #region BusLine
+        IEnumerable<BusLine> GetAllBusLines();
+        IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate);
+        BusLine GetBusLine(int license);
+        void AddBusLine(BusLine busLine);
+        void UpdateBusLine(BusLine busLine);
+        void UpdateBusLine(int license, Action<BusLine> update); // method that knows to updt specific fields in Person
+        void DeleteBusLine(int license);
+        #endregion
+
+        #region User
+        IEnumerable<User> GetAllUsers();
+        IEnumerable<User> GetAllUsersBy(Predicate<User> predicate);
+        User GetUser(string userName);
+        void AddUser(User user);
+        void UpdateUser(User user);
+        void UpdateUser(string license, Action<User> update); // method that knows to updt specific fields in Person
+        void DeleteUser(string license);
+        #endregion
+
     }
 }

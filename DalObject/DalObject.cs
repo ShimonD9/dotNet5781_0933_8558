@@ -154,69 +154,6 @@ namespace DL
         }
         #endregion
 
-        #region BusLine
-        public IEnumerable<BusLine> GetAllBusLines()
-        {
-            return from busLine in DataSource.ListBusLines
-                   select busLine.Clone();
-        }
-        public IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate)
-        {
-            return from busLine in DataSource.ListBusLines
-                   where predicate(busLine)
-                   select busLine.Clone();
-        }
-        public BusLine GetBusLine(int busLineNumber)
-        {
-            BusLine bus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLineNumber);
-            if (bus != null && bus.ObjectActive)
-                return bus.Clone();
-            else if (!bus.ObjectActive)
-                throw new DO.ExceptionDALInactiveBus(busLineNumber, $"the bus is  inactive");
-            else
-                throw new DO.ExceptionDALBadLicsens(busLineNumber, $"bad id: {busLineNumber}");
-        }
-        public void AddBusLine(BusLine busLine)
-        {
-            if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber) != null &&
-               DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == true)
-                throw new DO.ExceptionDALBadLicsens(busLine.BusLineNumber, "Duplicate bus ID");
-            else if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == false)
-            {
-                BusLine addBus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLine.BusLineNumber);
-                addBus.ObjectActive = true;
-                addBus = busLine.Clone();
-            }
-            else
-                DataSource.ListBusLines.Add(busLine.Clone());
-        }
-        public void UpdateBusLine(BusLine busLine)
-        {
-            BusLine busUpdate = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLine.BusLineNumber);
-            if (busUpdate != null && busUpdate.ObjectActive)
-                busUpdate = busLine.Clone();
-            else if (!busUpdate.ObjectActive)
-                throw new DO.ExceptionDALInactiveBus(busLine.BusLineNumber, $"the bus is  inactive");
-            else
-                throw new DO.ExceptionDALBadLicsens(busLine.BusLineNumber, $"bad id: {busLine.BusLineNumber}");
-        }
-        public void UpdateBusLine(int busLineNumber, Action<BusLine> update) // method that knows to updt specific fields in Person
-        {
-            BusLine busUpdate = GetBusLine(busLineNumber);
-            update(busUpdate);
-        }
-        public void DeleteBusLine(int busLineNumber)
-        {
-            BusLine bus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLineNumber);
-            if (bus != null && bus.ObjectActive)
-                bus.ObjectActive = false;
-            else if (!bus.ObjectActive)
-                throw new DO.ExceptionDALInactiveBus(busLineNumber, $"the bus is  inactive");
-            else
-                throw new DO.ExceptionDALBadLicsens(busLineNumber, $"bad id: {busLineNumber}");
-        }
-        #endregion
-
         #region BusLineStation
         public IEnumerable<BusLineStation> GetAllBusLineStations()
         {
@@ -277,6 +214,69 @@ namespace DL
                 throw new DO.ExceptionDALInactiveBus(busStopKey, $"the bus is  inactive");
             else
                 throw new DO.ExceptionDALBadLicsens(busStopKey, $"bad id: {busStopKey}");
+        }
+        #endregion
+
+        #region BusLine
+        public IEnumerable<BusLine> GetAllBusLines()
+        {
+            return from busLine in DataSource.ListBusLines
+                   select busLine.Clone();
+        }
+        public IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate)
+        {
+            return from busLine in DataSource.ListBusLines
+                   where predicate(busLine)
+                   select busLine.Clone();
+        }
+        public BusLine GetBusLine(int busLineNumber)
+        {
+            BusLine bus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLineNumber);
+            if (bus != null && bus.ObjectActive)
+                return bus.Clone();
+            else if (!bus.ObjectActive)
+                throw new DO.ExceptionDALInactiveBus(busLineNumber, $"the bus is  inactive");
+            else
+                throw new DO.ExceptionDALBadLicsens(busLineNumber, $"bad id: {busLineNumber}");
+        }
+        public void AddBusLine(BusLine busLine)
+        {
+            if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber) != null &&
+               DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == true)
+                throw new DO.ExceptionDALBadLicsens(busLine.BusLineNumber, "Duplicate bus ID");
+            else if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == false)
+            {
+                BusLine addBus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLine.BusLineNumber);
+                addBus.ObjectActive = true;
+                addBus = busLine.Clone();
+            }
+            else
+                DataSource.ListBusLines.Add(busLine.Clone());
+        }
+        public void UpdateBusLine(BusLine busLine)
+        {
+            BusLine busUpdate = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLine.BusLineNumber);
+            if (busUpdate != null && busUpdate.ObjectActive)
+                busUpdate = busLine.Clone();
+            else if (!busUpdate.ObjectActive)
+                throw new DO.ExceptionDALInactiveBus(busLine.BusLineNumber, $"the bus is  inactive");
+            else
+                throw new DO.ExceptionDALBadLicsens(busLine.BusLineNumber, $"bad id: {busLine.BusLineNumber}");
+        }
+        public void UpdateBusLine(int busLineNumber, Action<BusLine> update) // method that knows to updt specific fields in Person
+        {
+            BusLine busUpdate = GetBusLine(busLineNumber);
+            update(busUpdate);
+        }
+        public void DeleteBusLine(int busLineNumber)
+        {
+            BusLine bus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLineNumber);
+            if (bus != null && bus.ObjectActive)
+                bus.ObjectActive = false;
+            else if (!bus.ObjectActive)
+                throw new DO.ExceptionDALInactiveBus(busLineNumber, $"the bus is  inactive");
+            else
+                throw new DO.ExceptionDALBadLicsens(busLineNumber, $"bad id: {busLineNumber}");
         }
         #endregion
 

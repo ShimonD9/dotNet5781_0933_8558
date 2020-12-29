@@ -28,23 +28,7 @@ namespace PlGui
             InitializeComponent();
             lbBuses.DataContext = bl.GetAllBuses();
             lbBusStops.DataContext = bl.GetAllBusStops();
-        }
-
-        static readonly DependencyProperty BusProperty = DependencyProperty.Register("Bus", typeof(PO.Bus), typeof(MainWindow));
-        public PO.Bus Bus { get => (PO.Bus)GetValue(BusProperty); set => SetValue(BusProperty, value); }
-
-        public BO.Bus BusBO
-        {
-            set
-            {
-                if (value == null)
-                    Bus = new PO.Bus();
-                else
-                {
-                    value.DeepCopyTo(Bus);
-                }
-
-            }
+            lbBusLines.DataContext = bl.GetAllBusLines();
         }
 
         private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -61,12 +45,40 @@ namespace PlGui
             }
         }
 
-            /// <summary>
-            /// The add bus button click event
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="e"></param>
-            private void Button_OpenAddBusWindow(object sender, RoutedEventArgs e)
+        private void LBBusLines_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //if (!Application.Current.Windows.OfType<BusLineDetailsWindow>().Any())
+            //{
+            //    ListBox list = sender as ListBox;
+            //    if (list != null)
+            //    {
+            //        object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
+            //        BusLineDetailsWindow busLineDetailsWindow = new BusLineDetailsWindow(item);
+            //        busLineDetailsWindow.Show();
+            //    }
+            //}
+        }
+
+        private void LBBusStops_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (!Application.Current.Windows.OfType<BusStopDetailsWindow>().Any())
+            {
+                ListBox list = sender as ListBox;
+                if (list != null)
+                {
+                    object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
+                    BusStopDetailsWindow busStopDetailsWindow = new BusStopDetailsWindow(item);
+                    busStopDetailsWindow.Show();
+                }
+            }
+        }
+
+        /// <summary>
+        /// The add bus button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_OpenAddBusWindow(object sender, RoutedEventArgs e)
         {
             if (!Application.Current.Windows.OfType<AddBusWindow>().Any()) // To prevent the openning of another same window
             {

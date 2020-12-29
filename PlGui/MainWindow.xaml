@@ -138,7 +138,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="120" />
-                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="160" />
                             <ColumnDefinition Width="160" />
                         </Grid.ColumnDefinitions>
@@ -164,47 +164,38 @@
                         </Border>
                     </Grid>
                     <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
-                        <ListView Name ="lbBusLines" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="LBBuses_MouseDoubleClick" Margin="0,0,0,-300">
+                        <ListView Name ="lbBusLines" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="LBBusLines_MouseDoubleClick" Margin="0,0,0,-300">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="0,2">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="80" />
                                             <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="120" />
                                             <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="50" />
-                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="160" />
+                                            <ColumnDefinition Width="160" />
                                         </Grid.ColumnDefinitions>
 
                                         <Border Grid.Column="0" BorderBrush="Black" Background="{Binding Path='StatusColor'}" BorderThickness="1 1 1 1">
+                                            <TextBlock Name ="tbBusLineID" Text="{Binding Path = 'BusLineIdentifier'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
                                         </Border>
 
                                         <Border Grid.Column="1" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbBusLineNumber" Text="{Binding Path = 'BusLineNumber'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
                                         </Border>
 
-                                        <Border Grid.Column="1" BorderBrush="Black"  BorderThickness="0 1 1 1">
+                                        <Border Grid.Column="2" BorderBrush="Black"  BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbArea" Text="{Binding Path = 'Area'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
+
                                         </Border>
 
-                                        <Border Grid.Column="2" BorderBrush="Black"  Background="LemonChiffon" BorderThickness="0 1 1 1">
-                                        </Border>
-
-                                        <Border Grid.Column="3" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
+                                        <Border Grid.Column="3" BorderBrush="Black"  Background="LemonChiffon" BorderThickness="0 1 1 1">
+                                            <TextBlock Name = "tbFirstStation" Text="{Binding Path = 'FirstBusStopKey'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
                                         </Border>
 
                                         <Border Grid.Column="4" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
+                                            <TextBlock Name = "tbLastStation" Text="{Binding Path = 'LastBusStopKey'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
                                         </Border>
-
-                                        <Border Grid.Column="4" BorderBrush="Black"  BorderThickness="0 1 1 1">
-                                        </Border>
-
-                                        <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                        </Border>
-
-                                        <Border Grid.Column="6" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                        </Border>
-
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
@@ -260,7 +251,7 @@
                         </Border>
                     </Grid>
                     <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
-                        <ListView Name ="lbBusStops" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="LBBuses_MouseDoubleClick"  Margin="0,0,0,47">
+                        <ListView Name ="lbBusStops" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="LBBusStops_MouseDoubleClick"  Margin="0,0,0,47">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="0,2">

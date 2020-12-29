@@ -61,7 +61,12 @@
     <Compile Include="BusDetailsWindow.xaml.cs">
       <DependentUpon>BusDetailsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PO\Bus.cs" />
+    <Compile Include="BusLineDetailsWindow.xaml.cs">
+      <DependentUpon>BusLineDetailsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BusStopDetailsWindow.xaml.cs">
+      <DependentUpon>BusStopDetailsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DeepCopyUtilities.cs" />
     <Page Include="AddBusLineWindow.xaml">
       <SubType>Designer</SubType>
@@ -76,6 +81,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BusDetailsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BusLineDetailsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BusStopDetailsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

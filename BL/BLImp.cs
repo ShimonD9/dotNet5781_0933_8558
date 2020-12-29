@@ -15,8 +15,105 @@ namespace BL
     {
         IDal dl = DalFactory.GetDL();
 
+        #region BusLineStation
 
+        BO.BusLineStation BusLineStationDoBoAdapter(DO.BusLineStation busLineStationDO)
+        {
+            BO.BusLineStation busLineStationBO = new BO.BusLineStation();
+            busLineStationDO.CopyPropertiesTo(busLineStationBO);
+            return busLineStationBO;
+        }
 
+        DO.BusLineStation BusLineStationBoDoAdapter(BO.BusLineStation busLineStationBO)
+        {
+            DO.BusLineStation busLineStationDO = new DO.BusLineStation();
+            busLineStationBO.CopyPropertiesTo(busLineStationDO);
+            return busLineStationDO;
+        }
+
+        public IEnumerable<BusLineStation> GetAllBusLineStations()
+        {
+            return from doBusLineStation in dl.GetAllBusLineStations() select BusLineStationDoBoAdapter(doBusLineStation);
+        }
+
+        public IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BusLineStation GetBusLineStation(int license)
+        {
+            throw new NotImplementedException();
+        }
+        public void AddBusLineStation(BusLineStation busLineStation)
+        {
+            throw new NotImplementedException();
+        }
+        public void UpdateBusLineStation(BusLineStation busLineStation)
+        {
+            throw new NotImplementedException();
+        }
+        public void UpdateBusLineStation(int license, Action<BusLineStation> update)
+        {
+            throw new NotImplementedException();
+        }
+        public void DeleteBusLineStation(int license)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region BusLine
+
+        BO.BusLine BusLineDoBoAdapter(DO.BusLine busLineDO)
+        {
+            BO.BusLine busLineBO = new BO.BusLine();
+            busLineDO.CopyPropertiesTo(busLineBO);
+            busLineBO.LineStations = from boLineStation 
+                                     in GetAllBusLineStations() 
+                                     where boLineStation.BusLineID == busLineBO.BusLineIdentifier 
+                                     orderby boLineStation.LineStationIndex
+                                     select boLineStation;
+            return busLineBO;
+        }
+
+        DO.BusLine BusLineBoDoAdapter(BO.BusLine busLineBO)
+        {
+            DO.BusLine busLineDO = new DO.BusLine();
+            busLineBO.CopyPropertiesTo(busLineDO);
+            return busLineDO;
+        }
+
+        public IEnumerable<BusLine> GetAllBusLines()
+        {
+            return from doBusLine in dl.GetAllBusLines() select BusLineDoBoAdapter(doBusLine);
+        }
+
+        public IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate)
+        {
+            throw new NotImplementedException();
+        }
+        public BusLine GetBusLine(int license)
+        {
+            throw new NotImplementedException();
+        }
+        public void AddBusLine(BusLine busLine)
+        {
+            throw new NotImplementedException();
+        }
+        public void UpdateBusLine(BusLine busLine)
+        {
+            throw new NotImplementedException();
+        }
+        public void UpdateBusLine(int license, Action<BusLine> update)
+        {
+            throw new NotImplementedException();
+        }
+        public void DeleteBusLine(int license)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
 
         #region Bus
 
@@ -35,6 +132,7 @@ namespace BL
             busBO.CopyPropertiesTo(busDO);
             return busDO;
         }
+
         public IEnumerable<Bus> GetAllBuses()
         {
             return from doBus in dl.GetAllBuses() select busDoBoAdapter(doBus);
@@ -130,6 +228,11 @@ namespace BL
             BO.BusStop busStopBO = new BO.BusStop();
             int code = busStopDO.BusStopKey;
             busStopDO.CopyPropertiesTo(busStopBO);
+            busStopBO.LinesStopHere = from boBusLine
+                                        in GetAllBusLines()
+                                      where boBusLine.LineStations.Any(line => line.BusStopKey == busStopBO.BusStopKey)
+                                      orderby boBusLine.BusLineNumber
+                                      select boBusLine;
             return busStopBO;
         }
 
