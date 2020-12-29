@@ -31,11 +31,11 @@ namespace DS
                 new Bus
                 {
                 License=1324544,
-                LicenseDate = DateTime.Parse("10.12.2016"),
+                LicenseDate = new DateTime(2016,12,10),           
                 Mileage = 200030,
                 Fuel = 1150,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                LastTreatmentDate =new DateTime(2020,10,15),
                 MileageAtLastTreat = 200020,
                 ObjectActive=true,
                 },
@@ -44,11 +44,11 @@ namespace DS
                 new Bus
                 {
                 License=93029403,
-                LicenseDate = DateTime.Parse("10.11.2019"),
+                LicenseDate = new DateTime(2019,10,11),
                 Mileage = 301010,
                 Fuel = 0,
                 BusStatus = Enums.BUS_STATUS.NEEDS_REFUEL,
-                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                LastTreatmentDate =new DateTime(2020,10,12),
                 MileageAtLastTreat = 300020,
                 ObjectActive=true,
                 },
@@ -57,11 +57,11 @@ namespace DS
                 new Bus
                 {
                 License=63045719,
-                LicenseDate = DateTime.Parse("10.3.2018"),
+                LicenseDate = new DateTime(2018,3,10),
                 Mileage = 130030,
                 Fuel = 1100,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("11.4.2020"),
+                LastTreatmentDate =new DateTime(2020,11,4),
                 MileageAtLastTreat = 130010,
                 ObjectActive=true,
                 },
@@ -70,11 +70,11 @@ namespace DS
                 new Bus
                 {
                 License=7707707,
-                LicenseDate = DateTime.Parse("10.1.2012"),
+                LicenseDate = new DateTime(2012,1,10),
                 Mileage = 500030,
                 Fuel = 1200,
                 BusStatus = Enums.BUS_STATUS.DANGEROUS,
-                LastTreatmentDate = DateTime.Parse("10.12.2016"),
+                LastTreatmentDate =new DateTime(2016,10,17),
                 MileageAtLastTreat = 300010,
                 ObjectActive=true,
                 },
@@ -83,11 +83,11 @@ namespace DS
                 new Bus
                 {
                 License=11231123,
-                LicenseDate = DateTime.Parse("2.2.2019"),
+                LicenseDate = new DateTime(2019,2,2),
                 Mileage = 2223,
                 Fuel = 1200,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("3.2.2020"),
+                LastTreatmentDate =new DateTime(2020,2,3),
                 MileageAtLastTreat = 222,
                 ObjectActive=true,
                 },
@@ -96,11 +96,11 @@ namespace DS
                 new Bus
                 {
                 License=32207541,
-                LicenseDate = DateTime.Parse("10.3.2018"),
+                LicenseDate = new DateTime(2018,10,3),
                 Mileage = 15000,
                 Fuel = 0,
                 BusStatus = Enums.BUS_STATUS.NEEDS_REFUEL,
-                LastTreatmentDate = DateTime.Parse("1.3.2019"),
+                LastTreatmentDate =new DateTime(2019,3,1),
                 MileageAtLastTreat = 0,
                 ObjectActive=true,
                 },
@@ -109,11 +109,11 @@ namespace DS
                 new Bus
                 {
                 License=1332465,
-                LicenseDate = DateTime.Parse("10.12.1999"),
+                LicenseDate = new DateTime(1999,10,12),
                 Mileage = 933302,
                 Fuel = 1200,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("10.12.2018"),
+                LastTreatmentDate =new DateTime(2018,12,10),
                 MileageAtLastTreat = 913999,
                 ObjectActive=true,
                 },
@@ -122,11 +122,11 @@ namespace DS
                 new Bus
                 {
                 License=80412356,
-                LicenseDate = DateTime.Parse("3.7.2018"),
+                LicenseDate = new DateTime(2018,3,7),
                 Mileage = 100500,
                 Fuel = 695,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("10.11.2019"),
+                LastTreatmentDate =new DateTime(2019,10,11),
                 MileageAtLastTreat = 85000,
                 ObjectActive=true,
                 },
@@ -135,11 +135,11 @@ namespace DS
                 new Bus
                 {
                 License=9360505,
-                LicenseDate = DateTime.Parse("3.1.2004"),
+                LicenseDate = new DateTime(2004,3,1),
                 Mileage = 366666,
                 Fuel = 1070,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("3.4.2020"),
+                LastTreatmentDate =new DateTime(2020,4,3),
                 MileageAtLastTreat = 348999,
                 ObjectActive=true,
                 },
@@ -148,11 +148,11 @@ namespace DS
                 new Bus
                 {
                 License=10050823,
-                LicenseDate = DateTime.Parse("3.4.2019"),
+                LicenseDate = new DateTime(2019,6,3),
                 Mileage = 1113,
                 Fuel = 55,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("10.4.2020"),
+                LastTreatmentDate =new DateTime(2020,8,23),
                 MileageAtLastTreat = 0,
                 ObjectActive=true,
                 },
@@ -161,11 +161,11 @@ namespace DS
                 new Bus
                 {
                 License=3025133,
-                LicenseDate = DateTime.Parse("11.11.2011"),
+                LicenseDate = new DateTime(2011,11,11),
                 Mileage = 11134,
                 Fuel = 1150,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                LastTreatmentDate =new DateTime(2020,9,20),
                 MileageAtLastTreat = 11100,
                 ObjectActive=true,
                 },
@@ -174,11 +174,11 @@ namespace DS
                 new Bus
                 {
                 License=20021120,
-                LicenseDate = DateTime.Parse("10.1.2018"),
+                LicenseDate = new DateTime(2018,9,11),
                 Mileage = 19320,
                 Fuel = 1200,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("9.3.2020"),
+                LastTreatmentDate =new DateTime(2020,9,3),
                 MileageAtLastTreat = 2000,
                 ObjectActive=true,
                 },
@@ -187,11 +187,11 @@ namespace DS
                 new Bus
                 {
                 License=7820522,
-                LicenseDate = DateTime.Parse("3.3.2013"),
+                LicenseDate = new DateTime(2013,3,3),
                 Mileage = 9999,
                 Fuel = 950,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("10.1.2020"),
+                LastTreatmentDate =new DateTime(2020,1,10),
                 MileageAtLastTreat = 8230,
                 ObjectActive=true,
                 },
@@ -200,11 +200,11 @@ namespace DS
                 new Bus
                 {
                 License=98769852,
-                LicenseDate = DateTime.Parse("10.12.2019"),
+                LicenseDate = new DateTime(2019,7,7),
                 Mileage = 30520,
                 Fuel = 200,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("12.18.2020"),
+                LastTreatmentDate =new DateTime(2020,12,18),
                 MileageAtLastTreat = 10520,
                 ObjectActive=true,
                 },
@@ -213,11 +213,11 @@ namespace DS
                 new Bus
                 {
                 License=9603250,
-                LicenseDate = DateTime.Parse("10.12.1993"),
+                LicenseDate = new DateTime(1993,7,17),
                 Mileage = 2002030,
                 Fuel = 1150,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                LastTreatmentDate =new DateTime(2020,10,18),
                 MileageAtLastTreat = 1909996.3,
                 ObjectActive=true,
                 },
@@ -226,11 +226,11 @@ namespace DS
                 new Bus
                 {
                 License=96503201,
-                LicenseDate = DateTime.Parse("11.11.2018"),
+                LicenseDate = new DateTime(2018,10,17),
                 Mileage = 19230,
                 Fuel = 1150,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("11.11.2020"),
+                LastTreatmentDate =new DateTime(2020,11,11),
                 MileageAtLastTreat = 19200,
                 ObjectActive=true,
                 },
@@ -239,11 +239,11 @@ namespace DS
                 new Bus
                 {
                 License=7052033,
-                LicenseDate = DateTime.Parse("12.7.2006"),
+                LicenseDate = new DateTime(2006,6,7),
                 Mileage = 999666,
                 Fuel = 1200,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("12.7.2020"),
+                LastTreatmentDate =new DateTime(2020,7,12),
                 MileageAtLastTreat = 979666,
                 ObjectActive=true,
                 },
@@ -252,11 +252,11 @@ namespace DS
                 new Bus
                 {
                 License=10203055,
-                LicenseDate = DateTime.Parse("5.3.2019"),
+                LicenseDate = new DateTime(2019,5,3),
                 Mileage = 23320,
                 Fuel = 1150,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("10.10.2020"),
+                LastTreatmentDate =new DateTime(2020,10,10),
                 MileageAtLastTreat = 20000,
                 ObjectActive=true,
                 },
@@ -265,11 +265,11 @@ namespace DS
                 new Bus
                 {
                 License=9036541,
-                LicenseDate = DateTime.Parse("5.5.2015"),
+                LicenseDate = new DateTime(2015,9,6),
                 Mileage = 19852,
                 Fuel = 0,
                 BusStatus = Enums.BUS_STATUS.NEEDS_REFUEL,
-                LastTreatmentDate = DateTime.Parse("5.5.2020"),
+                LastTreatmentDate =new DateTime(2020,5,5),
                 MileageAtLastTreat = 18999,
                 ObjectActive=true,
                 },
@@ -278,11 +278,11 @@ namespace DS
                 new Bus
                 {
                 License=12987053,
-                LicenseDate = DateTime.Parse("11.11.2019"),
+                LicenseDate = new DateTime(2019,6,26),
                 Mileage = 11112,
                 Fuel = 1150,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("11.11.2020"),
+                LastTreatmentDate =new DateTime(2020,8,22),
                 MileageAtLastTreat = 9992,
                 ObjectActive=true,
                 },
