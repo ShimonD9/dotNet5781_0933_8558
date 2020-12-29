@@ -31,11 +31,11 @@ namespace DS
                 new Bus
                 {
                 License=1324544,
-                LicenseDate = DateTime.Parse("10.12.2016"),
+                LicenseDate = new DateTime(2020,12,4),
                 Mileage = 200030,
                 Fuel = 1150,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
-                LastTreatmentDate = DateTime.Parse("10.12.2020"),
+                LastTreatmentDate = new DateTime(2020,12,4),
                 MileageAtLastTreat = 200020,
                 ObjectActive=true,
                 },
