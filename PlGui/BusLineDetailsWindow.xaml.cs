@@ -28,7 +28,7 @@ namespace PlGui
         public BusLineDetailsWindow(object item)
         {
             InitializeComponent();
-            cbArea.ItemsSource = Enum.GetValues(typeof(PO.Enums.AREA));
+            cbArea.ItemsSource = Enum.GetValues(typeof(BO.Enums.AREA));
             BusLineDet.DataContext = item;          
         }
 

@@ -1109,7 +1109,7 @@ namespace DS
 
             ListConsecutiveStations = new List<ConsecutiveStations> { };
 
-            for (int i = 0; i < 10; i++) // Creating 20 bus line stations according to the 10 bus lines (with first bus stop and last bus stop, and 8 bus stops between)
+            for (int i = 0; i < 11; i++) // Creating 20 bus line stations according to the 10 bus lines (with first bus stop and last bus stop, and 8 bus stops between)
             {
                 // #1 busLineStation
                 ListBusLineStations.Add(
@@ -1119,7 +1119,7 @@ namespace DS
                         BusStopKey = ListBusLines[i].FirstBusStopKey,
                         LineStationIndex = 0,
                         PrevStation = 0,
-                        NextStation = ListBusStops[2 * i + 14].BusStopKey,
+                        NextStation = ListBusStops[2 * i + 15].BusStopKey,
                         ObjectActive = true
                     }
                 );
@@ -1130,10 +1130,10 @@ namespace DS
                     new BusLineStation
                     {
                         BusLineID = ListBusLines[i].BusLineID,
-                        BusStopKey = ListBusStops[2 * i + 14].BusStopKey,
+                        BusStopKey = ListBusStops[2 * i + 15].BusStopKey,
                         LineStationIndex = 1,
                         PrevStation = ListBusLines[i].FirstBusStopKey,
-                        NextStation = ListBusStops[2 * i + 15].BusStopKey,
+                        NextStation = ListBusStops[2 * i + 16].BusStopKey,
                         ObjectActive = true
                     }
                 );
@@ -1142,7 +1142,7 @@ namespace DS
                     new ConsecutiveStations
                     {
                         BusStopKeyA = ListBusLines[i].FirstBusStopKey,
-                        BusStopKeyB = ListBusStops[2 * i + 14].BusStopKey,
+                        BusStopKeyB = ListBusStops[2 * i + 15].BusStopKey,
                         Distance = 1.3,
                         TravelTime = TimeSpan.Parse("00:03:10"),
                         ObjectActive = true,
@@ -1154,32 +1154,8 @@ namespace DS
                     new BusLineStation
                     {
                         BusLineID = ListBusLines[i].BusLineID,
-                        BusStopKey = ListBusStops[2 * i + 15].BusStopKey,
-                        LineStationIndex = 2,
-                        PrevStation = ListBusStops[2 * i + 14].BusStopKey,
-                        NextStation = ListBusStops[2 * i + 16].BusStopKey,
-                        ObjectActive = true
-                    }
-                );
-
-                ListConsecutiveStations.Add(
-                    new ConsecutiveStations
-                    {
-                        BusStopKeyA = ListBusStops[2 * i + 14].BusStopKey,
-                        BusStopKeyB = ListBusStops[2 * i + 15].BusStopKey,
-                        Distance = 1.3,
-                        TravelTime = TimeSpan.Parse("00:03:10"),
-                        ObjectActive = true,
-                    }
-                );
-
-                // #4 busLineStation
-                ListBusLineStations.Add(
-                    new BusLineStation
-                    {
-                        BusLineID = ListBusLines[i].BusLineID,
                         BusStopKey = ListBusStops[2 * i + 16].BusStopKey,
-                        LineStationIndex = 3,
+                        LineStationIndex = 2,
                         PrevStation = ListBusStops[2 * i + 15].BusStopKey,
                         NextStation = ListBusStops[2 * i + 17].BusStopKey,
                         ObjectActive = true
@@ -1197,13 +1173,13 @@ namespace DS
                     }
                 );
 
-                // #5 busLineStation
+                // #4 busLineStation
                 ListBusLineStations.Add(
                     new BusLineStation
                     {
                         BusLineID = ListBusLines[i].BusLineID,
                         BusStopKey = ListBusStops[2 * i + 17].BusStopKey,
-                        LineStationIndex = 4,
+                        LineStationIndex = 3,
                         PrevStation = ListBusStops[2 * i + 16].BusStopKey,
                         NextStation = ListBusStops[2 * i + 18].BusStopKey,
                         ObjectActive = true
@@ -1221,13 +1197,13 @@ namespace DS
                     }
                 );
 
-                // #6 busLineStation
+                // #5 busLineStation
                 ListBusLineStations.Add(
                     new BusLineStation
                     {
                         BusLineID = ListBusLines[i].BusLineID,
                         BusStopKey = ListBusStops[2 * i + 18].BusStopKey,
-                        LineStationIndex = 5,
+                        LineStationIndex = 4,
                         PrevStation = ListBusStops[2 * i + 17].BusStopKey,
                         NextStation = ListBusStops[2 * i + 19].BusStopKey,
                         ObjectActive = true
@@ -1245,19 +1221,18 @@ namespace DS
                     }
                 );
 
-                // #7 busLineStation
+                // #6 busLineStation
                 ListBusLineStations.Add(
                     new BusLineStation
                     {
                         BusLineID = ListBusLines[i].BusLineID,
                         BusStopKey = ListBusStops[2 * i + 19].BusStopKey,
-                        LineStationIndex = 6,
+                        LineStationIndex = 5,
                         PrevStation = ListBusStops[2 * i + 18].BusStopKey,
                         NextStation = ListBusStops[2 * i + 20].BusStopKey,
                         ObjectActive = true
                     }
                 );
-
 
                 ListConsecutiveStations.Add(
                     new ConsecutiveStations
@@ -1270,13 +1245,13 @@ namespace DS
                     }
                 );
 
-                // #8 busLineStation
+                // #7 busLineStation
                 ListBusLineStations.Add(
                     new BusLineStation
                     {
                         BusLineID = ListBusLines[i].BusLineID,
                         BusStopKey = ListBusStops[2 * i + 20].BusStopKey,
-                        LineStationIndex = 7,
+                        LineStationIndex = 6,
                         PrevStation = ListBusStops[2 * i + 19].BusStopKey,
                         NextStation = ListBusStops[2 * i + 21].BusStopKey,
                         ObjectActive = true
@@ -1295,19 +1270,18 @@ namespace DS
                     }
                 );
 
-                // #9 busLineStation
+                // #8 busLineStation
                 ListBusLineStations.Add(
                     new BusLineStation
                     {
                         BusLineID = ListBusLines[i].BusLineID,
                         BusStopKey = ListBusStops[2 * i + 21].BusStopKey,
-                        LineStationIndex = 8,
+                        LineStationIndex = 7,
                         PrevStation = ListBusStops[2 * i + 20].BusStopKey,
-                        NextStation = ListBusLines[i].LastBusStopKey,
+                        NextStation = ListBusStops[2 * i + 22].BusStopKey,
                         ObjectActive = true
                     }
                 );
-
 
 
                 ListConsecutiveStations.Add(
@@ -1321,6 +1295,32 @@ namespace DS
                     }
                 );
 
+                // #9 busLineStation
+                ListBusLineStations.Add(
+                    new BusLineStation
+                    {
+                        BusLineID = ListBusLines[i].BusLineID,
+                        BusStopKey = ListBusStops[2 * i + 22].BusStopKey,
+                        LineStationIndex = 8,
+                        PrevStation = ListBusStops[2 * i + 21].BusStopKey,
+                        NextStation = ListBusLines[i].LastBusStopKey,
+                        ObjectActive = true
+                    }
+                );
+
+
+
+                ListConsecutiveStations.Add(
+                    new ConsecutiveStations
+                    {
+                        BusStopKeyA = ListBusStops[2 * i + 21].BusStopKey,
+                        BusStopKeyB = ListBusStops[2 * i + 22].BusStopKey,
+                        Distance = 1.3,
+                        TravelTime = TimeSpan.Parse("00:03:10"),
+                        ObjectActive = true,
+                    }
+                );
+
                 // #10 busLineStation
                 ListBusLineStations.Add(
                     new BusLineStation
@@ -1328,7 +1328,7 @@ namespace DS
                         BusLineID = ListBusLines[i].BusLineID,
                         BusStopKey = ListBusLines[i].LastBusStopKey,
                         LineStationIndex = 9,
-                        PrevStation = ListBusStops[2 * i + 21].BusStopKey,
+                        PrevStation = ListBusStops[2 * i + 22].BusStopKey,
                         NextStation = 0,
                         ObjectActive = true
                     }
@@ -1337,7 +1337,7 @@ namespace DS
                 ListConsecutiveStations.Add(
                     new ConsecutiveStations
                     {
-                        BusStopKeyA = ListBusStops[2 * i + 21].BusStopKey,
+                        BusStopKeyA = ListBusStops[2 * i + 22].BusStopKey,
                         BusStopKeyB = ListBusLines[i].BusLineID,
                         Distance = 1.3,
                         TravelTime = TimeSpan.Parse("00:03:10"),
@@ -1365,7 +1365,7 @@ namespace DS
                 {
                     BusAtTravelID = RunningNumBusAtTravel,
                     License = 93029403,
-                    BusLineNumberIdentifier = 101,
+                    BusLineID = 101,
                     FormalDepartureTime = TimeSpan.Parse("10:20:00"),
                     ActualDepartureTime = TimeSpan.Parse("10:22:00"),
                     PrevBusLineStationNumber = 66033,

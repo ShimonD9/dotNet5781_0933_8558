@@ -73,8 +73,8 @@ namespace BL
             busLineDO.CopyPropertiesTo(busLineBO);
             busLineBO.LineStations = from boLineStation 
                                      in GetAllBusLineStations()
-                                     //where boLineStation.BusLineID == busLineBO.BusLineIdentifier
-                                     //orderby boLineStation.LineStationIndex
+                                     where boLineStation.BusLineID == busLineBO.BusLineID
+                                     orderby boLineStation.LineStationIndex
                                      select boLineStation;
             return busLineBO;
         }

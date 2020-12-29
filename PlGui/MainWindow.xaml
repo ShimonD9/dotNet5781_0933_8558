@@ -177,7 +177,7 @@
                                         </Grid.ColumnDefinitions>
 
                                         <Border Grid.Column="0" BorderBrush="Black" Background="{Binding Path='StatusColor'}" BorderThickness="1 1 1 1">
-                                            <TextBlock Name ="tbBusLineID" Text="{Binding Path = 'BusLineIdentifier'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
+                                            <TextBlock Name ="tbBusLineID" Text="{Binding Path = 'BusLineID'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
                                         </Border>
 
                                         <Border Grid.Column="1" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">

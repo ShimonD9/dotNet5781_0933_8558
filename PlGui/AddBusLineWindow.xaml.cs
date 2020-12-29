@@ -25,7 +25,7 @@ namespace PlGui
         public AddBusLineWindow()
         {
             InitializeComponent();
-            cbArea.ItemsSource = Enum.GetValues(typeof(PO.Enums.AREA));
+            cbArea.ItemsSource = Enum.GetValues(typeof(BO.Enums.AREA));
             cbLastBusStop.IsEnabled = false;
             cbFirstBusStop.ItemsSource = bl.GetAllBusStops().OrderBy(busStop => busStop.BusStopKey);
         }
