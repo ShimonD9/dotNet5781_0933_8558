@@ -252,7 +252,7 @@ namespace DS
                 new Bus
                 {
                 License=10203055,
-                LicenseDate = DateTime.Parse("23.3.2019"),
+                LicenseDate = DateTime.Parse("5.5.2019"),
                 Mileage = 23320,
                 Fuel = 1150,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
