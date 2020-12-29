@@ -9,6 +9,15 @@ namespace DS
 {
     public static class DataSource
     {
+        private static int runningNumBusAtTravel = 0;
+        public static int RunningNumBusAtTravel { get => ++runningNumBusAtTravel; }
+
+        private static int runningNumBusLine = 0;
+        public static int RunningNumBusLine { get => ++runningNumBusLine; }
+
+        private static int runningNumLineDeparture = 0;
+        public static int RunningNumLineDeparture { get => ++runningNumLineDeparture; }
+
         public static List<Bus> ListBuses;
         public static List<BusAtTravel> ListBusAtTravels;
         public static List<BusLine> ListBusLines;
@@ -985,7 +994,7 @@ namespace DS
             {
                 new BusLine
                 {
-                    BusLineID = Config.RunningNumBusLine,
+                    BusLineID = RunningNumBusLine,
                     BusLineNumber = 210,
                     Area = Enums.AREA.Center,
                     FirstBusStopKey = 26475,
@@ -995,7 +1004,7 @@ namespace DS
 
                 new BusLine
                 {
-                    BusLineID = Config.RunningNumBusLine,
+                    BusLineID = RunningNumBusLine,
                     BusLineNumber = 220,
                     Area = Enums.AREA.Center,
                     FirstBusStopKey = 65299,
@@ -1005,7 +1014,7 @@ namespace DS
 
                 new BusLine
                 {
-                    BusLineID = Config.RunningNumBusLine,
+                    BusLineID =  RunningNumBusLine,
                     BusLineNumber = 230,
                     Area = Enums.AREA.Center,
                     FirstBusStopKey = 60278,
@@ -1015,7 +1024,7 @@ namespace DS
 
                 new BusLine
                 {
-                    BusLineID = Config.RunningNumBusLine,
+                    BusLineID =  RunningNumBusLine,
                     BusLineNumber = 240,
                     Area = Enums.AREA.Center,
                     FirstBusStopKey = 60403,
@@ -1025,7 +1034,7 @@ namespace DS
 
                 new BusLine
                 {
-                    BusLineID = Config.RunningNumBusLine,
+                    BusLineID =  RunningNumBusLine,
                     BusLineNumber = 310,
                     Area = Enums.AREA.Jerusalem,
                     FirstBusStopKey = 4009,
@@ -1035,7 +1044,7 @@ namespace DS
 
                 new BusLine
                 {
-                    BusLineID = Config.RunningNumBusLine,
+                    BusLineID =  RunningNumBusLine,
                     BusLineNumber = 340,
                     Area = Enums.AREA.Jerusalem,
                     FirstBusStopKey = 4009,
@@ -1045,7 +1054,7 @@ namespace DS
 
                 new BusLine
                 {
-                    BusLineID = Config.RunningNumBusLine,
+                    BusLineID =  RunningNumBusLine,
                     BusLineNumber = 1,
                     Area = Enums.AREA.Jerusalem,
                     FirstBusStopKey = 60257,
@@ -1055,7 +1064,7 @@ namespace DS
 
                 new BusLine
                 {
-                    BusLineID = Config.RunningNumBusLine,
+                    BusLineID =  RunningNumBusLine,
                     BusLineNumber = 2,
                     Area = Enums.AREA.Jerusalem,
                     FirstBusStopKey = 60817,
@@ -1065,7 +1074,7 @@ namespace DS
 
                 new BusLine
                 {
-                    BusLineID = Config.RunningNumBusLine,
+                    BusLineID =  RunningNumBusLine,
                     BusLineNumber = 6,
                     Area = Enums.AREA.North,
                     FirstBusStopKey = 60817,
@@ -1075,7 +1084,7 @@ namespace DS
 
                 new BusLine
                 {
-                    BusLineID = Config.RunningNumBusLine,
+                    BusLineID = RunningNumBusLine,
                     BusLineNumber = 5,
                     Area = Enums.AREA.Center,
                     FirstBusStopKey = 63988,
@@ -1085,7 +1094,7 @@ namespace DS
 
                 new BusLine
                 {
-                    BusLineID = Config.RunningNumBusLine,
+                    BusLineID =  RunningNumBusLine,
                     BusLineNumber = 891,
                     Area = Enums.AREA.South,
                     FirstBusStopKey = 12284,
@@ -1341,7 +1350,7 @@ namespace DS
              {
                  new LineDeparture
                  {
-                    DepartureID = Config.RunningNumLineDeparture,
+                    DepartureID = RunningNumLineDeparture,
                     BusLineID = ListBusLines[0].BusLineID,
                     StartTime = TimeSpan.Parse("10:00:00"),
                     EndTime = TimeSpan.Parse("23:00:00"),
@@ -1354,7 +1363,7 @@ namespace DS
             {
                 new BusAtTravel
                 {
-                    BusAtTravelID = Config.RunningNumBusAtTravel,
+                    BusAtTravelID = RunningNumBusAtTravel,
                     License = 93029403,
                     BusLineNumberIdentifier = 101,
                     FormalDepartureTime = TimeSpan.Parse("10:20:00"),

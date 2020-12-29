@@ -33,7 +33,9 @@ namespace BL
 
         public IEnumerable<BusLineStation> GetAllBusLineStations()
         {
-            return from doBusLineStation in dl.GetAllBusLineStations() select BusLineStationDoBoAdapter(doBusLineStation);
+            return from doBusLineStation 
+                   in dl.GetAllBusLineStations() 
+                   select BusLineStationDoBoAdapter(doBusLineStation);
         }
 
         public IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
@@ -70,8 +72,8 @@ namespace BL
             BO.BusLine busLineBO = new BO.BusLine();
             busLineDO.CopyPropertiesTo(busLineBO);
             busLineBO.LineStations = from boLineStation 
-                                     in GetAllBusLineStations() 
-                                     where boLineStation.BusLineID == busLineBO.BusLineIdentifier 
+                                     in GetAllBusLineStations()
+                                     where boLineStation.BusLineID == busLineBO.BusLineIdentifier
                                      orderby boLineStation.LineStationIndex
                                      select boLineStation;
             return busLineBO;
@@ -86,7 +88,7 @@ namespace BL
 
         public IEnumerable<BusLine> GetAllBusLines()
         {
-            return from doBusLine in dl.GetAllBusLines() select BusLineDoBoAdapter(doBusLine);
+            return from doBusLine in dl.GetAllBusLines() select BusLineDoBoAdapter(doBusLine);         
         }
 
         public IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate)

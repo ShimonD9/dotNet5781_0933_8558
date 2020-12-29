@@ -64,7 +64,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Bus Lines stopping at this bus stop:"/>
-                        <ListView Name ="lvLines" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding Path=LinesStopHere}"/>
+                        <ListView Name ="lvLines" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding Path='LinesStopHere'}"/>
                     </Grid>
                 </Border>
             </Grid>

@@ -47,16 +47,16 @@ namespace PlGui
 
         private void LBBusLines_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            //if (!Application.Current.Windows.OfType<BusLineDetailsWindow>().Any())
-            //{
-            //    ListBox list = sender as ListBox;
-            //    if (list != null)
-            //    {
-            //        object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
-            //        BusLineDetailsWindow busLineDetailsWindow = new BusLineDetailsWindow(item);
-            //        busLineDetailsWindow.Show();
-            //    }
-            //}
+            if (!Application.Current.Windows.OfType<BusLineDetailsWindow>().Any())
+            {
+                ListBox list = sender as ListBox;
+                if (list != null)
+                {
+                    object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
+                    BusLineDetailsWindow busLineDetailsWindow = new BusLineDetailsWindow(item);
+                    busLineDetailsWindow.Show();
+                }
+            }
         }
 
         private void LBBusStops_MouseDoubleClick(object sender, MouseButtonEventArgs e)

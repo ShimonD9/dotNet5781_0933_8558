@@ -24,10 +24,23 @@ namespace PlGui
             InitializeComponent();
         }
 
-        //public BusLineDetailsWindow(object item)
-        //{
-        //    InitializeComponent();
-        //    BusDet.DataContext = item;
-        //}
+        // A second builder, to get the item selected in the list box
+        public BusLineDetailsWindow(object item)
+        {
+            InitializeComponent();
+            cbArea.ItemsSource = Enum.GetValues(typeof(PO.Enums.AREA));
+            BusLineDet.DataContext = item;          
+        }
+
+
+        private void Button_Update(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Delete(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
