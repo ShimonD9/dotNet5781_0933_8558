@@ -123,7 +123,6 @@ namespace BL
         }
         #endregion
 
-
         #region BusStop
 
         BO.BusStop busStopDoBoAdapter(DO.BusStop busStopDO)
@@ -177,20 +176,20 @@ namespace BL
         {
             try
             {
-                DO.BusStop newBus = busStopBoDoAdapter(busStopBO);
-                (DalFactory.GetDL()).AddBusStop(newBus);
+                DO.BusStop newStop= busStopBoDoAdapter(busStopBO);
+                (DalFactory.GetDL()).AddBusStop(newStop);
             }
             catch (DO.ExceptionDALBadLicsens ex)
             {
-                throw new BO.ExceptionBLBadLicense("License already exist", ex);
+                throw new BO.ExceptionBLBadLicense("bus stop code already exist", ex);
             }
         }
 
-        public void DeleteBusStop(int license)
+        public void DeleteBusStop(int BusStopCode)
         {
             try
             {
-                dl.DeleteBusStop(license);
+                dl.DeleteBusStop(BusStopCode);
             }
             catch (DO.ExceptionDALBadLicsens ex)
             {
