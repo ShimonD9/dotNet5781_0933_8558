@@ -24,8 +24,10 @@ namespace DL
         #region Bus
         public IEnumerable<Bus> GetAllBuses()
         {
+            
             return from bus in DataSource.ListBuses
                    select bus.Clone();
+            
         }
 
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
