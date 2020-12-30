@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
-        Title="Bus Line Details Window" Height="500" Width="790.36" ResizeMode="CanMinimize">
+        Title="Bus Line Details Window" Height="519.231" Width="876.257" ResizeMode="CanMinimize">
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="Black" Offset="0"/>
@@ -24,7 +24,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Grid ShowGridLines="True"  HorizontalAlignment="Center" Height="339" VerticalAlignment="Center" Width="333" Visibility="Visible">
+                    <Grid ShowGridLines="True"  HorizontalAlignment="Center" VerticalAlignment="Center"  Height="339" Width="333">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
@@ -42,23 +42,101 @@
                         <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="First Bus Stop key:"/>
                         <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Last Bus Stop key:"/>
                         <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusLineID}"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusLineNumber}"/>
+                        <TextBox  MaxLength="3" PreviewTextInput="NumberValidationTextBoxNoDots" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusLineNumber}"/>
                         <ComboBox Name="cbArea" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Area}"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=FirstBusStopKey}"/>
-                        <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=LastBusStopKey}"/>
+                        <TextBlock Name="cbFirstBusStop" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=FirstBusStopKey}"/>
+                        <TextBlock Name="cbSecondBusStop" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=LastBusStopKey}"/>
                     </Grid>
                 </Border>
                 <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Grid ShowGridLines="True"  HorizontalAlignment="Center" Height="339" VerticalAlignment="Center" Width="333" Visibility="Visible">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                    <Grid ShowGridLines="True"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="339" Width="350">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.1*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="0.2*"/>
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Route:"/>
-                        <ListView Name ="lvLineStations" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" ItemsSource="{Binding Path='LineStations'}"/>
+
+                        <Grid Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="7,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60" />
+                                <ColumnDefinition Width="75" />
+                                <ColumnDefinition Width="105" />
+                                <ColumnDefinition Width="90"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                                <TextBlock  Text="Index" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                            </Border>
+
+                            <Border Grid.Column="1" BorderBrush="Black" Background="PapayaWhip" BorderThickness="0 1 1 1">
+                                <TextBlock  Text="Bus Stop key" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold"/>
+                            </Border>
+
+                            <Border Grid.Column="2" BorderBrush="Black" Background="PapayaWhip" BorderThickness="0 1 1 1">
+                                <TextBlock  Text="Previous bus stop key" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10"  FontWeight="Bold"/>
+                            </Border>
+
+                            <Border Grid.Column="3" BorderBrush="Black" Background="PapayaWhip" BorderThickness="0 1 1 1">
+                                <TextBlock  Text="Next bus stop key" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold"/>
+                            </Border>
+                        </Grid>
+
+                        <ListView Grid.Row="2" Name ="lvLineStations" ItemsSource="{Binding Path='LineStations'}"  SelectionChanged="lvStationsSelectionChanged">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="60" />
+                                            <ColumnDefinition Width="75" />
+                                            <ColumnDefinition Width="105" />
+                                            <ColumnDefinition Width="90"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1 1 1 1">
+                                            <TextBlock Name ="tbIndex" Text="{Binding Path = 'LineStationIndex'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" TextAlignment="Center" />
+                                        </Border>
+
+                                        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbBusStopKey" Text="{Binding Path = 'BusStopKey'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" TextAlignment="Center" />
+                                        </Border>
+
+                                        <Border Grid.Column="2" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbPrevStation" Text="{Binding Path = 'PrevStation'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" TextAlignment="Center" />
+                                        </Border>
+
+                                        <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbNextStation" Text="{Binding Path = 'NextStation'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" TextAlignment="Center" />
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        <Border Grid.Row="3">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Name="bAddStation" Grid.Column="0" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_AddStation">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image />
+                                            <TextBlock Text="Add a station"  FontSize="16" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                                <Button Name="bDeleteStation" Grid.Column="1" IsEnabled="False" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_DeleteStation">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image  />
+                                            <TextBlock Text="Delete the station" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </Border>
             </Grid>

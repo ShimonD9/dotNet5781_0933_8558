@@ -31,7 +31,7 @@
                 </Grid>
 
                 <Grid Grid.Row="0" Grid.Column="1">
-                    <TextBox x:Name="tbLineNumber" PreviewTextInput="NumberValidationTextBoxNoDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+                    <TextBox x:Name="tbLineNumber" MaxLength="3" PreviewTextInput="NumberValidationTextBoxNoDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
                 </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0">

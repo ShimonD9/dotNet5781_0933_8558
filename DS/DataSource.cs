@@ -1308,8 +1308,6 @@ namespace DS
                     }
                 );
 
-
-
                 ListConsecutiveStations.Add(
                     new ConsecutiveStations
                     {
