@@ -21,6 +21,10 @@ namespace PlGui
     /// </summary>
     public partial class BusDetailsWindow : Window
     {
+        IBL bl = BLFactory.GetBL("1");
+        BO.Bus bus;
+
+
         public BusDetailsWindow()
         {
             InitializeComponent();
@@ -30,6 +34,7 @@ namespace PlGui
         public BusDetailsWindow(object item)
         {
             InitializeComponent();
+            bus = item as BO.Bus;
             BusDet.DataContext = item;
         }
 
@@ -41,8 +46,48 @@ namespace PlGui
         /// <param name="e"></param>
         private void Button_Update(object sender, RoutedEventArgs e)
         {
-            
-            this.Close(); // Closes the window
+            DateTime startDateChosen;
+            DateTime treatDateChosen;
+            if (!dpLicenseDate.SelectedDate.HasValue || !dpTreatmentDate.SelectedDate.HasValue) // Checks if the user chose a date
+            {
+                MessageBox.Show("You didn't fill the required date fields!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                startDateChosen = dpLicenseDate.SelectedDate.Value;
+                treatDateChosen = dpTreatmentDate.SelectedDate.Value;
+                // Checks if the inputs are correct, and pops an appropriate message if not:
+                try
+                {
+                    if (startDateChosen.Year < 2018 && tbLicense.Text.Length < 7
+                    || startDateChosen.Year > 2017 && tbLicense.Text.Length < 8)
+                    {
+                        MessageBox.Show("The license you entered is too short!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else if (!Double.TryParse(tbMileage.GetLineText(0), out double milNow) || !Double.TryParse(tbMileageAtTreat.GetLineText(0), out double milTreat))
+                    {
+                        MessageBox.Show("You didn't fill correctly all the required information", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else if (double.Parse(tbMileageAtTreat.Text) > double.Parse(tbMileage.Text))
+                    {
+                        MessageBox.Show("The total mileage cannot be smaller than the mileage at the last treat!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else
+                    {
+                        bus.Fuel = sliderFuel.Value;
+                        bus.LicenseDate = startDateChosen;
+                        bus.LastTreatmentDate = treatDateChosen;
+                        bus.Mileage = double.Parse(tbMileage.Text);
+                        bus.MileageAtLastTreat = double.Parse(tbMileageAtTreat.Text);
+                        bl.UpdateBus(bus);
+                        this.Close(); // Closes the window
+                    }
+                }
+                catch (BO.ExceptionBLBadLicense)
+                {
+                    MessageBox.Show("The bus license you entered already exists in the company!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
         }
 
         /// <summary>
@@ -52,18 +97,12 @@ namespace PlGui
         /// <param name="e"></param>
         private void Button_Delete(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
-            //var fxElt = sender as FrameworkElement;
-            //Bus bus = fxElt.DataContext as Bus;
-            //if (bus.MileageSinceLastTreat < 20000 && bus.LastTreatmentDate.AddYears(1).CompareTo(MainWindow.useMyRunningDate) > 0) // In case the bus doesn't need a treatment (according to mileage and date of last treatment)
-            //{
-            //    MessageBox.Show("The bus doesn't need a treatment yet", "Treatment Error!", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //}
-            //else
-            //{
-            //    bus.Treatment();  // Calls the refuel background worker
-            //    this.Close();  // Closes the window
-            //}
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this bus?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+            if (result == MessageBoxResult.Yes)
+            {
+                bl.DeleteBus(bus.License);
+                this.Close(); // Closes the window
+            }
         }
     }
 }

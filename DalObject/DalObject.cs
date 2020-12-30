@@ -75,11 +75,13 @@ namespace DL
             else
                 throw new DO.ExceptionDALBadLicsens(bus.License, $"bad id: {bus.License}");
         }
+
         public void UpdateBus(int licenseNumber, Action<Bus> update)  // method that knows to update specific fields in Person
         {
             Bus busUpdate = GetBus(licenseNumber);
             update(busUpdate);
         }
+
         public void DeleteBus(int license)
         {
             Bus bus = DataSource.ListBuses.Find(b => b.License == license);

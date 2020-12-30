@@ -20,7 +20,7 @@
                             <ColumnDefinition Width="80" />
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="200" />
                             <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="50" />
                             <ColumnDefinition Width="50" />
@@ -35,11 +35,11 @@
                         </Border>
 
                         <Border Grid.Column="2" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                            <TextBlock  Text="Days until the next treatment" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
+                            <TextBlock  Text="Mileage" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
                         </Border>
 
                         <Border Grid.Column="3" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                            <TextBlock  Text="KM until the next treatment" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
+                            <TextBlock  Text="Last treatment date" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
                         </Border>
 
                         <Border Grid.Column="4" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
@@ -63,7 +63,7 @@
                                             <ColumnDefinition Width="80" />
                                             <ColumnDefinition Width="100" />
                                             <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="200" />
                                             <ColumnDefinition Width="100" />
                                             <ColumnDefinition Width="50" />
                                             <ColumnDefinition Width="50" />
@@ -82,11 +82,11 @@
                                         </Border>
 
                                         <Border Grid.Column="2" BorderBrush="Black"  Background="LemonChiffon" BorderThickness="0 1 1 1">
-                                            <TextBlock Name ="tbDaysToTreat" FontSize="16" Text="{Binding Path='DaysUntilNextTreat'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
+                                            <TextBlock Name ="tbMileage" FontSize="16" Text="{Binding Path='Mileage'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
                                         </Border>
 
                                         <Border Grid.Column="3" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
-                                            <TextBlock Name ="tbKMToTreat" FontSize="16" Text="{Binding Path='KMtoNextTreat'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
+                                            <TextBlock Name ="tbLastTreatmentDate" FontSize="16" Text="{Binding Path='LastTreatmentDate'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
                                         </Border>
 
                                         <!--<Border Grid.Column="4" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">

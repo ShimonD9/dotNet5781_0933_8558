@@ -33,17 +33,17 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="License number:"/>
-                    <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Activity start date:"/>
+                    <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="License date:"/>
                     <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Total mileage:"/>
                     <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Last treatment date:"/>
-                    <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Mileage since last treatment:"/>
+                    <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Mileage at last treatment:"/>
                     <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Fuel status (km left to ride):"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=License}"/>
-                    <DatePicker Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=LicenseDate}"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Mileage}"/>
-                    <DatePicker Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=LastTreatmentDate}"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=MileageSinceLastTreat}"/>
-                    <TextBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Fuel}"/>
+                    <TextBlock Name ="tbLicense" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=License}"/>
+                    <DatePicker Name ="dpLicenseDate" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=LicenseDate}"/>
+                    <TextBox Name ="tbMileage" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Mileage}"/>
+                    <DatePicker Name ="dpTreatmentDate" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=LastTreatmentDate}"/>
+                    <TextBox Name ="tbMileageAtTreat" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=MileageAtLastTreat}"/>
+                    <Slider Name="sliderFuel" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Minimum="0" Maximum="1200"  IsSnapToTickEnabled="True"  IsHitTestVisible="True" Width="90" HorizontalAlignment="Center"  AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0"  Value="{Binding Path=Fuel}"/>
                 </Grid>
             </Border>
         </Border>

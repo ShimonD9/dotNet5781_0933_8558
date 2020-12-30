@@ -41,7 +41,8 @@ namespace PlGui
                 {
                     object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
                     BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
-                    busDetailsWindow.Show();
+                    busDetailsWindow.ShowDialog();
+                    lbBuses.ItemsSource = bl.GetAllBuses();
                 }
             }
         }
@@ -55,7 +56,7 @@ namespace PlGui
                 {
                     object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
                     BusLineDetailsWindow busLineDetailsWindow = new BusLineDetailsWindow(item);
-                    busLineDetailsWindow.Show();
+                    busLineDetailsWindow.ShowDialog();
                 }
             }
         }
@@ -69,7 +70,7 @@ namespace PlGui
                 {
                     object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
                     BusStopDetailsWindow busStopDetailsWindow = new BusStopDetailsWindow(item);
-                    busStopDetailsWindow.Show();
+                    busStopDetailsWindow.ShowDialog();
                 }
             }
         }

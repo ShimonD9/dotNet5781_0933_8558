@@ -190,11 +190,12 @@ namespace BL
         {
             try
             {
+                BusStatusUpdate(busBO);
                 dl.UpdateBus(busBoDoAdapter(busBO));
             }
             catch (DO.ExceptionDALBadLicsens ex)
             {
-                throw new BO.ExceptionBLBadLicense("Licesns does not exist Or bus inactive", ex);
+                throw new BO.ExceptionBLBadLicense("License does not exist or bus inactive", ex); 
             }
 
         }
