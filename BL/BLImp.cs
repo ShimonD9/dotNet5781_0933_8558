@@ -231,7 +231,7 @@ namespace BL
             int code = busStopDO.BusStopKey;
             busStopDO.CopyPropertiesTo(busStopBO);
             busStopBO.LinesStopHere = from boBusLine
-                                        in GetAllBusLines()
+                                      in GetAllBusLines()
                                       where boBusLine.LineStations.Any(line => line.BusStopKey == busStopBO.BusStopKey)
                                       orderby boBusLine.BusLineNumber
                                       select boBusLine;

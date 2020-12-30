@@ -26,6 +26,7 @@ namespace DL
         {
             
             return from bus in DataSource.ListBuses
+                   where bus.ObjectActive == true
                    select bus.Clone();
             
         }

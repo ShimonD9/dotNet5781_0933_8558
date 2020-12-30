@@ -1144,10 +1144,10 @@ namespace DS
                         BusStopKeyA = ListBusLines[i].FirstBusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 15].BusStopKey,
                         Distance = 1.3,
-                        TravelTime = TimeSpan.Parse("00:03:10"),
+                        TravelTime = new TimeSpan(0, 10, 30),
                         ObjectActive = true,
                     }
-                );
+                ); 
 
                 // #3 busLineStation
                 ListBusLineStations.Add(
@@ -1354,7 +1354,7 @@ namespace DS
                     BusLineID = ListBusLines[0].BusLineID,
                     StartTime = TimeSpan.Parse("10:00:00"),
                     EndTime = TimeSpan.Parse("23:00:00"),
-                    Frequency = 50,
+                    Frequency = 5,
                     ObjectActive=true,
                  }
              };
