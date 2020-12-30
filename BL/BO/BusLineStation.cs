@@ -17,7 +17,8 @@ namespace BO
 
         public override string ToString()           // Printing details of a station
         {
-            return string.Format("Bus station key = {0, -20} ", BusStopKey);
+            return string.Format("Bus Line ID = {0}, Bus Stop Key = {1}, Line Station Index = {2},Prev Station = {3},Next Station = {4}", BusLineID, BusStopKey, LineStationIndex, PrevStation, NextStation);
+
         }
     }
 }

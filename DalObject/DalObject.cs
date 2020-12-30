@@ -96,6 +96,7 @@ namespace DL
         public IEnumerable<BusAtTravel> GetAllBusesAtTravel()
         {
             return from busAtTravel in DataSource.ListBusAtTravels
+                   where busAtTravel.ObjectActive == true
                    select busAtTravel.Clone();
         }
         public IEnumerable<BusAtTravel> GetAllBusesAtTravelBy(Predicate<BusAtTravel> predicate)
@@ -159,6 +160,7 @@ namespace DL
         public IEnumerable<BusLineStation> GetAllBusLineStations()
         {
             return from busLineStation in DataSource.ListBusLineStations
+                   where busLineStation.ObjectActive == true
                    select busLineStation.Clone();
         }
         public IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
@@ -222,6 +224,7 @@ namespace DL
         public IEnumerable<BusLine> GetAllBusLines()
         {
             return from busLine in DataSource.ListBusLines
+                   where busLine.ObjectActive == true
                    select busLine.Clone();
         }
         public IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate)
@@ -285,6 +288,7 @@ namespace DL
         public IEnumerable<BusStop> GetAllBusStops()
         {
             return from busStopLine in DataSource.ListBusStops
+                   where busStopLine.ObjectActive == true
                    select busStopLine.Clone();
         }
         public IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate)
@@ -348,6 +352,7 @@ namespace DL
         public IEnumerable<ConsecutiveStations> GetAllConsecutiveStations()
         {
             return from busConsecutiveStations in DataSource.ListConsecutiveStations
+                   where busConsecutiveStations.ObjectActive == true
                    select busConsecutiveStations.Clone();
         }
         public IEnumerable<ConsecutiveStations> GetAllConsecutiveStationsBy(Predicate<ConsecutiveStations> predicate)
@@ -411,6 +416,7 @@ namespace DL
         public IEnumerable<LineDeparture> GetAllLineDeparture()
         {
             return from busLineDeparture in DataSource.ListLineDepartures
+                   where busLineDeparture.ObjectActive == true
                    select busLineDeparture.Clone();
         }
         public IEnumerable<LineDeparture> GetAllLineDepartureBy(Predicate<LineDeparture> predicate)
@@ -474,6 +480,7 @@ namespace DL
         public IEnumerable<User> GetAllUsers()
         {
             return from user in DataSource.ListUsers
+                   where user.ObjectActive == true
                    select user.Clone();
         }
 
