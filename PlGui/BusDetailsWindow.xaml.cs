@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BLApi;
+using BO;
 
 namespace PlGui
 {
@@ -37,20 +39,10 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Fuel(object sender, RoutedEventArgs e)
+        private void Button_Update(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
-            //var fxElt = sender as FrameworkElement;
-            //Bus bus = fxElt.DataContext as Bus;
-            //if (bus.KMLeftToTravel == 1200) // In case the gas tank is already full
-            //{
-            //    MessageBox.Show("The gas tank is already full!", "Refuel Error!", MessageBoxButton.OK, MessageBoxImage.Warning);
-            //}
-            //else
-            //{
-            //    bus.Refuel(); // Calls the refuel background worker
-            //    this.Close(); // Closes the window
-            //}
+            
+            this.Close(); // Closes the window
         }
 
         /// <summary>
@@ -58,7 +50,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Treatment(object sender, RoutedEventArgs e)
+        private void Button_Delete(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
             //var fxElt = sender as FrameworkElement;
