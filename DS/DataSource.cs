@@ -40,7 +40,7 @@ namespace DS
                 new Bus
                 {
                 License=1324544,
-                LicenseDate = new DateTime(2016,12,10),           
+                LicenseDate = new DateTime(2016,12,10),
                 Mileage = 200030,
                 Fuel = 1150,
                 BusStatus = Enums.BUS_STATUS.READY_FOR_TRAVEL,
@@ -1143,11 +1143,11 @@ namespace DS
                     {
                         BusStopKeyA = ListBusLines[i].FirstBusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 15].BusStopKey,
-                        Distance = 1.3,
+                        Distance = 1.7,
                         TravelTime = new TimeSpan(0, 10, 30),
                         ObjectActive = true,
                     }
-                ); 
+                );
 
                 // #3 busLineStation
                 ListBusLineStations.Add(
@@ -1167,8 +1167,8 @@ namespace DS
                     {
                         BusStopKeyA = ListBusStops[2 * i + 15].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 16].BusStopKey,
-                        Distance = 1.3,
-                        TravelTime = TimeSpan.Parse("00:03:10"),
+                        Distance = 2.4,
+                        TravelTime = new TimeSpan(0, 32, 22),
                         ObjectActive = true,
                     }
                 );
@@ -1191,8 +1191,8 @@ namespace DS
                     {
                         BusStopKeyA = ListBusStops[2 * i + 16].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 17].BusStopKey,
-                        Distance = 1.3,
-                        TravelTime = TimeSpan.Parse("00:03:10"),
+                        Distance = 1.6,
+                        TravelTime = new TimeSpan(0, 25, 12),
                         ObjectActive = true,
                     }
                 );
@@ -1216,7 +1216,7 @@ namespace DS
                         BusStopKeyA = ListBusStops[2 * i + 17].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 18].BusStopKey,
                         Distance = 1.3,
-                        TravelTime = TimeSpan.Parse("00:03:10"),
+                        TravelTime = new TimeSpan(0, 42, 0),
                         ObjectActive = true,
                     }
                 );
@@ -1239,8 +1239,8 @@ namespace DS
                     {
                         BusStopKeyA = ListBusStops[2 * i + 18].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 19].BusStopKey,
-                        Distance = 1.3,
-                        TravelTime = TimeSpan.Parse("00:03:10"),
+                        Distance = 0.8,
+                        TravelTime = new TimeSpan(0, 52, 24),
                         ObjectActive = true,
                     }
                 );
@@ -1264,8 +1264,8 @@ namespace DS
                     {
                         BusStopKeyA = ListBusStops[2 * i + 19].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 20].BusStopKey,
-                        Distance = 1.3,
-                        TravelTime = TimeSpan.Parse("00:03:10"),
+                        Distance = 3.3,
+                        TravelTime = new TimeSpan(0, 22, 12),
                         ObjectActive = true,
                     }
                 );
@@ -1289,8 +1289,8 @@ namespace DS
                     {
                         BusStopKeyA = ListBusStops[2 * i + 20].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 21].BusStopKey,
-                        Distance = 1.3,
-                        TravelTime = TimeSpan.Parse("00:03:10"),
+                        Distance = 2.9,
+                        TravelTime = new TimeSpan(0, 47,56),
                         ObjectActive = true,
                     }
                 );
@@ -1315,8 +1315,8 @@ namespace DS
                     {
                         BusStopKeyA = ListBusStops[2 * i + 21].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 22].BusStopKey,
-                        Distance = 1.3,
-                        TravelTime = TimeSpan.Parse("00:03:10"),
+                        Distance = 0.6,
+                        TravelTime = new TimeSpan(0,34, 20),
                         ObjectActive = true,
                     }
                 );
@@ -1339,8 +1339,8 @@ namespace DS
                     {
                         BusStopKeyA = ListBusStops[2 * i + 22].BusStopKey,
                         BusStopKeyB = ListBusLines[i].BusLineID,
-                        Distance = 1.3,
-                        TravelTime = TimeSpan.Parse("00:03:10"),
+                        Distance = 2.1,
+                        TravelTime = new TimeSpan(1, 3, 30),
                         ObjectActive = true,
                     }
                 );
