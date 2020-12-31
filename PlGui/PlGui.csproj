@@ -68,6 +68,7 @@
       <DependentUpon>BusStopDetailsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DeepCopyUtilities.cs" />
+    <Compile Include="PO\Bus.cs" />
     <Page Include="AddBusLineWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -161,5 +162,6 @@
   <ItemGroup>
     <Resource Include="Images\busRepair.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

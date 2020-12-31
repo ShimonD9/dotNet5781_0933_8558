@@ -25,6 +25,7 @@ namespace PlGui
     partial class MainWindow : Window
     {
         IBL bl = BLFactory.GetBL("1");
+
         public MainWindow()
         {
             InitializeComponent();
@@ -44,6 +45,12 @@ namespace PlGui
                     BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
                     busDetailsWindow.ShowDialog();
                     lbBuses.ItemsSource = bl.GetAllBuses();
+
+                    // רעיון של המרצה אליעזר
+                    //IEnumerable<PO.Bus> poBuses = from bobus in bl.GetAllBuses()
+                    //                               select new PO.Bus(bobus);
+                    //lbBuses.ItemsSource = poBuses;
+
                 }
             }
         }
