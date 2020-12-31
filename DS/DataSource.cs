@@ -1352,9 +1352,90 @@ namespace DS
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[1].BusLineID,
-                    StartTime = TimeSpan.Parse("10:00:00"),
-                    EndTime = TimeSpan.Parse("23:00:00"),
+                    StartTime = TimeSpan.Parse("06:30:00"),
+                    EndTime = TimeSpan.Parse("17:00:00"),
+                    Frequency = 10,
+                    ObjectActive=true,
+                 },
+                 new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[2].BusLineID,
+                    StartTime = TimeSpan.Parse("08:30:00"),
+                    EndTime = TimeSpan.Parse("20:30:00"),
+                    Frequency = 15,
+                    ObjectActive=true,
+                 },
+                 new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[3].BusLineID,
+                    StartTime = TimeSpan.Parse("12:00:00"),
+                    EndTime = TimeSpan.Parse("22:00:00"),
+                    Frequency = 20,
+                    ObjectActive=true,
+                 },
+                 new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[4].BusLineID,
+                    StartTime = TimeSpan.Parse("07:00:00"),
+                    EndTime = TimeSpan.Parse("15:00:00"),
                     Frequency = 5,
+                    ObjectActive=true,
+                 },
+                 new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[5].BusLineID,
+                    StartTime = TimeSpan.Parse("11:00:00"),
+                    EndTime = TimeSpan.Parse("16:00:00"),
+                    Frequency = 10,
+                    ObjectActive=true,
+                 },
+                 new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[6].BusLineID,
+                    StartTime = TimeSpan.Parse("09:00:00"),
+                    EndTime = TimeSpan.Parse("21:00:00"),
+                    Frequency = 25,
+                    ObjectActive=true,
+                 },
+                 new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[7].BusLineID,
+                    StartTime = TimeSpan.Parse("10:30:00"),
+                    EndTime = TimeSpan.Parse("00:15:00"),
+                    Frequency = 15,
+                    ObjectActive=true,
+                 },
+                 new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[8].BusLineID,
+                    StartTime = TimeSpan.Parse("05:45:00"),
+                    EndTime = TimeSpan.Parse("15:45:00"),
+                    Frequency = 30,
+                    ObjectActive=true,
+                 },
+                 new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[9].BusLineID,
+                    StartTime = TimeSpan.Parse("13:00:00"),
+                    EndTime = TimeSpan.Parse("01:00:00"),
+                    Frequency = 60,
+                    ObjectActive=true,
+                 },
+                 new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[10].BusLineID,
+                    StartTime = TimeSpan.Parse("08:00:00"),
+                    EndTime = TimeSpan.Parse("22:00:00"),
+                    Frequency = 20,
                     ObjectActive=true,
                  }
              };
