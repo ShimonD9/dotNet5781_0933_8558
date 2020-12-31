@@ -117,6 +117,7 @@ namespace PlGui
             {
                 AddBusStopWindow addBusStopWindow = new AddBusStopWindow(); // Creates the new window, and then shows it
                 addBusStopWindow.ShowDialog();
+                lbBusStops.ItemsSource = bl.GetAllBusStops();
                 //lbBuses.Items.Refresh(); // For seeing the new bus added on the list view
             }
         }

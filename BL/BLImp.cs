@@ -33,8 +33,8 @@ namespace BL
 
         public IEnumerable<BusLineStation> GetAllBusLineStations()
         {
-            return from doBusLineStation 
-                   in dl.GetAllBusLineStations() 
+            return from doBusLineStation
+                   in dl.GetAllBusLineStations()
                    select BusLineStationDoBoAdapter(doBusLineStation);
         }
 
@@ -71,7 +71,7 @@ namespace BL
         {
             BO.BusLine busLineBO = new BO.BusLine();
             busLineDO.CopyPropertiesTo(busLineBO);
-            busLineBO.LineStations = from boLineStation 
+            busLineBO.LineStations = from boLineStation
                                      in GetAllBusLineStations()
                                      where boLineStation.BusLineID == busLineBO.BusLineID
                                      orderby boLineStation.LineStationIndex
@@ -88,7 +88,7 @@ namespace BL
 
         public IEnumerable<BusLine> GetAllBusLines()
         {
-            return from doBusLine in dl.GetAllBusLines() select BusLineDoBoAdapter(doBusLine);         
+            return from doBusLine in dl.GetAllBusLines() select BusLineDoBoAdapter(doBusLine);
         }
 
         public IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate)
@@ -195,7 +195,7 @@ namespace BL
             }
             catch (DO.ExceptionDALBadLicsens ex)
             {
-                throw new BO.ExceptionBLBadLicense("License does not exist or bus inactive", ex); 
+                throw new BO.ExceptionBLBadLicense("License does not exist or bus inactive", ex);
             }
 
         }
@@ -278,16 +278,27 @@ namespace BL
 
         }
 
+        public void UpdateBusStop(int license, Action<BusStop> update)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+
         public void AddBusStop(BO.BusStop busStopBO)
         {
             try
             {
-                DO.BusStop newStop= busStopBoDoAdapter(busStopBO);
+                DO.BusStop newStop = busStopBoDoAdapter(busStopBO);
                 (DalFactory.GetDL()).AddBusStop(newStop);
             }
             catch (DO.ExceptionDALBadLicsens ex)
             {
-                throw new BO.ExceptionBLBadLicense("bus stop code already exist", ex);
+                throw new BO.ExceptionBLBadLicense("Bus stop code already exist", ex);
             }
         }
 

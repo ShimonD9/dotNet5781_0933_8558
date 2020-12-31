@@ -22,12 +22,12 @@ namespace BLApi
 
         #region BusStop
         IEnumerable<BusStop> GetAllBusStops();
-        //IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate);
-        //BusStop GetBusStop(int license);
-        //void AddBusStop(BusStop busStop);
-        //void UpdateBusStop(BusStop busStop);
-        //void UpdateBusStop(int license, Action<BusStop> update); // method that knows to updt specific fields in Person
-        //void DeleteBusStop(int license);
+        IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate);
+        BusStop GetBusStop(int license);
+        void AddBusStop(BusStop busStop);
+        void UpdateBusStop(BusStop busStop);
+        void UpdateBusStop(int license, Action<BusStop> update); // method that knows to updt specific fields in Person
+        void DeleteBusStop(int license);
         #endregion
 
         #region BusLineStation

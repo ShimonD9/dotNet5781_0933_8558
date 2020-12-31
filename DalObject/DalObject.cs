@@ -314,14 +314,15 @@ namespace DL
             if (DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey) != null &&
               DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey).ObjectActive == true)
                 throw new DO.ExceptionDALBadLicsens(busStop.BusStopKey, "Duplicate bus ID");
-            else if (DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey).ObjectActive == false)
+            else if (DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey) != null && 
+                DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey).ObjectActive == false)
             {
                 BusStop addBus = DataSource.ListBusStops.Find(b => b.BusStopKey == busStop.BusStopKey);
                 addBus.ObjectActive = true;
                 addBus = busStop.Clone();
             }
             else
-                DataSource.ListBusStops.Add(busStop.Clone());
+                DataSource.ListBusStops.Insert(0, busStop.Clone());
         }
         public void UpdateBusStop(BusStop busStop)
         {

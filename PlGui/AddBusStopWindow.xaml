@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
-        Title="Add a new bus stop" Height="373.391" Width="322.763" ResizeMode="CanMinimize">
+        Title="Add a new bus stop" Height="373.391" Width="365.847" ResizeMode="CanMinimize">
 
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -34,7 +34,7 @@
             </Grid>
 
             <Grid Grid.Row="0" Grid.Column="1">
-                <TextBox x:Name="tbBusStopCode" PreviewTextInput="NumberValidationTextBoxNoDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+                <TextBox x:Name="tbBusStopCode" MaxLength="5" PreviewTextInput="NumberValidationTextBoxNoDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0">
@@ -42,7 +42,7 @@
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="1">
-                <TextBox Name="tbBusStopName" Text="0"  PreviewTextInput="NumberValidationTextBox" TextAlignment="Center" VerticalAlignment="Center" Width="90" HorizontalAlignment="Center" />
+                <TextBox Name="tbBusStopName" TextAlignment="Center" VerticalAlignment="Center" Width="90" HorizontalAlignment="Center" />
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="0">
@@ -50,31 +50,31 @@
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="1">
-                <TextBox Name="tbBusStopAddress" Text="0" PreviewTextInput="NumberValidationTextBox"  TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
+                <TextBox Name="tbBusStopAddress" TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
             </Grid>
 
             <Grid Grid.Row="3" Grid.Column="0">
-                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the bus stop Latitude:" Width="221"  Margin="5"/>
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the bus stop Latitude (31, 33.3):" Width="221"  Margin="5"/>
             </Grid>
 
             <Grid Grid.Row="3" Grid.Column="1">
-                <TextBox Name="tbLatitude" Text="0" PreviewTextInput="NumberValidationTextBox"  TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
+                <TextBox Name="tbLatitude" Text="0" MaxLength="7" PreviewTextInput="NumberValidationTextBox"  TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
             </Grid>
 
             <Grid Grid.Row="4" Grid.Column="0">
-                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the bus stop Longitude:" Width="221"  Margin="5"/>
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the bus stop Longitude (34.3, 35.5):" Width="235"  Margin="5,5,0,5"/>
             </Grid>
 
             <Grid Grid.Row="4" Grid.Column="1">
-                <TextBox Name="tbLongitude" Text="0" PreviewTextInput="NumberValidationTextBox"  TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
+                <TextBox Name="tbLongitude" Text="0" MaxLength="7" PreviewTextInput="NumberValidationTextBox"  TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
             </Grid>
 
             <Grid Grid.Row="5" Grid.Column="0">
-                <CheckBox Name="ckbDigitalPanel" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Digital panel" Margin="5"/>
+                <CheckBox Name="cbDigitalPanel" HorizontalAlignment="Left" VerticalAlignment="Center" Content="Digital panel" Margin="5"/>
             </Grid>
-            
+
             <Grid Grid.Row="6" Grid.Column="0">
-                <CheckBox Name="ckbSunshade" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Sunshade" Margin="5"/>
+                <CheckBox Name="cbSunshade" HorizontalAlignment="Right" VerticalAlignment="Center" Content="Sunshade" Margin="5"/>
             </Grid>
 
         </Grid>
