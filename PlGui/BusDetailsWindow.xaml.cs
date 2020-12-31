@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -79,7 +80,7 @@ namespace PlGui
                         bus.LastTreatmentDate = treatDateChosen;
                         bus.Mileage = double.Parse(tbMileage.Text);
                         bus.MileageAtLastTreat = double.Parse(tbMileageAtTreat.Text);
-                        bl.UpdateBus(bus);                        
+                        bl.UpdateBus(bus);
                         this.Close(); // Closes the window
                     }
                 }
