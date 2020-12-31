@@ -122,7 +122,8 @@ namespace DL
             if (DataSource.ListBusAtTravels.FirstOrDefault(b => b.License == bus.License) != null &&
                DataSource.ListBusAtTravels.FirstOrDefault(b => b.License == bus.License).ObjectActive == true)
                 throw new DO.ExceptionDALBadLicsens(bus.License, "Duplicate bus ID");
-            else if (DataSource.ListBusAtTravels.FirstOrDefault(b => b.License == bus.License).ObjectActive == false)
+            else if (DataSource.ListBusAtTravels.FirstOrDefault(b => b.License == bus.License) != null &&
+                DataSource.ListBusAtTravels.FirstOrDefault(b => b.License == bus.License).ObjectActive == false)
             {
                 BusAtTravel addBus = DataSource.ListBusAtTravels.Find(b => b.License == bus.License);
                 addBus.ObjectActive = true;
@@ -250,7 +251,8 @@ namespace DL
             if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber) != null &&
                DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == true)
                 throw new DO.ExceptionDALBadLicsens(busLine.BusLineNumber, "Duplicate bus ID");
-            else if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == false)
+            else if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber) != null &&
+                DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == false)
             {
                 BusLine addBus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLine.BusLineNumber);
                 addBus.ObjectActive = true;
@@ -381,7 +383,8 @@ namespace DL
             if (DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA) != null &&
               DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA).ObjectActive == true)
                 throw new DO.ExceptionDALBadLicsens(consecutiveStations.BusStopKeyA, "Duplicate bus ID");
-            else if (DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA).ObjectActive == false)
+            else if (DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA) != null &&
+                DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA).ObjectActive == false)
             {
                 ConsecutiveStations addBus = DataSource.ListConsecutiveStations.Find(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA);
                 addBus.ObjectActive = true;
@@ -447,7 +450,8 @@ namespace DL
             if (DataSource.ListLineDepartures.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID) != null &&
               DataSource.ListLineDepartures.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID).ObjectActive == true)
                 throw new DO.ExceptionDALBadLicsens(lineDeparture.BusLineID, "Duplicate bus ID");
-            else if (DataSource.ListLineDepartures.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID).ObjectActive == false)
+            else if (DataSource.ListLineDepartures.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID) != null &&
+                DataSource.ListLineDepartures.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID).ObjectActive == false)
             {
                 LineDeparture addBus = DataSource.ListLineDepartures.Find(b => b.BusLineID == lineDeparture.BusLineID);
                 addBus.ObjectActive = true;
@@ -514,7 +518,8 @@ namespace DL
             if (DataSource.ListUsers.FirstOrDefault(b => b.UserName == user.UserName) != null &&
               DataSource.ListUsers.FirstOrDefault(b => b.UserName == user.UserName).ObjectActive == true)
                 throw new DO.ExceptionDALBadIdUser(user.UserName, "Duplicate bus ID");
-            else if (DataSource.ListUsers.FirstOrDefault(b => b.UserName == user.UserName).ObjectActive == false)
+            else if (DataSource.ListUsers.FirstOrDefault(b => b.UserName == user.UserName) != null &&
+                DataSource.ListUsers.FirstOrDefault(b => b.UserName == user.UserName).ObjectActive == false)
             {
                 User addUser = DataSource.ListUsers.Find(b => b.UserName == user.UserName);
                 addUser.ObjectActive = true;
