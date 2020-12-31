@@ -21,7 +21,7 @@ namespace DO
         public ExceptionDALBadIdUser(string id) : base() => ID = id;
         public ExceptionDALBadIdUser(string id, string message) : base(message) => ID = id;
         public ExceptionDALBadIdUser(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
-        public override string ToString() => base.ToString() + $", bad dog : {ID}";
+        public override string ToString() => base.ToString() + $", bad id : {ID}";
     }
     public class ExceptionDALInactiveBus : Exception
     {
@@ -29,7 +29,7 @@ namespace DO
         public ExceptionDALInactiveBus(int id) : base() => ID = id;
         public ExceptionDALInactiveBus(int id, string message) : base(message) => ID = id;
         public ExceptionDALInactiveBus(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
-        public override string ToString() => base.ToString() + $", bad dog : {ID}";
+        public override string ToString() => base.ToString() + $", bad id : {ID}";
     }
     public class ExceptionDALInactiveUser : Exception
     {
@@ -37,7 +37,7 @@ namespace DO
         public ExceptionDALInactiveUser(string id) : base() => ID = id;
         public ExceptionDALInactiveUser(string id, string message) : base(message) => ID = id;
         public ExceptionDALInactiveUser(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
-        public override string ToString() => base.ToString() + $", bad dog : {ID}";
+        public override string ToString() => base.ToString() + $", bad id : {ID}";
     }
 
 }

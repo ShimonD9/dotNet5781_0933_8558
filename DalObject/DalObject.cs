@@ -339,13 +339,14 @@ namespace DL
             BusStop busUpdate = GetBusStop(busStopKey);
             update(busUpdate);
         }
+
         public void DeleteBusStop(int busStopKey)
         {
             BusStop bus = DataSource.ListBusStops.Find(b => b.BusStopKey == busStopKey);
             if (bus != null &&  bus.ObjectActive)
                 bus.ObjectActive = false;
             else if (!bus.ObjectActive)
-                throw new DO.ExceptionDALInactiveBus(busStopKey, $"the bus is  inactive");
+                throw new DO.ExceptionDALInactiveBus(busStopKey, $"the bus stop is inactive");
             else
                 throw new DO.ExceptionDALBadLicsens(busStopKey, $"bad id: {busStopKey}");
         }
@@ -374,6 +375,7 @@ namespace DL
             else
                 throw new DO.ExceptionDALBadLicsens(busConsecutive, $"bad id: {busConsecutive}");
         }
+
         public void AddConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
             if (DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA) != null &&
@@ -398,11 +400,13 @@ namespace DL
             else
                 throw new DO.ExceptionDALBadLicsens(consecutiveStations.BusStopKeyA, $"bad id: {consecutiveStations.BusStopKeyA}");
         }
+
         public void UpdateConsecutiveStations(int busConsecutive, Action<ConsecutiveStations> update) // method that knows to updt specific fields in Person
         {
             ConsecutiveStations busConsecutiveUpdate = GetConsecutiveStations(busConsecutive);
             update(busConsecutiveUpdate);
         }
+
         public void DeleteConsecutiveStations(int busConsecutiveKey)
         {
             ConsecutiveStations busConsecutive = DataSource.ListConsecutiveStations.Find(b => b.BusStopKeyA == busConsecutiveKey);

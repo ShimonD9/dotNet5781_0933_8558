@@ -71,6 +71,7 @@ namespace PlGui
                     object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
                     BusStopDetailsWindow busStopDetailsWindow = new BusStopDetailsWindow(item);
                     busStopDetailsWindow.ShowDialog();
+                    lbBusStops.ItemsSource = bl.GetAllBusStops();
                 }
             }
         }

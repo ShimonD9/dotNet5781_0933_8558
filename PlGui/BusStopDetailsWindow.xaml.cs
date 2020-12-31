@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BLApi;
+using BO;
 
 namespace PlGui
 {
@@ -19,6 +21,8 @@ namespace PlGui
     /// </summary>
     public partial class BusStopDetailsWindow : Window
     {
+        IBL bl = BLFactory.GetBL("1");
+        BO.BusStop busStop;
         public BusStopDetailsWindow()
         {
             InitializeComponent();
@@ -29,6 +33,7 @@ namespace PlGui
         {
             InitializeComponent();
             BusStopDet.DataContext = item;
+            busStop = item as BO.BusStop;
         }
 
         private void Button_Update(object sender, RoutedEventArgs e)
@@ -38,7 +43,24 @@ namespace PlGui
 
         private void Button_Delete(object sender, RoutedEventArgs e)
         {
-
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this bus stop?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+            if (result == MessageBoxResult.Yes)
+            {
+                try
+                {
+                    bl.DeleteBusStop(busStop.BusStopKey);
+                    this.Close(); // Closes the window
+                }
+                catch (BO.ExceptionBLBadLicense)
+                {
+                    MessageBox.Show("The bus license doesn't exist or the bus is inactive!", "Cannot delete the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                catch
+                {
+                    string busLines = string.Join("\n", busStop.LinesStopHere);
+                    MessageBox.Show("This bus stop serves the next bus lines: \n" + busLines + ".\n You must delete the bus station from the bus lines details window, before removing the bus stop itself.", "Unable to delte the bus stop!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
         }
     }
 }

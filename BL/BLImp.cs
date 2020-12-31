@@ -21,6 +21,8 @@ namespace BL
         {
             BO.BusLineStation busLineStationBO = new BO.BusLineStation();
             busLineStationDO.CopyPropertiesTo(busLineStationBO);
+            // Update DistanceToNext, based on consecutive stations (using BusStopKey & NextStation)
+            // Update TimeToNext, based on consecutive stations (using BusStopKey & NextStation)
             return busLineStationBO;
         }
 
@@ -208,7 +210,7 @@ namespace BL
             }
             catch (DO.ExceptionDALBadLicsens ex)
             {
-                throw new BO.ExceptionBLBadLicense("Licesns does not exist Or bus inactive", ex);
+                throw new BO.ExceptionBLBadLicense("License does not exist Or bus inactive", ex);
             }
         }
         public void DeleteBus(int license)
@@ -219,7 +221,7 @@ namespace BL
             }
             catch (DO.ExceptionDALBadLicsens ex)
             {
-                throw new BO.ExceptionBLBadLicense("Licesns does not exist Or bus inactive", ex);
+                throw new BO.ExceptionBLBadLicense("he bus license doesn't exist or the bus is inactive!", ex);
             }
         }
         #endregion
@@ -306,6 +308,8 @@ namespace BL
         {
             try
             {
+                if (busStopDoBoAdapter(dl.GetBusStop(BusStopCode)).LinesStopHere.Count() > 0)
+                    throw new BO.ExceptionBLLinesStopHere("The bus stop serves bus lines, and cannot be deleted.");
                 dl.DeleteBusStop(BusStopCode);
             }
             catch (DO.ExceptionDALBadLicsens ex)

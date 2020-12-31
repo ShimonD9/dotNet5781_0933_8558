@@ -91,7 +91,7 @@ namespace PlGui
         }
 
         /// <summary>
-        /// The treatment button click event
+        /// The delete button click event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -100,7 +100,14 @@ namespace PlGui
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this bus?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
             if (result == MessageBoxResult.Yes)
             {
-                bl.DeleteBus(bus.License);
+                try
+                {
+                    bl.DeleteBus(bus.License);
+                }
+                catch (BO.ExceptionBLBadLicense)
+                {
+                    MessageBox.Show("The bus license doesn't exist or the bus is inactive!", "Cannot delete the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
                 this.Close(); // Closes the window
             }
         }

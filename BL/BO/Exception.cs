@@ -23,5 +23,14 @@ namespace BO
         public override string ToString() => base.ToString() + $", bad lisence id: {ID}";
     }
 
+    public class ExceptionBLLinesStopHere : Exception
+    {
+        public string ID;
+        public ExceptionBLLinesStopHere(string id) : base() => ID = id;
+        public ExceptionBLLinesStopHere(string id, string message) : base(message) => ID = id;
+        public ExceptionBLLinesStopHere(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public override string ToString() => base.ToString() + $", bus stop : {ID} serves bus lines";
+    }
+
 }
 
