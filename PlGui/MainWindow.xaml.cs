@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
 using BLApi;
 using BO;
 
@@ -122,8 +123,6 @@ namespace PlGui
                 //lbBuses.Items.Refresh(); // For seeing the new bus added on the list view
             }
         }
-
-
-
+          
     }
 }

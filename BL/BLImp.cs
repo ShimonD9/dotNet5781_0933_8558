@@ -406,8 +406,4 @@ namespace BL
         }
         #endregion
     }
-
-
-
-
 }

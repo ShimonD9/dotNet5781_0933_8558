@@ -25,10 +25,10 @@ namespace PlGui
         BO.Bus bus;
 
 
-        public BusDetailsWindow()
-        {
-            InitializeComponent();
-        }
+        //public BusDetailsWindow()
+        //{
+        //    InitializeComponent();
+        //}
 
         // A second builder, to get the item selected in the list box
         public BusDetailsWindow(object item)
@@ -79,7 +79,7 @@ namespace PlGui
                         bus.LastTreatmentDate = treatDateChosen;
                         bus.Mileage = double.Parse(tbMileage.Text);
                         bus.MileageAtLastTreat = double.Parse(tbMileageAtTreat.Text);
-                        bl.UpdateBus(bus);
+                        bl.UpdateBus(bus);                        
                         this.Close(); // Closes the window
                     }
                 }
