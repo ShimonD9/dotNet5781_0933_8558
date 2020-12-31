@@ -57,8 +57,8 @@ namespace PlGui
                 }
                 catch
                 {
-                    string busLines = string.Join("\n", busStop.LinesStopHere);
-                    MessageBox.Show("This bus stop serves the next bus lines: \n" + busLines + ".\n You must delete the bus station from the bus lines details window, before removing the bus stop itself.", "Unable to delte the bus stop!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    string busLines = string.Join(", ", from lineBus in busStop.LinesStopHere select lineBus.BusLineNumber);
+                    MessageBox.Show("This bus stop serves the next bus lines: \n" + busLines + ".\nYou must remove the bus station from the bus lines details window, before deleting the bus stop itself.", "Unable to delte the bus stop!", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
