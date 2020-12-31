@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DS
 {
-    class Config
+    public static class Config
     {
         private static int runningNumBusAtTravel = 0;
         public static int RunningNumBusAtTravel { get => ++runningNumBusAtTravel; }

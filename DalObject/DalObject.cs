@@ -255,6 +255,7 @@ namespace DL
                 DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == false)
             {
                 BusLine addBus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLine.BusLineNumber);
+                addBus.BusLineID = Config.RunningNumBusLine;
                 addBus.ObjectActive = true;
                 addBus = busLine.Clone();
             }
