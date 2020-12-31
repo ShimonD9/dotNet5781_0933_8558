@@ -103,7 +103,19 @@ namespace BL
         }
         public void AddBusLine(BusLine busLine)
         {
-            throw new NotImplementedException();
+            DO.BusLine newBus = BusLineBoDoAdapter(busLine);
+            if (dl.GetAllBusLines().Any(b => b.FirstBusStopKey == newBus.FirstBusStopKey) &&
+                dl.GetAllBusLines().Any(b => b.LastBusStopKey == newBus.LastBusStopKey))
+                throw new ExceptionBLBusLineExist("License already exist");               
+            try
+            {
+                (DalFactory.GetDL()).AddBusLine(newBus);
+            }
+
+            catch (DO.ExceptionDALBadLicsens ex)
+            {
+                throw new BO.ExceptionBLBadLicense("License already exist", ex);
+            }
         }
         public void UpdateBusLine(BusLine busLine)
         {
@@ -377,14 +389,14 @@ namespace BL
 
         public void UpdateUser(User userBO)
         {
-                try
-                {
-                    dl.UpdateUser(userBoDoAdapter(userBO));
-                }
-                catch (DO.ExceptionDALBadIdUser ex)
-                {
-                    throw new BO.ExceptionBLBadUserId("user does not exist Or inactive", ex);
-                }
+            try
+            {
+                dl.UpdateUser(userBoDoAdapter(userBO));
+            }
+            catch (DO.ExceptionDALBadIdUser ex)
+            {
+                throw new BO.ExceptionBLBadUserId("user does not exist Or inactive", ex);
+            }
         }
 
         public void UpdateUser(string userName, Action<User> update) // method that knows to updt specific fields in Person
