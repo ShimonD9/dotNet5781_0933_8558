@@ -21,6 +21,17 @@ namespace BL
         {
             BO.BusLineStation busLineStationBO = new BO.BusLineStation();
             busLineStationDO.CopyPropertiesTo(busLineStationBO);
+            // לוודא שצורת השאילתא תקינה
+            busLineStationBO.DistanceToNext = (from doConStations
+                                              in dl.GetAllConsecutiveStations()
+                                              where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
+                                                    doConStations.BusStopKeyB == busLineStationBO.NextStation
+                                              select doConStations.Distance).FirstOrDefault();
+            busLineStationBO.TimeToNext = (from doConStations
+                                              in dl.GetAllConsecutiveStations()
+                                           where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
+                                                 doConStations.BusStopKeyB == busLineStationBO.NextStation
+                                           select doConStations.TravelTime).FirstOrDefault();
             // Update DistanceToNext, based on consecutive stations (using BusStopKey & NextStation)
             // Update TimeToNext, based on consecutive stations (using BusStopKey & NextStation)
             return busLineStationBO;
