@@ -104,8 +104,8 @@ namespace BL
         public void AddBusLine(BusLine busLine)
         {
             DO.BusLine newBus = BusLineBoDoAdapter(busLine);
-            if (dl.GetAllBusLines().Any(b => b.FirstBusStopKey == newBus.FirstBusStopKey) &&
-                dl.GetAllBusLines().Any(b => b.LastBusStopKey == newBus.LastBusStopKey))
+            if (dl.GetAllBusLines().Any(b => b.FirstBusStopKey == newBus.FirstBusStopKey &&
+            b.LastBusStopKey == newBus.LastBusStopKey))
                 throw new ExceptionBLBusLineExist("License already exist");               
             try
             {
