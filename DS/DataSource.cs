@@ -1141,7 +1141,7 @@ namespace DS
                         BusStopKeyA = ListBusLines[i].FirstBusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 15].BusStopKey,
                         Distance = Math.Round((double)(randInt / 3.141592), 2),
-                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 2), rnd.Next(0, randInt * 5)),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1166,7 +1166,7 @@ namespace DS
                         BusStopKeyA = ListBusStops[2 * i + 15].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 16].BusStopKey,
                         Distance = Math.Round((double)(randInt / 3.141592), 2),
-                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 2), rnd.Next(0, randInt * 5)),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1191,7 +1191,7 @@ namespace DS
                         BusStopKeyA = ListBusStops[2 * i + 16].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 17].BusStopKey,
                         Distance = Math.Round((double)(randInt / 3.141592), 2),
-                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 2), rnd.Next(0, randInt * 5)),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1216,7 +1216,7 @@ namespace DS
                         BusStopKeyA = ListBusStops[2 * i + 17].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 18].BusStopKey,
                         Distance = Math.Round((double)(randInt / 3.141592), 2),
-                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 2), rnd.Next(0, randInt * 5)),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1241,7 +1241,7 @@ namespace DS
                         BusStopKeyA = ListBusStops[2 * i + 18].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 19].BusStopKey,
                         Distance = Math.Round((double)(randInt / 3.141592), 2),
-                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 2), rnd.Next(0, randInt * 5)),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1266,7 +1266,7 @@ namespace DS
                         BusStopKeyA = ListBusStops[2 * i + 19].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 20].BusStopKey,
                         Distance = Math.Round((double)(randInt / 3.141592), 2),
-                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 2), rnd.Next(0, randInt * 5)),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1291,7 +1291,7 @@ namespace DS
                         BusStopKeyA = ListBusStops[2 * i + 20].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 21].BusStopKey,
                         Distance = Math.Round((double)(randInt / 3.141592), 2),
-                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 2), rnd.Next(0, randInt * 5)),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1316,7 +1316,7 @@ namespace DS
                         BusStopKeyA = ListBusStops[2 * i + 21].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 22].BusStopKey,
                         Distance = Math.Round((double)(randInt / 3.141592), 2),
-                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 2), rnd.Next(0, randInt * 5)),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1341,7 +1341,7 @@ namespace DS
                         BusStopKeyA = ListBusStops[2 * i + 22].BusStopKey,
                         BusStopKeyB = ListBusLines[i].LastBusStopKey,
                         Distance = Math.Round((double)(randInt / 3.141592), 2),
-                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 2), rnd.Next(0, randInt * 5)),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );

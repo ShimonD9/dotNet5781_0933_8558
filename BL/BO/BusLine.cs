@@ -16,6 +16,7 @@ namespace BO
         public int LastBusStopKey { get; set; }
         public bool ObjectActive { get; set; }
         public IEnumerable<BusLineStation> LineStations { get; set; }
+        public IEnumerable<TimeSpan> Schedule { get; set; }
 
         /// <summary>
         /// Formats a string which represents the Bus object
