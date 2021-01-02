@@ -23,6 +23,8 @@ namespace PlGui
     public partial class AddBusLineWindow : Window
     {
         IBL bl = BLFactory.GetBL("1");
+
+
         public AddBusLineWindow()
         {
             InitializeComponent();
@@ -43,9 +45,15 @@ namespace PlGui
 
         // Using regex to unable wrongs inputs in the text box:
 
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        private void NumberValidationTextBoxColon(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9/.]$");
+            Regex regex = new Regex("[^0-9/:]$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void NumberValidationTextBoxDots(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9/:]$");
             e.Handled = regex.IsMatch(e.Text);
         }
 

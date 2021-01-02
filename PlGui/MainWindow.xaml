@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
-        Title="Bus management display" Height="600" Width="800" ResizeMode="CanMinimize">
+        Title="Bus management display" Height="650" Width="800" ResizeMode="CanMinimize">
     <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
             <TabItem Header="Buses">
                 <Grid Background="#FFE5E5E5">

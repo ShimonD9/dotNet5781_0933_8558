@@ -28,8 +28,18 @@ namespace BL
                                      where boLineStation.BusLineID == busLineBO.BusLineID
                                      orderby boLineStation.LineStationIndex
                                      select boLineStation;
-            //busLineBO.Schedule = new IEnumerable<>
-            //    getLineDeparture(busLineB
+            BO.LineDeparture lineDeparture = GetLineDeparture(busLineBO.BusLineID);
+            TimeSpan addedTS = lineDeparture.StartTime;
+            TimeSpan lastTS = lineDeparture.EndTime;
+            TimeSpan toAdd = new TimeSpan(0,lineDeparture.Frequency,0);
+            List<TimeSpan> schedule = new List<TimeSpan>{  addedTS };
+            
+            while (addedTS.CompareTo(lastTS) <= 0)
+            {
+                addedTS = addedTS.Add(toAdd);
+                schedule.Add(addedTS);
+            }
+            busLineBO.Schedule = from ts in schedule select ts;
             return busLineBO;
         }
 

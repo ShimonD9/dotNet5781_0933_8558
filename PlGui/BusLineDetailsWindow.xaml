@@ -141,6 +141,7 @@
 
                         </TabItem>
                         <TabItem Header="Line departure times">
+                            <ListView Grid.Row="1" Name ="lvSchedule" HorizontalContentAlignment="Center" ItemsSource="{Binding Path='Schedule'}" />
                         </TabItem>
                     </TabControl>
                 </Border>
