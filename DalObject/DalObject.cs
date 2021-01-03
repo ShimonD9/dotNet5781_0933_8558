@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-
-using DalApi;
+﻿using DalApi;
 using DO;
 using DS;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DL
 {
@@ -184,10 +180,11 @@ namespace DL
         }
         public void AddBusLineStation(BusLineStation busLineStation)
         {
-            BusLineStation newBusLineStation = DataSource.ListBusLineStations.FirstOrDefault(b => b.BusStopKey == busLineStation.BusStopKey);
-            if (newBusLineStation != null && newBusLineStation.ObjectActive == true)
+            BusLineStation existBusLineStation = DataSource.ListBusLineStations.FirstOrDefault(b => b.BusStopKey == busLineStation.BusStopKey
+            && b.BusLineID == busLineStation.BusLineID);
+            if (existBusLineStation != null && existBusLineStation.ObjectActive == true)
                 throw new DO.ExceptionDALBadLicsens(busLineStation.BusStopKey, "Duplicate bus ID");
-            else if (newBusLineStation.ObjectActive == false)
+            else if (existBusLineStation != null && existBusLineStation.ObjectActive == false)
             {
                 BusLineStation addBus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busLineStation.BusStopKey);
                 addBus.ObjectActive = true;
@@ -250,11 +247,11 @@ namespace DL
 
         public int AddBusLine(BusLine busLine)
         {
-            BusLine newBusLine = DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber);
+            BusLine exsistBusLine = DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber);
             int idToReturn;
             // Need to correct this condition:
-            if (newBusLine != null && newBusLine.ObjectActive == true && newBusLine.FirstBusStopKey == busLine.FirstBusStopKey
-                && newBusLine.LastBusStopKey == busLine.LastBusStopKey)
+            if (exsistBusLine != null && exsistBusLine.ObjectActive == true && exsistBusLine.FirstBusStopKey == busLine.FirstBusStopKey
+                && exsistBusLine.LastBusStopKey == busLine.LastBusStopKey)
                 throw new DO.ExceptionDALBadLicsens(busLine.BusLineNumber, "Duplicate bus ID");
 
             else if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber) != null &&
@@ -268,6 +265,7 @@ namespace DL
             else
             {
                 busLine.BusLineID = Config.RunningNumBusLine;
+                busLine.ObjectActive = true;
                 idToReturn = busLine.BusLineID;
                 DataSource.ListBusLines.Add(busLine.Clone());
             }
@@ -472,6 +470,7 @@ namespace DL
                 addBus = lineDeparture.Clone();
             }
             else
+                lineDeparture.ObjectActive = true;
                 DataSource.ListLineDepartures.Add(lineDeparture.Clone());
         }
         public void UpdateLineDeparture(LineDeparture lineDeparture)

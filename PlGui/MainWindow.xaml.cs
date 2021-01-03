@@ -110,7 +110,7 @@ namespace PlGui
             {
                 AddBusLineWindow addBusLineWindow = new AddBusLineWindow(); // Creates the new window, and then shows it
                 addBusLineWindow.ShowDialog();
-                lbBuses.ItemsSource = bl.GetAllBuses();
+                lbBusLines.ItemsSource = bl.GetAllBusLines();
                 //lbBuses.Items.Refresh(); // For seeing the new bus added on the list view
             }
         }

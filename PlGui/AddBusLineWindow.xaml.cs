@@ -23,17 +23,16 @@ namespace PlGui
     public partial class AddBusLineWindow : Window
     {
         IBL bl = BLFactory.GetBL("1");
-        BO.BusLine newBusLine;
-        BO.BusLineStation newStationA;
-        BO.BusLineStation newStationB;
-        BO.ConsecutiveStations newConStations;
-        BO.LineDeparture newLineDeparture;
+        BO.BusLine newBusLine = new BO.BusLine();
+        BO.BusLineStation newStationA = new BusLineStation();
+        BO.BusLineStation newStationB = new BusLineStation();
+        BO.ConsecutiveStations newConStations = new ConsecutiveStations();
+        BO.LineDeparture newLineDeparture = new LineDeparture();
         int runningNumber;
 
         public AddBusLineWindow()
         {
-            InitializeComponent();
-            newBusLine = new BO.BusLine();
+            InitializeComponent();      
             cbArea.ItemsSource = Enum.GetValues(typeof(BO.Enums.AREA));
             cbLastBusStop.IsEnabled = false;
             cbFirstBusStop.ItemsSource = bl.GetAllBusStops().OrderBy(busStop => busStop.BusStopKey);
@@ -69,29 +68,33 @@ namespace PlGui
                     newStationA.LineStationIndex = 0;
                     newStationA.BusStopKey = newBusLine.FirstBusStopKey;
                     newStationA.NextStation = newBusLine.LastBusStopKey;
+                    bl.AddBusLineStation(newStationA);
 
                     newStationB.BusLineID = runningNumber ;
                     newStationB.LineStationIndex = 1;
                     newStationB.BusStopKey = newBusLine.LastBusStopKey;
                     newStationB.NextStation = 0;
+                    bl.AddBusLineStation(newStationB);
 
                     // Consecutive line stations:
                     newConStations.BusStopKeyA = newBusLine.FirstBusStopKey;
                     newConStations.BusStopKeyB = newBusLine.LastBusStopKey;
                     newConStations.Distance = kmToNext;
                     newConStations.TravelTime = timeToNext;
-
+                    
                     // Departure:
                     newLineDeparture.BusLineID = runningNumber ;
                     newLineDeparture.StartTime = startTime;
                     newLineDeparture.EndTime = endTime;
                     newLineDeparture.Frequency = (int)sFrequency.Value;
+                    bl.AddLineDeparture(newLineDeparture);
+                    //IEnumerable<BO.BusLine> boBuses = bl.GetAllBusLines();
                     this.Close();
                 }
             }
             catch (BO.ExceptionBLBadLicense)
             {
-                MessageBox.Show("The bus stop code you entered already exists in the company!", "Cannot add the bus stop", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("The bus line number you entered already exists in the company!", "Cannot add the bus stop", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 

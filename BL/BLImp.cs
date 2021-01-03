@@ -329,6 +329,19 @@ namespace BL
             return LineDepartureDoBoAdapter(lineDepartureDO);
 
         }
+
+        public void AddLineDeparture(LineDeparture lineDeparture)
+        {
+            try
+            {
+                DO.LineDeparture newlineDeparture = LineDepartureBoDoAdapter(lineDeparture);
+                (DalFactory.GetDL()).AddLineDeparture(newlineDeparture);
+            }
+            catch (DO.ExceptionDALBadLicsens ex)
+            {
+                throw new BO.ExceptionBLBadLicense("Bus stop code already exist", ex);
+            }
+        }
         #endregion
 
         #region BusLineStation

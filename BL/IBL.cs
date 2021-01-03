@@ -50,6 +50,12 @@ namespace BLApi
         void DeleteBusLine(int license);
         #endregion
 
+        #region LineDeparture
+      IEnumerable<LineDeparture> GetAllLineDepartures();
+        LineDeparture GetLineDeparture(int busLineID);
+       void AddLineDeparture(LineDeparture busLineStationBo);
+        #endregion
+
         #region User
         IEnumerable<User> GetAllUsers();
         IEnumerable<User> GetAllUsersBy(Predicate<User> predicate);

@@ -80,9 +80,7 @@ namespace PlGui
                         bus.LastTreatmentDate = treatDateChosen;
                         bus.Mileage = double.Parse(tbMileage.Text);
                         bus.MileageAtLastTreat = double.Parse(tbMileageAtTreat.Text);
-                        bl.UpdateBus(bus);
-                        IEnumerable<BO.Bus> bobuses = bl.GetAllBuses();
-                        MessageBox.Show(bl.GetBus(bus.License).ToString()); // ניסוי שמראה שפונקציית העדכון לא עובדת
+                        bl.UpdateBus(bus);                        
                         this.Close(); // Closes the window
                     }
                 }
