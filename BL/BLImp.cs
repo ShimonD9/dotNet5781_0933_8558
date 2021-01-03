@@ -28,18 +28,21 @@ namespace BL
                                      where boLineStation.BusLineID == busLineBO.BusLineID
                                      orderby boLineStation.LineStationIndex
                                      select boLineStation;
+
+            // Schedule initializing:
             BO.LineDeparture lineDeparture = GetLineDeparture(busLineBO.BusLineID);
             TimeSpan addedTS = lineDeparture.StartTime;
             TimeSpan lastTS = lineDeparture.EndTime;
-            TimeSpan toAdd = new TimeSpan(0,lineDeparture.Frequency,0);
+            TimeSpan toAdd = new TimeSpan(0, lineDeparture.Frequency, 0);
             List<TimeSpan> schedule = new List<TimeSpan>{  addedTS };
             
-            while (addedTS.CompareTo(lastTS) <= 0)
+            while (addedTS.CompareTo(lastTS) < 0)
             {
                 addedTS = addedTS.Add(toAdd);
                 schedule.Add(addedTS);
             }
-            busLineBO.Schedule = from ts in schedule select ts;
+            schedule.Add(lastTS);
+            busLineBO.Schedule = from ts in schedule select ts; // MyList.Select(item => new Item(<cons params>).ToList() - הצעת מתן
             return busLineBO;
         }
 
@@ -66,9 +69,11 @@ namespace BL
         public void AddBusLine(BusLine busLine)
         {
             DO.BusLine newBus = BusLineBoDoAdapter(busLine);
-            if (dl.GetAllBusLines().Any(b => b.FirstBusStopKey == newBus.FirstBusStopKey &&
-            b.LastBusStopKey == newBus.LastBusStopKey))
-                throw new ExceptionBLBusLineExist("License already exist");               
+            if (dl.GetAllBusLines().Any(b => 
+               b.FirstBusStopKey == newBus.FirstBusStopKey 
+            && b.LastBusStopKey == newBus.LastBusStopKey
+            && b.BusLineNumber == newBus.BusLineNumber))
+                throw new ExceptionBLBusLineExist("Bus Line already exist");               
             try
             {
                 (DalFactory.GetDL()).AddBusLine(newBus);
