@@ -44,7 +44,7 @@ namespace BLApi
         IEnumerable<BusLine> GetAllBusLines();
         IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate);
         BusLine GetBusLine(int license);
-        void AddBusLine(BusLine busLine);
+        int AddBusLine(BusLine busLine);
         void UpdateBusLine(BusLine busLine);
         void UpdateBusLine(int license, Action<BusLine> update); // method that knows to updt specific fields in Person
         void DeleteBusLine(int license);

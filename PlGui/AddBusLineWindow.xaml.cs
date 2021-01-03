@@ -61,16 +61,16 @@ namespace PlGui
                     newBusLine.Area = (Enums.AREA)cbArea.SelectedItem;
                     newBusLine.FirstBusStopKey = (cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey;
                     newBusLine.LastBusStopKey = (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey;
-                    //runningNumber = bl.AddBusLine(newBusLine);   // Inserts the new bus to the beginning of the list                 
+                    runningNumber = bl.AddBusLine(newBusLine);   // Inserts the new bus to the beginning of the list                 
 
                     // Line Stations Addition:
 
-                    newStationA.BusLineID = newBusLine.BusLineID;
+                    newStationA.BusLineID = runningNumber;
                     newStationA.LineStationIndex = 0;
                     newStationA.BusStopKey = newBusLine.FirstBusStopKey;
                     newStationA.NextStation = newBusLine.LastBusStopKey;
 
-                    //newStationB.BusLineID = ;
+                    newStationB.BusLineID = runningNumber ;
                     newStationB.LineStationIndex = 1;
                     newStationB.BusStopKey = newBusLine.LastBusStopKey;
                     newStationB.NextStation = 0;
@@ -82,7 +82,7 @@ namespace PlGui
                     newConStations.TravelTime = timeToNext;
 
                     // Departure:
-                    //newLineDeparture.BusLineID = ;
+                    newLineDeparture.BusLineID = runningNumber ;
                     newLineDeparture.StartTime = startTime;
                     newLineDeparture.EndTime = endTime;
                     newLineDeparture.Frequency = (int)sFrequency.Value;

@@ -248,10 +248,10 @@ namespace DL
                 throw new DO.ExceptionDALBadLicsens(busLineNumber, $"bad id: {busLineNumber}");
         }
 
-        public void AddBusLine(BusLine busLine)
+        public int AddBusLine(BusLine busLine)
         {
             BusLine newBusLine = DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber);
-            //int idToReturn;
+            int idToReturn;
             // Need to correct this condition:
             if (newBusLine != null && newBusLine.ObjectActive == true && newBusLine.FirstBusStopKey == busLine.FirstBusStopKey
                 && newBusLine.LastBusStopKey == busLine.LastBusStopKey)
@@ -262,16 +262,16 @@ namespace DL
             {
                 BusLine addBus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLine.BusLineNumber);
                 addBus.ObjectActive = true;
-                //idToReturn = addBus.BusLineID;
+                idToReturn = addBus.BusLineID;
                 addBus = busLine.Clone();
             }
             else
             {
                 busLine.BusLineID = Config.RunningNumBusLine;
-                //idToReturn = busLine.BusLineID;
+                idToReturn = busLine.BusLineID;
                 DataSource.ListBusLines.Add(busLine.Clone());
             }
-            //return idToReturn;
+            return idToReturn;
         }
 
         public void UpdateBusLine(BusLine busLine)

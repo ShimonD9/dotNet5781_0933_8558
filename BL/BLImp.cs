@@ -66,20 +66,20 @@ namespace BL
         {
             throw new NotImplementedException();
         }
-        public void AddBusLine(BusLine busLine)
+        public int AddBusLine(BusLine busLine)
         {
-            //int idToReturn;
+            int idToReturn;
             DO.BusLine newBus = BusLineBoDoAdapter(busLine);
             try
             {
-                (DalFactory.GetDL()).AddBusLine(newBus);
+                idToReturn = (DalFactory.GetDL()).AddBusLine(newBus);
             }
 
             catch (DO.ExceptionDALBadLicsens ex)
             {
                 throw new BO.ExceptionBLBadLicense("Bus Line License already exist", ex);
             }
-            //return idToReturn;
+            return idToReturn;
         }
         public void UpdateBusLine(BusLine busLine)
         {
