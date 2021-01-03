@@ -250,10 +250,13 @@ namespace DL
 
         public void AddBusLine(BusLine busLine)
         {
+
             int idToReturn;
             // Need to correct this condition:
             if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber) != null &&
-               DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == true)
+               DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == true
+                && DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).FirstBusStopKey == busLine.FirstBusStopKey
+                && DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).LastBusStopKey == busLine.LastBusStopKey)
                 throw new DO.ExceptionDALBadLicsens(busLine.BusLineNumber, "Duplicate bus ID");
 
        
@@ -271,7 +274,7 @@ namespace DL
                 idToReturn = busLine.BusLineID;
                 DataSource.ListBusLines.Add(busLine.Clone()); 
             }
-            // return idToReturn;
+             //return idToReturn;
         }
 
         public void UpdateBusLine(BusLine busLine)

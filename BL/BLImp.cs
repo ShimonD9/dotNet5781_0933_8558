@@ -68,21 +68,18 @@ namespace BL
         }
         public void AddBusLine(BusLine busLine)
         {
-            DO.BusLine newBus = BusLineBoDoAdapter(busLine);
-            if (dl.GetAllBusLines().Any(b => 
-               b.FirstBusStopKey == newBus.FirstBusStopKey 
-            && b.LastBusStopKey == newBus.LastBusStopKey
-            && b.BusLineNumber == newBus.BusLineNumber))
-                throw new ExceptionBLBusLineExist("Bus Line already exist");               
+            //int idToReturn;
+            DO.BusLine newBus = BusLineBoDoAdapter(busLine);   
             try
             {
-                (DalFactory.GetDL()).AddBusLine(newBus);
+              (DalFactory.GetDL()).AddBusLine(newBus);
             }
 
             catch (DO.ExceptionDALBadLicsens ex)
             {
-                throw new BO.ExceptionBLBadLicense("License already exist", ex);
+                throw new BO.ExceptionBLBadLicense("Bus Line License already exist", ex);
             }
+            //return idToReturn;
         }
         public void UpdateBusLine(BusLine busLine)
         {

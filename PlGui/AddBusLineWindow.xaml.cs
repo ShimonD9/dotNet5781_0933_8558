@@ -28,6 +28,7 @@ namespace PlGui
         BO.BusLineStation newStationB;
         BO.ConsecutiveStations newConStations;
         BO.LineDeparture newLineDeparture;
+        int runningNumber;
 
         public AddBusLineWindow()
         {
@@ -60,7 +61,7 @@ namespace PlGui
                     newBusLine.Area = (Enums.AREA)cbArea.SelectedItem;
                     newBusLine.FirstBusStopKey = (cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey;
                     newBusLine.LastBusStopKey = (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey;
-                    bl.AddBusLine(newBusLine);   // Inserts the new bus to the beginning of the list                 
+                    //runningNumber = bl.AddBusLine(newBusLine);   // Inserts the new bus to the beginning of the list                 
 
                     // Line Stations Addition:
 
