@@ -26,12 +26,12 @@ namespace PlGui
     public partial class AddBusStopWindow : Window
     {
         BO.BusStop newBusStop;
-        IBL myBL;
+        IBL bl;
 
         public AddBusStopWindow()
         {
             InitializeComponent();
-            myBL = BLFactory.GetBL("1");
+            bl = BLFactory.GetBL("1");
             newBusStop = new BO.BusStop();
         }
 
@@ -64,7 +64,7 @@ namespace PlGui
                     newBusStop.Sunshade = cbSunshade.IsEnabled;
                     newBusStop.DigitalPanel = cbDigitalPanel.IsEnabled;
                     newBusStop.ObjectActive = true;
-                    myBL.AddBusStop(newBusStop);   // Inserts the new bus to the beginning of the list                 
+                    bl.AddBusStop(newBusStop);   // Inserts the new bus to the beginning of the list                 
                     this.Close();
                 }
             }

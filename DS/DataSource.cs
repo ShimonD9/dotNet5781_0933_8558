@@ -18,6 +18,7 @@ namespace DS
         public static List<ConsecutiveStations> ListConsecutiveStations;
         public static List<LineDeparture> ListLineDepartures;
         public static List<User> ListUsers;
+        public static Random rnd = new Random(DateTime.Now.Millisecond);
 
         static DataSource()
         {
@@ -1103,6 +1104,9 @@ namespace DS
 
             for (int i = 0; i < 11; i++) // Creating 20 bus line stations according to the 10 bus lines (with first bus stop and last bus stop, and 8 bus stops between)
             {
+                // Need to make the random work better!
+
+
                 // #1 busLineStation
                 ListBusLineStations.Add(
                     new BusLineStation
@@ -1130,13 +1134,14 @@ namespace DS
                     }
                 );
 
+                int randInt = rnd.Next(1, 10);
                 ListConsecutiveStations.Add(
                     new ConsecutiveStations
                     {
                         BusStopKeyA = ListBusLines[i].FirstBusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 15].BusStopKey,
-                        Distance = 1.7,
-                        TravelTime = new TimeSpan(0, 10, 30),
+                        Distance = Math.Round((double)(randInt / 3.141592), 2),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1154,13 +1159,14 @@ namespace DS
                     }
                 );
 
+                randInt = rnd.Next(1, 10);
                 ListConsecutiveStations.Add(
                     new ConsecutiveStations
                     {
                         BusStopKeyA = ListBusStops[2 * i + 15].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 16].BusStopKey,
-                        Distance = 2.4,
-                        TravelTime = new TimeSpan(0, 32, 22),
+                        Distance = Math.Round((double)(randInt / 3.141592), 2),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1178,13 +1184,14 @@ namespace DS
                     }
                 );
 
+                randInt = rnd.Next(1, 10);
                 ListConsecutiveStations.Add(
                     new ConsecutiveStations
                     {
                         BusStopKeyA = ListBusStops[2 * i + 16].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 17].BusStopKey,
-                        Distance = 1.6,
-                        TravelTime = new TimeSpan(0, 25, 12),
+                        Distance = Math.Round((double)(randInt / 3.141592), 2),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1202,13 +1209,14 @@ namespace DS
                     }
                 );
 
+                randInt = rnd.Next(1, 10);
                 ListConsecutiveStations.Add(
                     new ConsecutiveStations
                     {
                         BusStopKeyA = ListBusStops[2 * i + 17].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 18].BusStopKey,
-                        Distance = 1.3,
-                        TravelTime = new TimeSpan(0, 42, 0),
+                        Distance = Math.Round((double)(randInt / 3.141592), 2),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1226,13 +1234,14 @@ namespace DS
                     }
                 );
 
+                randInt = rnd.Next(1, 10);
                 ListConsecutiveStations.Add(
                     new ConsecutiveStations
                     {
                         BusStopKeyA = ListBusStops[2 * i + 18].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 19].BusStopKey,
-                        Distance = 0.8,
-                        TravelTime = new TimeSpan(0, 52, 24),
+                        Distance = Math.Round((double)(randInt / 3.141592), 2),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1250,14 +1259,14 @@ namespace DS
                     }
                 );
 
-
+                randInt = rnd.Next(1, 10);
                 ListConsecutiveStations.Add(
                     new ConsecutiveStations
                     {
                         BusStopKeyA = ListBusStops[2 * i + 19].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 20].BusStopKey,
-                        Distance = 3.3,
-                        TravelTime = new TimeSpan(0, 22, 12),
+                        Distance = Math.Round((double)(randInt / 3.141592), 2),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1275,14 +1284,14 @@ namespace DS
                     }
                 );
 
-
+                randInt = rnd.Next(1, 10);
                 ListConsecutiveStations.Add(
                     new ConsecutiveStations
                     {
                         BusStopKeyA = ListBusStops[2 * i + 20].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 21].BusStopKey,
-                        Distance = 2.9,
-                        TravelTime = new TimeSpan(0, 47,56),
+                        Distance = Math.Round((double)(randInt / 3.141592), 2),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1300,13 +1309,14 @@ namespace DS
                     }
                 );
 
+                randInt = rnd.Next(1, 10);
                 ListConsecutiveStations.Add(
                     new ConsecutiveStations
                     {
                         BusStopKeyA = ListBusStops[2 * i + 21].BusStopKey,
                         BusStopKeyB = ListBusStops[2 * i + 22].BusStopKey,
-                        Distance = 0.6,
-                        TravelTime = new TimeSpan(0,34, 20),
+                        Distance = Math.Round((double)(randInt / 3.141592), 2),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );
@@ -1324,13 +1334,14 @@ namespace DS
                     }
                 );
 
+                randInt = rnd.Next(1, 10);
                 ListConsecutiveStations.Add(
                     new ConsecutiveStations
                     {
                         BusStopKeyA = ListBusStops[2 * i + 22].BusStopKey,
-                        BusStopKeyB = ListBusLines[i].BusLineID,
-                        Distance = 2.1,
-                        TravelTime = new TimeSpan(1, 3, 30),
+                        BusStopKeyB = ListBusLines[i].LastBusStopKey,
+                        Distance = Math.Round((double)(randInt / 3.141592), 2),
+                        TravelTime = new TimeSpan(0, rnd.Next(0, randInt * 4), rnd.Next(0, randInt * 5)),
                         ObjectActive = true,
                     }
                 );

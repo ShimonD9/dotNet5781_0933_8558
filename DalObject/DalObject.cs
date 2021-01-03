@@ -236,6 +236,7 @@ namespace DL
                    where predicate(busLine)
                    select busLine.Clone();
         }
+
         public BusLine GetBusLine(int busLineNumber)
         {
             BusLine bus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLineNumber);
@@ -246,22 +247,33 @@ namespace DL
             else
                 throw new DO.ExceptionDALBadLicsens(busLineNumber, $"bad id: {busLineNumber}");
         }
+
         public void AddBusLine(BusLine busLine)
         {
+            int idToReturn;
+            // Need to correct this condition:
             if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber) != null &&
                DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == true)
                 throw new DO.ExceptionDALBadLicsens(busLine.BusLineNumber, "Duplicate bus ID");
+
+       
             else if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber) != null &&
                 DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == false)
             {
                 BusLine addBus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLine.BusLineNumber);
-                addBus.BusLineID = Config.RunningNumBusLine;
                 addBus.ObjectActive = true;
+                idToReturn = addBus.BusLineID;
                 addBus = busLine.Clone();
             }
             else
-                DataSource.ListBusLines.Add(busLine.Clone());
+            {
+                busLine.BusLineID = Config.RunningNumBusLine;
+                idToReturn = busLine.BusLineID;
+                DataSource.ListBusLines.Add(busLine.Clone()); 
+            }
+            // return idToReturn;
         }
+
         public void UpdateBusLine(BusLine busLine)
         {
             BusLine busUpdate = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLine.BusLineNumber);
@@ -436,6 +448,7 @@ namespace DL
                    where predicate(busLineDeparture)
                    select busLineDeparture.Clone();
         }
+
         public LineDeparture GetLineDeparture(int busLineID)
         {
             LineDeparture bus = DataSource.ListLineDepartures.Find(b => b.BusLineID == busLineID);

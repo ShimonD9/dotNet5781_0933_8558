@@ -5,34 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
-        Title="Add a new bus line"  Height="373.391" Width="322.763" ResizeMode="CanMinimize">
+        Title="Add a new bus line"  Height="500" Width="322.763" ResizeMode="CanMinimize">
 
-        <Window.Background>
-            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                <GradientStop Color="Black" Offset="1"/>
-                <GradientStop Color="#FF54C543" Offset="0.898"/>
-            </LinearGradientBrush>
-        </Window.Background>
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="1"/>
+            <GradientStop Color="#FF54C543" Offset="0.898"/>
+        </LinearGradientBrush>
+    </Window.Background>
 
     <StackPanel>
         <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width ="*"/>
-                    <ColumnDefinition Width ="0.5*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height ="*"/>
-                    <RowDefinition Height ="*"/>
-                    <RowDefinition Height ="*"/>
-                    <RowDefinition Height ="*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Grid.Column="0">
-                    <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the bus line number:" Width="149" Margin="5"/>
-                </Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width ="*"/>
+                <ColumnDefinition Width ="0.5*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height ="*"/>
+                <RowDefinition Height ="*"/>
+                <RowDefinition Height ="*"/>
+                <RowDefinition Height ="*"/>
+                <RowDefinition Height ="*"/>
+                <RowDefinition Height ="*"/>
+                <RowDefinition Height ="*"/>
+                <RowDefinition Height ="*"/>
+                <RowDefinition Height ="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the bus line number:" Width="149" Margin="5"/>
+            </Grid>
 
-                <Grid Grid.Row="0" Grid.Column="1">
-                    <TextBox x:Name="tbLineNumber" MaxLength="3" PreviewTextInput="NumberValidationTextBoxNoDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
-                </Grid>
+            <Grid Grid.Row="0" Grid.Column="1">
+                <TextBox x:Name="tbLineNumber" MaxLength="3" PreviewTextInput="NumberValidationTextBoxNoDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+            </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0">
                 <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Choose the area:" Width="149"  Margin="5"/>
@@ -42,28 +47,72 @@
                 <ComboBox Name ="cbArea" HorizontalAlignment="Stretch" Margin="10" FontSize="10" Background="#FFFFFFE1" BorderBrush="White" OpacityMask="#FFE45252"/>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="0">
-                    <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Choose the first bus stop:" Width="221"  Margin="5"/>
-                </Grid>
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Choose the first bus stop:" Width="221"  Margin="5"/>
+            </Grid>
             <Grid Grid.Row="2" Grid.Column="1">
-                <ComboBox Name ="cbFirstBusStop" DisplayMemberPath="BusStopKey" HorizontalAlignment="Stretch" Margin="10" FontSize="10" Background="#FFFFFFE1" BorderBrush="White" OpacityMask="#FFE45252" SelectionChanged="cbFirstBusStopSelectionChanged"/>
+                <ComboBox Name ="cbFirstBusStop" DisplayMemberPath="BusStopKey" HorizontalAlignment="Stretch" Margin="10" FontSize="10" SelectionChanged="cbFirstBusStopSelectionChanged"/>
             </Grid>
 
             <Grid Grid.Row="3" Grid.Column="0">
-                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Choose the last bus stop:" Width="221"  Margin="5"/>
-                </Grid>
-            
-            <Grid Grid.Row="3" Grid.Column="1">
-                <ComboBox Name ="cbLastBusStop" DisplayMemberPath="BusStopKey" HorizontalAlignment="Stretch" Margin="10" FontSize="10" Background="#FFFFFFE1" BorderBrush="White" OpacityMask="#FFE45252" SelectionChanged="cbLastBusStopSelectionChanged"/>
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Choose the second bus stop:" Width="221"  Margin="5"/>
             </Grid>
- 
+
+            <Grid Grid.Row="3" Grid.Column="1">
+                <ComboBox Name ="cbLastBusStop" DisplayMemberPath="BusStopKey" HorizontalAlignment="Stretch" Margin="10" FontSize="10" SelectionChanged="cbLastBusStopSelectionChanged"/>
+            </Grid>
+
+            <Grid Grid.Row="4" Grid.Column="0">
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Distance between the bus stops:" Width="221"  Margin="5"/>
+            </Grid>
+
+            <Grid Grid.Row="4" Grid.Column="1">
+                <TextBox Name ="tbKmToNext" Text="0"  MaxLength="8" PreviewTextInput="NumberValidationTextBoxDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+            </Grid>
+
+
+            <Grid Grid.Row="5" Grid.Column="0">
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Travel time between the bus stops:" Width="221"  Margin="5"/>
+            </Grid>
+
+            <Grid Grid.Row="5" Grid.Column="1">
+                <TextBox Name ="tbTimeToNext" Text="hh:mm:ss"  MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+            </Grid>
+
+
+            <Grid Grid.Row="6" Grid.Column="0">
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the time of first departure:" Width="221"  Margin="5"/>
+            </Grid>
+
+            <Grid Grid.Row="6" Grid.Column="1">
+                <TextBox Name ="tbStartTime" Text="hh:mm:ss"  MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+            </Grid>
+
+
+            <Grid Grid.Row="7" Grid.Column="0">
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the time of last departure:" Width="221"  Margin="5"/>
+            </Grid>
+
+            <Grid Grid.Row="7" Grid.Column="1">
+                <TextBox Name ="tbEndTime"  Text="hh:mm:ss" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic" />
+            </Grid>
+
+            <Grid Grid.Row="8" Grid.Column="0">
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Choose the frequency (in minutes):" Width="221"  Margin="5"/>
+            </Grid>
+
+            <Grid Grid.Row="8" Grid.Column="1">
+                <Slider Name ="sFrequency"  VerticalAlignment="Center" Minimum="5" Maximum="90" IsHitTestVisible="True"  Width="90" HorizontalAlignment="Center"  AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" />
+            </Grid>
+
+
 
 
         </Grid>
 
-            <Button Content="Add the new bus line to the list" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Margin="20" Click="Button_Click"/>
+        <Button Content="Add the new bus line to the list" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Margin="20" Click="Button_Click"/>
 
-        </StackPanel>
+    </StackPanel>
 
-    </Window>
+</Window>
 
 

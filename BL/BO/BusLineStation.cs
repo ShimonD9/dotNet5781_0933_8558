@@ -15,6 +15,7 @@ namespace BO
         public int NextStation { get; set; }
         public double DistanceToNext { get; set; }
         public TimeSpan TimeToNext { get; set; }
+
         public bool ObjectActive { get; set; }
 
         public override string ToString()           // Printing details of a station

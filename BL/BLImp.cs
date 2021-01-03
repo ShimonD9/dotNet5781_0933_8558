@@ -15,57 +15,7 @@ namespace BL
     {
         IDal dl = DalFactory.GetDL();
 
-        #region BusLineStation
-
-        BO.BusLineStation BusLineStationDoBoAdapter(DO.BusLineStation busLineStationDO)
-        {
-            BO.BusLineStation busLineStationBO = new BO.BusLineStation();
-            busLineStationDO.CopyPropertiesTo(busLineStationBO);
-            // Update DistanceToNext, based on consecutive stations (using BusStopKey & NextStation)
-            // Update TimeToNext, based on consecutive stations (using BusStopKey & NextStation)
-            return busLineStationBO;
-        }
-
-        DO.BusLineStation BusLineStationBoDoAdapter(BO.BusLineStation busLineStationBO)
-        {
-            DO.BusLineStation busLineStationDO = new DO.BusLineStation();
-            busLineStationBO.CopyPropertiesTo(busLineStationDO);
-            return busLineStationDO;
-        }
-
-        public IEnumerable<BusLineStation> GetAllBusLineStations()
-        {
-            return from doBusLineStation
-                   in dl.GetAllBusLineStations()
-                   select BusLineStationDoBoAdapter(doBusLineStation);
-        }
-
-        public IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public BusLineStation GetBusLineStation(int license)
-        {
-            throw new NotImplementedException();
-        }
-        public void AddBusLineStation(BusLineStation busLineStation)
-        {
-            throw new NotImplementedException();
-        }
-        public void UpdateBusLineStation(BusLineStation busLineStation)
-        {
-            throw new NotImplementedException();
-        }
-        public void UpdateBusLineStation(int license, Action<BusLineStation> update)
-        {
-            throw new NotImplementedException();
-        }
-        public void DeleteBusLineStation(int license)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
+   
 
         #region BusLine
 
@@ -78,6 +28,21 @@ namespace BL
                                      where boLineStation.BusLineID == busLineBO.BusLineID
                                      orderby boLineStation.LineStationIndex
                                      select boLineStation;
+
+            // Schedule initializing:
+            BO.LineDeparture lineDeparture = GetLineDeparture(busLineBO.BusLineID);
+            TimeSpan addedTS = lineDeparture.StartTime;
+            TimeSpan lastTS = lineDeparture.EndTime;
+            TimeSpan toAdd = new TimeSpan(0, lineDeparture.Frequency, 0);
+            List<TimeSpan> schedule = new List<TimeSpan>{  addedTS };
+            
+            while (addedTS.CompareTo(lastTS) < 0)
+            {
+                addedTS = addedTS.Add(toAdd);
+                schedule.Add(addedTS);
+            }
+            schedule.Add(lastTS);
+            busLineBO.Schedule = from ts in schedule select ts; // MyList.Select(item => new Item(<cons params>).ToList() - הצעת מתן
             return busLineBO;
         }
 
@@ -104,8 +69,10 @@ namespace BL
         public void AddBusLine(BusLine busLine)
         {
             DO.BusLine newBus = BusLineBoDoAdapter(busLine);
-            if (dl.GetAllBusLines().Any(b => b.FirstBusStopKey == newBus.FirstBusStopKey &&
-            b.LastBusStopKey == newBus.LastBusStopKey))
+            if (dl.GetAllBusLines().Any(b => 
+               b.FirstBusStopKey == newBus.FirstBusStopKey 
+            && b.LastBusStopKey == newBus.LastBusStopKey
+            && b.BusLineNumber == newBus.BusLineNumber))
                 throw new ExceptionBLBusLineExist("Bus Line already exist");               
             try
             {
@@ -330,6 +297,104 @@ namespace BL
             }
         }
 
+        #endregion
+
+        #region LineDeparture
+        BO.LineDeparture LineDepartureDoBoAdapter(DO.LineDeparture LineDepartureDO)
+        {
+            BO.LineDeparture LineDepartureBO = new BO.LineDeparture();
+            LineDepartureDO.CopyPropertiesTo(LineDepartureBO);
+            return LineDepartureBO;
+        }
+
+        DO.LineDeparture LineDepartureBoDoAdapter(BO.LineDeparture lineDepartureBO)
+        {
+            DO.LineDeparture lineDepartureDO = new DO.LineDeparture();
+            lineDepartureBO.CopyPropertiesTo(lineDepartureDO);
+            return lineDepartureDO;
+        }
+        public IEnumerable<LineDeparture> GetAllLineDepartures()
+        {
+            return from doLineDeparture in dl.GetAllLineDeparture() select LineDepartureDoBoAdapter(doLineDeparture);
+        }
+
+        public LineDeparture GetLineDeparture(int busLineID)
+        {
+            DO.LineDeparture lineDepartureDO;
+            try
+            {
+                lineDepartureDO = dl.GetLineDeparture(busLineID);
+            }
+            catch (DO.ExceptionDALBadIdUser ex) // לתקן לחריגה בהתאם!
+            {
+                throw new BO.ExceptionBLBadUserId("user dose not exist", ex);
+            }
+            return LineDepartureDoBoAdapter(lineDepartureDO);
+
+        }
+        #endregion
+
+        #region BusLineStation
+
+        BO.BusLineStation BusLineStationDoBoAdapter(DO.BusLineStation busLineStationDO)
+        {
+            BO.BusLineStation busLineStationBO = new BO.BusLineStation();
+            busLineStationDO.CopyPropertiesTo(busLineStationBO);
+            // לוודא שצורת השאילתא תקינה
+            busLineStationBO.DistanceToNext = (from doConStations
+                                              in dl.GetAllConsecutiveStations()
+                                               where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
+                                                     doConStations.BusStopKeyB == busLineStationBO.NextStation
+                                               select doConStations.Distance).FirstOrDefault();
+            busLineStationBO.TimeToNext = (from doConStations
+                                              in dl.GetAllConsecutiveStations()
+                                           where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
+                                                 doConStations.BusStopKeyB == busLineStationBO.NextStation
+                                           select doConStations.TravelTime).FirstOrDefault();
+            // Update DistanceToNext, based on consecutive stations (using BusStopKey & NextStation)
+            // Update TimeToNext, based on consecutive stations (using BusStopKey & NextStation)
+            return busLineStationBO;
+        }
+
+        DO.BusLineStation BusLineStationBoDoAdapter(BO.BusLineStation busLineStationBO)
+        {
+            DO.BusLineStation busLineStationDO = new DO.BusLineStation();
+            busLineStationBO.CopyPropertiesTo(busLineStationDO);
+            return busLineStationDO;
+        }
+
+        public IEnumerable<BusLineStation> GetAllBusLineStations()
+        {
+            return from doBusLineStation
+                   in dl.GetAllBusLineStations()
+                   select BusLineStationDoBoAdapter(doBusLineStation);
+        }
+
+        public IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BusLineStation GetBusLineStation(int license)
+        {
+            throw new NotImplementedException();
+        }
+        public void AddBusLineStation(BusLineStation busLineStation)
+        {
+            throw new NotImplementedException();
+        }
+        public void UpdateBusLineStation(BusLineStation busLineStation)
+        {
+            throw new NotImplementedException();
+        }
+        public void UpdateBusLineStation(int license, Action<BusLineStation> update)
+        {
+            throw new NotImplementedException();
+        }
+        public void DeleteBusLineStation(int license)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region User
