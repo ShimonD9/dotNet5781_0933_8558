@@ -15,7 +15,7 @@ namespace BL
     {
         IDal dl = DalFactory.GetDL();
 
-   
+
 
         #region BusLine
 
@@ -34,8 +34,8 @@ namespace BL
             TimeSpan addedTS = lineDeparture.StartTime;
             TimeSpan lastTS = lineDeparture.EndTime;
             TimeSpan toAdd = new TimeSpan(0, lineDeparture.Frequency, 0);
-            List<TimeSpan> schedule = new List<TimeSpan>{  addedTS };
-            
+            List<TimeSpan> schedule = new List<TimeSpan> { addedTS };
+
             while (addedTS.CompareTo(lastTS) < 0)
             {
                 addedTS = addedTS.Add(toAdd);
@@ -69,10 +69,10 @@ namespace BL
         public void AddBusLine(BusLine busLine)
         {
             //int idToReturn;
-            DO.BusLine newBus = BusLineBoDoAdapter(busLine);   
+            DO.BusLine newBus = BusLineBoDoAdapter(busLine);
             try
             {
-              (DalFactory.GetDL()).AddBusLine(newBus);
+                (DalFactory.GetDL()).AddBusLine(newBus);
             }
 
             catch (DO.ExceptionDALBadLicsens ex)
@@ -348,8 +348,6 @@ namespace BL
                                            where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
                                                  doConStations.BusStopKeyB == busLineStationBO.NextStation
                                            select doConStations.TravelTime).FirstOrDefault();
-            // Update DistanceToNext, based on consecutive stations (using BusStopKey & NextStation)
-            // Update TimeToNext, based on consecutive stations (using BusStopKey & NextStation)
             return busLineStationBO;
         }
 
@@ -376,9 +374,17 @@ namespace BL
         {
             throw new NotImplementedException();
         }
-        public void AddBusLineStation(BusLineStation busLineStation)
+        public void AddBusLineStation(BusLineStation busLineStationBo)
         {
-            throw new NotImplementedException();
+            try
+            {
+                DO.BusLineStation newStop = BusLineStationBoDoAdapter(busLineStationBo);
+                (DalFactory.GetDL()).AddBusLineStation(newStop);
+            }
+            catch (DO.ExceptionDALBadLicsens ex)
+            {
+                throw new BO.ExceptionBLBadLicense("Bus stop code already exist", ex);
+            }
         }
         public void UpdateBusLineStation(BusLineStation busLineStation)
         {

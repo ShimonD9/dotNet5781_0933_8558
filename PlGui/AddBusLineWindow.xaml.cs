@@ -65,7 +65,7 @@ namespace PlGui
 
                     // Line Stations Addition:
 
-                    //newStationA.BusLineID = ;
+                    newStationA.BusLineID = newBusLine.BusLineID;
                     newStationA.LineStationIndex = 0;
                     newStationA.BusStopKey = newBusLine.FirstBusStopKey;
                     newStationA.NextStation = newBusLine.LastBusStopKey;

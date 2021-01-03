@@ -24,11 +24,11 @@ namespace DL
         #region Bus
         public IEnumerable<Bus> GetAllBuses()
         {
-            
+
             return from bus in DataSource.ListBuses
                    where bus.ObjectActive == true
                    select bus.Clone();
-            
+
         }
 
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
@@ -43,7 +43,7 @@ namespace DL
             Bus bus = DataSource.ListBuses.Find(b => b.License == license);
             if (bus != null && bus.ObjectActive)
                 return bus.Clone();
-            else if(!bus.ObjectActive)
+            else if (!bus.ObjectActive)
                 throw new DO.ExceptionDALInactiveBus(license, $"the bus is  inactive");
             else
                 throw new DO.ExceptionDALBadLicsens(bus.License, $"bad id: {bus.License}");
@@ -62,7 +62,7 @@ namespace DL
                 addBus = bus.Clone();
             }
             else
-            DataSource.ListBuses.Insert(0, bus.Clone());
+                DataSource.ListBuses.Insert(0, bus.Clone());
         }
 
         public void UpdateBus(Bus bus) //busUpdate
@@ -184,10 +184,10 @@ namespace DL
         }
         public void AddBusLineStation(BusLineStation busLineStation)
         {
-            if (DataSource.ListBusLineStations.FirstOrDefault(b => b.BusStopKey == busLineStation.BusStopKey) != null &&
-               DataSource.ListBusLineStations.FirstOrDefault(b => b.BusStopKey == busLineStation.BusStopKey).ObjectActive == true)
+            BusLineStation newBusLineStation = DataSource.ListBusLineStations.FirstOrDefault(b => b.BusStopKey == busLineStation.BusStopKey);
+            if (newBusLineStation != null && newBusLineStation.ObjectActive == true)
                 throw new DO.ExceptionDALBadLicsens(busLineStation.BusStopKey, "Duplicate bus ID");
-            else if (DataSource.ListBusLineStations.FirstOrDefault(b => b.BusStopKey == busLineStation.BusStopKey).ObjectActive == false)
+            else if (newBusLineStation.ObjectActive == false)
             {
                 BusLineStation addBus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busLineStation.BusStopKey);
                 addBus.ObjectActive = true;
@@ -250,31 +250,28 @@ namespace DL
 
         public void AddBusLine(BusLine busLine)
         {
-
-            int idToReturn;
+            BusLine newBusLine = DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber);
+            //int idToReturn;
             // Need to correct this condition:
-            if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber) != null &&
-               DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == true
-                && DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).FirstBusStopKey == busLine.FirstBusStopKey
-                && DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).LastBusStopKey == busLine.LastBusStopKey)
+            if (newBusLine != null && newBusLine.ObjectActive == true && newBusLine.FirstBusStopKey == busLine.FirstBusStopKey
+                && newBusLine.LastBusStopKey == busLine.LastBusStopKey)
                 throw new DO.ExceptionDALBadLicsens(busLine.BusLineNumber, "Duplicate bus ID");
 
-       
             else if (DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber) != null &&
                 DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber).ObjectActive == false)
             {
                 BusLine addBus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLine.BusLineNumber);
                 addBus.ObjectActive = true;
-                idToReturn = addBus.BusLineID;
+                //idToReturn = addBus.BusLineID;
                 addBus = busLine.Clone();
             }
             else
             {
                 busLine.BusLineID = Config.RunningNumBusLine;
-                idToReturn = busLine.BusLineID;
-                DataSource.ListBusLines.Add(busLine.Clone()); 
+                //idToReturn = busLine.BusLineID;
+                DataSource.ListBusLines.Add(busLine.Clone());
             }
-             //return idToReturn;
+            //return idToReturn;
         }
 
         public void UpdateBusLine(BusLine busLine)
@@ -332,7 +329,7 @@ namespace DL
             if (DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey) != null &&
               DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey).ObjectActive == true)
                 throw new DO.ExceptionDALBadLicsens(busStop.BusStopKey, "Duplicate bus ID");
-            else if (DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey) != null && 
+            else if (DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey) != null &&
                 DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey).ObjectActive == false)
             {
                 BusStop addBus = DataSource.ListBusStops.Find(b => b.BusStopKey == busStop.BusStopKey);
@@ -361,7 +358,7 @@ namespace DL
         public void DeleteBusStop(int busStopKey)
         {
             BusStop bus = DataSource.ListBusStops.Find(b => b.BusStopKey == busStopKey);
-            if (bus != null &&  bus.ObjectActive)
+            if (bus != null && bus.ObjectActive)
                 bus.ObjectActive = false;
             else if (!bus.ObjectActive)
                 throw new DO.ExceptionDALInactiveBus(busStopKey, $"the bus stop is inactive");
@@ -396,15 +393,15 @@ namespace DL
 
         public void AddConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
-            if (DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA) != null &&
-              DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA).ObjectActive == true)
+            ConsecutiveStations newConsecutiveStations = DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA);
+            if (newConsecutiveStations != null && newConsecutiveStations.ObjectActive == true)
                 throw new DO.ExceptionDALBadLicsens(consecutiveStations.BusStopKeyA, "Duplicate bus ID");
             else if (DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA) != null &&
                 DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA).ObjectActive == false)
             {
-                ConsecutiveStations addBus = DataSource.ListConsecutiveStations.Find(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA);
-                addBus.ObjectActive = true;
-                addBus = consecutiveStations.Clone();
+                ConsecutiveStations addConsecutiveStations = DataSource.ListConsecutiveStations.Find(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA);
+                addConsecutiveStations.ObjectActive = true;
+                addConsecutiveStations = consecutiveStations.Clone();
             }
             else
                 DataSource.ListConsecutiveStations.Add(consecutiveStations.Clone());
