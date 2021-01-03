@@ -67,10 +67,10 @@ namespace DL
 
         public void UpdateBus(Bus bus) //busUpdate
         {
-            Bus busUpdate = DataSource.ListBuses.Find(b => b.License == bus.License);
-            if (busUpdate != null && busUpdate.ObjectActive)
-                busUpdate = bus.Clone();
-            else if (!busUpdate.ObjectActive)
+            int index = DataSource.ListBuses.FindIndex(bus1 => bus1.License == bus.License);          
+            if (DataSource.ListBuses[index] != null && DataSource.ListBuses[index].ObjectActive)
+                DataSource.ListBuses[index] = bus.Clone();
+            else if (!DataSource.ListBuses[index].ObjectActive)
                 throw new DO.ExceptionDALInactiveBus(bus.License, $"the bus is  inactive");
             else
                 throw new DO.ExceptionDALBadLicsens(bus.License, $"bad id: {bus.License}");
@@ -134,10 +134,10 @@ namespace DL
         }
         public void UpdateBusAtTravel(BusAtTravel bus)
         {
-            BusAtTravel busUpdate = DataSource.ListBusAtTravels.Find(b => b.License == bus.License);
-            if (busUpdate != null && busUpdate.ObjectActive)
-                busUpdate = bus.Clone();
-            else if (!bus.ObjectActive)
+            int index = DataSource.ListBusAtTravels.FindIndex(bus1 => bus1.License == bus.License);
+            if (DataSource.ListBusAtTravels[index] != null && DataSource.ListBusAtTravels[index].ObjectActive)
+                DataSource.ListBusAtTravels[index] = bus.Clone();
+            else if (!DataSource.ListBusAtTravels[index].ObjectActive)
                 throw new DO.ExceptionDALInactiveBus(bus.License, $"the bus is  inactive");
             else
                 throw new DO.ExceptionDALBadLicsens(bus.License, $"bad id: {bus.License}");
@@ -198,13 +198,13 @@ namespace DL
         }
         public void UpdateBusLineStation(BusLineStation busLineStation)
         {
-            BusLineStation busUpdate = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busLineStation.BusStopKey);
-            if (busUpdate != null && busUpdate.ObjectActive)
-                busUpdate = busLineStation.Clone();
-            else if (!busUpdate.ObjectActive)
-                throw new DO.ExceptionDALInactiveBus(busUpdate.BusStopKey, $"the bus is  inactive");
+            int index = DataSource.ListBusLineStations.FindIndex(bus1 => bus1.BusStopKey == busLineStation.BusStopKey);
+            if (DataSource.ListBusLineStations[index] != null && DataSource.ListBusLineStations[index].ObjectActive)
+                DataSource.ListBusLineStations[index] = busLineStation.Clone();
+            else if (!DataSource.ListBusLineStations[index].ObjectActive)
+                throw new DO.ExceptionDALInactiveBus(busLineStation.BusStopKey, $"the bus is  inactive");
             else
-                throw new DO.ExceptionDALBadLicsens(busUpdate.BusStopKey, $"bad id: {busUpdate.BusStopKey}");
+                throw new DO.ExceptionDALBadLicsens(busLineStation.BusStopKey, $"bad id: {busLineStation.BusStopKey}");
         }
         public void UpdateBusLineStation(int busStopKey, Action<BusLineStation> update) // method that knows to updt specific fields in Person
         {
@@ -276,10 +276,10 @@ namespace DL
 
         public void UpdateBusLine(BusLine busLine)
         {
-            BusLine busUpdate = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLine.BusLineNumber);
-            if (busUpdate != null && busUpdate.ObjectActive)
-                busUpdate = busLine.Clone();
-            else if (!busUpdate.ObjectActive)
+            int index = DataSource.ListBusLines.FindIndex(bus1 => bus1.BusLineNumber == busLine.BusLineNumber);
+            if (DataSource.ListBusLines[index] != null && DataSource.ListBusLines[index].ObjectActive)
+                DataSource.ListBusLines[index] = busLine.Clone();
+            else if (!DataSource.ListBusLines[index].ObjectActive)
                 throw new DO.ExceptionDALInactiveBus(busLine.BusLineNumber, $"the bus is  inactive");
             else
                 throw new DO.ExceptionDALBadLicsens(busLine.BusLineNumber, $"bad id: {busLine.BusLineNumber}");
@@ -341,13 +341,13 @@ namespace DL
         }
         public void UpdateBusStop(BusStop busStop)
         {
-            BusStop busUpdate = DataSource.ListBusStops.Find(b => b.BusStopKey == busStop.BusStopKey);
-            if (busUpdate != null && busUpdate.ObjectActive)
-                busUpdate = busStop.Clone();
-            else if (!busUpdate.ObjectActive)
-                throw new DO.ExceptionDALInactiveBus(busUpdate.BusStopKey, $"the bus is  inactive");
+            int index = DataSource.ListBusStops.FindIndex(bus1 => bus1.BusStopKey == busStop.BusStopKey);
+            if (DataSource.ListBusStops[index] != null && DataSource.ListBusStops[index].ObjectActive)
+                DataSource.ListBusStops[index] = busStop.Clone();
+            else if (!DataSource.ListBusStops[index].ObjectActive)
+                throw new DO.ExceptionDALInactiveBus(busStop.BusStopKey, $"the bus is  inactive");
             else
-                throw new DO.ExceptionDALBadLicsens(busUpdate.BusStopKey, $"bad id: {busUpdate.BusStopKey}");
+                throw new DO.ExceptionDALBadLicsens(busStop.BusStopKey, $"bad id: {busStop.BusStopKey}");
         }
         public void UpdateBusStop(int busStopKey, Action<BusStop> update) // method that knows to updt specific fields in Person
         {
@@ -408,10 +408,10 @@ namespace DL
         }
         public void UpdateConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
-            ConsecutiveStations consecutiveUpdate = DataSource.ListConsecutiveStations.Find(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA);
-            if (consecutiveUpdate != null && consecutiveUpdate.ObjectActive)
-                consecutiveUpdate = consecutiveStations.Clone();
-            else if (!consecutiveUpdate.ObjectActive)
+            int index = DataSource.ListConsecutiveStations.FindIndex(consecutive => consecutive.BusStopKeyA == consecutiveStations.BusStopKeyA);
+            if (DataSource.ListConsecutiveStations[index] != null && DataSource.ListConsecutiveStations[index].ObjectActive)
+                DataSource.ListConsecutiveStations[index] = consecutiveStations.Clone();
+            else if (!DataSource.ListConsecutiveStations[index].ObjectActive)
                 throw new DO.ExceptionDALInactiveBus(consecutiveStations.BusStopKeyA, $"the bus is  inactive");
             else
                 throw new DO.ExceptionDALBadLicsens(consecutiveStations.BusStopKeyA, $"bad id: {consecutiveStations.BusStopKeyA}");
@@ -476,13 +476,13 @@ namespace DL
         }
         public void UpdateLineDeparture(LineDeparture lineDeparture)
         {
-            LineDeparture busUpdate = DataSource.ListLineDepartures.Find(b => b.BusLineID == lineDeparture.BusLineID);
-            if (busUpdate != null && busUpdate.ObjectActive)
-                busUpdate = lineDeparture.Clone();
-            else if (!busUpdate.ObjectActive)
-                throw new DO.ExceptionDALInactiveBus(busUpdate.BusLineID, $"the bus is  inactive");
+            int index = DataSource.ListLineDepartures.FindIndex(lineDep => lineDep.BusLineID== lineDeparture.BusLineID);
+            if (DataSource.ListLineDepartures[index] != null && DataSource.ListLineDepartures[index].ObjectActive)
+                DataSource.ListLineDepartures[index] = lineDeparture.Clone();
+            else if (!DataSource.ListLineDepartures[index].ObjectActive)
+                throw new DO.ExceptionDALInactiveBus(lineDeparture.BusLineID, $"the bus is  inactive");
             else
-                throw new DO.ExceptionDALBadLicsens(busUpdate.BusLineID, $"bad id: {busUpdate.BusLineID}");
+                throw new DO.ExceptionDALBadLicsens(lineDeparture.BusLineID, $"bad id: {lineDeparture.BusLineID}");
         }
         public void UpdateLineDeparture(int busLineID, Action<LineDeparture> update) // method that knows to updt specific fields in Person
         {
@@ -545,10 +545,10 @@ namespace DL
 
         public void UpdateUser(User user)
         {
-            User userUpdate = DataSource.ListUsers.Find(b => b.UserName == user.UserName);
-            if (userUpdate != null && userUpdate.ObjectActive)
-                userUpdate = user.Clone();
-            else if (!userUpdate.ObjectActive)
+            int index = DataSource.ListUsers.FindIndex(user1 => user1.UserName == user.UserName);
+            if (DataSource.ListUsers[index] != null && DataSource.ListUsers[index].ObjectActive)
+                DataSource.ListUsers[index] = user.Clone();
+            else if (!DataSource.ListUsers[index].ObjectActive)
                 throw new DO.ExceptionDALInactiveUser(user.UserName, $"the bus is  inactive");
             else
                 throw new DO.ExceptionDALBadIdUser(user.UserName, $"bad id: {user.UserName}");
