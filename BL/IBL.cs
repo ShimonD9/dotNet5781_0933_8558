@@ -44,7 +44,7 @@ namespace BLApi
         IEnumerable<BusLine> GetAllBusLines();
         IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate);
         BusLine GetBusLine(int license);
-        int AddBusLine(BusLine busLine);
+        int AddBusLine(BusLine busLine, double kmToNext, TimeSpan timeToNext, TimeSpan startTime, TimeSpan endTime, int frequency);
         void UpdateBusLine(BusLine busLine);
         void UpdateBusLine(int license, Action<BusLine> update); // method that knows to updt specific fields in Person
         void DeleteBusLine(int license);
@@ -54,11 +54,11 @@ namespace BLApi
         void CheckIfConsecutiveExistOrInactive(int busStopKeyA, int busStopKeyB);
         #endregion
 
-        #region LineDeparture
-        IEnumerable<LineDeparture> GetAllLineDepartures();
-        LineDeparture GetLineDeparture(int busLineID);
-       void AddLineDeparture(LineDeparture busLineStationBo);
-        #endregion
+       // #region LineDeparture
+       // IEnumerable<LineDeparture> GetAllLineDepartures();
+       // LineDeparture GetLineDeparture(int busLineID);
+       //void AddLineDeparture(LineDeparture busLineStationBo);
+       // #endregion
 
         #region User
         IEnumerable<User> GetAllUsers();

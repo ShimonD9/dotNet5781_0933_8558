@@ -27,7 +27,6 @@ namespace PlGui
         BO.BusLineStation newStationA = new BusLineStation();
         BO.BusLineStation newStationB = new BusLineStation();
 
-        BO.LineDeparture newLineDeparture = new LineDeparture();
         int runningNumber;
 
         public AddBusLineWindow()
@@ -60,7 +59,7 @@ namespace PlGui
                     newBusLine.Area = (Enums.AREA)cbArea.SelectedItem;
                     newBusLine.FirstBusStopKey = (cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey;
                     newBusLine.LastBusStopKey = (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey;
-                    runningNumber = bl.AddBusLine(newBusLine);   // Inserts the new bus to the beginning of the list                 
+                    runningNumber = bl.AddBusLine(newBusLine, kmToNext, timeToNext, startTime, endTime, (int)sFrequency.Value);   // Inserts the new bus to the beginning of the list                 
 
                     // Line Stations Addition:
 
@@ -75,20 +74,6 @@ namespace PlGui
                     newStationB.BusStopKey = newBusLine.LastBusStopKey;
                     newStationB.NextStation = 0;
                     bl.AddBusLineStation(newStationB);
-
-                    // Consecutive line stations:
-                    //newConStations.BusStopKeyA = newBusLine.FirstBusStopKey;
-                    //newConStations.BusStopKeyB = newBusLine.LastBusStopKey;
-                    //newConStations.Distance = kmToNext;
-                    //newConStations.TravelTime = timeToNext;
-
-                    // Departure:
-                    newLineDeparture.BusLineID = runningNumber ;
-                    newLineDeparture.StartTime = startTime;
-                    newLineDeparture.EndTime = endTime;
-                    newLineDeparture.Frequency = (int)sFrequency.Value;
-                    bl.AddLineDeparture(newLineDeparture);
-                    //IEnumerable<BO.BusLine> boBuses = bl.GetAllBusLines();
                     this.Close();
                 }
             }
@@ -125,13 +110,18 @@ namespace PlGui
                 cbLastBusStop.ItemsSource = bl.GetAllBusStops()
                     .Where(busStop => busStop.BusStopKey != (cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey)
                     .OrderBy(busStop => busStop.BusStopKey);
+            lbKmToNext.Visibility = Visibility.Collapsed;
+            lbTimeToNext.Visibility = Visibility.Collapsed;
+            tbKmToNext.Visibility = Visibility.Collapsed;
+            tbTimeToNext.Visibility = Visibility.Collapsed;
         }
 
         private void cbLastBusStopSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                bl.CheckIfConsecutiveExistOrInactive((cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey, (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey);
+                if (cbFirstBusStop.SelectedItem != null && cbLastBusStop.SelectedItem !=null)
+                    bl.CheckIfConsecutiveExistOrInactive((cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey, (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey);
             }
             catch (BO.ExceptionBLInactive)
             {

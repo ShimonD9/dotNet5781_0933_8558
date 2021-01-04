@@ -28,7 +28,7 @@ namespace BL
                                      select boLineStation;
 
             // Schedule initializing:
-            BO.LineDeparture lineDeparture = GetLineDeparture(busLineBO.BusLineID);
+            DO.LineDeparture lineDeparture = dl.GetLineDeparture(busLineBO.BusLineID);
             TimeSpan addedTS = lineDeparture.StartTime;
             TimeSpan lastTS = lineDeparture.EndTime;
             TimeSpan toAdd = new TimeSpan(0, lineDeparture.Frequency, 0);
@@ -64,18 +64,30 @@ namespace BL
         {
             throw new NotImplementedException();
         }
-        public int AddBusLine(BusLine busLine)
+        public int AddBusLine(BusLine busLine, double kmToNext, TimeSpan timeToNext, TimeSpan startTime, TimeSpan endTime, int frequency)
         {
             int idToReturn;
             DO.BusLine newBus = BusLineBoDoAdapter(busLine);
+            DO.ConsecutiveStations newConStations = new DO.ConsecutiveStations();
+            DO.LineDeparture newLineDeparture = new DO.LineDeparture();
             try
             {
                 idToReturn = (DalFactory.GetDL()).AddBusLine(newBus);
+                newConStations.BusStopKeyA = busLine.FirstBusStopKey;
+                newConStations.BusStopKeyB = busLine.LastBusStopKey;
+                newConStations.Distance = kmToNext;
+                newConStations.TravelTime = timeToNext;
+                dl.AddConsecutiveStations(newConStations);
+                newLineDeparture.BusLineID = idToReturn;
+                newLineDeparture.StartTime = startTime;
+                newLineDeparture.EndTime = endTime;
+                newLineDeparture.Frequency = frequency;
+                dl.AddLineDeparture(newLineDeparture);
             }
 
             catch (DO.ExceptionDALBadLicense ex)
             {
-                throw new BO.ExceptionBLBadLicense("Bus Line License already exist", ex);
+                throw new BO.ExceptionBLBadLicense("Line already exist", ex);
             }
             return idToReturn;
         }
@@ -294,53 +306,53 @@ namespace BL
 
         #endregion
 
-        #region LineDeparture
-        BO.LineDeparture LineDepartureDoBoAdapter(DO.LineDeparture LineDepartureDO)
-        {
-            BO.LineDeparture LineDepartureBO = new BO.LineDeparture();
-            LineDepartureDO.CopyPropertiesTo(LineDepartureBO);
-            return LineDepartureBO;
-        }
+        //#region LineDeparture
+        //BO.LineDeparture LineDepartureDoBoAdapter(DO.LineDeparture LineDepartureDO)
+        //{
+        //    BO.LineDeparture LineDepartureBO = new BO.LineDeparture();
+        //    LineDepartureDO.CopyPropertiesTo(LineDepartureBO);
+        //    return LineDepartureBO;
+        //}
 
-        DO.LineDeparture LineDepartureBoDoAdapter(BO.LineDeparture lineDepartureBO)
-        {
-            DO.LineDeparture lineDepartureDO = new DO.LineDeparture();
-            lineDepartureBO.CopyPropertiesTo(lineDepartureDO);
-            return lineDepartureDO;
-        }
-        public IEnumerable<LineDeparture> GetAllLineDepartures()
-        {
-            return from doLineDeparture in dl.GetAllLineDeparture() select LineDepartureDoBoAdapter(doLineDeparture);
-        }
+        //DO.LineDeparture LineDepartureBoDoAdapter(BO.LineDeparture lineDepartureBO)
+        //{
+        //    DO.LineDeparture lineDepartureDO = new DO.LineDeparture();
+        //    lineDepartureBO.CopyPropertiesTo(lineDepartureDO);
+        //    return lineDepartureDO;
+        //}
+        //public IEnumerable<LineDeparture> GetAllLineDepartures()
+        //{
+        //    return from doLineDeparture in dl.GetAllLineDeparture() select LineDepartureDoBoAdapter(doLineDeparture);
+        //}
 
-        public LineDeparture GetLineDeparture(int busLineID)
-        {
-            DO.LineDeparture lineDepartureDO;
-            try
-            {
-                lineDepartureDO = dl.GetLineDeparture(busLineID);
-            }
-            catch (DO.ExceptionDALBadIdUser ex) // לתקן לחריגה בהתאם!
-            {
-                throw new BO.ExceptionBLBadUserId("user dose not exist", ex);
-            }
-            return LineDepartureDoBoAdapter(lineDepartureDO);
+        //public LineDeparture GetLineDeparture(int busLineID)
+        //{
+        //    DO.LineDeparture lineDepartureDO;
+        //    try
+        //    {
+        //        lineDepartureDO = dl.GetLineDeparture(busLineID);
+        //    }
+        //    catch (DO.ExceptionDALBadIdUser ex) // לתקן לחריגה בהתאם!
+        //    {
+        //        throw new BO.ExceptionBLBadUserId("user dose not exist", ex);
+        //    }
+        //    return LineDepartureDoBoAdapter(lineDepartureDO);
 
-        }
+        //}
 
-        public void AddLineDeparture(LineDeparture lineDeparture)
-        {
-            try
-            {
-                DO.LineDeparture newlineDeparture = LineDepartureBoDoAdapter(lineDeparture);
-                (DalFactory.GetDL()).AddLineDeparture(newlineDeparture);
-            }
-            catch (DO.ExceptionDALBadLicense ex)
-            {
-                throw new BO.ExceptionBLBadLicense("Bus stop code already exist", ex);
-            }
-        }
-        #endregion
+        //public void AddLineDeparture(LineDeparture lineDeparture)
+        //{
+        //    try
+        //    {
+        //        DO.LineDeparture newlineDeparture = LineDepartureBoDoAdapter(lineDeparture);
+        //        (DalFactory.GetDL()).AddLineDeparture(newlineDeparture);
+        //    }
+        //    catch (DO.ExceptionDALBadLicense ex)
+        //    {
+        //        throw new BO.ExceptionBLBadLicense("Bus stop code already exist", ex);
+        //    }
+        //}
+        //#endregion
 
         #region BusLineStation
 
@@ -414,7 +426,7 @@ namespace BL
         #region Consecutive Stations
         public void CheckIfConsecutiveExistOrInactive(int busStopKeyA, int busStopKeyB)
         {
-            DO.ConsecutiveStations newConStations;
+            DO.ConsecutiveStations newConStations = new DO.ConsecutiveStations();
             try
             {
                 newConStations = dl.GetConsecutiveStations(busStopKeyA, busStopKeyB);

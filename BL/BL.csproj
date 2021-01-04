@@ -50,7 +50,6 @@
     <Compile Include="BO\BusStop.cs" />
     <Compile Include="BO\Enums.cs" />
     <Compile Include="BO\Exception.cs" />
-    <Compile Include="BO\LineDeparture.cs" />
     <Compile Include="BO\User.cs" />
     <Compile Include="DeepCopyUtilities.cs" />
     <Compile Include="IBL.cs" />
