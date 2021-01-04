@@ -74,27 +74,24 @@ namespace BL
             {
                 idToReturn = (DalFactory.GetDL()).AddBusLine(newBus);
 
-
-                    newConStations.BusStopKeyA = busLine.FirstBusStopKey;
-                    newConStations.BusStopKeyB = busLine.LastBusStopKey;
-                    newConStations.Distance = kmToNext;
-                    newConStations.TravelTime = timeToNext;
-                    dl.AddConsecutiveStations(newConStations);
-
+                
                 newLineDeparture.BusLineID = idToReturn;
                 newLineDeparture.StartTime = startTime;
                 newLineDeparture.EndTime = endTime;
                 newLineDeparture.Frequency = frequency;
-                dl.AddLineDeparture(newLineDeparture);
-            }
+            
+                    dl.AddLineDeparture(newLineDeparture);
 
+                newConStations.BusStopKeyA = busLine.FirstBusStopKey;
+                newConStations.BusStopKeyB = busLine.LastBusStopKey;
+                newConStations.Distance = kmToNext;
+                newConStations.TravelTime = timeToNext;
+                if (!CheckIfConsecutiveExist(busLine.FirstBusStopKey, busLine.LastBusStopKey))
+                    dl.AddConsecutiveStations(newConStations);
+            }
             catch (DO.ExceptionDALBadLicense ex)
             {
                 throw new BO.ExceptionBLBadLicense("Line already exist", ex);
-            }
-            catch (DO.ExceptionDAL_ExistConsStations ex)
-            {
-                throw new ExceptionBL_ExistConsStations();
             }
             return idToReturn; 
         }
@@ -261,15 +258,15 @@ namespace BL
             return busStopDoBoAdapter(bosStopDO);
         }
 
-        public void UpdateBusStop(int oldBusStopKey, BO.BusStop busStopBO) //busUpdate
+        public void UpdateBusStop(BO.BusStop busStopBO) //busUpdate
         {
             try
             {
-                dl.UpdateBusStop(oldBusStopKey, busStopBoDoAdapter(busStopBO));
+                dl.UpdateBusStop(busStopBoDoAdapter(busStopBO));
             }
             catch (DO.ExceptionDALBadLicense ex)
             {
-                throw new BO.ExceptionBLBadLicense("The updated bus stop key code entered already exist", ex);
+                throw new BO.ExceptionBLBadLicense("The bus stop code doesn't exist", ex);
             }
 
         }
@@ -405,6 +402,7 @@ namespace BL
         {
             throw new NotImplementedException();
         }
+
         public void AddBusLineStation(BusLineStation busLineStationBo)
         {
             try
@@ -417,14 +415,17 @@ namespace BL
                 throw new BO.ExceptionBLBadLicense("Bus stop code already exist", ex);
             }
         }
+
         public void UpdateBusLineStation(BusLineStation busLineStation)
         {
             throw new NotImplementedException();
         }
+
         public void UpdateBusLineStation(int license, Action<BusLineStation> update)
         {
             throw new NotImplementedException();
         }
+
         public void DeleteBusLineStation(int license)
         {
             throw new NotImplementedException();

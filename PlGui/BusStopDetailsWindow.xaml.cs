@@ -24,7 +24,6 @@ namespace PlGui
     {
         IBL bl = BLFactory.GetBL("1");
         BO.BusStop busStop;
-        int oldBusStopKey;
 
         public BusStopDetailsWindow()
         {
@@ -37,7 +36,6 @@ namespace PlGui
             InitializeComponent();
             BusStopDet.DataContext = item;
             busStop = item as BO.BusStop;
-            oldBusStopKey = busStop.BusStopKey;
         }
 
         private void Button_Update(object sender, RoutedEventArgs e)
@@ -56,12 +54,11 @@ namespace PlGui
                 {
                     busStop.Sunshade = (bool)cbSunshade.IsChecked;
                     busStop.DigitalPanel = (bool)cbDigitalPanel.IsChecked;
-                    busStop.BusStopKey = int.Parse(tbStopKey.GetLineText(0));
                     busStop.BusStopName = tbStopName.GetLineText(0);
                     busStop.BusStopAddress = tbAddress.GetLineText(0);
                     busStop.Latitude = lati;
                     busStop.Longitude = longi;
-                    bl.UpdateBusStop(oldBusStopKey, busStop);   // Inserts the new bus to the beginning of the list                 
+                    bl.UpdateBusStop(busStop);   // Inserts the new bus to the beginning of the list                 
                     this.Close();
                 }
             }

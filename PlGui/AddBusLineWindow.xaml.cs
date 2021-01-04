@@ -61,13 +61,13 @@ namespace PlGui
                     newBusLine.Area = (Enums.AREA)cbArea.SelectedItem;
                     newBusLine.FirstBusStopKey = (cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey;
                     newBusLine.LastBusStopKey = (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey;
-                    if (tbKmToNext.Visibility == Visibility.Visible && tbTimeToNext.Visibility == Visibility.Visible)
-                        runningNumber = bl.AddBusLine(newBusLine, kmToNext, timeToNext, startTime, endTime, (int)sFrequency.Value); // Inserts the new bus to the beginning of the list                 
+                    runningNumber = bl.AddBusLine(newBusLine, kmToNext, timeToNext, startTime, endTime, (int)sFrequency.Value); // Inserts the new bus to the beginning of the list                 
 
                     // Line Stations Addition:
 
                     newStationA.BusLineID = runningNumber;
                     newStationA.LineStationIndex = 0;
+                    newStationB.PrevStation = 0;
                     newStationA.BusStopKey = newBusLine.FirstBusStopKey;
                     newStationA.NextStation = newBusLine.LastBusStopKey;
                     bl.AddBusLineStation(newStationA);
@@ -75,6 +75,7 @@ namespace PlGui
                     newStationB.BusLineID = runningNumber;
                     newStationB.LineStationIndex = 1;
                     newStationB.BusStopKey = newBusLine.LastBusStopKey;
+                    newStationB.PrevStation = newBusLine.FirstBusStopKey;
                     newStationB.NextStation = 0;
                     bl.AddBusLineStation(newStationB);
                     this.Close();
@@ -122,15 +123,24 @@ namespace PlGui
         private void cbLastBusStopSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cbFirstBusStop.SelectedItem != null && cbLastBusStop.SelectedItem != null)
-                if (bl.CheckIfConsecutiveExist((cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey, (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey))
-                {; } // If they are exist, or inactive, it means we know the time and distance between the two bus
-                else // It means the consecutive doesn't exist, and we need to manager neeed to enter the distance and time
+            {
+                if (!bl.CheckIfConsecutiveExist((cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey, (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey))
+                // If they are exist, or inactive, it means we know the time and distance between the two bus
+                // It means the consecutive doesn't exist, and we need to manager neeed to enter the distance and time
                 {
                     lbKmToNext.Visibility = Visibility.Visible;
                     lbTimeToNext.Visibility = Visibility.Visible;
                     tbKmToNext.Visibility = Visibility.Visible;
                     tbTimeToNext.Visibility = Visibility.Visible;
                 }
+                else
+                {
+                    lbKmToNext.Visibility = Visibility.Collapsed;
+                    lbTimeToNext.Visibility = Visibility.Collapsed;
+                    tbKmToNext.Visibility = Visibility.Collapsed;
+                    tbTimeToNext.Visibility = Visibility.Collapsed;
+                }
+            }
         }
     }
 }

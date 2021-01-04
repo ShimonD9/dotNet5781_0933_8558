@@ -45,7 +45,7 @@
                         <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Longitude (34.3, 35.5):"/>
                         <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Sunshade:"/>
                         <Label  Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Digital Panel:"/>
-                        <TextBox Name="tbStopKey" Grid.Row="0" Grid.Column="1" MaxLength="5" PreviewTextInput="NumberValidationTextBoxNoDots" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusStopKey, Mode=OneWay}"/>
+                        <TextBlock Name="tbStopKey" Grid.Row="0" Grid.Column="1" PreviewTextInput="NumberValidationTextBoxNoDots" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusStopKey, Mode=OneWay}"/>
                         <TextBox Name="tbStopName" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusStopName, Mode=OneWay}"/>
                         <TextBox Name="tbAddress" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusStopAddress, Mode=OneWay}"/>
                         <TextBox Name="tbLatitude" Grid.Row="3" Grid.Column="1" MaxLength="7" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Latitude, Mode=OneWay}"/>
