@@ -61,21 +61,22 @@
                 <ComboBox Name ="cbLastBusStop" DisplayMemberPath="BusStopKey" HorizontalAlignment="Stretch" Margin="10" FontSize="10" SelectionChanged="cbLastBusStopSelectionChanged"/>
             </Grid>
 
+            
             <Grid Grid.Row="4" Grid.Column="0">
-                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Distance between the bus stops:" Width="221"  Margin="5"/>
+                <Label HorizontalAlignment="Left" Visibility="Collapsed" VerticalAlignment="Center" Content="Distance between the bus stops:" Width="221"  Margin="5"/>
             </Grid>
 
             <Grid Grid.Row="4" Grid.Column="1">
-                <TextBox Name ="tbKmToNext" Text="0"  MaxLength="8" PreviewTextInput="NumberValidationTextBoxDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+                <TextBox Name ="tbKmToNext" Text="0"  Visibility="Collapsed" MaxLength="8" PreviewTextInput="NumberValidationTextBoxDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
             </Grid>
 
 
             <Grid Grid.Row="5" Grid.Column="0">
-                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Travel time between the bus stops:" Width="221"  Margin="5"/>
+                <Label HorizontalAlignment="Left" Visibility="Collapsed" VerticalAlignment="Center" Content="Travel time between the bus stops:" Width="221"  Margin="5"/>
             </Grid>
 
             <Grid Grid.Row="5" Grid.Column="1">
-                <TextBox Name ="tbTimeToNext" Text="hh:mm:ss"  MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+                <TextBox Name ="tbTimeToNext" Visibility="Collapsed" Text="hh:mm:ss"  MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
             </Grid>
 
 
