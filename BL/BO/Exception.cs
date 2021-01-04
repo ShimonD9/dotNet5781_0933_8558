@@ -15,18 +15,18 @@ namespace BO
         public override string ToString() => base.ToString() + $", bad license id: {ID}";
     }
 
-    public class ExceptionBLInactive : Exception
+    public class ExceptionBL_Inactive : Exception
     {
         public int ID;
-        public ExceptionBLInactive(string message, Exception innerException) :
+        public ExceptionBL_Inactive(string message, Exception innerException) :
             base(message, innerException) => ID = ((DO.ExceptionDALInactive)innerException).ID;
         public override string ToString() => base.ToString() + $", inactive: {ID}";
     }
 
-    public class ExceptionBLunexist : Exception
+    public class ExceptionBL_Unexist : Exception
     {
         public int ID;
-        public ExceptionBLunexist(string message, Exception innerException) :
+        public ExceptionBL_Unexist(string message, Exception innerException) :
             base(message, innerException) => ID = ((DO.ExceptionDALunexist)innerException).ID;
         public override string ToString() => base.ToString() + $", unexist: {ID}";
     }

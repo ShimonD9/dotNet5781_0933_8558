@@ -51,7 +51,7 @@ namespace BLApi
         #endregion
 
         #region Consecutive Stations
-        void CheckIfConsecutiveExistOrInactive(int busStopKeyA, int busStopKeyB);
+        bool CheckIfConsecutiveExist(int busStopKeyA, int busStopKeyB);
         #endregion
 
        // #region LineDeparture

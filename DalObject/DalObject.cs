@@ -390,21 +390,22 @@ namespace DL
                 throw new DO.ExceptionDALunexist(busStopCodeA, $"the consecutive stations doesn't exist: {busStopCodeA}");
         }
 
-        public void AddConsecutiveStations(ConsecutiveStations consecutiveStations)
+        public void AddConsecutiveStations(ConsecutiveStations newConsecutiveStations)
         {
-            ConsecutiveStations newConsecutiveStations = DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA);
-            if (newConsecutiveStations != null && newConsecutiveStations.ObjectActive == true)
-                throw new DO.ExceptionDALBadLicense(consecutiveStations.BusStopKeyA, "Duplicate bus ID");
-            else if (DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA) != null &&
-                DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA).ObjectActive == false)
+            ConsecutiveStations existConsecutiveStations = DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == newConsecutiveStations.BusStopKeyA && b.BusStopKeyB == newConsecutiveStations.BusStopKeyB);
+            if (existConsecutiveStations != null && existConsecutiveStations.ObjectActive == true)
+               throw new DO.ExceptionDALBadLicense(newConsecutiveStations.BusStopKeyA, "Duplicate bus ID");
+            else if (existConsecutiveStations != null && existConsecutiveStations.ObjectActive == false)
             {
-                ConsecutiveStations addConsecutiveStations = DataSource.ListConsecutiveStations.Find(b => b.BusStopKeyA == consecutiveStations.BusStopKeyA);
-                addConsecutiveStations.ObjectActive = true;
-                addConsecutiveStations = consecutiveStations.Clone();
+                existConsecutiveStations.ObjectActive = true;
             }
             else
-                DataSource.ListConsecutiveStations.Add(consecutiveStations.Clone());
+            {
+                newConsecutiveStations.ObjectActive = true;
+                DataSource.ListConsecutiveStations.Add(newConsecutiveStations.Clone());
+            }
         }
+
         public void UpdateConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
             int index = DataSource.ListConsecutiveStations.FindIndex(consecutive => consecutive.BusStopKeyA == consecutiveStations.BusStopKeyA);
@@ -458,6 +459,7 @@ namespace DL
             else
                 throw new DO.ExceptionDALBadLicense(busLineID, $"bad id: {busLineID}");
         }
+
         public void AddLineDeparture(LineDeparture lineDeparture)
         {
             if (DataSource.ListLineDepartures.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID) != null &&

@@ -73,11 +73,14 @@ namespace BL
             try
             {
                 idToReturn = (DalFactory.GetDL()).AddBusLine(newBus);
-                newConStations.BusStopKeyA = busLine.FirstBusStopKey;
-                newConStations.BusStopKeyB = busLine.LastBusStopKey;
-                newConStations.Distance = kmToNext;
-                newConStations.TravelTime = timeToNext;
-                dl.AddConsecutiveStations(newConStations);
+
+
+                    newConStations.BusStopKeyA = busLine.FirstBusStopKey;
+                    newConStations.BusStopKeyB = busLine.LastBusStopKey;
+                    newConStations.Distance = kmToNext;
+                    newConStations.TravelTime = timeToNext;
+                    dl.AddConsecutiveStations(newConStations);
+
                 newLineDeparture.BusLineID = idToReturn;
                 newLineDeparture.StartTime = startTime;
                 newLineDeparture.EndTime = endTime;
@@ -89,8 +92,13 @@ namespace BL
             {
                 throw new BO.ExceptionBLBadLicense("Line already exist", ex);
             }
+            //catch (DO.ExceptionDALExistConsStations ex)
+            //{
+            //    no need to throw up to the PL
+            //}
             return idToReturn;
         }
+
         public void UpdateBusLine(BusLine busLine)
         {
             throw new NotImplementedException();
@@ -424,23 +432,26 @@ namespace BL
         #endregion
 
         #region Consecutive Stations
-        public void CheckIfConsecutiveExistOrInactive(int busStopKeyA, int busStopKeyB)
+
+        public bool CheckIfConsecutiveExist(int busStopKeyA, int busStopKeyB)
         {
             DO.ConsecutiveStations newConStations = new DO.ConsecutiveStations();
             try
             {
                 newConStations = dl.GetConsecutiveStations(busStopKeyA, busStopKeyB);
+                return true;
             }
             catch(DO.ExceptionDALInactive ex)
             {
-                throw new BO.ExceptionBLInactive("Consecutive stations object exist but isn't active", ex);
+                return true;
             }
             catch(DO.ExceptionDALunexist ex)
             {
-                throw new BO.ExceptionBLunexist("Consecutive stations object doesn't exist", ex);
+                return false;
             }
         }
         #endregion
+
 
         #region User
         BO.User userDoBoAdapter(DO.User userDO)

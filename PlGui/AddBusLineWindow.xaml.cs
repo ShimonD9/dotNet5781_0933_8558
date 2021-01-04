@@ -31,7 +31,7 @@ namespace PlGui
 
         public AddBusLineWindow()
         {
-            InitializeComponent();      
+            InitializeComponent();
             cbArea.ItemsSource = Enum.GetValues(typeof(BO.Enums.AREA));
             cbLastBusStop.IsEnabled = false;
             cbFirstBusStop.ItemsSource = bl.GetAllBusStops().OrderBy(busStop => busStop.BusStopKey);
@@ -47,7 +47,9 @@ namespace PlGui
         {
             try
             {
-                if (!Double.TryParse(tbKmToNext.GetLineText(0), out double kmToNext) || !TimeSpan.TryParse(tbTimeToNext.GetLineText(0), out TimeSpan timeToNext)
+                double kmToNext = 0;
+                TimeSpan timeToNext = new TimeSpan(0, 0, 0);
+                if (tbKmToNext.Visibility == Visibility.Visible && !Double.TryParse(tbKmToNext.GetLineText(0), out kmToNext) || tbTimeToNext.Visibility == Visibility.Visible && !TimeSpan.TryParse(tbTimeToNext.GetLineText(0), out timeToNext)
                     || !TimeSpan.TryParse(tbStartTime.GetLineText(0), out TimeSpan startTime) || !TimeSpan.TryParse(tbEndTime.GetLineText(0), out TimeSpan endTime))
                 {
                     MessageBox.Show("You didn't fill correctly all the required information", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -59,7 +61,8 @@ namespace PlGui
                     newBusLine.Area = (Enums.AREA)cbArea.SelectedItem;
                     newBusLine.FirstBusStopKey = (cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey;
                     newBusLine.LastBusStopKey = (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey;
-                    runningNumber = bl.AddBusLine(newBusLine, kmToNext, timeToNext, startTime, endTime, (int)sFrequency.Value);   // Inserts the new bus to the beginning of the list                 
+                    if (tbKmToNext.Visibility == Visibility.Visible && tbTimeToNext.Visibility == Visibility.Visible)
+                        runningNumber = bl.AddBusLine(newBusLine, kmToNext, timeToNext, startTime, endTime, (int)sFrequency.Value); // Inserts the new bus to the beginning of the list                 
 
                     // Line Stations Addition:
 
@@ -69,7 +72,7 @@ namespace PlGui
                     newStationA.NextStation = newBusLine.LastBusStopKey;
                     bl.AddBusLineStation(newStationA);
 
-                    newStationB.BusLineID = runningNumber ;
+                    newStationB.BusLineID = runningNumber;
                     newStationB.LineStationIndex = 1;
                     newStationB.BusStopKey = newBusLine.LastBusStopKey;
                     newStationB.NextStation = 0;
@@ -118,22 +121,16 @@ namespace PlGui
 
         private void cbLastBusStopSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
-            {
-                if (cbFirstBusStop.SelectedItem != null && cbLastBusStop.SelectedItem !=null)
-                    bl.CheckIfConsecutiveExistOrInactive((cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey, (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey);
-            }
-            catch (BO.ExceptionBLInactive)
-            {
-                // change to active - HOW?
-            }
-            catch (BO.ExceptionBLunexist)
-            {
-                lbKmToNext.Visibility = Visibility.Visible;
-                lbTimeToNext.Visibility = Visibility.Visible;
-                tbKmToNext.Visibility = Visibility.Visible;
-                tbTimeToNext.Visibility = Visibility.Visible;
-            }
+            if (cbFirstBusStop.SelectedItem != null && cbLastBusStop.SelectedItem != null)
+                if (bl.CheckIfConsecutiveExist((cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey, (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey))
+                {; } // If they are exist, or inactive, it means we know the time and distance between the two bus
+                else // It means the consecutive doesn't exist, and we need to manager neeed to enter the distance and time
+                {
+                    lbKmToNext.Visibility = Visibility.Visible;
+                    lbTimeToNext.Visibility = Visibility.Visible;
+                    tbKmToNext.Visibility = Visibility.Visible;
+                    tbTimeToNext.Visibility = Visibility.Visible;
+                }
         }
     }
 }
