@@ -11,7 +11,7 @@ namespace BO
     {
         public int ID;
         public ExceptionBLBadLicense(string message, Exception innerException) :
-            base(message, innerException) => ID = ((DO.ExceptionDALBadLicense)innerException).ID;
+            base(message, innerException) => ID = ((DO.ExceptionDAL_KeyNotFound)innerException).ID;
         public override string ToString() => base.ToString() + $", bad license id: {ID}";
     }
 
@@ -19,7 +19,7 @@ namespace BO
     {
         public int ID;
         public ExceptionBL_Inactive(string message, Exception innerException) :
-            base(message, innerException) => ID = ((DO.ExceptionDALInactive)innerException).ID;
+            base(message, innerException) => ID = ((DO.ExceptionDAL_Inactive)innerException).ID;
         public override string ToString() => base.ToString() + $", inactive: {ID}";
     }
 
@@ -27,7 +27,7 @@ namespace BO
     {
         public int ID;
         public ExceptionBL_Unexist(string message, Exception innerException) :
-            base(message, innerException) => ID = ((DO.ExceptionDALunexist)innerException).ID;
+            base(message, innerException) => ID = ((DO.ExceptionDAL_KeyAlreadyExist)innerException).ID;
         public override string ToString() => base.ToString() + $", unexist: {ID}";
     }
 
@@ -35,7 +35,7 @@ namespace BO
     {
         public string ID;
         public ExceptionBLBadUserId(string message, Exception innerException) :
-            base(message, innerException) => ID = ((DO.ExceptionDALBadIdUser)innerException).ID;
+            base(message, innerException) => ID = ((DO.ExceptionDAL_UserKeyNotFound)innerException).ID;
         public override string ToString() => base.ToString() + $", bad license id: {ID}";
     }
 

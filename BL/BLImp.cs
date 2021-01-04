@@ -89,7 +89,7 @@ namespace BL
                 if (!CheckIfConsecutiveExist(busLine.FirstBusStopKey, busLine.LastBusStopKey))
                     dl.AddConsecutiveStations(newConStations);
             }
-            catch (DO.ExceptionDALBadLicense ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadLicense("Line already exist", ex);
             }
@@ -148,7 +148,7 @@ namespace BL
             {
                 busDO = dl.GetBus(license);
             }
-            catch (DO.ExceptionDALBadLicense ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadLicense("License does not exist", ex);
             }
@@ -173,7 +173,7 @@ namespace BL
                 DO.Bus newBus = busBoDoAdapter(busBO);
                 (DalFactory.GetDL()).AddBus(newBus);
             }
-            catch (DO.ExceptionDALBadLicense ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadLicense("License already exist", ex);
             }
@@ -186,7 +186,7 @@ namespace BL
                 BusStatusUpdate(busBO);
                 dl.UpdateBus(busBoDoAdapter(busBO));
             }
-            catch (DO.ExceptionDALBadLicense ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadLicense("License does not exist or bus inactive", ex);
             }
@@ -199,7 +199,7 @@ namespace BL
                 DO.Bus busUpdateDO = dl.GetBus(licenseNumber);
                 update(busDoBoAdapter(busUpdateDO));
             }
-            catch (DO.ExceptionDALBadLicense ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadLicense("License does not exist Or bus inactive", ex);
             }
@@ -210,7 +210,7 @@ namespace BL
             {
                 dl.DeleteBus(license);
             }
-            catch (DO.ExceptionDALBadLicense ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadLicense("he bus license doesn't exist or the bus is inactive!", ex);
             }
@@ -251,7 +251,7 @@ namespace BL
             {
                 bosStopDO = dl.GetBusStop(bosStopKeyDO);
             }
-            catch (DO.ExceptionDALBadLicense ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadLicense("bus stop key does not exist", ex);
             }
@@ -264,7 +264,7 @@ namespace BL
             {
                 dl.UpdateBusStop(busStopBoDoAdapter(busStopBO));
             }
-            catch (DO.ExceptionDALBadLicense ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadLicense("The bus stop code doesn't exist", ex);
             }
@@ -289,7 +289,7 @@ namespace BL
                 DO.BusStop newStop = busStopBoDoAdapter(busStopBO);
                 (DalFactory.GetDL()).AddBusStop(newStop);
             }
-            catch (DO.ExceptionDALBadLicense ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadLicense("Bus stop code already exist", ex);
             }
@@ -303,7 +303,7 @@ namespace BL
                     throw new BO.ExceptionBLLinesStopHere("The bus stop serves bus lines, and cannot be deleted.");
                 dl.DeleteBusStop(BusStopCode);
             }
-            catch (DO.ExceptionDALBadLicense ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadLicense("bus stop key does not exist Or bus inactive", ex);
             }
@@ -410,7 +410,7 @@ namespace BL
                 DO.BusLineStation newStop = BusLineStationBoDoAdapter(busLineStationBo);
                 (DalFactory.GetDL()).AddBusLineStation(newStop);
             }
-            catch (DO.ExceptionDALBadLicense ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadLicense("Bus stop code already exist", ex);
             }
@@ -442,11 +442,11 @@ namespace BL
                 newConStations = dl.GetConsecutiveStations(busStopKeyA, busStopKeyB);
                 return true;
             }
-            catch(DO.ExceptionDALInactive ex)
+            catch(DO.ExceptionDAL_Inactive ex)
             {
                 return true;
             }
-            catch(DO.ExceptionDALunexist ex)
+            catch(DO.ExceptionDAL_KeyAlreadyExist ex)
             {
                 return false;
             }
@@ -488,7 +488,7 @@ namespace BL
             {
                 userDO = dl.GetUser(userName);
             }
-            catch (DO.ExceptionDALBadIdUser ex)
+            catch (DO.ExceptionDAL_UserKeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadUserId("user dose not exist", ex);
             }
@@ -503,7 +503,7 @@ namespace BL
                 DO.User newUser = userBoDoAdapter(userBO);
                 (DalFactory.GetDL()).AddUser(newUser);
             }
-            catch (DO.ExceptionDALBadIdUser ex)
+            catch (DO.ExceptionDAL_UserKeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadUserId("user already exist", ex);
             }
@@ -515,7 +515,7 @@ namespace BL
             {
                 dl.UpdateUser(userBoDoAdapter(userBO));
             }
-            catch (DO.ExceptionDALBadIdUser ex)
+            catch (DO.ExceptionDAL_UserKeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadUserId("user does not exist Or inactive", ex);
             }
@@ -533,7 +533,7 @@ namespace BL
             {
                 dl.DeleteUser(userName);
             }
-            catch (DO.ExceptionDALBadIdUser ex)
+            catch (DO.ExceptionDAL_UserKeyNotFound ex)
             {
                 throw new BO.ExceptionBLBadUserId("user does not exist Or inactive", ex);
             }
