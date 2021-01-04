@@ -61,9 +61,9 @@ namespace PlGui
                     newBusStop.BusStopName = tbBusStopName.GetLineText(0);
                     newBusStop.Latitude = double.Parse(tbLatitude.GetLineText(0));
                     newBusStop.Longitude = double.Parse(tbLongitude.GetLineText(0));
-                    newBusStop.Sunshade = cbSunshade.IsEnabled;
-                    newBusStop.DigitalPanel = cbDigitalPanel.IsEnabled;
-                    newBusStop.ObjectActive = true;
+                    newBusStop.Sunshade = (bool)cbSunshade.IsChecked;
+                    newBusStop.DigitalPanel = (bool)cbDigitalPanel.IsChecked;
+                    
                     bl.AddBusStop(newBusStop);   // Inserts the new bus to the beginning of the list                 
                     this.Close();
                 }

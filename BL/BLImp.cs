@@ -261,15 +261,15 @@ namespace BL
             return busStopDoBoAdapter(bosStopDO);
         }
 
-        public void UpdateBusStop(BO.BusStop busStopBO) //busUpdate
+        public void UpdateBusStop(int oldBusStopKey, BO.BusStop busStopBO) //busUpdate
         {
             try
             {
-                dl.UpdateBusStop(busStopBoDoAdapter(busStopBO));
+                dl.UpdateBusStop(oldBusStopKey, busStopBoDoAdapter(busStopBO));
             }
             catch (DO.ExceptionDALBadLicense ex)
             {
-                throw new BO.ExceptionBLBadLicense("bus stop key not exist Or bus inactive", ex);
+                throw new BO.ExceptionBLBadLicense("The updated bus stop key code entered already exist", ex);
             }
 
         }

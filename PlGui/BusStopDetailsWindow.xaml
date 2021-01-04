@@ -41,17 +41,17 @@
                         <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Bus Stop key:"/>
                         <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Bus Stop name:"/>
                         <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Bus Stop address:"/>
-                        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Latitude:"/>
-                        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Longitude:"/>
+                        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Latitude  (31, 33.3):"/>
+                        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Longitude (34.3, 35.5):"/>
                         <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Sunshade:"/>
                         <Label  Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Digital Panel:"/>
-                        <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusStopKey}"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusStopName}"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusStopAddress}"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Latitude}"/>
-                        <TextBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Longitude}"/>
-                        <CheckBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=Sunshade}"/>
-                        <CheckBox Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=DigitalPanel}"/>
+                        <TextBox Name="tbStopKey" Grid.Row="0" Grid.Column="1" MaxLength="5" PreviewTextInput="NumberValidationTextBoxNoDots" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusStopKey, Mode=OneWay}"/>
+                        <TextBox Name="tbStopName" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusStopName, Mode=OneWay}"/>
+                        <TextBox Name="tbAddress" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusStopAddress, Mode=OneWay}"/>
+                        <TextBox Name="tbLatitude" Grid.Row="3" Grid.Column="1" MaxLength="7" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Latitude, Mode=OneWay}"/>
+                        <TextBox Name="tbLongitude" Grid.Row="4" Grid.Column="1" MaxLength="7" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Longitude, Mode=OneWay}"/>
+                        <CheckBox Name="cbSunshade" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=Sunshade, Mode=OneWay}"/>
+                        <CheckBox Name="cbDigitalPanel" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=DigitalPanel, Mode=OneWay}"/>
                     </Grid>
                 </Border>
                 <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">

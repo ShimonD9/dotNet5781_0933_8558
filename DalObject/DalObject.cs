@@ -63,7 +63,7 @@ namespace DL
 
         public void UpdateBus(Bus bus) //busUpdate
         {
-            int index = DataSource.ListBuses.FindIndex(bus1 => bus1.License == bus.License);          
+            int index = DataSource.ListBuses.FindIndex(bus1 => bus1.License == bus.License);
             if (DataSource.ListBuses[index] != null && DataSource.ListBuses[index].ObjectActive)
                 DataSource.ListBuses[index] = bus.Clone();
             else if (!DataSource.ListBuses[index].ObjectActive)
@@ -335,18 +335,30 @@ namespace DL
                 addBus = busStop.Clone();
             }
             else
+            {
+                busStop.ObjectActive = true;
                 DataSource.ListBusStops.Insert(0, busStop.Clone());
+            }
         }
-        public void UpdateBusStop(BusStop busStop)
+
+        public void UpdateBusStop(int oldBusStopKey, BusStop busStop)
         {
-            int index = DataSource.ListBusStops.FindIndex(bus1 => bus1.BusStopKey == busStop.BusStopKey);
+            // Checks if the code of the new bus stop is new, and if exist, it throws an exception
+            if (oldBusStopKey != busStop.BusStopKey)
+            {
+                if (DataSource.ListBusStops.FindIndex(b => b.BusStopKey == busStop.BusStopKey) != -1)
+                    throw new DO.ExceptionDALBadLicense(busStop.BusStopKey, "Duplicate bus stop code");
+            }
+            // If the old bus stop code didn't change, or it changed but it's new:
+            int index = DataSource.ListBusStops.FindIndex(b => b.BusStopKey == oldBusStopKey);
             if (DataSource.ListBusStops[index] != null && DataSource.ListBusStops[index].ObjectActive)
                 DataSource.ListBusStops[index] = busStop.Clone();
             else if (!DataSource.ListBusStops[index].ObjectActive)
-                throw new DO.ExceptionDALInactive(busStop.BusStopKey, $"the bus is  inactive");
+                throw new DO.ExceptionDALInactive(oldBusStopKey, $"the bus is  inactive");
             else
-                throw new DO.ExceptionDALBadLicense(busStop.BusStopKey, $"bad id: {busStop.BusStopKey}");
+                throw new DO.ExceptionDALunexist(oldBusStopKey, $"the bus doesn't exist");
         }
+
         public void UpdateBusStop(int busStopKey, Action<BusStop> update) // method that knows to updt specific fields in Person
         {
             BusStop busUpdate = GetBusStop(busStopKey);
@@ -394,7 +406,7 @@ namespace DL
         {
             ConsecutiveStations existConsecutiveStations = DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == newConsecutiveStations.BusStopKeyA && b.BusStopKeyB == newConsecutiveStations.BusStopKeyB);
             if (existConsecutiveStations != null && existConsecutiveStations.ObjectActive == true)
-               throw new DO.ExceptionDALBadLicense(newConsecutiveStations.BusStopKeyA, "Duplicate bus ID");
+                throw new DO.ExceptionDALBadLicense(newConsecutiveStations.BusStopKeyA, "Duplicate bus ID");
             else if (existConsecutiveStations != null && existConsecutiveStations.ObjectActive == false)
             {
                 existConsecutiveStations.ObjectActive = true;
@@ -474,11 +486,11 @@ namespace DL
             }
             else
                 lineDeparture.ObjectActive = true;
-                DataSource.ListLineDepartures.Add(lineDeparture.Clone());
+            DataSource.ListLineDepartures.Add(lineDeparture.Clone());
         }
         public void UpdateLineDeparture(LineDeparture lineDeparture)
         {
-            int index = DataSource.ListLineDepartures.FindIndex(lineDep => lineDep.BusLineID== lineDeparture.BusLineID);
+            int index = DataSource.ListLineDepartures.FindIndex(lineDep => lineDep.BusLineID == lineDeparture.BusLineID);
             if (DataSource.ListLineDepartures[index] != null && DataSource.ListLineDepartures[index].ObjectActive)
                 DataSource.ListLineDepartures[index] = lineDeparture.Clone();
             else if (!DataSource.ListLineDepartures[index].ObjectActive)
