@@ -19,6 +19,10 @@ namespace DO
     public class ExceptionDALunexist : Exception
     {
         public int ID, ID_B;
+
+        public string ID1;
+
+        public ExceptionDALunexist(string id) : base() => ID1 = id;
         public ExceptionDALunexist(int id) : base() => ID = id;
         public ExceptionDALunexist(int id, string message) : base(message) => ID = id;
         public ExceptionDALunexist(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
@@ -34,14 +38,21 @@ namespace DO
         public ExceptionDALBadIdUser(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", bad id : {ID}";
     }
+
     public class ExceptionDALInactive : Exception
     {
         public int ID;
+
+        public string ID1;
         public ExceptionDALInactive(int id) : base() => ID = id;
+
+        public ExceptionDALInactive(string id) : base() => ID1 = id;
+
         public ExceptionDALInactive(int id, string message) : base(message) => ID = id;
         public ExceptionDALInactive(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", bad id : {ID}";
     }
+
     public class ExceptionDALInactiveUser : Exception
     {
         public string ID;
@@ -50,5 +61,16 @@ namespace DO
         public ExceptionDALInactiveUser(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", bad id : {ID}";
     }
+
+    public class ExceptionDAL_ExistConsStations : Exception
+    {
+        public string ID;
+
+        public ExceptionDAL_ExistConsStations(string id) : base() => ID = id;
+        public ExceptionDAL_ExistConsStations(string id, string message) : base(message) => ID = id;
+        public ExceptionDAL_ExistConsStations(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public override string ToString() => base.ToString() + $", Exist Conscutive Stations : {ID}";
+    }
+
 
 }

@@ -92,11 +92,11 @@ namespace BL
             {
                 throw new BO.ExceptionBLBadLicense("Line already exist", ex);
             }
-            //catch (DO.ExceptionDALExistConsStations ex)
-            //{
-            //    no need to throw up to the PL
-            //}
-            return idToReturn;
+            catch (DO.ExceptionDAL_ExistConsStations ex)
+            {
+                throw new ExceptionBL_ExistConsStations();
+            }
+            return idToReturn; 
         }
 
         public void UpdateBusLine(BusLine busLine)

@@ -385,16 +385,16 @@ namespace DL
             if (conStations != null && conStations.ObjectActive)
                 return conStations.Clone();
             else if (conStations != null && !conStations.ObjectActive)
-                throw new DO.ExceptionDALInactive(busStopCodeA, $"the bus is  inactive");
+                throw new DO.ExceptionDALInactive("the consecutive stations is inactive");
             else
-                throw new DO.ExceptionDALunexist(busStopCodeA, $"the consecutive stations doesn't exist: {busStopCodeA}");
+                throw new DO.ExceptionDALunexist("the consecutive stations doesn't exist");
         }
 
         public void AddConsecutiveStations(ConsecutiveStations newConsecutiveStations)
         {
             ConsecutiveStations existConsecutiveStations = DataSource.ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == newConsecutiveStations.BusStopKeyA && b.BusStopKeyB == newConsecutiveStations.BusStopKeyB);
             if (existConsecutiveStations != null && existConsecutiveStations.ObjectActive == true)
-               throw new DO.ExceptionDALBadLicense(newConsecutiveStations.BusStopKeyA, "Duplicate bus ID");
+               throw new DO.ExceptionDAL_ExistConsStations("Duplicate Consecutive Stations");
             else if (existConsecutiveStations != null && existConsecutiveStations.ObjectActive == false)
             {
                 existConsecutiveStations.ObjectActive = true;
@@ -412,9 +412,9 @@ namespace DL
             if (DataSource.ListConsecutiveStations[index] != null && DataSource.ListConsecutiveStations[index].ObjectActive)
                 DataSource.ListConsecutiveStations[index] = consecutiveStations.Clone();
             else if (!DataSource.ListConsecutiveStations[index].ObjectActive)
-                throw new DO.ExceptionDALInactive(consecutiveStations.BusStopKeyA, $"the bus is  inactive");
+                throw new DO.ExceptionDALInactive("the consecutive stations is inactive");
             else
-                throw new DO.ExceptionDALBadLicense(consecutiveStations.BusStopKeyA, $"bad id: {consecutiveStations.BusStopKeyA}");
+                throw new DO.ExceptionDALunexist("the consecutive stations doesn't exist");
         }
 
         public void UpdateConsecutiveStations(int busStopCodeA, int busStopCodeB, Action<ConsecutiveStations> update) // method that knows to updt specific fields in Person
@@ -431,7 +431,7 @@ namespace DL
             else if (!busConsecutive.ObjectActive)
                 throw new DO.ExceptionDALInactive(busStopCodeA, $"the bus is  inactive");
             else
-                throw new DO.ExceptionDALBadLicense(busStopCodeA, $"bad id: {busStopCodeA}");
+                throw new DO.ExceptionDALunexist("the consecutive stations doesn't exist");
         }
         #endregion  //בדיקה לעומק איך לבצע מימוש!!
 

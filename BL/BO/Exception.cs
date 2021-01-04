@@ -47,6 +47,7 @@ namespace BO
         public ExceptionBLLinesStopHere(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", bus stop : {ID} serves bus lines";
     }
+
     public class ExceptionBLBusLineExist : Exception
     {
         public string ID;
@@ -55,6 +56,13 @@ namespace BO
         public ExceptionBLBusLineExist(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", bus stop : {ID} serves bus lines";
     }
+
+    public class ExceptionBL_ExistConsStations : Exception
+    {
+        public override string ToString() => base.ToString() + $", Fine";
+    }
+
+
 
 }
 
