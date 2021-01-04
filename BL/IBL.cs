@@ -50,8 +50,12 @@ namespace BLApi
         void DeleteBusLine(int license);
         #endregion
 
+        #region Consecutive Stations
+        void CheckIfConsecutiveExistOrInactive(int busStopKeyA, int busStopKeyB);
+        #endregion
+
         #region LineDeparture
-      IEnumerable<LineDeparture> GetAllLineDepartures();
+        IEnumerable<LineDeparture> GetAllLineDepartures();
         LineDeparture GetLineDeparture(int busLineID);
        void AddLineDeparture(LineDeparture busLineStationBo);
         #endregion

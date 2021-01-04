@@ -62,11 +62,11 @@ namespace DalApi
         #region ConsecutiveStations
         IEnumerable<ConsecutiveStations> GetAllConsecutiveStations();
         IEnumerable<ConsecutiveStations> GetAllConsecutiveStationsBy(Predicate<ConsecutiveStations> predicate);
-        ConsecutiveStations GetConsecutiveStations(int busConsecutiveA);
+        ConsecutiveStations GetConsecutiveStations(int busStopCodeA, int busStopCodeB);
         void AddConsecutiveStations(ConsecutiveStations consecutiveStations);
         void UpdateConsecutiveStations(ConsecutiveStations consecutiveStations);
-        void UpdateConsecutiveStations(int license, Action<ConsecutiveStations> update); // method that knows to updt specific fields in Person
-        void DeleteConsecutiveStations(int license);
+        void UpdateConsecutiveStations(int busStopCodeA, int busStopCodeB, Action<ConsecutiveStations> update); // method that knows to updt specific fields in Person
+        void DeleteConsecutiveStations(int busStopCodeA, int busStopCodeB);
         #endregion
 
         #region LineDeparture

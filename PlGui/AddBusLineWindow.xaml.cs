@@ -26,7 +26,7 @@ namespace PlGui
         BO.BusLine newBusLine = new BO.BusLine();
         BO.BusLineStation newStationA = new BusLineStation();
         BO.BusLineStation newStationB = new BusLineStation();
-        BO.ConsecutiveStations newConStations = new ConsecutiveStations();
+
         BO.LineDeparture newLineDeparture = new LineDeparture();
         int runningNumber;
 
@@ -77,11 +77,11 @@ namespace PlGui
                     bl.AddBusLineStation(newStationB);
 
                     // Consecutive line stations:
-                    newConStations.BusStopKeyA = newBusLine.FirstBusStopKey;
-                    newConStations.BusStopKeyB = newBusLine.LastBusStopKey;
-                    newConStations.Distance = kmToNext;
-                    newConStations.TravelTime = timeToNext;
-                    
+                    //newConStations.BusStopKeyA = newBusLine.FirstBusStopKey;
+                    //newConStations.BusStopKeyB = newBusLine.LastBusStopKey;
+                    //newConStations.Distance = kmToNext;
+                    //newConStations.TravelTime = timeToNext;
+
                     // Departure:
                     newLineDeparture.BusLineID = runningNumber ;
                     newLineDeparture.StartTime = startTime;
@@ -129,7 +129,21 @@ namespace PlGui
 
         private void cbLastBusStopSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            try
+            {
+                bl.CheckIfConsecutiveExistOrInactive((cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey, (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey);
+            }
+            catch (BO.ExceptionBLInactive)
+            {
+                // change to active - HOW?
+            }
+            catch (BO.ExceptionBLunexist)
+            {
+                lbKmToNext.Visibility = Visibility.Visible;
+                lbTimeToNext.Visibility = Visibility.Visible;
+                tbKmToNext.Visibility = Visibility.Visible;
+                tbTimeToNext.Visibility = Visibility.Visible;
+            }
         }
     }
 }

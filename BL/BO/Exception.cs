@@ -11,8 +11,24 @@ namespace BO
     {
         public int ID;
         public ExceptionBLBadLicense(string message, Exception innerException) :
-            base(message, innerException) => ID = ((DO.ExceptionDALBadLicsens)innerException).ID;
-        public override string ToString() => base.ToString() + $", bad lisence id: {ID}";
+            base(message, innerException) => ID = ((DO.ExceptionDALBadLicense)innerException).ID;
+        public override string ToString() => base.ToString() + $", bad license id: {ID}";
+    }
+
+    public class ExceptionBLInactive : Exception
+    {
+        public int ID;
+        public ExceptionBLInactive(string message, Exception innerException) :
+            base(message, innerException) => ID = ((DO.ExceptionDALInactive)innerException).ID;
+        public override string ToString() => base.ToString() + $", inactive: {ID}";
+    }
+
+    public class ExceptionBLunexist : Exception
+    {
+        public int ID;
+        public ExceptionBLunexist(string message, Exception innerException) :
+            base(message, innerException) => ID = ((DO.ExceptionDALunexist)innerException).ID;
+        public override string ToString() => base.ToString() + $", unexist: {ID}";
     }
 
     public class ExceptionBLBadUserId : Exception
@@ -20,7 +36,7 @@ namespace BO
         public string ID;
         public ExceptionBLBadUserId(string message, Exception innerException) :
             base(message, innerException) => ID = ((DO.ExceptionDALBadIdUser)innerException).ID;
-        public override string ToString() => base.ToString() + $", bad lisence id: {ID}";
+        public override string ToString() => base.ToString() + $", bad license id: {ID}";
     }
 
     public class ExceptionBLLinesStopHere : Exception

@@ -7,14 +7,25 @@ using System.Threading.Tasks;
 namespace DO
 {
     [Serializable]
-    public class ExceptionDALBadLicsens : Exception
+    public class ExceptionDALBadLicense : Exception
     {
         public int ID;
-        public ExceptionDALBadLicsens(int id) : base() => ID = id;
-        public ExceptionDALBadLicsens(int id, string message) : base(message) => ID = id;
-        public ExceptionDALBadLicsens(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public ExceptionDALBadLicense(int id) : base() => ID = id;
+        public ExceptionDALBadLicense(int id, string message) : base(message) => ID = id;
+        public ExceptionDALBadLicense(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", bad id: {ID}";
     }
+
+    public class ExceptionDALunexist : Exception
+    {
+        public int ID, ID_B;
+        public ExceptionDALunexist(int id) : base() => ID = id;
+        public ExceptionDALunexist(int id, string message) : base(message) => ID = id;
+        public ExceptionDALunexist(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public ExceptionDALunexist(int id, int idB, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public override string ToString() => base.ToString() + $", doesn't exist: {ID}";
+    }
+
     public class ExceptionDALBadIdUser : Exception
     {
         public string ID;
@@ -23,12 +34,12 @@ namespace DO
         public ExceptionDALBadIdUser(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", bad id : {ID}";
     }
-    public class ExceptionDALInactiveBus : Exception
+    public class ExceptionDALInactive : Exception
     {
         public int ID;
-        public ExceptionDALInactiveBus(int id) : base() => ID = id;
-        public ExceptionDALInactiveBus(int id, string message) : base(message) => ID = id;
-        public ExceptionDALInactiveBus(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public ExceptionDALInactive(int id) : base() => ID = id;
+        public ExceptionDALInactive(int id, string message) : base(message) => ID = id;
+        public ExceptionDALInactive(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", bad id : {ID}";
     }
     public class ExceptionDALInactiveUser : Exception
