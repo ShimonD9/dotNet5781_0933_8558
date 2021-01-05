@@ -81,7 +81,7 @@ namespace PlGui
                     this.Close();
                 }
             }
-            catch (BO.ExceptionBL_KeyNotFound)
+            catch (BO.ExceptionBL_KeyAlreadyExist)
             {
                 MessageBox.Show("The bus line number you entered already exists in the company!", "Cannot add the bus stop", MessageBoxButton.OK, MessageBoxImage.Warning);
             }

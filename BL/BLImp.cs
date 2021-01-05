@@ -39,7 +39,6 @@ namespace BL
                 addedTS = addedTS.Add(toAdd);
                 schedule.Add(addedTS);
             }
-            schedule.Add(lastTS);
             busLineBO.Schedule = from ts in schedule select ts; // MyList.Select(item => new Item(<cons params>).ToList() - הצעת מתן
             return busLineBO;
         }

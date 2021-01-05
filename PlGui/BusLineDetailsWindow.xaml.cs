@@ -32,13 +32,23 @@ namespace PlGui
         {
             InitializeComponent();
             cbArea.ItemsSource = Enum.GetValues(typeof(BO.Enums.AREA));
-            BusLineDet.DataContext = item; 
+            BusLineDet.DataContext = item;
+            tbFirstDeparture.DataContext = (item as BusLine).Schedule.ToList()[0];
+            int lastIndex = (item as BusLine).Schedule.ToList().Count;
+            tbLastDeparture.DataContext = (item as BusLine).Schedule.ToList()[lastIndex - 1];
+            tbFrequency.DataContext = (item as BusLine).Schedule.ToList()[1].Subtract((item as BusLine).Schedule.ToList()[0]).Minutes;
         }
 
 
         private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void NumberValidationTextBoxColon(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9/:]$");
             e.Handled = regex.IsMatch(e.Text);
         }
 
