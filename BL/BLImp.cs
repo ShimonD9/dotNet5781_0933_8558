@@ -26,7 +26,11 @@ namespace BL
                                      where boLineStation.BusLineID == busLineBO.BusLineID
                                      orderby boLineStation.LineStationIndex
                                      select boLineStation;
-
+            busLineBO.Schedule = from doLineDeparture
+                                 in dl.GetAllLineDeparture()
+                                 where doLineDeparture.BusLineID == busLineBO.BusLineID
+                                 orderby doLineDeparture.DepartureTime
+                                 select doLineDeparture.DepartureTime;
             // Schedule initializing:
             //DO.LineDeparture lineDeparture = dl.GetLineDeparture(busLineBO.BusLineID);
             //TimeSpan addedTS = lineDeparture.DepartureTime;

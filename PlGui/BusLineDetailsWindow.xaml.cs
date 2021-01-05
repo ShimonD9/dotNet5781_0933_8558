@@ -68,9 +68,25 @@ namespace PlGui
 
         }
 
+
+        private void Button_AddDeparture(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_DeleteDeparture(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void lvStationsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             bDeleteStation.IsEnabled = true;
+        }
+
+        private void lvScheduleSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            bDeleteDeparture.IsEnabled = true;
         }
     }
 }
