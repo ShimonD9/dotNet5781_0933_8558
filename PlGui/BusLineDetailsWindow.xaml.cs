@@ -33,10 +33,6 @@ namespace PlGui
             InitializeComponent();
             cbArea.ItemsSource = Enum.GetValues(typeof(BO.Enums.AREA));
             BusLineDet.DataContext = item;
-            tbFirstDeparture.DataContext = (item as BusLine).Schedule.ToList()[0];
-            int lastIndex = (item as BusLine).Schedule.ToList().Count;
-            tbLastDeparture.DataContext = (item as BusLine).Schedule.ToList()[lastIndex - 1];
-            tbFrequency.DataContext = (item as BusLine).Schedule.ToList()[1].Subtract((item as BusLine).Schedule.ToList()[0]).Minutes;
         }
 
 

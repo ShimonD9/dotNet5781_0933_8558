@@ -28,18 +28,18 @@ namespace BL
                                      select boLineStation;
 
             // Schedule initializing:
-            DO.LineDeparture lineDeparture = dl.GetLineDeparture(busLineBO.BusLineID);
-            TimeSpan addedTS = lineDeparture.StartTime;
-            TimeSpan lastTS = lineDeparture.EndTime;
-            TimeSpan toAdd = new TimeSpan(0, lineDeparture.Frequency, 0);
-            List<TimeSpan> schedule = new List<TimeSpan> { addedTS };
+            //DO.LineDeparture lineDeparture = dl.GetLineDeparture(busLineBO.BusLineID);
+            //TimeSpan addedTS = lineDeparture.DepartureTime;
+            //TimeSpan lastTS = lineDeparture.EndTime;
+            //TimeSpan toAdd = new TimeSpan(0, lineDeparture.Frequency, 0);
+            //List<TimeSpan> schedule = new List<TimeSpan> { addedTS };
 
-            while (addedTS.CompareTo(lastTS) < 0)
-            {
-                addedTS = addedTS.Add(toAdd);
-                schedule.Add(addedTS);
-            }
-            busLineBO.Schedule = from ts in schedule select ts; // MyList.Select(item => new Item(<cons params>).ToList() - הצעת מתן
+            //while (addedTS.CompareTo(lastTS) < 0)
+            //{
+            //    addedTS = addedTS.Add(toAdd);
+            //    schedule.Add(addedTS);
+            //}
+            //busLineBO.Schedule = from ts in schedule select ts; // MyList.Select(item => new Item(<cons params>).ToList() - הצעת מתן
             return busLineBO;
         }
 
@@ -74,13 +74,6 @@ namespace BL
                 idToReturn = (DalFactory.GetDL()).AddBusLine(newBus);
 
                 
-                newLineDeparture.BusLineID = idToReturn;
-                newLineDeparture.StartTime = startTime;
-                newLineDeparture.EndTime = endTime;
-                newLineDeparture.Frequency = frequency;
-            
-                    dl.AddLineDeparture(newLineDeparture);
-
                 newConStations.BusStopKeyA = busLine.FirstBusStopKey;
                 newConStations.BusStopKeyB = busLine.LastBusStopKey;
                 newConStations.Distance = kmToNext;

@@ -33,27 +33,14 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
+
                         </Grid.RowDefinitions>
                         <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Bus line identifier:"/>
                         <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Bus line number:"/>
                         <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Area:"/>
-                        <!--<Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="First Bus Stop key:"/>
-                        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Last Bus Stop key:"/>-->
-                        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="First line departure:"/>
-                        <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Last line departure:"/>
-                        <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Frequency"/>
                         <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusLineID}"/>
                         <TextBox Grid.Row="1" Grid.Column="1" MaxLength="3" PreviewTextInput="NumberValidationTextBoxNoDots"  HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusLineNumber, Mode=OneWay}"/>
                         <ComboBox  Grid.Row="2" Grid.Column="1" Name="cbArea" ItemsSource="{Binding}" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Area, Mode=OneWay}"/>
-                        <!--<TextBlock Name="cbFirstBusStop" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=FirstBusStopKey}"/>
-                        <TextBlock Name="cbSecondBusStop" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=LastBusStopKey}"/>-->
-                        <TextBox  Grid.Row="3" Grid.Column="1" Name="tbFirstDeparture" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Mode=OneWay}"/>
-                        <TextBox  Grid.Row="4" Grid.Column="1" Name="tbLastDeparture" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding  Mode=OneWay}"/>
-                        <TextBox  Grid.Row="5" Grid.Column="1" Name="tbFrequency" MaxLength="3" PreviewTextInput="NumberValidationTextBoxNoDots"  HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding  Mode=OneWay}"/>
-
                     </Grid>
                 </Border>
                 <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">

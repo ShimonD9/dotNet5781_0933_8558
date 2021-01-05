@@ -10,9 +10,7 @@ namespace DO
     {
         public int DepartureID { get; set; }  // Entity Key A - Running number
         public int BusLineID { get; set; }
-        public TimeSpan StartTime { get; set; }
-        public TimeSpan EndTime { get; set; } // Only if Frequency > 0
-        public int Frequency { get; set; } // If 0 - A single travel. If 6 - it means, every 6 minutes
+        public TimeSpan DepartureTime { get; set; }
         public bool ObjectActive { get; set; }
         /// <summary>
         /// Formats a string which represents the Bus object
@@ -20,7 +18,7 @@ namespace DO
         /// <returns> Returns the string to print the object </returns>
         public override string ToString()
         {
-            return string.Format("Bus Identifier = {0}, Start Time= {1},End Time = {2},Frequency = {3}", BusLineID, StartTime, EndTime, Frequency);
+            return string.Format("Bus Identifier = {0}, Start Time= {1}", BusLineID, DepartureTime);
         }
     }
 }
