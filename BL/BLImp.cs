@@ -65,7 +65,7 @@ namespace BL
             {
                 idToReturn = (DalFactory.GetDL()).AddBusLine(newBus);
 
-                
+
                 newConStations.BusStopKeyA = busLine.FirstBusStopKey;
                 newConStations.BusStopKeyB = busLine.LastBusStopKey;
                 newConStations.Distance = kmToNext;
@@ -77,12 +77,19 @@ namespace BL
             {
                 throw new BO.ExceptionBL_KeyAlreadyExist("Line already exist", ex);
             }
-            return idToReturn; 
+            return idToReturn;
         }
 
-        public void UpdateBusLine(BusLine busLine)
+        public void UpdateBusLine(BusLine busLineBO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dl.UpdateBusLine(BusLineBoDoAdapter(busLineBO));
+            }
+            catch (DO.ExceptionDAL_KeyNotFound ex)
+            {
+                throw new BO.ExceptionBL_KeyNotFound("The bus line doesn't exist", ex);
+            }
         }
         public void UpdateBusLine(int license, Action<BusLine> update)
         {
@@ -90,409 +97,417 @@ namespace BL
         }
         public void DeleteBusLine(int license)
         {
-            throw new NotImplementedException();
-        }
-        #endregion
-
-        #region Bus
-
-        BO.Bus busDoBoAdapter(DO.Bus busDO)
-        {
-            BO.Bus busBO = new BO.Bus();
-            //int id = busDO.License;
-            busDO.CopyPropertiesTo(busBO);
-            return busBO;
-        }
-
-        DO.Bus busBoDoAdapter(BO.Bus busBO)
-        {
-            DO.Bus busDO = new DO.Bus();
-            //int id = busDO.License;
-            busBO.CopyPropertiesTo(busDO);
-            return busDO;
-        }
-
-        public IEnumerable<Bus> GetAllBuses()
-        {
-            return from doBus in dl.GetAllBuses() select busDoBoAdapter(doBus);
-        }
-
-        public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
-        {
-            throw new NotImplementedException();
-            //return from bus in DataSource.ListBuses
-            //       where predicate(bus)
-            //       select bus.Clone();
-        }
-
-        public Bus GetBus(int license)
-        {
-            DO.Bus busDO;
             try
             {
-                busDO = dl.GetBus(license);
+                dl.DeleteBusLine(license);
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBL_KeyNotFound("License does not exist", ex);
+
+                throw new BO.ExceptionBL_KeyNotFound("The bus line not exist", ex);
             }
-            return busDoBoAdapter(busDO);
-        }
+            }
+            #endregion
 
-        public void BusStatusUpdate(BO.Bus busBo)
-        {
-            if (busBo.Mileage - busBo.MileageAtLastTreat < 20000 && busBo.LastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && busBo.Fuel > 0)
-                busBo.BusStatus = BO.Enums.BUS_STATUS.READY_FOR_TRAVEL;
-            else if (busBo.Mileage - busBo.MileageAtLastTreat >= 20000 || busBo.LastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
-                busBo.BusStatus = BO.Enums.BUS_STATUS.DANGEROUS;
-            else if (busBo.Fuel == 0)
-                busBo.BusStatus = BO.Enums.BUS_STATUS.NEEDS_REFUEL;
-        }
+            #region Bus
 
-        public void AddBus(BO.Bus busBO)
-        {
-            try
+            BO.Bus busDoBoAdapter(DO.Bus busDO)
             {
-                BusStatusUpdate(busBO);
-                DO.Bus newBus = busBoDoAdapter(busBO);
-                (DalFactory.GetDL()).AddBus(newBus);
+                BO.Bus busBO = new BO.Bus();
+                //int id = busDO.License;
+                busDO.CopyPropertiesTo(busBO);
+                return busBO;
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+
+            DO.Bus busBoDoAdapter(BO.Bus busBO)
             {
-                throw new BO.ExceptionBL_KeyNotFound("License already exist", ex);
+                DO.Bus busDO = new DO.Bus();
+                //int id = busDO.License;
+                busBO.CopyPropertiesTo(busDO);
+                return busDO;
             }
-        }
 
-        public void UpdateBus(BO.Bus busBO) //busUpdate
-        {
-            try
+            public IEnumerable<Bus> GetAllBuses()
             {
-                BusStatusUpdate(busBO);
-                dl.UpdateBus(busBoDoAdapter(busBO));
+                return from doBus in dl.GetAllBuses() select busDoBoAdapter(doBus);
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+
+            public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
             {
-                throw new BO.ExceptionBL_KeyNotFound("License does not exist or bus inactive", ex);
+                throw new NotImplementedException();
+                //return from bus in DataSource.ListBuses
+                //       where predicate(bus)
+                //       select bus.Clone();
             }
 
-        }
-        public void UpdateBus(int licenseNumber, Action<BO.Bus> update)  // method that knows to update specific fields in Person
-        {
-            try
+            public Bus GetBus(int license)
             {
-                DO.Bus busUpdateDO = dl.GetBus(licenseNumber);
-                update(busDoBoAdapter(busUpdateDO));
+                DO.Bus busDO;
+                try
+                {
+                    busDO = dl.GetBus(license);
+                }
+                catch (DO.ExceptionDAL_KeyNotFound ex)
+                {
+                    throw new BO.ExceptionBL_KeyNotFound("License does not exist", ex);
+                }
+                return busDoBoAdapter(busDO);
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+
+            public void BusStatusUpdate(BO.Bus busBo)
             {
-                throw new BO.ExceptionBL_KeyNotFound("License does not exist Or bus inactive", ex);
+                if (busBo.Mileage - busBo.MileageAtLastTreat < 20000 && busBo.LastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && busBo.Fuel > 0)
+                    busBo.BusStatus = BO.Enums.BUS_STATUS.READY_FOR_TRAVEL;
+                else if (busBo.Mileage - busBo.MileageAtLastTreat >= 20000 || busBo.LastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
+                    busBo.BusStatus = BO.Enums.BUS_STATUS.DANGEROUS;
+                else if (busBo.Fuel == 0)
+                    busBo.BusStatus = BO.Enums.BUS_STATUS.NEEDS_REFUEL;
             }
-        }
-        public void DeleteBus(int license)
-        {
-            try
+
+            public void AddBus(BO.Bus busBO)
             {
-                dl.DeleteBus(license);
+                try
+                {
+                    BusStatusUpdate(busBO);
+                    DO.Bus newBus = busBoDoAdapter(busBO);
+                    (DalFactory.GetDL()).AddBus(newBus);
+                }
+                catch (DO.ExceptionDAL_KeyNotFound ex)
+                {
+                    throw new BO.ExceptionBL_KeyNotFound("License already exist", ex);
+                }
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+
+            public void UpdateBus(BO.Bus busBO) //busUpdate
             {
-                throw new BO.ExceptionBL_KeyNotFound("the bus license doesn't exist or the bus is inactive!", ex);
+                try
+                {
+                    BusStatusUpdate(busBO);
+                    dl.UpdateBus(busBoDoAdapter(busBO));
+                }
+                catch (DO.ExceptionDAL_KeyNotFound ex)
+                {
+                    throw new BO.ExceptionBL_KeyNotFound("License does not exist or bus inactive", ex);
+                }
+
             }
-        }
-        #endregion
-
-        #region BusStop
-
-        BO.BusStop busStopDoBoAdapter(DO.BusStop busStopDO)
-        {
-            BO.BusStop busStopBO = new BO.BusStop();
-            int code = busStopDO.BusStopKey;
-            busStopDO.CopyPropertiesTo(busStopBO);
-            busStopBO.LinesStopHere = from boBusLine
-                                      in GetAllBusLines()
-                                      where boBusLine.LineStations.Any(line => line.BusStopKey == busStopBO.BusStopKey)
-                                      orderby boBusLine.BusLineNumber
-                                      select boBusLine;
-            return busStopBO;
-        }
-
-        DO.BusStop busStopBoDoAdapter(BO.BusStop busStopBO)
-        {
-            DO.BusStop busStopDO = new DO.BusStop();
-            //int id = busDO.License;
-            busStopBO.CopyPropertiesTo(busStopDO);
-            return busStopDO;
-        }
-        public IEnumerable<BusStop> GetAllBusStops()
-        {
-            return from doBusStop in dl.GetAllBusStops() select busStopDoBoAdapter(doBusStop);
-        }
-
-        public BusStop GetBusStop(int bosStopKeyDO)
-        {
-            DO.BusStop bosStopDO;
-            try
+            public void UpdateBus(int licenseNumber, Action<BO.Bus> update)  // method that knows to update specific fields in Person
             {
-                bosStopDO = dl.GetBusStop(bosStopKeyDO);
+                try
+                {
+                    DO.Bus busUpdateDO = dl.GetBus(licenseNumber);
+                    update(busDoBoAdapter(busUpdateDO));
+                }
+                catch (DO.ExceptionDAL_KeyNotFound ex)
+                {
+                    throw new BO.ExceptionBL_KeyNotFound("License does not exist Or bus inactive", ex);
+                }
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+            public void DeleteBus(int license)
             {
-                throw new BO.ExceptionBL_KeyNotFound("bus stop key does not exist", ex);
+                try
+                {
+                    dl.DeleteBus(license);
+                }
+                catch (DO.ExceptionDAL_KeyNotFound ex)
+                {
+                    throw new BO.ExceptionBL_KeyNotFound("the bus license doesn't exist or the bus is inactive!", ex);
+                }
             }
-            return busStopDoBoAdapter(bosStopDO);
-        }
+            #endregion
 
-        public void UpdateBusStop(BO.BusStop busStopBO) //busUpdate
-        {
-            try
+            #region BusStop
+
+            BO.BusStop busStopDoBoAdapter(DO.BusStop busStopDO)
             {
-                dl.UpdateBusStop(busStopBoDoAdapter(busStopBO));
+                BO.BusStop busStopBO = new BO.BusStop();
+                int code = busStopDO.BusStopKey;
+                busStopDO.CopyPropertiesTo(busStopBO);
+                busStopBO.LinesStopHere = from boBusLine
+                                          in GetAllBusLines()
+                                          where boBusLine.LineStations.Any(line => line.BusStopKey == busStopBO.BusStopKey)
+                                          orderby boBusLine.BusLineNumber
+                                          select boBusLine;
+                return busStopBO;
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+
+            DO.BusStop busStopBoDoAdapter(BO.BusStop busStopBO)
             {
-                throw new BO.ExceptionBL_KeyNotFound("The bus stop code doesn't exist", ex);
+                DO.BusStop busStopDO = new DO.BusStop();
+                //int id = busDO.License;
+                busStopBO.CopyPropertiesTo(busStopDO);
+                return busStopDO;
             }
-
-        }
-
-        public void UpdateBusStop(int license, Action<BusStop> update)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public void AddBusStop(BO.BusStop busStopBO)
-        {
-            try
+            public IEnumerable<BusStop> GetAllBusStops()
             {
-                DO.BusStop newStop = busStopBoDoAdapter(busStopBO);
-                (DalFactory.GetDL()).AddBusStop(newStop);
+                return from doBusStop in dl.GetAllBusStops() select busStopDoBoAdapter(doBusStop);
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+
+            public BusStop GetBusStop(int bosStopKeyDO)
             {
-                throw new BO.ExceptionBL_KeyNotFound("Bus stop code already exist", ex);
+                DO.BusStop bosStopDO;
+                try
+                {
+                    bosStopDO = dl.GetBusStop(bosStopKeyDO);
+                }
+                catch (DO.ExceptionDAL_KeyNotFound ex)
+                {
+                    throw new BO.ExceptionBL_KeyNotFound("bus stop key does not exist", ex);
+                }
+                return busStopDoBoAdapter(bosStopDO);
             }
-        }
 
-        public void DeleteBusStop(int BusStopCode)
-        {
-            try
+            public void UpdateBusStop(BO.BusStop busStopBO) //busUpdate
             {
-                if (busStopDoBoAdapter(dl.GetBusStop(BusStopCode)).LinesStopHere.Count() > 0)
-                    throw new BO.ExceptionBL_LinesStopHere("The bus stop serves bus lines, and cannot be deleted.");
-                dl.DeleteBusStop(BusStopCode);
+                try
+                {
+                    dl.UpdateBusStop(busStopBoDoAdapter(busStopBO));
+                }
+                catch (DO.ExceptionDAL_KeyNotFound ex)
+                {
+                    throw new BO.ExceptionBL_KeyNotFound("The bus stop code doesn't exist", ex);
+                }
+
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+
+            public void UpdateBusStop(int license, Action<BusStop> update)
             {
-                throw new BO.ExceptionBL_KeyNotFound("bus stop key does not exist Or bus inactive", ex);
+                throw new NotImplementedException();
             }
-        }
 
-        #endregion
-
-        #region LineDeparture
-
-        public void AddLineDeparture(TimeSpan departureTime, int busLineID)
-        {
-            try
+            public IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate)
             {
-                DO.LineDeparture newLineDeparture = new DO.LineDeparture();
-                newLineDeparture.BusLineID = busLineID;
-                newLineDeparture.DepartureTime = departureTime;
-                (DalFactory.GetDL()).AddLineDeparture(newLineDeparture);
+                throw new NotImplementedException();
             }
-            catch (DO.ExceptionDAL_KeyAlreadyExist ex)
+
+
+            public void AddBusStop(BO.BusStop busStopBO)
             {
-                throw new BO.ExceptionBL_KeyAlreadyExist("The line departure time already exist", ex);
+                try
+                {
+                    DO.BusStop newStop = busStopBoDoAdapter(busStopBO);
+                    (DalFactory.GetDL()).AddBusStop(newStop);
+                }
+                catch (DO.ExceptionDAL_KeyNotFound ex)
+                {
+                    throw new BO.ExceptionBL_KeyNotFound("Bus stop code already exist", ex);
+                }
             }
-        }
-        #endregion
 
-        #region BusLineStation
+            public void DeleteBusStop(int BusStopCode)
+            {
+                try
+                {
+                    if (busStopDoBoAdapter(dl.GetBusStop(BusStopCode)).LinesStopHere.Count() > 0)
+                        throw new BO.ExceptionBL_LinesStopHere("The bus stop serves bus lines, and cannot be deleted.");
+                    dl.DeleteBusStop(BusStopCode);
+                }
+                catch (DO.ExceptionDAL_KeyNotFound ex)
+                {
+                    throw new BO.ExceptionBL_KeyNotFound("bus stop key does not exist Or bus inactive", ex);
+                }
+            }
 
-        BO.BusLineStation BusLineStationDoBoAdapter(DO.BusLineStation busLineStationDO)
-        {
-            BO.BusLineStation busLineStationBO = new BO.BusLineStation();
-            busLineStationDO.CopyPropertiesTo(busLineStationBO);
-            // לוודא שצורת השאילתא תקינה
-            busLineStationBO.DistanceToNext = (from doConStations
-                                              in dl.GetAllConsecutiveStations()
+            #endregion
+
+            #region LineDeparture
+
+            public void AddLineDeparture(TimeSpan departureTime, int busLineID)
+            {
+                try
+                {
+                    DO.LineDeparture newLineDeparture = new DO.LineDeparture();
+                    newLineDeparture.BusLineID = busLineID;
+                    newLineDeparture.DepartureTime = departureTime;
+                    (DalFactory.GetDL()).AddLineDeparture(newLineDeparture);
+                }
+                catch (DO.ExceptionDAL_KeyAlreadyExist ex)
+                {
+                    throw new BO.ExceptionBL_KeyAlreadyExist("The line departure time already exist", ex);
+                }
+            }
+            #endregion
+
+            #region BusLineStation
+
+            BO.BusLineStation BusLineStationDoBoAdapter(DO.BusLineStation busLineStationDO)
+            {
+                BO.BusLineStation busLineStationBO = new BO.BusLineStation();
+                busLineStationDO.CopyPropertiesTo(busLineStationBO);
+                // לוודא שצורת השאילתא תקינה
+                busLineStationBO.DistanceToNext = (from doConStations
+                                                  in dl.GetAllConsecutiveStations()
+                                                   where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
+                                                         doConStations.BusStopKeyB == busLineStationBO.NextStation
+                                                   select doConStations.Distance).FirstOrDefault();
+                busLineStationBO.TimeToNext = (from doConStations
+                                                  in dl.GetAllConsecutiveStations()
                                                where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
                                                      doConStations.BusStopKeyB == busLineStationBO.NextStation
-                                               select doConStations.Distance).FirstOrDefault();
-            busLineStationBO.TimeToNext = (from doConStations
-                                              in dl.GetAllConsecutiveStations()
-                                           where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
-                                                 doConStations.BusStopKeyB == busLineStationBO.NextStation
-                                           select doConStations.TravelTime).FirstOrDefault();
-            return busLineStationBO;
-        }
-
-        DO.BusLineStation BusLineStationBoDoAdapter(BO.BusLineStation busLineStationBO)
-        {
-            DO.BusLineStation busLineStationDO = new DO.BusLineStation();
-            busLineStationBO.CopyPropertiesTo(busLineStationDO);
-            return busLineStationDO;
-        }
-
-        public IEnumerable<BusLineStation> GetAllBusLineStations()
-        {
-            return from doBusLineStation
-                   in dl.GetAllBusLineStations()
-                   select BusLineStationDoBoAdapter(doBusLineStation);
-        }
-
-        public IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-        public BusLineStation GetBusLineStation(int license)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddBusLineStation(BusLineStation busLineStationBo)
-        {
-            try
-            {
-                DO.BusLineStation newStop = BusLineStationBoDoAdapter(busLineStationBo);
-                (DalFactory.GetDL()).AddBusLineStation(newStop);
+                                               select doConStations.TravelTime).FirstOrDefault();
+                return busLineStationBO;
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+
+            DO.BusLineStation BusLineStationBoDoAdapter(BO.BusLineStation busLineStationBO)
             {
-                throw new BO.ExceptionBL_KeyNotFound("Bus stop code already exist", ex);
+                DO.BusLineStation busLineStationDO = new DO.BusLineStation();
+                busLineStationBO.CopyPropertiesTo(busLineStationDO);
+                return busLineStationDO;
             }
-        }
 
-        public void UpdateBusLineStation(BusLineStation busLineStation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateBusLineStation(int license, Action<BusLineStation> update)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteBusLineStation(int license)
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
-
-        #region Consecutive Stations
-
-        public bool CheckIfConsecutiveExist(int busStopKeyA, int busStopKeyB)
-        {
-            DO.ConsecutiveStations newConStations = new DO.ConsecutiveStations();
-            try
+            public IEnumerable<BusLineStation> GetAllBusLineStations()
             {
-                newConStations = dl.GetConsecutiveStations(busStopKeyA, busStopKeyB);
-                return true;
+                return from doBusLineStation
+                       in dl.GetAllBusLineStations()
+                       select BusLineStationDoBoAdapter(doBusLineStation);
             }
-            catch(DO.ExceptionDAL_Inactive ex)
+
+            public IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
             {
-                return true;
+                throw new NotImplementedException();
             }
-            catch(DO.ExceptionDAL_KeyNotFound ex)
+
+            public BusLineStation GetBusLineStation(int license)
             {
-                return false;
+                throw new NotImplementedException();
             }
-            
-        }
-        #endregion
+
+            public void AddBusLineStation(BusLineStation busLineStationBo)
+            {
+                try
+                {
+                    DO.BusLineStation newStop = BusLineStationBoDoAdapter(busLineStationBo);
+                    (DalFactory.GetDL()).AddBusLineStation(newStop);
+                }
+                catch (DO.ExceptionDAL_KeyNotFound ex)
+                {
+                    throw new BO.ExceptionBL_KeyNotFound("Bus stop code already exist", ex);
+                }
+            }
+
+            public void UpdateBusLineStation(BusLineStation busLineStation)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void UpdateBusLineStation(int license, Action<BusLineStation> update)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void DeleteBusLineStation(int license)
+            {
+                throw new NotImplementedException();
+            }
+            #endregion
+
+            #region Consecutive Stations
+
+            public bool CheckIfConsecutiveExist(int busStopKeyA, int busStopKeyB)
+            {
+                DO.ConsecutiveStations newConStations = new DO.ConsecutiveStations();
+                try
+                {
+                    newConStations = dl.GetConsecutiveStations(busStopKeyA, busStopKeyB);
+                    return true;
+                }
+                catch (DO.ExceptionDAL_Inactive ex)
+                {
+                    return true;
+                }
+                catch (DO.ExceptionDAL_KeyNotFound ex)
+                {
+                    return false;
+                }
+
+            }
+            #endregion
 
 
-        #region User
-        BO.User userDoBoAdapter(DO.User userDO)
-        {
-            BO.User userBO = new BO.User();
-            //int code = userDO.UserName;
-            userDO.CopyPropertiesTo(userBO);
-            return userBO;
-        }
+            #region User
+            BO.User userDoBoAdapter(DO.User userDO)
+            {
+                BO.User userBO = new BO.User();
+                //int code = userDO.UserName;
+                userDO.CopyPropertiesTo(userBO);
+                return userBO;
+            }
 
-        DO.User userBoDoAdapter(BO.User userBO)
-        {
-            DO.User userDO = new DO.User();
-            //int id = busDO.License;
-            userBO.CopyPropertiesTo(userDO);
-            return userDO;
-        }
-        public IEnumerable<User> GetAllUsers()
-        {
-            return from doUser in dl.GetAllUsers() select userDoBoAdapter(doUser);
-        }
-        public IEnumerable<User> GetAllUsersBy(Predicate<User> predicate)
-        {
-            return from user in dl.GetAllUsers()
-                   where predicate(userDoBoAdapter(user))
-                   select userDoBoAdapter(user);
-        }
+            DO.User userBoDoAdapter(BO.User userBO)
+            {
+                DO.User userDO = new DO.User();
+                //int id = busDO.License;
+                userBO.CopyPropertiesTo(userDO);
+                return userDO;
+            }
+            public IEnumerable<User> GetAllUsers()
+            {
+                return from doUser in dl.GetAllUsers() select userDoBoAdapter(doUser);
+            }
+            public IEnumerable<User> GetAllUsersBy(Predicate<User> predicate)
+            {
+                return from user in dl.GetAllUsers()
+                       where predicate(userDoBoAdapter(user))
+                       select userDoBoAdapter(user);
+            }
 
-        public User GetUser(string userName)
-        {
-            DO.User userDO;
-            try
+            public User GetUser(string userName)
             {
-                userDO = dl.GetUser(userName);
-            }
-            catch (DO.ExceptionDAL_UserKeyNotFound ex)
-            {
-                throw new BO.ExceptionBL_UserKeyNotFound("user dose not exist", ex);
-            }
-            return userDoBoAdapter(userDO);
+                DO.User userDO;
+                try
+                {
+                    userDO = dl.GetUser(userName);
+                }
+                catch (DO.ExceptionDAL_UserKeyNotFound ex)
+                {
+                    throw new BO.ExceptionBL_UserKeyNotFound("user dose not exist", ex);
+                }
+                return userDoBoAdapter(userDO);
 
-        }
+            }
 
-        public void AddUser(User userBO)
-        {
-            try
+            public void AddUser(User userBO)
             {
-                DO.User newUser = userBoDoAdapter(userBO);
-                (DalFactory.GetDL()).AddUser(newUser);
+                try
+                {
+                    DO.User newUser = userBoDoAdapter(userBO);
+                    (DalFactory.GetDL()).AddUser(newUser);
+                }
+                catch (DO.ExceptionDAL_UserKeyNotFound ex)
+                {
+                    throw new BO.ExceptionBL_UserKeyNotFound("user already exist", ex);
+                }
             }
-            catch (DO.ExceptionDAL_UserKeyNotFound ex)
-            {
-                throw new BO.ExceptionBL_UserKeyNotFound("user already exist", ex);
-            }
-        }
 
-        public void UpdateUser(User userBO)
-        {
-            try
+            public void UpdateUser(User userBO)
             {
-                dl.UpdateUser(userBoDoAdapter(userBO));
+                try
+                {
+                    dl.UpdateUser(userBoDoAdapter(userBO));
+                }
+                catch (DO.ExceptionDAL_UserKeyNotFound ex)
+                {
+                    throw new BO.ExceptionBL_UserKeyNotFound("user does not exist Or inactive", ex);
+                }
             }
-            catch (DO.ExceptionDAL_UserKeyNotFound ex)
-            {
-                throw new BO.ExceptionBL_UserKeyNotFound("user does not exist Or inactive", ex);
-            }
-        }
 
-        public void UpdateUser(string userName, Action<User> update) // method that knows to updt specific fields in Person
-        {
-            User userUpdate = GetUser(userName);
-            update(userUpdate);
-        }
+            public void UpdateUser(string userName, Action<User> update) // method that knows to updt specific fields in Person
+            {
+                User userUpdate = GetUser(userName);
+                update(userUpdate);
+            }
 
-        public void DeleteUser(string userName)
-        {
-            try
+            public void DeleteUser(string userName)
             {
-                dl.DeleteUser(userName);
+                try
+                {
+                    dl.DeleteUser(userName);
+                }
+                catch (DO.ExceptionDAL_UserKeyNotFound ex)
+                {
+                    throw new BO.ExceptionBL_UserKeyNotFound("user does not exist Or inactive", ex);
+                }
             }
-            catch (DO.ExceptionDAL_UserKeyNotFound ex)
-            {
-                throw new BO.ExceptionBL_UserKeyNotFound("user does not exist Or inactive", ex);
-            }
+            #endregion
         }
-        #endregion
     }
-}
