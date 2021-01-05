@@ -90,7 +90,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBL_KeyNotFound("Line already exist", ex);
+                throw new BO.ExceptionBL_KeyAlreadyExist("Line already exist", ex);
             }
             return idToReturn; 
         }
