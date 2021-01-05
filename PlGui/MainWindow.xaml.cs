@@ -59,6 +59,7 @@ namespace PlGui
                     object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
                     BusLineDetailsWindow busLineDetailsWindow = new BusLineDetailsWindow(item);
                     busLineDetailsWindow.ShowDialog();
+                    lbBusLines.ItemsSource = bl.GetAllBusLines();
                 }
             }
         }
@@ -105,7 +106,6 @@ namespace PlGui
                 AddBusLineWindow addBusLineWindow = new AddBusLineWindow(); // Creates the new window, and then shows it
                 addBusLineWindow.ShowDialog();
                 lbBusLines.ItemsSource = bl.GetAllBusLines();
-                //lbBuses.Items.Refresh(); // For seeing the new bus added on the list view
             }
         }
 

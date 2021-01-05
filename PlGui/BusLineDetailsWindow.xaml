@@ -12,7 +12,7 @@
             <GradientStop Color="#FFE1F054" Offset="0.087"/>
         </LinearGradientBrush>
     </Window.Background>
-    <Grid Name="BusLineDet" >
+    <Grid Name="BusLineDet">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.2*"/>

@@ -83,8 +83,9 @@ namespace PlGui
                     if (TimeSpan.TryParse(tbAddDeparture.GetLineText(0), out TimeSpan timeDeparture))
                     {
                         bl.AddLineDeparture(timeDeparture, busLine.BusLineID);
-                        lvSchedule.Items.Refresh();
+                        BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
                         gAddDeparture.Visibility = Visibility.Collapsed;
+                        tbAddDeparture.Text = "hh:mm:ss";
                     }
                     else
                         MessageBox.Show("You have entered a wrong time departure!");

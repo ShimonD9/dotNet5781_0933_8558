@@ -237,15 +237,15 @@ namespace DL
                    select busLine.Clone();
         }
 
-        public BusLine GetBusLine(int busLineNumber)
+        public BusLine GetBusLine(int busLineID)
         {
-            BusLine bus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLineNumber);
+            BusLine bus = DataSource.ListBusLines.Find(b => b.BusLineID == busLineID);
             if (bus != null && bus.ObjectActive)
                 return bus.Clone();
             else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busLineNumber, $"the bus line is  inactive");
+                throw new DO.ExceptionDAL_Inactive(busLineID, $"the bus line is  inactive");
             else
-                throw new DO.ExceptionDAL_KeyNotFound(busLineNumber, $"bus line number not found: {busLineNumber}");
+                throw new DO.ExceptionDAL_KeyNotFound(busLineID, $"bus line number not found: {busLineID}");
         }
 
         public int AddBusLine(BusLine busLine)
@@ -472,7 +472,6 @@ namespace DL
             else if (existLineDeparture != null && existLineDeparture.ObjectActive == false)
             {
                 existLineDeparture.ObjectActive = true;
-                existLineDeparture = lineDeparture.Clone();
             }
             else
             {

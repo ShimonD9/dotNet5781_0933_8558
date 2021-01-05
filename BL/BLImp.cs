@@ -31,19 +31,6 @@ namespace BL
                                  where doLineDeparture.BusLineID == busLineBO.BusLineID
                                  orderby doLineDeparture.DepartureTime
                                  select doLineDeparture.DepartureTime;
-            // Schedule initializing:
-            //DO.LineDeparture lineDeparture = dl.GetLineDeparture(busLineBO.BusLineID);
-            //TimeSpan addedTS = lineDeparture.DepartureTime;
-            //TimeSpan lastTS = lineDeparture.EndTime;
-            //TimeSpan toAdd = new TimeSpan(0, lineDeparture.Frequency, 0);
-            //List<TimeSpan> schedule = new List<TimeSpan> { addedTS };
-
-            //while (addedTS.CompareTo(lastTS) < 0)
-            //{
-            //    addedTS = addedTS.Add(toAdd);
-            //    schedule.Add(addedTS);
-            //}
-            //busLineBO.Schedule = from ts in schedule select ts; // MyList.Select(item => new Item(<cons params>).ToList() - הצעת מתן
             return busLineBO;
         }
 
@@ -63,9 +50,10 @@ namespace BL
         {
             throw new NotImplementedException();
         }
-        public BusLine GetBusLine(int license)
+
+        public BusLine GetBusLine(int busLineID)
         {
-            throw new NotImplementedException();
+            return BusLineDoBoAdapter(dl.GetBusLine(busLineID));
         }
         public int AddBusLine(BusLine busLine, double kmToNext, TimeSpan timeToNext, TimeSpan startTime, TimeSpan endTime, int frequency)
         {

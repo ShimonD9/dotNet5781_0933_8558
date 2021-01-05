@@ -43,11 +43,11 @@ namespace BLApi
         #region BusLine
         IEnumerable<BusLine> GetAllBusLines();
         IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate);
-        BusLine GetBusLine(int license);
+        BusLine GetBusLine(int busLineID);
         int AddBusLine(BusLine busLine, double kmToNext, TimeSpan timeToNext, TimeSpan startTime, TimeSpan endTime, int frequency);
         void UpdateBusLine(BusLine busLine);
-        void UpdateBusLine(int license, Action<BusLine> update); // method that knows to updt specific fields in Person
-        void DeleteBusLine(int license);
+        void UpdateBusLine(int busLineID, Action<BusLine> update); // method that knows to updt specific fields in Person
+        void DeleteBusLine(int busLineIDlicense);
         #endregion
 
         #region Consecutive Stations
