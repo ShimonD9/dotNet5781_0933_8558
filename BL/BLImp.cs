@@ -91,7 +91,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadLicense("Line already exist", ex);
+                throw new BO.ExceptionBL_KeyNotFound("Line already exist", ex);
             }
             return idToReturn; 
         }
@@ -150,7 +150,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadLicense("License does not exist", ex);
+                throw new BO.ExceptionBL_KeyNotFound("License does not exist", ex);
             }
             return busDoBoAdapter(busDO);
         }
@@ -175,7 +175,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadLicense("License already exist", ex);
+                throw new BO.ExceptionBL_KeyNotFound("License already exist", ex);
             }
         }
 
@@ -188,7 +188,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadLicense("License does not exist or bus inactive", ex);
+                throw new BO.ExceptionBL_KeyNotFound("License does not exist or bus inactive", ex);
             }
 
         }
@@ -201,7 +201,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadLicense("License does not exist Or bus inactive", ex);
+                throw new BO.ExceptionBL_KeyNotFound("License does not exist Or bus inactive", ex);
             }
         }
         public void DeleteBus(int license)
@@ -212,7 +212,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadLicense("he bus license doesn't exist or the bus is inactive!", ex);
+                throw new BO.ExceptionBL_KeyNotFound("the bus license doesn't exist or the bus is inactive!", ex);
             }
         }
         #endregion
@@ -253,7 +253,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadLicense("bus stop key does not exist", ex);
+                throw new BO.ExceptionBL_KeyNotFound("bus stop key does not exist", ex);
             }
             return busStopDoBoAdapter(bosStopDO);
         }
@@ -266,7 +266,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadLicense("The bus stop code doesn't exist", ex);
+                throw new BO.ExceptionBL_KeyNotFound("The bus stop code doesn't exist", ex);
             }
 
         }
@@ -291,7 +291,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadLicense("Bus stop code already exist", ex);
+                throw new BO.ExceptionBL_KeyNotFound("Bus stop code already exist", ex);
             }
         }
 
@@ -300,12 +300,12 @@ namespace BL
             try
             {
                 if (busStopDoBoAdapter(dl.GetBusStop(BusStopCode)).LinesStopHere.Count() > 0)
-                    throw new BO.ExceptionBLLinesStopHere("The bus stop serves bus lines, and cannot be deleted.");
+                    throw new BO.ExceptionBL_LinesStopHere("The bus stop serves bus lines, and cannot be deleted.");
                 dl.DeleteBusStop(BusStopCode);
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadLicense("bus stop key does not exist Or bus inactive", ex);
+                throw new BO.ExceptionBL_KeyNotFound("bus stop key does not exist Or bus inactive", ex);
             }
         }
 
@@ -412,7 +412,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadLicense("Bus stop code already exist", ex);
+                throw new BO.ExceptionBL_KeyNotFound("Bus stop code already exist", ex);
             }
         }
 
@@ -446,10 +446,11 @@ namespace BL
             {
                 return true;
             }
-            catch(DO.ExceptionDAL_KeyAlreadyExist ex)
+            catch(DO.ExceptionDAL_KeyNotFound ex)
             {
                 return false;
             }
+            
         }
         #endregion
 
@@ -490,7 +491,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_UserKeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadUserId("user dose not exist", ex);
+                throw new BO.ExceptionBL_UserKeyNotFound("user dose not exist", ex);
             }
             return userDoBoAdapter(userDO);
 
@@ -505,7 +506,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_UserKeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadUserId("user already exist", ex);
+                throw new BO.ExceptionBL_UserKeyNotFound("user already exist", ex);
             }
         }
 
@@ -517,7 +518,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_UserKeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadUserId("user does not exist Or inactive", ex);
+                throw new BO.ExceptionBL_UserKeyNotFound("user does not exist Or inactive", ex);
             }
         }
 
@@ -535,7 +536,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_UserKeyNotFound ex)
             {
-                throw new BO.ExceptionBLBadUserId("user does not exist Or inactive", ex);
+                throw new BO.ExceptionBL_UserKeyNotFound("user does not exist Or inactive", ex);
             }
         }
         #endregion

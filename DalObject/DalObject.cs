@@ -62,11 +62,10 @@ namespace DL
 
         public void UpdateBus(Bus bus) //busUpdate
         {
-            int index = DataSource.ListBuses.FindIndex(bus1 => bus1.License == bus.License);
-            Bus existBus = DataSource.ListBuses[index];
-            if (existBus != null && existBus.ObjectActive)
-                existBus = bus.Clone();
-            else if (existBus != null && !existBus.ObjectActive)
+            int index = DataSource.ListBuses.FindIndex(bus1 => bus1.License == bus.License);          
+            if (DataSource.ListBuses[index] != null && DataSource.ListBuses[index].ObjectActive)
+                DataSource.ListBuses[index] = bus.Clone();
+            else if (DataSource.ListBuses[index] != null && !DataSource.ListBuses[index].ObjectActive)
                 throw new DO.ExceptionDAL_Inactive(bus.License, $"the bus is  inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(bus.License, $"license key not found: {bus.License}");
@@ -131,11 +130,9 @@ namespace DL
         public void UpdateBusAtTravel(BusAtTravel bus)
         {
             int index = DataSource.ListBusAtTravels.FindIndex(bus1 => bus1.License == bus.License);
-            BusAtTravel existBus = DataSource.ListBusAtTravels[index];
-
-            if (existBus != null && existBus.ObjectActive)
-                existBus = bus.Clone();
-            else if (existBus != null && !existBus.ObjectActive)
+            if (DataSource.ListBusAtTravels[index] != null && DataSource.ListBusAtTravels[index].ObjectActive)
+                DataSource.ListBusAtTravels[index] = bus.Clone();
+            else if (DataSource.ListBusAtTravels[index] != null && !DataSource.ListBusAtTravels[index].ObjectActive)
                 throw new DO.ExceptionDAL_Inactive(bus.License, $"the bus is  inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(bus.License, $"license key not found: {bus.License}");
@@ -202,10 +199,9 @@ namespace DL
         public void UpdateBusLineStation(BusLineStation busLineStation)
         {
             int index = DataSource.ListBusLineStations.FindIndex(bus1 => bus1.BusStopKey == busLineStation.BusStopKey);
-            BusLineStation existBusLineStation = DataSource.ListBusLineStations[index];
-            if (existBusLineStation != null && existBusLineStation.ObjectActive)
-                existBusLineStation = busLineStation.Clone();
-            else if (existBusLineStation != null && !existBusLineStation.ObjectActive)
+            if (DataSource.ListBusLineStations[index] != null && DataSource.ListBusLineStations[index].ObjectActive)
+                DataSource.ListBusLineStations[index] = busLineStation.Clone();
+            else if (DataSource.ListBusLineStations[index] != null && !DataSource.ListBusLineStations[index].ObjectActive)
                 throw new DO.ExceptionDAL_Inactive(busLineStation.BusStopKey, $"the bus line station is  inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busLineStation.BusStopKey, $"station key not found: {busLineStation.BusStopKey}");
@@ -279,11 +275,9 @@ namespace DL
         public void UpdateBusLine(BusLine busLine)
         {
             int index = DataSource.ListBusLines.FindIndex(bus1 => bus1.BusLineNumber == busLine.BusLineNumber);
-            BusLine exsitBus = DataSource.ListBusLines[index];
-
-            if (exsitBus != null && exsitBus.ObjectActive)
-                exsitBus = busLine.Clone();
-            else if (exsitBus != null && !exsitBus.ObjectActive)
+            if (DataSource.ListBusLines[index] != null && DataSource.ListBusLines[index].ObjectActive)
+                DataSource.ListBusLines[index] = busLine.Clone();
+            else if (DataSource.ListBusLines[index] != null && !DataSource.ListBusLines[index].ObjectActive)
                 throw new DO.ExceptionDAL_Inactive(busLine.BusLineNumber, $"the bus line is  inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busLine.BusLineNumber, $"bus line number not found: {busLine.BusLineNumber}");
@@ -349,10 +343,9 @@ namespace DL
         {
             // If the old bus stop code didn't change, or it changed but it's new:
             int index = DataSource.ListBusStops.FindIndex(b => b.BusStopKey == busStop.BusStopKey);
-            BusStop existStop = DataSource.ListBusStops[index];
-            if (existStop != null && existStop.ObjectActive)
-                existStop = busStop.Clone();
-            else if (existStop != null && !existStop.ObjectActive)
+            if (DataSource.ListBusStops[index] != null && DataSource.ListBusStops[index].ObjectActive)
+                DataSource.ListBusStops[index] = busStop.Clone();
+            else if (DataSource.ListBusStops[index] != null && !DataSource.ListBusStops[index].ObjectActive)
                 throw new DO.ExceptionDAL_Inactive(busStop.BusStopKey, $"the bus Stop is inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busStop.BusStopKey, $"bus stop key not found");
@@ -420,10 +413,9 @@ namespace DL
         public void UpdateConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
             int index = DataSource.ListConsecutiveStations.FindIndex(consecutive => consecutive.BusStopKeyA == consecutiveStations.BusStopKeyA);
-            ConsecutiveStations existCon = DataSource.ListConsecutiveStations[index];
-            if (existCon != null && existCon.ObjectActive)
-                existCon = consecutiveStations.Clone();
-            else if (existCon != null && !existCon.ObjectActive)
+            if (DataSource.ListConsecutiveStations[index] != null && DataSource.ListConsecutiveStations[index].ObjectActive)
+                DataSource.ListConsecutiveStations[index] = consecutiveStations.Clone();
+            else if (DataSource.ListConsecutiveStations[index] != null && !DataSource.ListConsecutiveStations[index].ObjectActive)
                 throw new DO.ExceptionDAL_Inactive("the consecutive stations is inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound("the consecutive stations not found");
@@ -489,10 +481,9 @@ namespace DL
         public void UpdateLineDeparture(LineDeparture lineDeparture)
         {
             int index = DataSource.ListLineDepartures.FindIndex(lineDep => lineDep.BusLineID == lineDeparture.BusLineID);
-            LineDeparture existLineDeparture = DataSource.ListLineDepartures[index];
-            if (existLineDeparture != null && existLineDeparture.ObjectActive)
-                existLineDeparture = lineDeparture.Clone();
-            else if (existLineDeparture != null && !existLineDeparture.ObjectActive)
+            if (DataSource.ListLineDepartures[index] != null && DataSource.ListLineDepartures[index].ObjectActive)
+                DataSource.ListLineDepartures[index] = lineDeparture.Clone();
+            else if (DataSource.ListLineDepartures[index] != null && !DataSource.ListLineDepartures[index].ObjectActive)
                 throw new DO.ExceptionDAL_Inactive(lineDeparture.BusLineID, $"the line departure is inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(lineDeparture.BusLineID, $"line departure key not found: {lineDeparture.BusLineID}");
@@ -558,10 +549,9 @@ namespace DL
         public void UpdateUser(User user)
         {
             int index = DataSource.ListUsers.FindIndex(user1 => user1.UserName == user.UserName);
-            User existUser = DataSource.ListUsers[index];
-            if (existUser != null && existUser.ObjectActive)
-                existUser = user.Clone();
-            else if (existUser != null && !existUser.ObjectActive)
+            if (DataSource.ListUsers[index] != null && DataSource.ListUsers[index].ObjectActive)
+                DataSource.ListUsers[index] = user.Clone();
+            else if (DataSource.ListUsers[index] != null && !DataSource.ListUsers[index].ObjectActive)
                 throw new DO.ExceptionDAL_InactiveUser(user.UserName, $"the user is inactive");
             else
                 throw new DO.ExceptionDAL_UserKeyNotFound(user.UserName, $"user name not found: {user.UserName}");

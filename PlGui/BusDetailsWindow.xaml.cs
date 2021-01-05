@@ -84,7 +84,7 @@ namespace PlGui
                         this.Close(); // Closes the window
                     }
                 }
-                catch (BO.ExceptionBLBadLicense)
+                catch (BO.ExceptionBL_KeyNotFound)
                 {
                     MessageBox.Show("The bus license you entered already exists in the company!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
@@ -105,7 +105,7 @@ namespace PlGui
                 {
                     bl.DeleteBus(bus.License);
                 }
-                catch (BO.ExceptionBLBadLicense)
+                catch (BO.ExceptionBL_KeyNotFound)
                 {
                     MessageBox.Show("The bus license doesn't exist or the bus is inactive!", "Cannot delete the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }

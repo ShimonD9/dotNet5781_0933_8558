@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 namespace BO
 {
     [Serializable]
-    public class ExceptionBLBadLicense : Exception
+
+    //---------------------buses and station bl exception-----------------------
+
+    public class ExceptionBL_KeyNotFound : Exception
     {
         public int ID;
-        public ExceptionBLBadLicense(string message, Exception innerException) :
+        public ExceptionBL_KeyNotFound(string message, Exception innerException) :
             base(message, innerException) => ID = ((DO.ExceptionDAL_KeyNotFound)innerException).ID;
         public override string ToString() => base.ToString() + $", bad license id: {ID}";
     }
@@ -23,43 +26,47 @@ namespace BO
         public override string ToString() => base.ToString() + $", inactive: {ID}";
     }
 
-    public class ExceptionBL_Unexist : Exception
+    public class ExceptionBL_KeyAlreadyExist : Exception
     {
         public int ID;
-        public ExceptionBL_Unexist(string message, Exception innerException) :
+        public ExceptionBL_KeyAlreadyExist(string message, Exception innerException) :
             base(message, innerException) => ID = ((DO.ExceptionDAL_KeyAlreadyExist)innerException).ID;
         public override string ToString() => base.ToString() + $", unexist: {ID}";
     }
 
-    public class ExceptionBLBadUserId : Exception
+    public class ExceptionBL_LinesStopHere : Exception
     {
         public string ID;
-        public ExceptionBLBadUserId(string message, Exception innerException) :
+        public ExceptionBL_LinesStopHere(string id) : base() => ID = id;
+        public ExceptionBL_LinesStopHere(string id, string message) : base(message) => ID = id;
+        public ExceptionBL_LinesStopHere(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public override string ToString() => base.ToString() + $", bus stop : {ID} serves bus lines";
+    }
+
+    public class ExceptionBL_WrongDetails: Exception
+    {
+        public string ID;
+        public ExceptionBL_WrongDetails(string id) : base() => ID = id;
+        public ExceptionBL_WrongDetails(string id, string message) : base(message) => ID = id;
+        public ExceptionBL_WrongDetails(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public override string ToString() => base.ToString() + $", bus stop : {ID} serves bus lines";
+    }
+
+    //----------------------------user bl exception------------------------------
+    public class ExceptionBL_UserKeyNotFound : Exception
+    {
+        public string ID;
+        public ExceptionBL_UserKeyNotFound(string message, Exception innerException) :
             base(message, innerException) => ID = ((DO.ExceptionDAL_UserKeyNotFound)innerException).ID;
         public override string ToString() => base.ToString() + $", bad license id: {ID}";
     }
 
-    public class ExceptionBLLinesStopHere : Exception
+    public class ExceptionBL_UserAlreadyExist : Exception
     {
         public string ID;
-        public ExceptionBLLinesStopHere(string id) : base() => ID = id;
-        public ExceptionBLLinesStopHere(string id, string message) : base(message) => ID = id;
-        public ExceptionBLLinesStopHere(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
-        public override string ToString() => base.ToString() + $", bus stop : {ID} serves bus lines";
-    }
-
-    public class ExceptionBLBusLineExist : Exception
-    {
-        public string ID;
-        public ExceptionBLBusLineExist(string id) : base() => ID = id;
-        public ExceptionBLBusLineExist(string id, string message) : base(message) => ID = id;
-        public ExceptionBLBusLineExist(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
-        public override string ToString() => base.ToString() + $", bus stop : {ID} serves bus lines";
-    }
-
-    public class ExceptionBL_ExistConsStations : Exception
-    {
-        public override string ToString() => base.ToString() + $", Fine";
+        public ExceptionBL_UserAlreadyExist(string message, Exception innerException) :
+            base(message, innerException) => ID = ((DO.ExceptionDAL_UserAlreadyExist)innerException).ID;
+        public override string ToString() => base.ToString() + $", bad license id: {ID}";
     }
 
 

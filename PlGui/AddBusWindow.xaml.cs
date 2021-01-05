@@ -80,7 +80,7 @@ namespace PlGui
                         this.Close();
                     }
                 }
-                catch (BO.ExceptionBLBadLicense)
+                catch (BO.ExceptionBL_KeyNotFound)
                 {
                     MessageBox.Show("The bus license you entered already exists in the company!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }

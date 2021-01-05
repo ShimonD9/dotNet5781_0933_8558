@@ -8,7 +8,7 @@ namespace DO
 {
     [Serializable]
 
-    //---------------------buses and station exception-----------------------
+    //---------------------buses and station dl exception-----------------------
     public class ExceptionDAL_KeyNotFound : Exception
     {
         public int ID;
@@ -58,7 +58,7 @@ namespace DO
         public override string ToString() => base.ToString() + $", Exist Conscutive Stations : {ID}";
     }
 
-    //----------------------------user exception------------------------------
+    //----------------------------user dl exception------------------------------
     public class ExceptionDAL_UserKeyNotFound : Exception
     {
         public string ID;
