@@ -22,6 +22,9 @@ namespace PlGui
     /// </summary>
     public partial class BusLineDetailsWindow : Window
     {
+        BO.BusLine busLine;
+        IBL bl = BLFactory.GetBL("1");
+
         public BusLineDetailsWindow()
         {
             InitializeComponent();
@@ -33,6 +36,7 @@ namespace PlGui
             InitializeComponent();
             cbArea.ItemsSource = Enum.GetValues(typeof(BO.Enums.AREA));
             BusLineDet.DataContext = item;
+            busLine = item as BusLine;
         }
 
 
@@ -71,7 +75,24 @@ namespace PlGui
 
         private void Button_AddDeparture(object sender, RoutedEventArgs e)
         {
-
+            if (gAddDeparture.Visibility != Visibility.Visible)
+                gAddDeparture.Visibility = Visibility.Visible;
+            else
+                try
+                {
+                    if (TimeSpan.TryParse(tbAddDeparture.GetLineText(0), out TimeSpan timeDeparture))
+                    {
+                        bl.AddLineDeparture(timeDeparture, busLine.BusLineID);
+                        lvSchedule.Items.Refresh();
+                        gAddDeparture.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                        MessageBox.Show("You have entered a wrong time departure!");
+                }
+                catch (ExceptionBL_KeyAlreadyExist)
+                {
+                    MessageBox.Show("This time departure already exist!");
+                }
         }
 
         private void Button_DeleteDeparture(object sender, RoutedEventArgs e)

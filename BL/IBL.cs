@@ -54,11 +54,10 @@ namespace BLApi
         bool CheckIfConsecutiveExist(int busStopKeyA, int busStopKeyB);
         #endregion
 
-       // #region LineDeparture
-       // IEnumerable<LineDeparture> GetAllLineDepartures();
-       // LineDeparture GetLineDeparture(int busLineID);
-       //void AddLineDeparture(LineDeparture busLineStationBo);
-       // #endregion
+        #region LineDeparture
+        void AddLineDeparture(TimeSpan departureTime, int busLineID);
+       // LineDeparture DeleteLineDeparture(int busLineID);
+       #endregion
 
         #region User
         IEnumerable<User> GetAllUsers();

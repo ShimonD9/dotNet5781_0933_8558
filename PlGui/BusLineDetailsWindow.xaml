@@ -108,6 +108,7 @@
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
+                                
                                 <Border Grid.Row="2">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -136,38 +137,44 @@
 
                         </TabItem>
                         <TabItem Header="Line departure times">
-                            <Grid ShowGridLines="True"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="300" Width="350">
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="300" Width="350">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="0.2*"/>
+                                    <RowDefinition Height="0.2*"/>
                                 </Grid.RowDefinitions>
-                                <Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="7,0,0,0">
+                                <Grid Grid.Row="0" HorizontalAlignment="Stretch">
                                     <ListView Name ="lvSchedule" Grid.Row="1"  HorizontalContentAlignment="Center" ItemsSource="{Binding Path='Schedule'}" SelectionChanged="lvScheduleSelectionChanged"/>
                                 </Grid>
-                                <Border Grid.Row="1">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Button Name="bAddDeparture" Grid.Column="0" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_AddDeparture">
-                                            <Button.Content>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image />
-                                                    <TextBlock Text="Add a departure time"  FontSize="16" VerticalAlignment="Center" FontWeight="SemiBold"/>
-                                                </StackPanel>
-                                            </Button.Content>
-                                        </Button>
-                                        <Button Name="bDeleteDeparture" Grid.Column="1" IsEnabled="False" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_DeleteDeparture">
-                                            <Button.Content>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image  />
-                                                    <TextBlock Text="Delete the departure time" TextWrapping="WrapWithOverflow" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                                                </StackPanel>
-                                            </Button.Content>
-                                        </Button>
-                                    </Grid>
-                                </Border>
+                                <Grid Name="gAddDeparture" Visibility="Collapsed" Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center"  Content="Enter the new departure time:" FontWeight="DemiBold"  />
+                                    <TextBox Name="tbAddDeparture" Grid.Column="1" Text="hh:mm:ss" VerticalAlignment="Center" HorizontalAlignment="Left"  HorizontalContentAlignment="Center" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"/>
+                                </Grid>
+                                <Grid Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Name="bAddDeparture" Grid.Column="0" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_AddDeparture">
+                                        <Button.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Add a departure time"  FontSize="16" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                            </StackPanel>
+                                        </Button.Content>
+                                    </Button>
+                                    <Button Name="bDeleteDeparture" Grid.Column="1" IsEnabled="False" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_DeleteDeparture">
+                                        <Button.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Delete the departure time" TextWrapping="WrapWithOverflow" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Button.Content>
+                                    </Button>
+                                </Grid>
+
                             </Grid>
                         </TabItem>
                     </TabControl>
@@ -192,7 +199,7 @@
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image  />
-                            <TextBlock Name="tbTreatment" Text="Delete" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" Margin="10"/>
+                            <TextBlock Text="Delete" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" Margin="10"/>
                         </StackPanel>
                     </Button.Content>
                 </Button>

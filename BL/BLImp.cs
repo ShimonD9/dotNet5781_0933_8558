@@ -307,53 +307,23 @@ namespace BL
 
         #endregion
 
-        //#region LineDeparture
-        //BO.LineDeparture LineDepartureDoBoAdapter(DO.LineDeparture LineDepartureDO)
-        //{
-        //    BO.LineDeparture LineDepartureBO = new BO.LineDeparture();
-        //    LineDepartureDO.CopyPropertiesTo(LineDepartureBO);
-        //    return LineDepartureBO;
-        //}
+        #region LineDeparture
 
-        //DO.LineDeparture LineDepartureBoDoAdapter(BO.LineDeparture lineDepartureBO)
-        //{
-        //    DO.LineDeparture lineDepartureDO = new DO.LineDeparture();
-        //    lineDepartureBO.CopyPropertiesTo(lineDepartureDO);
-        //    return lineDepartureDO;
-        //}
-        //public IEnumerable<LineDeparture> GetAllLineDepartures()
-        //{
-        //    return from doLineDeparture in dl.GetAllLineDeparture() select LineDepartureDoBoAdapter(doLineDeparture);
-        //}
-
-        //public LineDeparture GetLineDeparture(int busLineID)
-        //{
-        //    DO.LineDeparture lineDepartureDO;
-        //    try
-        //    {
-        //        lineDepartureDO = dl.GetLineDeparture(busLineID);
-        //    }
-        //    catch (DO.ExceptionDALBadIdUser ex) // לתקן לחריגה בהתאם!
-        //    {
-        //        throw new BO.ExceptionBLBadUserId("user dose not exist", ex);
-        //    }
-        //    return LineDepartureDoBoAdapter(lineDepartureDO);
-
-        //}
-
-        //public void AddLineDeparture(LineDeparture lineDeparture)
-        //{
-        //    try
-        //    {
-        //        DO.LineDeparture newlineDeparture = LineDepartureBoDoAdapter(lineDeparture);
-        //        (DalFactory.GetDL()).AddLineDeparture(newlineDeparture);
-        //    }
-        //    catch (DO.ExceptionDALBadLicense ex)
-        //    {
-        //        throw new BO.ExceptionBLBadLicense("Bus stop code already exist", ex);
-        //    }
-        //}
-        //#endregion
+        public void AddLineDeparture(TimeSpan departureTime, int busLineID)
+        {
+            try
+            {
+                DO.LineDeparture newLineDeparture = new DO.LineDeparture();
+                newLineDeparture.BusLineID = busLineID;
+                newLineDeparture.DepartureTime = departureTime;
+                (DalFactory.GetDL()).AddLineDeparture(newLineDeparture);
+            }
+            catch (DO.ExceptionDAL_KeyAlreadyExist ex)
+            {
+                throw new BO.ExceptionBL_KeyAlreadyExist("The line departure time already exist", ex);
+            }
+        }
+        #endregion
 
         #region BusLineStation
 

@@ -466,18 +466,22 @@ namespace DL
 
         public void AddLineDeparture(LineDeparture lineDeparture)
         {
-            LineDeparture existLineDeparture = DataSource.ListLineDepartures.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID);
+            LineDeparture existLineDeparture = DataSource.ListLineDepartures.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID && b.DepartureTime == lineDeparture.DepartureTime);
             if (existLineDeparture != null && existLineDeparture.ObjectActive == true)
-                throw new DO.ExceptionDAL_KeyAlreadyExist(lineDeparture.BusLineID, "Duplicate line departure");
+                throw new DO.ExceptionDAL_KeyAlreadyExist(lineDeparture.BusLineID, "Duplicate line departure time");
             else if (existLineDeparture != null && existLineDeparture.ObjectActive == false)
             {
                 existLineDeparture.ObjectActive = true;
                 existLineDeparture = lineDeparture.Clone();
             }
             else
+            {
+                lineDeparture.DepartureID = Config.RunningNumLineDeparture;
                 lineDeparture.ObjectActive = true;
-            DataSource.ListLineDepartures.Add(lineDeparture.Clone());
+                DataSource.ListLineDepartures.Add(lineDeparture.Clone());
+            }
         }
+
         public void UpdateLineDeparture(LineDeparture lineDeparture)
         {
             int index = DataSource.ListLineDepartures.FindIndex(lineDep => lineDep.BusLineID == lineDeparture.BusLineID);
