@@ -326,11 +326,23 @@ namespace BL
                     throw new BO.ExceptionBL_KeyAlreadyExist("The line departure time already exist", ex);
                 }
             }
-            #endregion
 
-            #region BusLineStation
+        public void DeleteLineDeparture(int lineDepartureID)
+        {
+            try
+            {
+                dl.DeleteLineDeparture(lineDepartureID);
+            }
+            catch (DO.ExceptionDAL_KeyNotFound ex)
+            {
+                throw new BO.ExceptionBL_KeyNotFound("the line departure ID doesn't exist or already is inactive!", ex);
+            }
+        }
+        #endregion
 
-            BO.BusLineStation BusLineStationDoBoAdapter(DO.BusLineStation busLineStationDO)
+        #region BusLineStation
+
+        BO.BusLineStation BusLineStationDoBoAdapter(DO.BusLineStation busLineStationDO)
             {
                 BO.BusLineStation busLineStationBO = new BO.BusLineStation();
                 busLineStationDO.CopyPropertiesTo(busLineStationBO);

@@ -56,7 +56,7 @@ namespace BLApi
 
         #region LineDeparture
         void AddLineDeparture(TimeSpan departureTime, int busLineID);
-       // LineDeparture DeleteLineDeparture(int busLineID);
+        void DeleteLineDeparture(int lineDepartureID);
        #endregion
 
         #region User
