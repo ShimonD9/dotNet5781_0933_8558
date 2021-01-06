@@ -76,7 +76,7 @@ namespace DalApi
         void AddLineDeparture(LineDeparture lineDeparture);
         void UpdateLineDeparture(LineDeparture lineDeparture);
         void UpdateLineDeparture(int license, Action<LineDeparture> update); // method that knows to updt specific fields in Person
-        void DeleteLineDeparture(int license);
+        void DeleteLineDeparture(TimeSpan departureTime, int busLineID);
         #endregion
 
         #region User

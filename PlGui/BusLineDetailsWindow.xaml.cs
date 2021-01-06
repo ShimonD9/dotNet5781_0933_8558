@@ -98,16 +98,30 @@ namespace PlGui
 
         private void Button_DeleteDeparture(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                gAddDeparture.Visibility = Visibility.Collapsed;
+                bl.DeleteLineDeparture((TimeSpan)lvSchedule.SelectedValue, busLine.BusLineID);
+                BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
+            }
+            catch(BO.ExceptionBL_KeyNotFound ex) 
+            {
+                MessageBox.Show("This time departure doesn't exist!");
+            }
+            catch(BO.ExceptionBL_Inactive ex)
+            {
+                MessageBox.Show("This time departure already is inactive!");
+            }
         }
 
         private void lvStationsSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        {            
             bDeleteStation.IsEnabled = true;
         }
 
         private void lvScheduleSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            gAddDeparture.Visibility = Visibility.Collapsed;
             bDeleteDeparture.IsEnabled = true;
         }
     }

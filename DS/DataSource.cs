@@ -1361,7 +1361,7 @@ namespace DS
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[0].BusLineID,
-                    DepartureTime = new TimeSpan(10,30,0),
+                    DepartureTime = new TimeSpan(10,50,0),
                     ObjectActive=true,
                  },
                  new LineDeparture

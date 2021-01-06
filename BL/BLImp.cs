@@ -327,15 +327,19 @@ namespace BL
                 }
             }
 
-        public void DeleteLineDeparture(int lineDepartureID)
+        public void DeleteLineDeparture(TimeSpan departureTime, int busLineID)
         {
             try
             {
-                dl.DeleteLineDeparture(lineDepartureID);
+                dl.DeleteLineDeparture(departureTime, busLineID);
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBL_KeyNotFound("the line departure ID doesn't exist or already is inactive!", ex);
+                throw new BO.ExceptionBL_KeyNotFound("the line departure doesn't exist", ex);
+            }
+            catch (DO.ExceptionDAL_Inactive ex)
+            {
+                throw new BO.ExceptionBL_Inactive("The line departure is already inactive", ex);
             }
         }
         #endregion

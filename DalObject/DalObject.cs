@@ -496,15 +496,15 @@ namespace DL
             LineDeparture busUpdate = GetLineDeparture(busLineID);
             update(busUpdate);
         }
-        public void DeleteLineDeparture(int busLineID)
+        public void DeleteLineDeparture(TimeSpan departureTime, int busLineID)
         {
-            LineDeparture bus = DataSource.ListLineDepartures.Find(b => b.BusLineID == busLineID);
+            LineDeparture bus = DataSource.ListLineDepartures.Find(b => b.BusLineID == busLineID && b.DepartureTime == departureTime);
             if (bus != null && bus.ObjectActive)
                 bus.ObjectActive = false;
             else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busLineID, $"the line departure is inactive");
+                throw new DO.ExceptionDAL_Inactive(bus.DepartureID, $"the line departure is inactive");
             else
-                throw new DO.ExceptionDAL_KeyNotFound(busLineID, $"line departure key not found: {busLineID}");
+                throw new DO.ExceptionDAL_KeyNotFound(bus.DepartureID, $"line departure key not found: {bus.DepartureID}");
         }
         #endregion
 
