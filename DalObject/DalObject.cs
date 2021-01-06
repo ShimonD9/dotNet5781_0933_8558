@@ -282,13 +282,13 @@ namespace DL
 
         public void UpdateBusLine(BusLine busLine)
         {
-            int index = DataSource.ListBusLines.FindIndex(bus1 => bus1.BusLineNumber == busLine.BusLineNumber);
+            int index = DataSource.ListBusLines.FindIndex(bus1 => bus1.BusLineID == busLine.BusLineID);
             if (DataSource.ListBusLines[index] != null && DataSource.ListBusLines[index].ObjectActive)
                 DataSource.ListBusLines[index] = busLine.Clone();
             else if (DataSource.ListBusLines[index] != null && !DataSource.ListBusLines[index].ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busLine.BusLineNumber, $"the bus line is  inactive");
+                throw new DO.ExceptionDAL_Inactive(busLine.BusLineID, $"the bus line is  inactive");
             else
-                throw new DO.ExceptionDAL_KeyNotFound(busLine.BusLineNumber, $"bus line number not found: {busLine.BusLineNumber}");
+                throw new DO.ExceptionDAL_KeyNotFound(busLine.BusLineID, $"bus line number not found: {busLine.BusLineID}");
         }
         public void UpdateBusLine(int busLineNumber, Action<BusLine> update) // method that knows to updt specific fields in Person
         {

@@ -53,7 +53,20 @@ namespace PlGui
 
         private void Button_Update(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                busLine.BusLineNumber = int.Parse(tbLineNumber.GetLineText(0));
+                bl.UpdateBusLine(busLine);
+                this.Close();
+            }
+            catch (BO.ExceptionBL_KeyNotFound)
+            {
+                MessageBox.Show("The bus line does not exist", "Unable to update");
+            }
+            catch (BO.ExceptionBL_Inactive)
+            {
+                MessageBox.Show("The bus line is inactive", "Unable to delete");
+            }
         }
 
         private void Button_Delete(object sender, RoutedEventArgs e)
@@ -65,11 +78,11 @@ namespace PlGui
                     bl.DeleteBusLine(busLine.BusLineID);
                     this.Close();
                 }
-                catch (BO.ExceptionBL_KeyNotFound ex)
+                catch (BO.ExceptionBL_KeyNotFound)
                 {
                     MessageBox.Show("The bus line does not exist","Unable to delete");
                 }
-                catch (BO.ExceptionBL_Inactive ex)
+                catch (BO.ExceptionBL_Inactive)
                 {
                     MessageBox.Show("The bus line already deleted", "Unable to delete");
                 }
