@@ -59,6 +59,21 @@ namespace PlGui
 
         private void Button_Delete(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this bus line?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+            if (result == MessageBoxResult.Yes)
+                try
+                {
+                    bl.DeleteBusLine(busLine.BusLineID);
+                    this.Close();
+                }
+                catch (BO.ExceptionBL_KeyNotFound ex)
+                {
+                    MessageBox.Show("The bus line does not exist","Unable to delete");
+                }
+                catch (BO.ExceptionBL_Inactive ex)
+                {
+                    MessageBox.Show("The bus line already deleted", "Unable to delete");
+                }
 
         }
 
@@ -104,18 +119,18 @@ namespace PlGui
                 bl.DeleteLineDeparture((TimeSpan)lvSchedule.SelectedValue, busLine.BusLineID);
                 BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
             }
-            catch(BO.ExceptionBL_KeyNotFound ex) 
+            catch (BO.ExceptionBL_KeyNotFound ex)
             {
                 MessageBox.Show("This time departure doesn't exist!");
             }
-            catch(BO.ExceptionBL_Inactive ex)
+            catch (BO.ExceptionBL_Inactive ex)
             {
                 MessageBox.Show("This time departure already is inactive!");
             }
         }
 
         private void lvStationsSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {            
+        {
             bDeleteStation.IsEnabled = true;
         }
 

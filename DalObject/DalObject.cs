@@ -168,16 +168,16 @@ namespace DL
                    where predicate(busLineStation)
                    select busLineStation.Clone();
         }
-        public BusLineStation GetBusLineStation(int busStopKey)
+        public BusLineStation GetBusLineStation(int busLineID, int busStopCode)
         {
-            BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopKey);
+            BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID);
 
             if (bus != null && bus.ObjectActive)
                 return bus.Clone();
             else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busStopKey, $"the bus station is  inactive");
+                throw new DO.ExceptionDAL_Inactive(busStopCode, $"the bus station is  inactive");
             else
-                throw new DO.ExceptionDAL_KeyNotFound(busStopKey, $"station key not found: {busStopKey}");
+                throw new DO.ExceptionDAL_KeyNotFound(busStopCode, $"station key not found: {busStopCode}");
         }
         public void AddBusLineStation(BusLineStation busLineStation)
         {
@@ -206,20 +206,28 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busLineStation.BusStopKey, $"station key not found: {busLineStation.BusStopKey}");
         }
-        public void UpdateBusLineStation(int busStopKey, Action<BusLineStation> update) // method that knows to updt specific fields in Person
+        public void UpdateBusLineStation(int busLineID, int busStopCode, Action<BusLineStation> update) // method that knows to updt specific fields in Person
         {
-            BusLineStation busUpdate = GetBusLineStation(busStopKey);
+            BusLineStation busUpdate = GetBusLineStation(busLineID, busStopCode);
             update(busUpdate);
         }
-        public void DeleteBusLineStation(int busStopKey)
+        public void DeleteBusLineStation(int busLineID, int busStopCode)
         {
-            BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopKey);
+            BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID);
             if (bus != null && bus.ObjectActive)
                 bus.ObjectActive = false;
             else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busStopKey, $"the bus line station is inactive");
+                throw new DO.ExceptionDAL_Inactive(busStopCode, $"the bus line station is inactive");
             else
-                throw new DO.ExceptionDAL_KeyNotFound(busStopKey, $"station key not found: {busStopKey}");
+                throw new DO.ExceptionDAL_KeyNotFound(busStopCode, $"station key not found: {busStopCode}");
+        }
+        public void DeleteBusLineStationsByID(int busLineID)
+        {
+            foreach (BusLineStation item in DataSource.ListBusLineStations)
+            {
+                if (item.BusLineID == busLineID)
+                    item.ObjectActive = false;
+            }          
         }
         #endregion
 
@@ -287,15 +295,15 @@ namespace DL
             BusLine busUpdate = GetBusLine(busLineNumber);
             update(busUpdate);
         }
-        public void DeleteBusLine(int busLineNumber)
+        public void DeleteBusLine(int busLineID)
         {
-            BusLine bus = DataSource.ListBusLines.Find(b => b.BusLineNumber == busLineNumber);
+            BusLine bus = DataSource.ListBusLines.Find(b => b.BusLineID == busLineID);
             if (bus != null && bus.ObjectActive)
                 bus.ObjectActive = false;
             else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busLineNumber, $"the bus line is  inactive");
+                throw new DO.ExceptionDAL_Inactive(busLineID, $"the bus line is  inactive");
             else
-                throw new DO.ExceptionDAL_KeyNotFound(busLineNumber, $"bus line number not found: {busLineNumber}");
+                throw new DO.ExceptionDAL_KeyNotFound(busLineID, $"bus line number not found: {busLineID}");
         }
         #endregion
 
@@ -505,6 +513,14 @@ namespace DL
                 throw new DO.ExceptionDAL_Inactive(bus.DepartureID, $"the line departure is inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(bus.DepartureID, $"line departure key not found: {bus.DepartureID}");
+        }
+        public void DeleteLineDepartureByID(int busLineID)
+        {
+            foreach (LineDeparture item in DataSource.ListLineDepartures)
+            {
+                if (item.BusLineID == busLineID)
+                    item.ObjectActive = false;
+            }
         }
         #endregion
 

@@ -42,11 +42,13 @@ namespace DalApi
         #region BusLineStation
         IEnumerable<BusLineStation> GetAllBusLineStations();
         IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate);
-        BusLineStation GetBusLineStation(int license);
+        BusLineStation GetBusLineStation(int busLineID, int busStopCode);
         void AddBusLineStation(BusLineStation busLineStation);
         void UpdateBusLineStation(BusLineStation busLineStation);
-        void UpdateBusLineStation(int license, Action<BusLineStation> update); // method that knows to updt specific fields in Person
-        void DeleteBusLineStation(int license);
+        void UpdateBusLineStation(int busLineID, int busStopCode, Action<BusLineStation> update); // method that knows to updt specific fields in Person
+        void DeleteBusLineStation(int busLineID, int busStopCode);
+        void DeleteBusLineStationsByID(int lineBusID);
+
         #endregion
 
         #region BusStop
@@ -77,6 +79,7 @@ namespace DalApi
         void UpdateLineDeparture(LineDeparture lineDeparture);
         void UpdateLineDeparture(int license, Action<LineDeparture> update); // method that knows to updt specific fields in Person
         void DeleteLineDeparture(TimeSpan departureTime, int busLineID);
+        void DeleteLineDepartureByID(int busLineID);
         #endregion
 
         #region User
