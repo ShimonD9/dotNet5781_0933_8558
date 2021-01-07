@@ -46,6 +46,7 @@
     <Compile Include="BO\Bus.cs" />
     <Compile Include="BO\BusAtTravel.cs" />
     <Compile Include="BO\BusLine.cs" />
+    <Compile Include="BO\BusLineAtBusStop.cs" />
     <Compile Include="BO\BusLineStation.cs" />
     <Compile Include="BO\BusStop.cs" />
     <Compile Include="BO\Enums.cs" />

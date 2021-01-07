@@ -240,7 +240,7 @@
                         </Border>
 
                         <Border Grid.Column="4" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                            <TextBlock  Text="address" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                            <TextBlock  Text="Address" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
                         </Border>
                         <Border Grid.Column="5" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
                             <TextBlock  Text="Sunshade" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold"/>

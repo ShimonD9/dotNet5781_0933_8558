@@ -10,6 +10,7 @@ namespace BO
     {
         public int BusLineID { get; set; }  // Entity Key A (not line number)
         public int BusStopKey { get; set; }  /// Entity Key B
+        public string BusStopName { get; set; }
         public int LineStationIndex { get; set; }
         public int PrevStation { get; set; }
         public int NextStation { get; set; }

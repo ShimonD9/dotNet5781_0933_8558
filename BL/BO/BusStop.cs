@@ -15,7 +15,7 @@ namespace BO
         public double Longitude { get; set; }
         public bool Sunshade { get; set; } // גגון
         public bool DigitalPanel { get; set; } // פאנל דיגיטלי
-        public IEnumerable<BusLine> LinesStopHere { get; set; }
+        public IEnumerable<BusLineAtBusStop> LinesStopHere { get; set; }
         public bool ObjectActive { get; set; }
         /// <summary>
         /// Formats a string which represents the Bus object

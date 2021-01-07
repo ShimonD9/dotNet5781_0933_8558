@@ -15,6 +15,7 @@ namespace BL
     {
         IDal dl = DalFactory.GetDL();
 
+
         #region BusLine
 
         BO.BusLine BusLineDoBoAdapter(DO.BusLine busLineDO)
@@ -353,7 +354,12 @@ namespace BL
         {
             BO.BusLineStation busLineStationBO = new BO.BusLineStation();
             busLineStationDO.CopyPropertiesTo(busLineStationBO);
-            // לוודא שצורת השאילתא תקינה
+
+            busLineStationBO.BusStopName = (from doBusStop
+                                            in dl.GetAllBusStops()
+                                            where doBusStop.BusStopKey == busLineStationBO.BusStopKey
+                                            select doBusStop.BusStopName).FirstOrDefault();
+
             busLineStationBO.DistanceToNext = (from doConStations
                                               in dl.GetAllConsecutiveStations()
                                                where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
