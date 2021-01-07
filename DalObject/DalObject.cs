@@ -102,22 +102,22 @@ namespace DL
                    where predicate(busAtTravel)
                    select busAtTravel.Clone();
         }
-        public BusAtTravel GetBusAtTravel(int license)
+        public BusAtTravel GetBusAtTravel(int busLineID)
         {
-            BusAtTravel bus = DataSource.ListBusAtTravels.Find(b => b.License == license);
+            BusAtTravel bus = DataSource.ListBusAtTravels.Find(b => b.BusLineID == busLineID);
             if (bus != null && bus.ObjectActive)
                 return bus.Clone();
             else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(license, $"the bus is  inactive");
+                throw new DO.ExceptionDAL_Inactive(busLineID, $"the bus is  inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(bus.License, $"Wrong license: {bus.License}");
         }
         public void AddBusAtTravel(BusAtTravel bus)
         {
-            BusAtTravel existBus = DataSource.ListBusAtTravels.FirstOrDefault(b => b.License == bus.License);
+            BusAtTravel existBus = DataSource.ListBusAtTravels.FirstOrDefault(b => b.BusLineID == bus.BusLineID);
 
             if (existBus != null && existBus.ObjectActive == true)
-                throw new DO.ExceptionDAL_KeyAlreadyExist(bus.License, "Duplicate bus licsens");
+                throw new DO.ExceptionDAL_KeyAlreadyExist(bus.BusLineID, "The bus line is already at travel");
             else if (existBus != null && existBus.ObjectActive == false)
             {
                 existBus.ObjectActive = true;
@@ -129,29 +129,29 @@ namespace DL
         }
         public void UpdateBusAtTravel(BusAtTravel bus)
         {
-            int index = DataSource.ListBusAtTravels.FindIndex(bus1 => bus1.License == bus.License);
+            int index = DataSource.ListBusAtTravels.FindIndex(bus1 => bus1.BusLineID == bus.BusLineID);
             if (DataSource.ListBusAtTravels[index] != null && DataSource.ListBusAtTravels[index].ObjectActive)
                 DataSource.ListBusAtTravels[index] = bus.Clone();
             else if (DataSource.ListBusAtTravels[index] != null && !DataSource.ListBusAtTravels[index].ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(bus.License, $"the bus is  inactive");
+                throw new DO.ExceptionDAL_Inactive(bus.BusLineID, $"the bus is  inactive");
             else
-                throw new DO.ExceptionDAL_KeyNotFound(bus.License, $"license key not found: {bus.License}");
+                throw new DO.ExceptionDAL_KeyNotFound(bus.BusLineID, $"license key not found: {bus.BusLineID}");
         }
-        public void UpdateBusAtTravel(int licenseNumber, Action<BusAtTravel> update) // method that knows to updt specific fields in Person
+        public void UpdateBusAtTravel(int BusLineID, Action<BusAtTravel> update) // method that knows to updt specific fields in Person
         {
-            BusAtTravel busUpdate = GetBusAtTravel(licenseNumber);
+            BusAtTravel busUpdate = GetBusAtTravel(BusLineID);
             update(busUpdate);
         }
-        public void DeleteBusAtTravel(int license)
+        public void DeleteBusAtTravel(int busLineID)
         {
-            BusAtTravel bus = DataSource.ListBusAtTravels.Find(b => b.License == license);
+            BusAtTravel bus = DataSource.ListBusAtTravels.Find(b => b.BusLineID == busLineID);
 
             if (bus != null && bus.ObjectActive)
                 bus.ObjectActive = false;
             else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(bus.License, $"the bus is  inactive");
+                throw new DO.ExceptionDAL_Inactive(bus.BusLineID, $"the bus is  inactive");
             else
-                throw new DO.ExceptionDAL_KeyNotFound(bus.License, $"license key not found: {bus.License}");
+                throw new DO.ExceptionDAL_KeyNotFound(bus.BusLineID, $"license key not found: {bus.BusLineID}");
         }
         #endregion
 
@@ -346,7 +346,6 @@ namespace DL
                 DataSource.ListBusStops.Insert(0, busStop.Clone());
             }
         }
-
         public void UpdateBusStop(BusStop busStop)
         {
             // If the old bus stop code didn't change, or it changed but it's new:
