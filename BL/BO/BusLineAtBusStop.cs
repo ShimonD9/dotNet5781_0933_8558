@@ -20,7 +20,7 @@ namespace BO
         /// <returns> Returns the string to print the object </returns>
         public override string ToString()
         {
-            return string.Format("Bus Line Number= {1}, Last Bus Stop Name = {2}", BusLineNumber, LastBusStopName);
+            return string.Format("Bus Line Number= {0}, Last Bus Stop Name = {1}", BusLineNumber, LastBusStopName);
         }
     }
 }

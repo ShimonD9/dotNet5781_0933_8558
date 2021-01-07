@@ -222,7 +222,9 @@ namespace BL
 
         #region BusStop
 
-        BO.BusStop busStopDoBoAdapter(DO.BusStop busStopDO)
+
+
+        BO.BusStop BusStopDoBoAdapter(DO.BusStop busStopDO)
         {
             BO.BusStop busStopBO = new BO.BusStop();
             int code = busStopDO.BusStopKey;
@@ -231,11 +233,11 @@ namespace BL
                                       in GetAllBusLines()
                                       where boBusLine.LineStations.Any(line => line.BusStopKey == busStopBO.BusStopKey)
                                       orderby boBusLine.BusLineNumber
-                                      select boBusLine;
+                                      select BusLinetoBusLineAtStopConvertor(boBusLine);
             return busStopBO;
         }
 
-        DO.BusStop busStopBoDoAdapter(BO.BusStop busStopBO)
+        DO.BusStop BusStopBoDoAdapter(BO.BusStop busStopBO)
         {
             DO.BusStop busStopDO = new DO.BusStop();
             //int id = busDO.License;
@@ -244,7 +246,7 @@ namespace BL
         }
         public IEnumerable<BusStop> GetAllBusStops()
         {
-            return from doBusStop in dl.GetAllBusStops() select busStopDoBoAdapter(doBusStop);
+            return from doBusStop in dl.GetAllBusStops() select BusStopDoBoAdapter(doBusStop);
         }
 
         public BusStop GetBusStop(int bosStopKeyDO)
@@ -258,14 +260,14 @@ namespace BL
             {
                 throw new BO.ExceptionBL_KeyNotFound("bus stop key does not exist", ex);
             }
-            return busStopDoBoAdapter(bosStopDO);
+            return BusStopDoBoAdapter(bosStopDO);
         }
 
         public void UpdateBusStop(BO.BusStop busStopBO) //busUpdate
         {
             try
             {
-                dl.UpdateBusStop(busStopBoDoAdapter(busStopBO));
+                dl.UpdateBusStop(BusStopBoDoAdapter(busStopBO));
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
@@ -289,7 +291,7 @@ namespace BL
         {
             try
             {
-                DO.BusStop newStop = busStopBoDoAdapter(busStopBO);
+                DO.BusStop newStop = BusStopBoDoAdapter(busStopBO);
                 (DalFactory.GetDL()).AddBusStop(newStop);
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
@@ -302,7 +304,7 @@ namespace BL
         {
             try
             {
-                if (busStopDoBoAdapter(dl.GetBusStop(BusStopCode)).LinesStopHere.Count() > 0)
+                if (BusStopDoBoAdapter(dl.GetBusStop(BusStopCode)).LinesStopHere.Count() > 0)
                     throw new BO.ExceptionBL_LinesStopHere("The bus stop serves bus lines, and cannot be deleted.");
                 dl.DeleteBusStop(BusStopCode);
             }
@@ -312,6 +314,16 @@ namespace BL
             }
         }
 
+        #endregion
+
+        #region BusLineAtBusStop
+        BO.BusLineAtBusStop BusLinetoBusLineAtStopConvertor(BO.BusLine busLine)
+        {
+            BO.BusLineAtBusStop busLineAtBusStop = new BO.BusLineAtBusStop();
+            busLine.CopyPropertiesTo(busLineAtBusStop);
+            busLineAtBusStop.LastBusStopName = dl.GetBusStop(busLineAtBusStop.LastBusStopKey).BusStopName;
+            return busLineAtBusStop;
+        }
         #endregion
 
         #region LineDeparture
