@@ -247,18 +247,18 @@ namespace BL
             return from doBusStop in dl.GetAllBusStops() select BusStopDoBoAdapter(doBusStop);
         }
 
-        public BusStop GetBusStop(int bosStopKeyDO)
+        public BusStop GetBusStop(int busStopKeyDO)
         {
-            DO.BusStop bosStopDO;
+            DO.BusStop busStopDO;
             try
             {
-                bosStopDO = dl.GetBusStop(bosStopKeyDO);
+                busStopDO = dl.GetBusStop(busStopKeyDO);
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 throw new BO.ExceptionBL_KeyNotFound("bus stop key does not exist", ex);
             }
-            return BusStopDoBoAdapter(bosStopDO);
+            return BusStopDoBoAdapter(busStopDO);
         }
 
         public void UpdateBusStop(BO.BusStop busStopBO) //busUpdate
@@ -404,7 +404,20 @@ namespace BL
 
         public BusLineStation GetBusLineStation(int busLineID, int busStopCode)
         {
-            throw new NotImplementedException();
+            DO.BusLineStation busStationDO;
+            try
+            {
+                busStationDO = dl.GetBusLineStation(busLineID, busStopCode);
+            }
+            catch (DO.ExceptionDAL_KeyNotFound ex)
+            {
+                throw new BO.ExceptionBL_KeyNotFound("bus station does not exist", ex);
+            }
+            catch (DO.ExceptionDAL_Inactive ex)
+            {
+                throw new BO.ExceptionBL_Inactive("bus station is inactive", ex);
+            }
+            return BusLineStationDoBoAdapter(busStationDO);
         }
 
         public void AddBusLineStation(BusLineStation busLineStationBo)
