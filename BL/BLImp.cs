@@ -56,6 +56,7 @@ namespace BL
         {
             return BusLineDoBoAdapter(dl.GetBusLine(busLineID));
         }
+
         public int AddBusLine(BusLine busLine, double kmToNext, TimeSpan timeToNext, TimeSpan startTime, TimeSpan endTime, int frequency)
         {
             int idToReturn;
@@ -92,7 +93,7 @@ namespace BL
                 throw new BO.ExceptionBL_KeyNotFound("The bus line doesn't exist", ex);
             }
         }
-        public void UpdateBusLine(int license, Action<BusLine> update)
+        public void UpdateBusLine(int busLineID, Action<BusLine> update)
         {
             throw new NotImplementedException();
         }
@@ -221,9 +222,6 @@ namespace BL
         #endregion
 
         #region BusStop
-
-
-
         BO.BusStop BusStopDoBoAdapter(DO.BusStop busStopDO)
         {
             BO.BusStop busStopBO = new BO.BusStop();
@@ -276,7 +274,7 @@ namespace BL
 
         }
 
-        public void UpdateBusStop(int license, Action<BusStop> update)
+        public void UpdateBusStop(int bosStopKeyDO, Action<BusStop> update)
         {
             throw new NotImplementedException();
         }
@@ -427,7 +425,7 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        public void UpdateBusLineStation(int license, Action<BusLineStation> update)
+        public void UpdateBusLineStation(int busLineID, Action<BusLineStation> update)
         {
             throw new NotImplementedException();
         }
@@ -460,7 +458,6 @@ namespace BL
 
         }
         #endregion
-
 
         #region User
         BO.User userDoBoAdapter(DO.User userDO)

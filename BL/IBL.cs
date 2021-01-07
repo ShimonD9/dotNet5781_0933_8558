@@ -23,11 +23,11 @@ namespace BLApi
         #region BusStop
         IEnumerable<BusStop> GetAllBusStops();
         IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate);
-        BusStop GetBusStop(int license);
+        BusStop GetBusStop(int busStopKey);
         void AddBusStop(BusStop busStop);
         void UpdateBusStop(BusStop busStop);
-        void UpdateBusStop(int license, Action<BusStop> update); // method that knows to updt specific fields in Person
-        void DeleteBusStop(int license);
+        void UpdateBusStop(int busStopKey, Action<BusStop> update); // method that knows to updt specific fields in Person
+        void DeleteBusStop(int busStopKey);
         #endregion
 
         #region BusLineStation
@@ -36,7 +36,7 @@ namespace BLApi
         BusLineStation GetBusLineStation(int busLineID, int busStopCode);
         void AddBusLineStation(BusLineStation busLineStation);
         void UpdateBusLineStation(BusLineStation busLineStation);
-        void UpdateBusLineStation(int license, Action<BusLineStation> update); // method that knows to updt specific fields in Person
+        void UpdateBusLineStation(int busLineID, Action<BusLineStation> update); // method that knows to updt specific fields in Person
         void DeleteBusLineStation(int busLineID, int busStopCode);
         #endregion
 
@@ -65,8 +65,8 @@ namespace BLApi
         User GetUser(string userName);
         void AddUser(User user);
         void UpdateUser(User user);
-        void UpdateUser(string license, Action<User> update); // method that knows to updt specific fields in Person
-        void DeleteUser(string license);
+        void UpdateUser(string userName, Action<User> update); // method that knows to updt specific fields in Person
+        void DeleteUser(string userName);
         #endregion
 
     }
