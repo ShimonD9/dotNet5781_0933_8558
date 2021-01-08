@@ -30,7 +30,7 @@
 
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Grid.Column="0">
-                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the bus stop code:" Width="149" Margin="5"/>
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the bus stop code (1-99999):" Width="197" Margin="5,5,0,5"/>
             </Grid>
 
             <Grid Grid.Row="0" Grid.Column="1">

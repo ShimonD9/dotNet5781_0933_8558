@@ -51,6 +51,7 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0.1*"/>
                                     <RowDefinition Height="*"/>
+                                    <RowDefinition Height="0.4*"/>
                                     <RowDefinition Height="0.2*"/>
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="7,0,0,0">
@@ -109,7 +110,22 @@
                                     </ListView.ItemTemplate>
                                 </ListView>
 
-                                <Border Grid.Row="2">
+                                <Grid Name="gUpdateConsecutive" Visibility="Collapsed" Grid.Row="2">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                     </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="0.3*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Grid.Row="0" Name="lbUpdateTime" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Left"  Content="Enter the time between:" FontWeight="DemiBold"  />
+                                    <TextBox Grid.Column="1"  Grid.Row="0"  Name="tbUpdateTime" Text="hh:mm:ss" VerticalAlignment="Center" HorizontalAlignment="Left"  HorizontalContentAlignment="Center" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"/>
+                                    <Label Grid.Column="0" Grid.Row="1" Name="lbUpdateKM" VerticalAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Left"   Content="Enter the km between:" FontWeight="DemiBold"  />
+                                    <TextBox Grid.Column="1"  Grid.Row="1"  Name="tbUpdateKM" Text="0" VerticalAlignment="Center" HorizontalAlignment="Left"  HorizontalContentAlignment="Center" MaxLength="5" PreviewTextInput="NumberValidationTextBoxDots"/>
+                                </Grid>
+
+                                <Border Grid.Row="3">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -127,7 +143,7 @@
                                             <Button.Content>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Image  />
-                                                    <TextBlock Text="Delete the station" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                    <TextBlock Name="tbDeleteStation" Text="Delete the station" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </Button.Content>
                                         </Button>

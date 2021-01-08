@@ -432,9 +432,35 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        public void DeleteBusLineStation(int busLineID, int busStopCode)
+        public void DeleteBusLineStation(int busLineID, int busStopCode, TimeSpan gapTimeUpdate, double gapKmUpdate)
         {
-            throw new NotImplementedException();
+            DO.BusLineStation currentInfo = dl.GetBusLineStation(busLineID, busStopCode);
+            DO.BusLineStation prevStation = dl.GetBusLineStation(busLineID, currentInfo.PrevStation);
+            DO.BusLineStation nextStation = dl.GetBusLineStation(busLineID, currentInfo.NextStation);
+            prevStation.NextStation = nextStation.BusStopKey;
+            nextStation.PrevStation = prevStation.BusStopKey;
+            dl.UpdateBusLineStation(prevStation);
+            dl.UpdateBusLineStation(nextStation);
+
+
+            ///
+            /// NEED TO UPDATE THE INDEX OF THE OTHER BUS LINE STATIONS AS WELL!!! (DO IT AT DL OR BL?!?!?)
+            ///
+
+            // Consecutive stations addition:
+            if (gapKmUpdate != 0) // It means there is need to fill the consecutive stations info gap (there are no consecutive stations to this case)
+            { 
+                DO.ConsecutiveStations newCons = new DO.ConsecutiveStations();
+
+                newCons.BusStopKeyA = currentInfo.PrevStation;
+                newCons.BusStopKeyB = currentInfo.NextStation;
+                newCons.Distance = gapKmUpdate;
+                newCons.TravelTime = gapTimeUpdate;
+                dl.AddConsecutiveStations(newCons);
+
+            }
+
+            dl.DeleteBusLineStation(busLineID, busStopCode);
         }
   
         #endregion
@@ -451,7 +477,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_Inactive ex)
             {
-                return true;
+                            return true;
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {

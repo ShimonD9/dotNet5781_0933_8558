@@ -37,7 +37,7 @@ namespace BLApi
         void AddBusLineStation(BusLineStation busLineStation);
         void UpdateBusLineStation(BusLineStation busLineStation);
         void UpdateBusLineStation(int license, Action<BusLineStation> update); // method that knows to updt specific fields in Person
-        void DeleteBusLineStation(int busLineID, int busStopCode);
+        void DeleteBusLineStation(int busLineID, int busStopCode, TimeSpan gapTimeUpdate, double gapKmUpdate);
         #endregion
 
         #region BusLine
@@ -51,6 +51,12 @@ namespace BLApi
         #endregion
 
         #region Consecutive Stations
+        /// <summary>
+        /// Checks if two given bus stop keys represented as consecutive stations at the data source
+        /// </summary>
+        /// <param name="busStopKeyA"></param>
+        /// <param name="busStopKeyB"></param>
+        /// <returns>True if the consecutive stations exist</returns>
         bool CheckIfConsecutiveExist(int busStopKeyA, int busStopKeyB);
         #endregion
 

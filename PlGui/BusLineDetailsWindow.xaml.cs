@@ -39,17 +39,6 @@ namespace PlGui
         }
 
 
-        private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]$");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
-        private void NumberValidationTextBoxColon(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9/:]$");
-            e.Handled = regex.IsMatch(e.Text);
-        }
 
         private void Button_Update(object sender, RoutedEventArgs e)
         {
@@ -80,7 +69,7 @@ namespace PlGui
                 }
                 catch (BO.ExceptionBL_KeyNotFound)
                 {
-                    MessageBox.Show("The bus line does not exist","Unable to delete");
+                    MessageBox.Show("The bus line does not exist", "Unable to delete");
                 }
                 catch (BO.ExceptionBL_Inactive)
                 {
@@ -96,7 +85,52 @@ namespace PlGui
 
         private void Button_DeleteStation(object sender, RoutedEventArgs e)
         {
+            BO.BusLineStation chosenStation = (lvLineStations.SelectedValue as BusLineStation);
+            if (tbDeleteStation.Text == "Delete")
+            {
 
+                try
+                {
+                    if (chosenStation != null && chosenStation.PrevStation != 0 && chosenStation.NextStation != 0)
+                    {
+                        if (!bl.CheckIfConsecutiveExist(chosenStation.PrevStation, chosenStation.NextStation))
+                        {
+                            gUpdateConsecutive.Visibility = Visibility.Visible;
+                            tbUpdateKM.Text = "0";
+                            tbUpdateTime.Text = "hh:mm:ss";
+                            lbUpdateKM.Content = "Enter the KM from " + chosenStation.PrevStation + " to " + chosenStation.NextStation + ":";
+                            lbUpdateTime.Content = "Enter travel time from " + chosenStation.PrevStation + " to " + chosenStation.NextStation + ":";
+                            tbDeleteStation.Text = "Submit changes";
+                        }
+                        else
+                        {
+                            bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, TimeSpan.FromMinutes(0), 0);
+                            BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
+                            gUpdateConsecutive.Visibility = Visibility.Collapsed;
+                            tbDeleteStation.Text = "Delete";
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            else if (tbDeleteStation.Text == "Submit changes")
+            {
+                if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                {
+                    MessageBox.Show("You didn't fill correctly all the required information", "Cannot add submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, timeUpdate, kmUpdate);
+                    BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
+                    gUpdateConsecutive.Visibility = Visibility.Collapsed;
+                    tbDeleteStation.Text = "Delete";
+                }
+            }
         }
 
 
@@ -143,6 +177,8 @@ namespace PlGui
 
         private void lvStationsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            gUpdateConsecutive.Visibility = Visibility.Collapsed;
+            tbDeleteStation.Text = "Delete";
             bDeleteStation.IsEnabled = true;
         }
 
@@ -150,6 +186,25 @@ namespace PlGui
         {
             gAddDeparture.Visibility = Visibility.Collapsed;
             bDeleteDeparture.IsEnabled = true;
+        }
+
+        private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void NumberValidationTextBoxColon(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9/:]$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+
+        private void NumberValidationTextBoxDots(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9/.]$");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

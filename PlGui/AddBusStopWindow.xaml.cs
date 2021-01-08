@@ -46,7 +46,7 @@ namespace PlGui
             // Checks if the inputs are correct, and pops an appropriate message if not:
             try
             {
-                if (!Double.TryParse(tbLatitude.GetLineText(0), out double lati) || !Double.TryParse(tbLongitude.GetLineText(0), out double longi))
+                if (!Double.TryParse(tbLatitude.GetLineText(0), out double lati) || !Double.TryParse(tbLongitude.GetLineText(0), out double longi) || int.Parse(tbBusStopCode.GetLineText(0)) == 0)
                 {
                     MessageBox.Show("You didn't fill correctly all the required information", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
