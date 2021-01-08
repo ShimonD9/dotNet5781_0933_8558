@@ -32,11 +32,11 @@ namespace DalApi
         #region BusLine
         IEnumerable<BusLine> GetAllBusLines();
         IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate);
-        BusLine GetBusLine(int license);
+        BusLine GetBusLine(int  busLineID);
         int AddBusLine(BusLine busLine);
         void UpdateBusLine(BusLine busLine);
-        void UpdateBusLine(int license, Action<BusLine> update); // method that knows to updt specific fields in Person
-        void DeleteBusLine(int license);
+        void UpdateBusLine(int busLineID, Action<BusLine> update); // method that knows to updt specific fields in Person
+        void DeleteBusLine(int busLineID);
         #endregion
 
         #region BusLineStation
@@ -47,18 +47,18 @@ namespace DalApi
         void UpdateBusLineStation(BusLineStation busLineStation);
         void UpdateBusLineStation(int busLineID, int busStopCode, Action<BusLineStation> update); // method that knows to updt specific fields in Person
         void DeleteBusLineStation(int busLineID, int busStopCode);
-        void DeleteBusLineStationsByID(int lineBusID);
+        void DeleteBusLineStationsByID(int busLineID);
 
         #endregion
 
         #region BusStop
         IEnumerable<BusStop> GetAllBusStops();
         IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate);
-        BusStop GetBusStop(int license);
+        BusStop GetBusStop(int busStopKey);
         void AddBusStop(BusStop busStop);
         void UpdateBusStop(BusStop busStop);
-        void UpdateBusStop(int license, Action<BusStop> update); // method that knows to updt specific fields in Person
-        void DeleteBusStop(int license);
+        void UpdateBusStop(int busStopKey, Action<BusStop> update); // method that knows to updt specific fields in Person
+        void DeleteBusStop(int busStopKey);
         #endregion
 
         #region ConsecutiveStations
@@ -74,10 +74,10 @@ namespace DalApi
         #region LineDeparture
         IEnumerable<LineDeparture> GetAllLineDeparture();
         IEnumerable<LineDeparture> GetAllLineDepartureBy(Predicate<LineDeparture> predicate);
-        LineDeparture GetLineDeparture(int license);
+        LineDeparture GetLineDeparture(int busLineID);
         void AddLineDeparture(LineDeparture lineDeparture);
         void UpdateLineDeparture(LineDeparture lineDeparture);
-        void UpdateLineDeparture(int license, Action<LineDeparture> update); // method that knows to updt specific fields in Person
+        void UpdateLineDeparture(int busLineID, Action<LineDeparture> update); // method that knows to updt specific fields in Person
         void DeleteLineDeparture(TimeSpan departureTime, int busLineID);
         void DeleteLineDepartureByID(int busLineID);
         #endregion
@@ -88,8 +88,8 @@ namespace DalApi
         User GetUser(string userName);
         void AddUser(User user);
         void UpdateUser(User user);
-        void UpdateUser(string license, Action<User> update); // method that knows to updt specific fields in Person
-        void DeleteUser(string license);
+        void UpdateUser(string userName, Action<User> update); // method that knows to updt specific fields in Person
+        void DeleteUser(string userName);
         #endregion
     }
 }

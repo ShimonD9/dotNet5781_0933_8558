@@ -56,6 +56,7 @@ namespace BL
         {
             return BusLineDoBoAdapter(dl.GetBusLine(busLineID));
         }
+
         public int AddBusLine(BusLine busLine, double kmToNext, TimeSpan timeToNext, TimeSpan startTime, TimeSpan endTime, int frequency)
         {
             int idToReturn;
@@ -92,7 +93,7 @@ namespace BL
                 throw new BO.ExceptionBL_KeyNotFound("The bus line doesn't exist", ex);
             }
         }
-        public void UpdateBusLine(int license, Action<BusLine> update)
+        public void UpdateBusLine(int busLineID, Action<BusLine> update)
         {
             throw new NotImplementedException();
         }
@@ -221,9 +222,6 @@ namespace BL
         #endregion
 
         #region BusStop
-
-
-
         BO.BusStop BusStopDoBoAdapter(DO.BusStop busStopDO)
         {
             BO.BusStop busStopBO = new BO.BusStop();
@@ -249,18 +247,18 @@ namespace BL
             return from doBusStop in dl.GetAllBusStops() select BusStopDoBoAdapter(doBusStop);
         }
 
-        public BusStop GetBusStop(int bosStopKeyDO)
+        public BusStop GetBusStop(int busStopKeyDO)
         {
-            DO.BusStop bosStopDO;
+            DO.BusStop busStopDO;
             try
             {
-                bosStopDO = dl.GetBusStop(bosStopKeyDO);
+                busStopDO = dl.GetBusStop(busStopKeyDO);
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 throw new BO.ExceptionBL_KeyNotFound("bus stop key does not exist", ex);
             }
-            return BusStopDoBoAdapter(bosStopDO);
+            return BusStopDoBoAdapter(busStopDO);
         }
 
         public void UpdateBusStop(BO.BusStop busStopBO) //busUpdate
@@ -276,7 +274,7 @@ namespace BL
 
         }
 
-        public void UpdateBusStop(int license, Action<BusStop> update)
+        public void UpdateBusStop(int bosStopKeyDO, Action<BusStop> update)
         {
             throw new NotImplementedException();
         }
@@ -406,7 +404,20 @@ namespace BL
 
         public BusLineStation GetBusLineStation(int busLineID, int busStopCode)
         {
-            throw new NotImplementedException();
+            DO.BusLineStation busStationDO;
+            try
+            {
+                busStationDO = dl.GetBusLineStation(busLineID, busStopCode);
+            }
+            catch (DO.ExceptionDAL_KeyNotFound ex)
+            {
+                throw new BO.ExceptionBL_KeyNotFound("bus station does not exist", ex);
+            }
+            catch (DO.ExceptionDAL_Inactive ex)
+            {
+                throw new BO.ExceptionBL_Inactive("bus station is inactive", ex);
+            }
+            return BusLineStationDoBoAdapter(busStationDO);
         }
 
         public void AddBusLineStation(BusLineStation busLineStationBo)
@@ -427,7 +438,7 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        public void UpdateBusLineStation(int license, Action<BusLineStation> update)
+        public void UpdateBusLineStation(int busLineID, Action<BusLineStation> update)
         {
             throw new NotImplementedException();
         }
@@ -486,7 +497,6 @@ namespace BL
 
         }
         #endregion
-
 
         #region User
         BO.User userDoBoAdapter(DO.User userDO)
