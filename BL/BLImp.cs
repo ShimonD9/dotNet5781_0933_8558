@@ -445,9 +445,9 @@ namespace BL
 
         public void DeleteBusLineStation(int busLineID, int busStopCode, TimeSpan gapTimeUpdate, double gapKmUpdate)
         {
-            DO.BusLineStation currentInfo = dl.GetBusLineStation(busLineID, busStopCode);
-            DO.BusLineStation prevStation = dl.GetBusLineStation(busLineID, currentInfo.PrevStation);
-            DO.BusLineStation nextStation = dl.GetBusLineStation(busLineID, currentInfo.NextStation);
+            DO.BusLineStation currentStation = dl.GetBusLineStation(busLineID, busStopCode);
+            DO.BusLineStation prevStation = dl.GetBusLineStation(busLineID, currentStation.PrevStation);
+            DO.BusLineStation nextStation = dl.GetBusLineStation(busLineID, currentStation.NextStation);
             prevStation.NextStation = nextStation.BusStopKey;
             nextStation.PrevStation = prevStation.BusStopKey;
             dl.UpdateBusLineStation(prevStation);
@@ -463,8 +463,8 @@ namespace BL
             { 
                 DO.ConsecutiveStations newCons = new DO.ConsecutiveStations();
 
-                newCons.BusStopKeyA = currentInfo.PrevStation;
-                newCons.BusStopKeyB = currentInfo.NextStation;
+                newCons.BusStopKeyA = currentStation.PrevStation;
+                newCons.BusStopKeyB = currentStation.NextStation;
                 newCons.Distance = gapKmUpdate;
                 newCons.TravelTime = gapTimeUpdate;
                 dl.AddConsecutiveStations(newCons);
