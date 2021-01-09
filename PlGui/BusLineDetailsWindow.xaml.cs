@@ -88,12 +88,11 @@ namespace PlGui
             BO.BusLineStation chosenStation = (lvLineStations.SelectedValue as BusLineStation);
             if (tbDeleteStation.Text == "Delete")
             {
-
                 try
                 {
                     if (chosenStation != null && chosenStation.PrevStation != 0 && chosenStation.NextStation != 0)
                     {
-                        if (!bl.CheckIfConsecutiveExist(chosenStation.PrevStation, chosenStation.NextStation))
+                        if (!bl.IsConsecutiveExist(chosenStation.PrevStation, chosenStation.NextStation))
                         {
                             gUpdateConsecutive.Visibility = Visibility.Visible;
                             tbUpdateKM.Text = "0";
@@ -107,6 +106,7 @@ namespace PlGui
                             bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, TimeSpan.FromMinutes(0), 0);
                             BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
                             gUpdateConsecutive.Visibility = Visibility.Collapsed;
+                            bDeleteStation.IsEnabled = false;
                             tbDeleteStation.Text = "Delete";
                         }
                     }
@@ -129,6 +129,7 @@ namespace PlGui
                     BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
                     gUpdateConsecutive.Visibility = Visibility.Collapsed;
                     tbDeleteStation.Text = "Delete";
+                    bDeleteStation.IsEnabled = false;
                 }
             }
         }

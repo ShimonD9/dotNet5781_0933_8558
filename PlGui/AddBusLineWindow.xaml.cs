@@ -124,7 +124,7 @@ namespace PlGui
         {
             if (cbFirstBusStop.SelectedItem != null && cbLastBusStop.SelectedItem != null)
             {
-                if (!bl.CheckIfConsecutiveExist((cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey, (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey))
+                if (!bl.IsConsecutiveExist((cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey, (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey))
                 // If they are exist, or inactive, it means we know the time and distance between the two bus
                 // It means the consecutive doesn't exist, and we need to manager neeed to enter the distance and time
                 {

@@ -202,15 +202,18 @@ namespace DL
             if (DataSource.ListBusLineStations[index] != null && DataSource.ListBusLineStations[index].ObjectActive)
                 DataSource.ListBusLineStations[index] = busLineStation.Clone();
             else if (DataSource.ListBusLineStations[index] != null && !DataSource.ListBusLineStations[index].ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busLineStation.BusStopKey, $"the bus line station is  inactive");
+                throw new DO.ExceptionDAL_Inactive(busLineStation.BusStopKey, $"the bus line station is inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busLineStation.BusStopKey, $"station key not found: {busLineStation.BusStopKey}");
         }
+
         public void UpdateBusLineStation(int busLineID, int busStopCode, Action<BusLineStation> update) // method that knows to updt specific fields in Person
         {
             BusLineStation busUpdate = GetBusLineStation(busLineID, busStopCode);
             update(busUpdate);
+            UpdateBusLineStation(busUpdate);
         }
+
         public void DeleteBusLineStation(int busLineID, int busStopCode)
         {
             BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID);

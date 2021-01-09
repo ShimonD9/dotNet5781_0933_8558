@@ -72,7 +72,7 @@ namespace BL
                 newConStations.BusStopKeyB = busLine.LastBusStopKey;
                 newConStations.Distance = kmToNext;
                 newConStations.TravelTime = timeToNext;
-                if (!CheckIfConsecutiveExist(busLine.FirstBusStopKey, busLine.LastBusStopKey))
+                if (!IsConsecutiveExist(busLine.FirstBusStopKey, busLine.LastBusStopKey))
                     dl.AddConsecutiveStations(newConStations);
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
@@ -446,17 +446,19 @@ namespace BL
         public void DeleteBusLineStation(int busLineID, int busStopCode, TimeSpan gapTimeUpdate, double gapKmUpdate)
         {
             DO.BusLineStation currentStation = dl.GetBusLineStation(busLineID, busStopCode);
-            DO.BusLineStation prevStation = dl.GetBusLineStation(busLineID, currentStation.PrevStation);
-            DO.BusLineStation nextStation = dl.GetBusLineStation(busLineID, currentStation.NextStation);
-            prevStation.NextStation = nextStation.BusStopKey;
-            nextStation.PrevStation = prevStation.BusStopKey;
-            dl.UpdateBusLineStation(prevStation);
-            dl.UpdateBusLineStation(nextStation);
-
-
-            ///
-            /// NEED TO UPDATE THE INDEX OF THE OTHER BUS LINE STATIONS AS WELL!!! (DO IT AT DL OR BL?!?!?)
-            ///
+            dl.UpdateBusLineStation(busLineID, currentStation.PrevStation, station => station.NextStation = currentStation.NextStation);
+            dl.UpdateBusLineStation(busLineID, currentStation.NextStation, station => station.PrevStation = currentStation.PrevStation);
+            
+            // Indices update:
+            int indexDeleted = currentStation.LineStationIndex;
+            var query = (from station
+                        in dl.GetAllBusLineStations()
+                        where station.BusLineID == busLineID && station.LineStationIndex > indexDeleted
+                        select station).ToList();
+            foreach (DO.BusLineStation station in query)
+            {
+                dl.UpdateBusLineStation(busLineID, station.BusStopKey, x => x.LineStationIndex--);
+            }
 
             // Consecutive stations addition:
             if (gapKmUpdate != 0) // It means there is need to fill the consecutive stations info gap (there are no consecutive stations to this case)
@@ -468,17 +470,23 @@ namespace BL
                 newCons.Distance = gapKmUpdate;
                 newCons.TravelTime = gapTimeUpdate;
                 dl.AddConsecutiveStations(newCons);
-
             }
-
+            
+            
             dl.DeleteBusLineStation(busLineID, busStopCode);
+
+            // Deleting the consecutive stations (which existed before the bus line station deletion) if they aren't in use
+            if (!IsConsecutiveInUse(currentStation.PrevStation, currentStation.BusStopKey))
+                dl.DeleteConsecutiveStations(currentStation.PrevStation, currentStation.BusStopKey);
+            if (!IsConsecutiveInUse(currentStation.BusStopKey, currentStation.NextStation))
+                dl.DeleteConsecutiveStations(currentStation.BusStopKey, currentStation.NextStation);
         }
   
         #endregion
 
         #region Consecutive Stations
 
-        public bool CheckIfConsecutiveExist(int busStopKeyA, int busStopKeyB)
+        public bool IsConsecutiveExist(int busStopKeyA, int busStopKeyB)
         {
             DO.ConsecutiveStations newConStations = new DO.ConsecutiveStations();
             try
@@ -488,13 +496,20 @@ namespace BL
             }
             catch (DO.ExceptionDAL_Inactive ex)
             {
-                            return true;
+                return true;
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 return false;
             }
+        }
 
+        public bool IsConsecutiveInUse(int busStopKeyA, int busStopKeyB)
+        {
+            return (from station
+                         in dl.GetAllBusLineStations()
+                         where station.BusStopKey == busStopKeyA && station.NextStation == busStopKeyB
+                         select station).Any();
         }
         #endregion
 

@@ -57,7 +57,15 @@ namespace BLApi
         /// <param name="busStopKeyA"></param>
         /// <param name="busStopKeyB"></param>
         /// <returns>True if the consecutive stations exist</returns>
-        bool CheckIfConsecutiveExist(int busStopKeyA, int busStopKeyB);
+        bool IsConsecutiveExist(int busStopKeyA, int busStopKeyB);
+
+        /// <summary>
+        /// Checks if two given bus stops (assumed as a consecutive stations) are in use as active bus line stations
+        /// </summary>
+        /// <param name="busStopKeyA"></param>
+        /// <param name="busStopKeyB"></param>
+        /// <returns></returns>
+        bool IsConsecutiveInUse(int busStopKeyA, int busStopKeyB);
         #endregion
 
         #region LineDeparture
