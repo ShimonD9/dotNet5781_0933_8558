@@ -1102,7 +1102,7 @@ namespace DS
 
             ListConsecutiveStations = new List<ConsecutiveStations> { };
 
-            for (int i = 0; i < 11; i++) // Creating 20 bus line stations according to the 10 bus lines (with first bus stop and last bus stop, and 8 bus stops between)
+            for (int i = 0; i < 11; i++) // Creating 10 bus line stations according to the 10 bus lines (with first bus stop and last bus stop, and 8 bus stops between)
             {
                 // Need to make the random work better!
 

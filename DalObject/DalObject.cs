@@ -196,6 +196,7 @@ namespace DL
                 DataSource.ListBusLineStations.Add(busLineStation.Clone());
             }
         }
+
         public void UpdateBusLineStation(BusLineStation busLineStation)
         {
             int index = DataSource.ListBusLineStations.FindIndex(bus1 => bus1.BusStopKey == busLineStation.BusStopKey);
