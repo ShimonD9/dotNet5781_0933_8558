@@ -98,7 +98,7 @@ namespace BL
             throw new NotImplementedException();
         }
         public void DeleteBusLine(int busLineID)
-        {           
+        {
             try
             {
                 dl.DeleteLineDepartureByID(busLineID);
@@ -448,13 +448,12 @@ namespace BL
             DO.BusLineStation currentStation = dl.GetBusLineStation(busLineID, busStopCode);
             dl.UpdateBusLineStation(busLineID, currentStation.PrevStation, station => station.NextStation = currentStation.NextStation);
             dl.UpdateBusLineStation(busLineID, currentStation.NextStation, station => station.PrevStation = currentStation.PrevStation);
-            
             // Indices update:
             int indexDeleted = currentStation.LineStationIndex;
             var query = (from station
                         in dl.GetAllBusLineStations()
-                        where station.BusLineID == busLineID && station.LineStationIndex > indexDeleted
-                        select station).ToList();
+                         where station.BusLineID == busLineID && station.LineStationIndex > indexDeleted
+                         select station).ToList();
             foreach (DO.BusLineStation station in query)
             {
                 dl.UpdateBusLineStation(busLineID, station.BusStopKey, x => x.LineStationIndex--);
@@ -462,7 +461,7 @@ namespace BL
 
             // Consecutive stations addition:
             if (gapKmUpdate != 0) // It means there is need to fill the consecutive stations info gap (there are no consecutive stations to this case)
-            { 
+            {
                 DO.ConsecutiveStations newCons = new DO.ConsecutiveStations();
 
                 newCons.BusStopKeyA = currentStation.PrevStation;
@@ -471,8 +470,14 @@ namespace BL
                 newCons.TravelTime = gapTimeUpdate;
                 dl.AddConsecutiveStations(newCons);
             }
-            
-            
+            else //it means consecutive exist or inactive
+            {
+                //DO.ConsecutiveStations existCon = dl.GetConsecutiveStations(currentStation.PrevStation, currentStation.NextStation);
+                //existCon.ObjectActive = true;
+                dl.UpdateConsecutiveStations(currentStation.PrevStation, currentStation.NextStation, con => con.ObjectActive = true);
+            }
+
+
             dl.DeleteBusLineStation(busLineID, busStopCode);
 
             // Deleting the consecutive stations (which existed before the bus line station deletion) if they aren't in use
@@ -481,7 +486,7 @@ namespace BL
             if (!IsConsecutiveInUse(currentStation.BusStopKey, currentStation.NextStation))
                 dl.DeleteConsecutiveStations(currentStation.BusStopKey, currentStation.NextStation);
         }
-  
+
         #endregion
 
         #region Consecutive Stations
@@ -508,8 +513,8 @@ namespace BL
         {
             return (from station
                          in dl.GetAllBusLineStations()
-                         where station.BusStopKey == busStopKeyA && station.NextStation == busStopKeyB
-                         select station).Any();
+                    where station.BusStopKey == busStopKeyA && station.NextStation == busStopKeyB
+                    select station).Any();
         }
         #endregion
 

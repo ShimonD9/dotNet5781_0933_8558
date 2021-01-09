@@ -62,7 +62,7 @@ namespace DL
 
         public void UpdateBus(Bus bus) //busUpdate
         {
-            int index = DataSource.ListBuses.FindIndex(bus1 => bus1.License == bus.License);          
+            int index = DataSource.ListBuses.FindIndex(bus1 => bus1.License == bus.License);
             if (DataSource.ListBuses[index] != null && DataSource.ListBuses[index].ObjectActive)
                 DataSource.ListBuses[index] = bus.Clone();
             else if (DataSource.ListBuses[index] != null && !DataSource.ListBuses[index].ObjectActive)
@@ -199,9 +199,12 @@ namespace DL
 
         public void UpdateBusLineStation(BusLineStation busLineStation)
         {
-            int index = DataSource.ListBusLineStations.FindIndex(bus1 => bus1.BusStopKey == busLineStation.BusStopKey);
+            int index = DataSource.ListBusLineStations.FindIndex(bus1 => bus1.BusLineID == busLineStation.BusLineID && bus1.BusStopKey == busLineStation.BusStopKey);         
             if (DataSource.ListBusLineStations[index] != null && DataSource.ListBusLineStations[index].ObjectActive)
-                DataSource.ListBusLineStations[index] = busLineStation.Clone();
+            {
+                DataSource.ListBusLineStations.Remove(DataSource.ListBusLineStations[index]);
+                DataSource.ListBusLineStations.Add(busLineStation.Clone());
+            }
             else if (DataSource.ListBusLineStations[index] != null && !DataSource.ListBusLineStations[index].ObjectActive)
                 throw new DO.ExceptionDAL_Inactive(busLineStation.BusStopKey, $"the bus line station is inactive");
             else
@@ -231,7 +234,7 @@ namespace DL
             {
                 if (item.BusLineID == busLineID)
                     item.ObjectActive = false;
-            }          
+            }
         }
         #endregion
 
@@ -436,6 +439,7 @@ namespace DL
         {
             ConsecutiveStations busConsecutiveUpdate = GetConsecutiveStations(busStopCodeA, busStopCodeB);
             update(busConsecutiveUpdate);
+            UpdateConsecutiveStations(busConsecutiveUpdate);
         }
 
         public void DeleteConsecutiveStations(int busStopCodeA, int busStopCodeB)
@@ -448,7 +452,7 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound("the consecutive stations not found");
         }
-        #endregion  //בדיקה לעומק איך לבצע מימוש!!
+        #endregion  //
 
         #region LineDeparture
         public IEnumerable<LineDeparture> GetAllLineDeparture()
