@@ -44,7 +44,7 @@ namespace BL
 
         public IEnumerable<BusLine> GetAllBusLines()
         {
-            return from doBusLine in dl.GetAllBusLines() select BusLineDoBoAdapter(doBusLine);
+            return from doBusLine in dl.GetAllBusLines() orderby doBusLine.BusLineID select BusLineDoBoAdapter(doBusLine);
         }
 
         public IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate)
@@ -455,9 +455,9 @@ namespace BL
                 dl.UpdateBusLineStation(busLineID, currentStation.PrevStation, station => station.NextStation = currentStation.NextStation);
                 dl.UpdateBusLineStation(busLineID, currentStation.NextStation, station => station.PrevStation = currentStation.PrevStation);
             }
-            else if (currentStation.PrevStation == 0 && currentStation.NextStation != 0)
+            else if (currentStation.PrevStation == 0 && currentStation.NextStation != 0) // The station to be deleted is the first one
                 dl.UpdateBusLineStation(busLineID, currentStation.NextStation, station => station.PrevStation = 0);
-            else if (currentStation.PrevStation != 0 && currentStation.NextStation == 0)
+            else if (currentStation.PrevStation != 0 && currentStation.NextStation == 0) // The station to be deleted is the last one
                 dl.UpdateBusLineStation(busLineID, currentStation.PrevStation, station => station.NextStation = 0);
 
 

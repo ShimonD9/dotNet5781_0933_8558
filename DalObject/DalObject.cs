@@ -292,7 +292,11 @@ namespace DL
         {
             int index = DataSource.ListBusLines.FindIndex(bus1 => bus1.BusLineID == busLine.BusLineID);
             if (DataSource.ListBusLines[index] != null && DataSource.ListBusLines[index].ObjectActive)
-                DataSource.ListBusLines[index] = busLine.Clone();
+            {
+                DataSource.ListBusLines.Remove(DataSource.ListBusLines[index]);
+                DataSource.ListBusLines.Add(busLine.Clone());
+            }
+                
             else if (DataSource.ListBusLines[index] != null && !DataSource.ListBusLines[index].ObjectActive)
                 throw new DO.ExceptionDAL_Inactive(busLine.BusLineID, $"the bus line is  inactive");
             else

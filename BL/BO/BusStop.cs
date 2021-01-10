@@ -23,7 +23,7 @@ namespace BO
         /// <returns> Returns the string to print the object </returns>
         public override string ToString()
         {
-            return string.Format("Bus Stop Key= {0}, Bus Stop Name= {1}, Bus Stop Address = {2}, Latitude = {3}, Longitude = {4}, Sunshade = {5}, Digital Panel = {6}", BusStopKey, BusStopName, BusStopAddress, Latitude, Longitude, Sunshade, DigitalPanel);
+            return string.Format("{0} - {1}", BusStopKey, BusStopName);
         }
 
     }

@@ -26,6 +26,8 @@ namespace PlGui
         IBL bl = BLFactory.GetBL("1");
         bool isAddStationInProcess = false;
         bool isDeleteStationInProcess = false;
+        bool mustUpdateGapA = false;
+        bool mustUpdateGapB = false;
 
         public BusLineDetailsWindow()
         {
@@ -82,6 +84,11 @@ namespace PlGui
 
         private void Button_AddStation(object sender, RoutedEventArgs e)
         {
+            BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
+            BO.BusLineStation chosenPrevStation = cbChoosePrevStation.SelectedItem as BO.BusLineStation;
+            BO.BusLineStation newStation = new BO.BusLineStation();
+
+            // Beginning of addition:
             if (!isAddStationInProcess && !isDeleteStationInProcess)
             {
                 isAddStationInProcess = true;
@@ -92,8 +99,113 @@ namespace PlGui
                                                  where !busLine.LineStations.Any(x => x.BusStopKey == busStop.BusStopKey) // if the bus stop in use at the current line, it won't show in the combo box
                                                  select busStop;
             }
-            else if (isAddStationInProcess == true)
+
+            // Submiting the changes:
+            else if (isAddStationInProcess == true && chosenBusStop != null)
             {
+                if (rbFirst.IsChecked == true) // Adding the line station to the head of the route
+                {
+                    newStation.BusLineID = busLine.BusLineID;
+                    newStation.BusStopKey = chosenBusStop.BusStopKey;
+                    newStation.BusStopName = chosenBusStop.BusStopName;
+                    newStation.LineStationIndex = 0;
+                    newStation.NextStation = busLine.FirstBusStopKey;
+                    newStation.PrevStation = 0;
+                    if (mustUpdateGapA == true)
+                    {
+                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                        {
+                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            newStation.DistanceToNext = kmUpdate;
+                            newStation.TimeToNext = timeUpdate;
+                        }
+                    }
+                    else
+                    {
+                        newStation.DistanceToNext = 0;
+                        newStation.TimeToNext = TimeSpan.FromMinutes(0);
+                    }
+                    // Send the object to the bl function - bl.addBusLineStationToStart(newStation)
+                }
+                else if (rbLast.IsChecked == true)  // Adding the line station to the end of the route
+                {
+                    newStation.BusLineID = busLine.BusLineID;
+                    newStation.BusStopKey = chosenBusStop.BusStopKey;
+                    newStation.BusStopName = chosenBusStop.BusStopName;
+                    newStation.LineStationIndex = busLine.LineStations.Count();
+                    newStation.NextStation = 0;
+                    newStation.PrevStation = busLine.LastBusStopKey;
+                    newStation.DistanceToNext = 0;
+                    newStation.TimeToNext = TimeSpan.FromMinutes(0);
+                    if (mustUpdateGapA == true)
+                    {
+                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                        {
+                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            // Send the object to the bl function - bl.addBusLineStationToEnd(newStation, kmUpdate, timeUpdate)
+                        }
+                    }
+                    else
+                    {
+                        // Send the object to the bl function - bl.addBusLineStationToEnd(newStation)
+                    }
+
+
+                }
+                else if (rbMiddle.IsChecked == true && chosenPrevStation != null)
+                {
+
+                    newStation.BusLineID = busLine.BusLineID;
+                    newStation.BusStopKey = chosenBusStop.BusStopKey;
+                    newStation.BusStopName = chosenBusStop.BusStopName;
+                    newStation.LineStationIndex = chosenPrevStation.LineStationIndex + 1;
+                    newStation.PrevStation = chosenPrevStation.BusStopKey;
+                    newStation.NextStation = chosenPrevStation.NextStation;
+                    if (mustUpdateGapA == true && mustUpdateGapB == true)
+                    {
+                        if (!Double.TryParse(tbUpdateKmB.GetLineText(0), out double kmUpdateB) || !TimeSpan.TryParse(tbUpdateTimeB.GetLineText(0), out TimeSpan timeUpdateB) || timeUpdateB == TimeSpan.FromMinutes(0) || kmUpdateB == 0 ||
+                            !Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                        {
+                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            newStation.TimeToNext = timeUpdateB;
+                            newStation.DistanceToNext = kmUpdateB;
+                            // Send the object to the bl function - bl.addBusLineStationToMiddle(newStation, kmUpdate, timeUpdate)
+                        }
+                    }
+                    else if (mustUpdateGapA == true)
+                    {
+                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                        {
+                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            // Send the object to the bl function - bl.addBusLineStationToMiddle(newStation, kmUpdate, timeUpdate)
+                        }
+                    }
+                    else if (mustUpdateGapB == true)
+                    {
+                        if (!Double.TryParse(tbUpdateKmB.GetLineText(0), out double kmUpdateB) || !TimeSpan.TryParse(tbUpdateTimeB.GetLineText(0), out TimeSpan timeUpdateB) || timeUpdateB == TimeSpan.FromMinutes(0) || kmUpdateB == 0)
+                        {
+                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            newStation.TimeToNext = timeUpdateB;
+                            newStation.DistanceToNext = kmUpdateB;
+                            // Send the object to the bl function - bl.addBusLineStationToMiddle(newStation)
+                        }
+                    }
+                }
 
             }
         }
@@ -116,7 +228,7 @@ namespace PlGui
                             tbUpdateTimeB.Visibility = Visibility.Hidden;
                             tbUpdateKM.Text = "0";
                             tbUpdateTime.Text = "hh:mm:ss";
-                            lbGapA.Content = chosenStation.PrevStation + " <-> " + chosenStation.NextStation;
+                            lbGapA.Content = chosenStation.PrevStation + " -> " + chosenStation.NextStation;
                             tbDeleteStation.Text = "Submit changes";
                         }
                         else
@@ -146,7 +258,7 @@ namespace PlGui
             {
                 if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
                 {
-                    MessageBox.Show("You didn't fill correctly all the required information", "Cannot add submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 else
                 {
@@ -164,6 +276,7 @@ namespace PlGui
         private void stationDeletionEndProcess()
         {
             BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
+            busLine = bl.GetBusLine(busLine.BusLineID);
             gUpdateConsecutive.Visibility = Visibility.Collapsed;
             bDeleteStation.IsEnabled = false;
             isDeleteStationInProcess = false;
@@ -174,8 +287,11 @@ namespace PlGui
         private void stationAdditionEndProcess()
         {
             BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
+            busLine = bl.GetBusLine(busLine.BusLineID);
             gUpdateConsecutive.Visibility = Visibility.Collapsed;
             gChooseNewStation.Visibility = Visibility.Collapsed;
+            mustUpdateGapA = false;
+            mustUpdateGapB = false;
             rbFirst.IsEnabled = false;
             rbMiddle.IsEnabled = false;
             rbLast.IsEnabled = false;
@@ -206,6 +322,8 @@ namespace PlGui
                 {
                     if (!bl.IsConsecutiveExist(chosenPrevStation.BusStopKey, chosenBusStop.BusStopKey) && !bl.IsConsecutiveExist(chosenBusStop.BusStopKey, chosenPrevStation.NextStation))
                     {
+                        mustUpdateGapA = true;
+                        mustUpdateGapB = true;
                         gUpdateConsecutive.Visibility = Visibility.Visible;
                         lbGapB.Visibility = Visibility.Visible;
                         tbUpdateKmB.Visibility = Visibility.Visible;
@@ -214,32 +332,34 @@ namespace PlGui
                         tbUpdateTime.Text = "hh:mm:ss";
                         tbUpdateKmB.Text = "0";
                         tbUpdateTimeB.Text = "hh:mm:ss";
-                        lbGapA.Content = chosenPrevStation.BusStopKey + " <-> " + chosenBusStop.BusStopKey;
-                        lbGapB.Content = chosenBusStop.BusStopKey + " <-> " + chosenPrevStation.NextStation;
+                        lbGapA.Content = chosenPrevStation.BusStopKey + " -> " + chosenBusStop.BusStopKey;
+                        lbGapB.Content = chosenBusStop.BusStopKey + " -> " + chosenPrevStation.NextStation;
                         tbAddStation.Text = "Submit changes";
                         bAddStation.IsEnabled = true;
                     }
                     else if (!bl.IsConsecutiveExist(chosenPrevStation.BusStopKey, chosenBusStop.BusStopKey))
                     {
+                        mustUpdateGapA = true;
                         gUpdateConsecutive.Visibility = Visibility.Visible;
                         lbGapB.Visibility = Visibility.Hidden;
                         tbUpdateKmB.Visibility = Visibility.Hidden;
                         tbUpdateTimeB.Visibility = Visibility.Hidden;
                         tbUpdateKM.Text = "0";
                         tbUpdateTime.Text = "hh:mm:ss";
-                        lbGapA.Content = chosenPrevStation.BusStopKey + " <-> " + chosenBusStop.BusStopKey;
+                        lbGapA.Content = chosenPrevStation.BusStopKey + " -> " + chosenBusStop.BusStopKey;
                         tbAddStation.Text = "Submit changes";
                         bAddStation.IsEnabled = true;
                     }
                     else if (!bl.IsConsecutiveExist(chosenBusStop.BusStopKey, chosenPrevStation.NextStation))
                     {
+                        mustUpdateGapB = true;
                         gUpdateConsecutive.Visibility = Visibility.Visible;
                         lbGapB.Visibility = Visibility.Hidden;
                         tbUpdateKmB.Visibility = Visibility.Hidden;
                         tbUpdateTimeB.Visibility = Visibility.Hidden;
                         tbUpdateKM.Text = "0";
                         tbUpdateTime.Text = "hh:mm:ss";
-                        lbGapA.Content = chosenBusStop.BusStopKey + " <-> " + chosenPrevStation.NextStation;
+                        lbGapA.Content = chosenBusStop.BusStopKey + " -> " + chosenPrevStation.NextStation;
                         tbAddStation.Text = "Submit changes";
                         bAddStation.IsEnabled = true;
                     }
@@ -262,14 +382,16 @@ namespace PlGui
             {
                 if (chosenBusStop != null && !bl.IsConsecutiveExist(chosenBusStop.BusStopKey, busLine.FirstBusStopKey))
                 {
+                    mustUpdateGapA = true;
                     gUpdateConsecutive.Visibility = Visibility.Visible;
                     lbGapB.Visibility = Visibility.Hidden;
                     tbUpdateKmB.Visibility = Visibility.Hidden;
                     tbUpdateTimeB.Visibility = Visibility.Hidden;
                     tbUpdateKM.Text = "0";
                     tbUpdateTime.Text = "hh:mm:ss";
-                    lbGapA.Content = chosenBusStop.BusStopKey + " <-> " + busLine.FirstBusStopKey;
+                    lbGapA.Content = chosenBusStop.BusStopKey + " -> " + busLine.FirstBusStopKey;
                     tbAddStation.Text = "Submit changes";
+                    bAddStation.IsEnabled = true;
                 }
             }
             catch (Exception)
@@ -282,6 +404,7 @@ namespace PlGui
         {
             BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
             gUpdateConsecutive.Visibility = Visibility.Collapsed;
+            bAddStation.IsEnabled = false;
             try
             {
                 if (chosenBusStop != null)
@@ -301,6 +424,7 @@ namespace PlGui
 
         private void rbLastCheck(object sender, RoutedEventArgs e)
         {
+
             gChoosePrevStation.Visibility = Visibility.Collapsed;
             gUpdateConsecutive.Visibility = Visibility.Collapsed;
             BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
@@ -308,14 +432,16 @@ namespace PlGui
             {
                 if (chosenBusStop != null && !bl.IsConsecutiveExist(busLine.LastBusStopKey, chosenBusStop.BusStopKey))
                 {
+                    mustUpdateGapA = true;
                     gUpdateConsecutive.Visibility = Visibility.Visible;
                     lbGapB.Visibility = Visibility.Hidden;
                     tbUpdateKmB.Visibility = Visibility.Hidden;
                     tbUpdateTimeB.Visibility = Visibility.Hidden;
                     tbUpdateKM.Text = "0";
                     tbUpdateTime.Text = "hh:mm:ss";
-                    lbGapA.Content = busLine.LastBusStopKey + " <-> " + chosenBusStop.BusStopKey;
+                    lbGapA.Content = busLine.LastBusStopKey + " -> " + chosenBusStop.BusStopKey;
                     tbAddStation.Text = "Submit changes";
+                    bAddStation.IsEnabled = true;
                 }
             }
             catch (Exception)
