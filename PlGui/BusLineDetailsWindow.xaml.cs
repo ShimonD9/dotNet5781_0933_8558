@@ -299,7 +299,6 @@ namespace PlGui
 
         }
 
-
         private void rbLastCheck(object sender, RoutedEventArgs e)
         {
             gChoosePrevStation.Visibility = Visibility.Collapsed;
