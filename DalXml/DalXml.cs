@@ -1,175 +1,189 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.IO;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Xml.Linq;
-//using DalApi;
-//using DO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+using DalApi;
+using DO;
 
 
 
-//namespace DL
-//{
-//    sealed class DalXml : IDal    //internal
-//    {
-//        #region singelton
-//        static readonly DalXml instance = new DalXml();
-//        static DalXml() { }// static ctor to ensure instance init is done just before first usage
-//        DalXml() { } // default => private
-//        public static DalXml Instance { get => instance; }// The public Instance property to use
-//        #endregion
+namespace DL
+{
+    sealed class DalXml : IDal    //internal
+    {
+        #region singelton
+        static readonly DalXml instance = new DalXml();
+        static DalXml() { }// static ctor to ensure instance init is done just before first usage
+        DalXml() { } // default => private
+        public static DalXml Instance { get => instance; }// The public Instance property to use
+        #endregion
 
-//        #region DS XML Files
+        #region DS XML Files
 
-//        string busPath = @"BusXml.xml"; //XElement
+        string busPath = @"BusXml.xml"; //XElement
 
-//        string busAtTravelPath = @"BusAtTravelXml.xml"; //XMLSerializer
-//        string busLinePath = @"BusLineXml.xml"; //XMLSerializer
-//        string busLineStationPath = @"BusLineStationXml.xml"; //XMLSerializer
-//        string busStopPath = @"BusStopXml.xml"; //XMLSerializer
-//        string consecutiveStationPath = @"ConsecutiveStationXml.xml"; //XMLSerializer
-//        string lineDeparturePath = @"LineDepartureXml.xml"; //XMLSerializer
-//        string userPath = @"UserXml.xml"; //XMLSerializer
+        string busAtTravelPath = @"BusAtTravelXml.xml"; //XMLSerializer
+        string busLinePath = @"BusLineXml.xml"; //XMLSerializer
+        string busLineStationPath = @"BusLineStationXml.xml"; //XMLSerializer
+        string busStopPath = @"BusStopXml.xml"; //XMLSerializer
+        string consecutiveStationPath = @"ConsecutiveStationXml.xml"; //XMLSerializer
+        string lineDeparturePath = @"LineDepartureXml.xml"; //XMLSerializer
+        string userPath = @"UserXml.xml"; //XMLSerializer
 
 
 
-//        #endregion
+        #endregion
 
-//        #region Bus
-//        public DO.Bus GetBus(int license)
-//        {
-//            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
+        #region Bus
+        public DO.Bus GetBus(int license)
+        {
+            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
 
-//            Bus bus = (from b in busRootElem.Elements()
-//                       where int.Parse(b.Element("License").Value) == license
-//                       select new Bus()
-//                       {
-//                           License = Int32.Parse(b.Element("License").Value),
-//                           LicenseDate = DateTime.Parse(b.Element("LicenseDate").Value),
-//                           Mileage = double.Parse(b.Element("Mileage").Value),
-//                           Fuel = double.Parse(b.Element("Fuel").Value),
-//                           BusStatus = (Enums.BUS_STATUS)Enum.Parse(typeof(Enums.BUS_STATUS), b.Element("BusStatus").Value),
-//                           LastTreatmentDate = DateTime.Parse(b.Element("LastTreatmentDate").Value),
-//                           MileageAtLastTreat = double.Parse(b.Element("MileageAtLastTreat").Value),
-//                           ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
-//                       }
-//                        ).FirstOrDefault();
+            Bus bus = (from b in busRootElem.Elements()
+                       where int.Parse(b.Element("License").Value) == license
+                       select new Bus()
+                       {
+                           License = Int32.Parse(b.Element("License").Value),
+                           LicenseDate = DateTime.Parse(b.Element("LicenseDate").Value),
+                           Mileage = double.Parse(b.Element("Mileage").Value),
+                           Fuel = double.Parse(b.Element("Fuel").Value),
+                           BusStatus = (Enums.BUS_STATUS)Enum.Parse(typeof(Enums.BUS_STATUS), b.Element("BusStatus").Value),
+                           LastTreatmentDate = DateTime.Parse(b.Element("LastTreatmentDate").Value),
+                           MileageAtLastTreat = double.Parse(b.Element("MileageAtLastTreat").Value),
+                           ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
+                       }
+                        ).FirstOrDefault();
 
-//            if (bus == null)
-//                throw new DO.ExceptionDAL_KeyNotFound(license, $"Bus license not found: {license}");
-//            else if (bus != null && !bus.ObjectActive)
-//                throw new DO.ExceptionDAL_Inactive(license, $"the bus is  inactive");
-//            return bus;
-//        }
-//        public IEnumerable<DO.Bus> GetAllBuses()
-//        {
-//            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
+            if (bus == null)
+                throw new DO.ExceptionDAL_KeyNotFound(license, $"Bus license not found: {license}");
+            else if (bus != null && !bus.ObjectActive)
+                throw new DO.ExceptionDAL_Inactive(license, $"the bus is  inactive");
+            return bus;
+        }
+        public IEnumerable<DO.Bus> GetAllBuses()
+        {
+            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
 
-//            return (from b in busRootElem.Elements()
-//                    where bool.Parse(b.Element("ObjectActive").Value) == true
-//                    select new Bus()
-//                    {
-//                        License = Int32.Parse(b.Element("License").Value),
-//                        LicenseDate = DateTime.Parse(b.Element("LicenseDate").Value),
-//                        Mileage = double.Parse(b.Element("Mileage").Value),
-//                        Fuel = double.Parse(b.Element("Fuel").Value),
-//                        BusStatus = (Enums.BUS_STATUS)Enum.Parse(typeof(Enums.BUS_STATUS), b.Element("BusStatus").Value),
-//                        LastTreatmentDate = DateTime.Parse(b.Element("LastTreatmentDate").Value),
-//                        MileageAtLastTreat = double.Parse(b.Element("MileageAtLastTreat").Value),
-//                        ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
-//                    }
-//                    );
-//        }
+            return (from b in busRootElem.Elements()
+                    where bool.Parse(b.Element("ObjectActive").Value) == true
+                    select new Bus()
+                    {
+                        License = Int32.Parse(b.Element("License").Value),
+                        LicenseDate = DateTime.Parse(b.Element("LicenseDate").Value),
+                        Mileage = double.Parse(b.Element("Mileage").Value),
+                        Fuel = double.Parse(b.Element("Fuel").Value),
+                        BusStatus = (Enums.BUS_STATUS)Enum.Parse(typeof(Enums.BUS_STATUS), b.Element("BusStatus").Value),
+                        LastTreatmentDate = DateTime.Parse(b.Element("LastTreatmentDate").Value),
+                        MileageAtLastTreat = double.Parse(b.Element("MileageAtLastTreat").Value),
+                        ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
+                    }
+                   );
+        }
 
-//        public IEnumerable<DO.Bus> GetAllBusesBy(Predicate<DO.Bus> predicate)
-//        {
-//            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
+        public IEnumerable<DO.Bus> GetAllBusesBy(Predicate<DO.Bus> predicate)
+        {
+            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
 
-//            return from b in busRootElem.Elements()
-//                   let bus = new Bus()
-//                   {
-//                       License = Int32.Parse(b.Element("License").Value),
-//                       LicenseDate = DateTime.Parse(b.Element("LicenseDate").Value),
-//                       Mileage = double.Parse(b.Element("Mileage").Value),
-//                       Fuel = double.Parse(b.Element("Fuel").Value),
-//                       BusStatus = (Enums.BUS_STATUS)Enum.Parse(typeof(Enums.BUS_STATUS), b.Element("BusStatus").Value),
-//                       LastTreatmentDate = DateTime.Parse(b.Element("LastTreatmentDate").Value),
-//                       MileageAtLastTreat = double.Parse(b.Element("MileageAtLastTreat").Value),
-//                       ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
-//                   }
-//                   where predicate(bus)
-//                   select bus;
-//        }
-//        public void AddBus(DO.Bus bus)
-//        {
-//            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
+            return from b in busRootElem.Elements()
+                   let bus = new Bus()
+                   {
+                       License = Int32.Parse(b.Element("License").Value),
+                       LicenseDate = DateTime.Parse(b.Element("LicenseDate").Value),
+                       Mileage = double.Parse(b.Element("Mileage").Value),
+                       Fuel = double.Parse(b.Element("Fuel").Value),
+                       BusStatus = (Enums.BUS_STATUS)Enum.Parse(typeof(Enums.BUS_STATUS), b.Element("BusStatus").Value),
+                       LastTreatmentDate = DateTime.Parse(b.Element("LastTreatmentDate").Value),
+                       MileageAtLastTreat = double.Parse(b.Element("MileageAtLastTreat").Value),
+                       ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
+                   }
+                   where predicate(bus)
+                   select bus;
+        }
+        public void AddBus(DO.Bus bus)
+        {
+            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
 
-//            XElement existBus = (from b in busRootElem.Elements()
-//                               where int.Parse(b.Element("License").Value) == bus.License
-//                               select b).FirstOrDefault();
+            XElement existBus = (from b in busRootElem.Elements()
+                                 where int.Parse(b.Element("License").Value) == bus.License
+                                 select b).FirstOrDefault();
 
-//            if (existBus != null && bool.Parse(existBus.Element("ObjectActive").Value))
-//                throw new DO.ExceptionDAL_KeyAlreadyExist(bus.License, "License already exist");
-//            if (existBus != null && !bool.Parse(existBus.Element("ObjectActive").Value))
-//                throw new DO.ExceptionDAL_Inactive(bus.License, "Bus is inactive");
+            if (existBus != null && bool.Parse(existBus.Element("ObjectActive").Value))
+                throw new DO.ExceptionDAL_KeyAlreadyExist(bus.License, "License already exist");
+            if (existBus != null && !bool.Parse(existBus.Element("ObjectActive").Value))
+            {
+                existBus.Element("License").Value = bus.License.ToString();
+                existBus.Element("LicenseDate").Value = bus.LicenseDate.ToString();
+                existBus.Element("Mileage").Value = bus.Mileage.ToString();
+                existBus.Element("Fuel").Value = bus.Fuel.ToString();
+                existBus.Element("BusStatus").Value = bus.BusStatus.ToString();
+                existBus.Element("LastTreatmentDate").Value = bus.LastTreatmentDate.ToString();
+                existBus.Element("MileageAtLastTreat").Value = bus.MileageAtLastTreat.ToString();
+                existBus.Element("ObjectActive").Value = true.ToString();
+            }
+            else
+            {
+                XElement newBusElem = new XElement("Bus",
+                                       new XElement("License", bus.License),
+                                       new XElement("LicenseDate", bus.LicenseDate),
+                                       new XElement("Mileage", bus.Mileage),
+                                       new XElement("Fuel", bus.Fuel),
+                                       new XElement("BusStatus", bus.BusStatus),
+                                       new XElement("LastTreatmentDate", bus.LastTreatmentDate),
+                                       new XElement("MileageAtLastTreat", bus.MileageAtLastTreat),
+                                       new XElement("ObjectActive", bus.ObjectActive = true));
+                busRootElem.Add(newBusElem);
+            }
 
-//            XElement newBusElem = new XElement("Bus",
-//                                   new XElement("License", bus.License),
-//                                   new XElement("LicenseDate", bus.LicenseDate),
-//                                   new XElement("Mileage", bus.Mileage),
-//                                   new XElement("Fuel", bus.Fuel),
-//                                   new XElement("BusStatus", bus.BusStatus),
-//                                   new XElement("LastTreatmentDate", bus.LastTreatmentDate),
-//                                   new XElement("MileageAtLastTreat", bus.MileageAtLastTreat),
-//                                   new XElement("ObjectActive", bus.ObjectActive = true));
+            XMLTools.SaveListToXMLElement(busRootElem, busPath);
+        }
 
-//            busRootElem.Add(newBusElem);
+        public void DeleteBus(int license)
+        {
+            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
+            XElement busToDelete = (from b in busRootElem.Elements()
+                                    where int.Parse(b.Element("License").Value) == license
+                                    select b).FirstOrDefault();
+            if(busToDelete == null)
+                throw new DO.ExceptionDAL_KeyNotFound(license, $"Bus not found: {license}");
 
-//            XMLTools.SaveListToXMLElement(busRootElem, busPath);
-//        }
+            if (bool.Parse(busToDelete.Element("ObjectActive").Value))
+            {
+                busToDelete.Element("ObjectActive").Value = false.ToString();
+                XMLTools.SaveListToXMLElement(busRootElem, busPath);
+            }
+            else if (!bool.Parse(busToDelete.Element("ObjectActive").Value))
+                throw new DO.ExceptionDAL_Inactive(license, $"Bus is alredy deleted: {license}");
+            else
+                throw new DO.ExceptionDAL_UnexpectedProblem("Unexpected Problem");
+        } 
 
-//        public void DeleteBus(int license)
-//        {
-//            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
-//            Bus busTodelete1 = GetBus(license);
-//            XElement busTodelete = (from b in busRootElem.Elements()
-//                            where int.Parse(b.Element("License").Value) == license
-//                            select b).FirstOrDefault();
+       public void UpdateBus(DO.Bus bus)
+       {
+            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
 
-//            if (busTodelete != null && bool.Parse(busTodelete.Element("ObjectActive").Value))
-//            {
-//                busTodelete.Element("ObjectActive").Value = busTodelete1.ObjectActive;
-//                XMLTools.SaveListToXMLElement(busRootElem, busPath);
-//            }
-//            else
-//                throw new DO.ExceptionDAL_KeyNotFound(license, $"Bus not found: {license}");
-//        }
+            XElement busToUpdate = (from b in busRootElem.Elements()
+                            where int.Parse(b.Element("License").Value) == bus.License
+                            select b).FirstOrDefault();
+            if (busToUpdate == null)
+                throw new DO.ExceptionDAL_KeyNotFound(bus.License, $"Bus not found: {bus.License}");
+            if (bool.Parse(busToUpdate.Element("ObjectActive").Value))
+            {
+                busToUpdate.Element("License").Value = bus.License.ToString();
+                busToUpdate.Element("LicenseDate").Value = bus.LicenseDate.ToString();
+                busToUpdate.Element("Mileage").Value = bus.Mileage.ToString();
+                busToUpdate.Element("Fuel").Value = bus.Fuel.ToString();
+                busToUpdate.Element("BusStatus").Value = bus.BusStatus.ToString();
+                busToUpdate.Element("LastTreatmentDate").Value = bus.LastTreatmentDate.ToString();
+                busToUpdate.Element("MileageAtLastTreat").Value = bus.MileageAtLastTreat.ToString();
+                busToUpdate.Element("ObjectActive").Value = bus.ObjectActive.ToString();
 
-////        public void UpdatePerson(DO.Person person)
-////        {
-////            XElement personsRootElem = XMLTools.LoadListFromXMLElement(personsPath);
-
-////            XElement per = (from p in personsRootElem.Elements()
-////                            where int.Parse(p.Element("ID").Value) == person.ID
-////                            select p).FirstOrDefault();
-
-////            if (per != null)
-////            {
-////                per.Element("ID").Value = person.ID.ToString();
-////                per.Element("Name").Value = person.Name;
-////                per.Element("Street").Value = person.Street;
-////                per.Element("HouseNumber").Value = person.HouseNumber.ToString();
-////                per.Element("City").Value = person.City;
-////                per.Element("BirthDate").Value = person.BirthDate.ToString();
-////                per.Element("PersonalStatus").Value = person.PersonalStatus.ToString();
-
-////                XMLTools.SaveListToXMLElement(personsRootElem, personsPath);
-////            }
-////            else
-////                throw new DO.BadPersonIdException(person.ID, $"bad person id: {person.ID}");
-////        }
+                XMLTools.SaveListToXMLElement(busRootElem, busPath);
+            }
+            
+        }
 
 ////        public void UpdatePerson(int id, Action<DO.Person> update)
 ////        {
