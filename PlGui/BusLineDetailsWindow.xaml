@@ -51,10 +51,11 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0.1*"/>
                                     <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
                                     <RowDefinition Height="0.2*"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
+
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="7,0,0,0">
                                     <Grid.ColumnDefinitions>
@@ -112,7 +113,79 @@
                                     </ListView.ItemTemplate>
                                 </ListView>
 
-                                <Border Grid.Row="2">
+                                <Grid Grid.Row="2" Name="gChooseNewStation" Visibility="Collapsed"   ShowGridLines="True">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <StackPanel Grid.Row="0" Margin="10">
+                                        <ComboBox Name="cbChooseNewStation"  IsEditable="True" IsReadOnly="True" Text="Choose the new station" ItemsSource="{Binding}" SelectionChanged="newStationSelectionChanged" SelectedItem="{Binding Path='BusStopKey'}" >
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}{0} - {1}">
+                                                                <Binding Path="BusStopKey"/>
+                                                                <Binding Path="BusStopName"/>
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                        <Label Name="rbTitle" FontWeight="Bold">Determine the new station position:</Label>
+                                        <StackPanel Orientation="Horizontal" >
+                                            <RadioButton Margin="5" Name="rbFirst" IsEnabled="False" GroupName="position" Checked="rbFirstCheck" >First</RadioButton>
+                                            <RadioButton  Margin="5" Name="rbMiddle" IsEnabled="False" GroupName="position" Checked="rbMiddleCheck">Middle</RadioButton>
+                                            <RadioButton Margin="5" Name="rbLast" IsEnabled="False" GroupName="position" Checked="rbLastCheck">Last</RadioButton>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Grid Grid.Row="3" Name="gChoosePrevStation" Visibility="Collapsed"  ShowGridLines="True">
+                                    <StackPanel Grid.Row="0" Margin="10">
+                                        <ComboBox Name="cbChoosePrevStation" SelectionChanged="prevStationSelectionChanged" IsEditable="True" IsReadOnly="True"  ItemsSource="{Binding}"  Text="After which station you wish to place the new station?">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock>
+                                                        <TextBlock.Text>
+                                                            <MultiBinding StringFormat="{}{0} - {1}">
+                                                                <Binding Path="BusStopKey"/>
+                                                                <Binding Path="BusStopName"/>
+                                                            </MultiBinding>
+                                                        </TextBlock.Text>
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Grid Grid.Row="4" Name="gUpdateConsecutive" Visibility="Collapsed"  ShowGridLines="True">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Grid.Row="0" Name="lbTitle" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Content ="Please fill info:"  FontWeight="DemiBold" />
+                                    <Label Grid.Column="1" Grid.Row="0" Name="lbGapA" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Left"  FontWeight="DemiBold" />
+                                    <Label Grid.Column="2" Grid.Row="0" Name="lbGapB" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Left"  FontWeight="DemiBold" />
+                                    <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Left"  Content="Travel time:" FontWeight="DemiBold" />
+                                    <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Left"  Content="Km:" FontWeight="DemiBold"/>
+                                    <TextBox Grid.Column="1"  Grid.Row="1"  Name="tbUpdateTime" Text="hh:mm:ss" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"/>
+                                    <TextBox Grid.Column="1"  Grid.Row="2"  Name="tbUpdateKM" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="5" PreviewTextInput="NumberValidationTextBoxDots"/>
+                                    <TextBox Grid.Column="2"  Grid.Row="1"  Name="tbUpdateTimeB" Text="hh:mm:ss" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"/>
+                                    <TextBox Grid.Column="2"  Grid.Row="2"  Name="tbUpdateKmB" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="5" PreviewTextInput="NumberValidationTextBoxDots"/>
+                                </Grid>
+
+
+                                <Border Grid.Row="5">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
@@ -136,75 +209,6 @@
                                         </Button>
                                     </Grid>
                                 </Border>
-
-                                <Grid Grid.Row="3" Name="gChooseNewStation" Visibility="Collapsed"   ShowGridLines="True">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    
-                                    <StackPanel Grid.Row="0" Margin="10">
-                                        <ComboBox Name="cbChooseNewStation"  IsEditable="True" IsReadOnly="True" Text="Choose the new station" ItemsSource="{Binding}" SelectedItem="{Binding Path='BusStopKey'}" >
-                                          <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock>
-                                                        <TextBlock.Text>
-                                                            <MultiBinding StringFormat="{}{0} - {1}">
-                                                                <Binding Path="BusStopKey"/>
-                                                                <Binding Path="BusStopName"/>
-                                                            </MultiBinding>
-                                                        </TextBlock.Text>
-                                                    </TextBlock>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                        <Label Name="rbTitle" FontWeight="Bold">Determine the new station position:</Label>
-                                        <RadioButton Name="rbFirst" GroupName="position" Checked="rbFirstCheck" >First</RadioButton>
-                                        <RadioButton Name="rbMiddle" GroupName="position" Checked="rbMiddleCheck">Middle</RadioButton>
-                                        <RadioButton Name="rbLast" GroupName="position" Checked="rbLastCheck">Last</RadioButton>
-                                    </StackPanel>
-                                </Grid>
-
-                                <Grid Grid.Row="4" Name="gChoosePrevStation" Visibility="Collapsed"  ShowGridLines="True">
-                                    <StackPanel Grid.Row="0" Margin="10">
-                                        <ComboBox Name="cbChoosePrevStation" SelectionChanged="prevStationSelectionChanged" IsEditable="True" IsReadOnly="True"  ItemsSource="{Binding}"  Text="After which station you wish to place the new station?">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock>
-                                                        <TextBlock.Text>
-                                                            <MultiBinding StringFormat="{}{0} - {1}">
-                                                                <Binding Path="BusStopKey"/>
-                                                                <Binding Path="BusStopName"/>
-                                                            </MultiBinding>
-                                                        </TextBlock.Text>
-                                                    </TextBlock>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                    </StackPanel>
-                                </Grid>
-
-                                <Grid Grid.Row="5" Name="gUpdateConsecutive" Visibility="Collapsed"  ShowGridLines="True">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" Grid.Row="0" Name="lbTitle" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Left" Content ="Please fill info:"  FontWeight="DemiBold" />
-                                    <Label Grid.Column="1" Grid.Row="0" Name="lbGapA" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Left"  FontWeight="DemiBold" />
-                                    <Label Grid.Column="2" Grid.Row="0" Name="lbGapB" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Left"  FontWeight="DemiBold" />
-                                    <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Left"  Content="Travel time:" FontWeight="DemiBold" />
-                                    <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Left"  Content="Km:" FontWeight="DemiBold"/>
-                                    <TextBox Grid.Column="1"  Grid.Row="1"  Name="tbUpdateTime" Text="hh:mm:ss" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"/>
-                                    <TextBox Grid.Column="1"  Grid.Row="2"  Name="tbUpdateKM" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="5" PreviewTextInput="NumberValidationTextBoxDots"/>
-                                    <TextBox Grid.Column="2"  Grid.Row="1"  Name="tbUpdateTimeB" Text="hh:mm:ss" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"/>
-                                    <TextBox Grid.Column="2"  Grid.Row="2"  Name="tbUpdateKmB" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="5" PreviewTextInput="NumberValidationTextBoxDots"/>
-                                </Grid>
 
                             </Grid>
 

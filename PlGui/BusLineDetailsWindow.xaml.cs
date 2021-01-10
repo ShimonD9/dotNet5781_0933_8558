@@ -176,10 +176,81 @@ namespace PlGui
             BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
             gUpdateConsecutive.Visibility = Visibility.Collapsed;
             gChooseNewStation.Visibility = Visibility.Collapsed;
+            rbFirst.IsEnabled = false;
+            rbMiddle.IsEnabled = false;
+            rbLast.IsEnabled = false;
+            cbChoosePrevStation.Text = "After which station you wish to place the new station?";
+            cbChooseNewStation.Text = "Choose the new station";
             gChoosePrevStation.Visibility = Visibility.Collapsed;
             isAddStationInProcess = false;
             bAddStation.IsEnabled = true;
-            tbDeleteStation.Text = "Add a station";
+            tbAddStation.Text = "Add a station";
+        }
+
+        private void newStationSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            gUpdateConsecutive.Visibility = Visibility.Collapsed;
+            rbFirst.IsEnabled = true;
+            rbMiddle.IsEnabled = true;
+            rbLast.IsEnabled = true;
+        }
+
+
+        private void prevStationSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
+            BO.BusLineStation chosenPrevStation = cbChoosePrevStation.SelectedItem as BO.BusLineStation;
+            try
+            {
+                if (chosenBusStop != null && chosenPrevStation != null)
+                {
+                    if (!bl.IsConsecutiveExist(chosenPrevStation.BusStopKey, chosenBusStop.BusStopKey) && !bl.IsConsecutiveExist(chosenBusStop.BusStopKey, chosenPrevStation.NextStation))
+                    {
+                        gUpdateConsecutive.Visibility = Visibility.Visible;
+                        lbGapB.Visibility = Visibility.Visible;
+                        tbUpdateKmB.Visibility = Visibility.Visible;
+                        tbUpdateTimeB.Visibility = Visibility.Visible;
+                        tbUpdateKM.Text = "0";
+                        tbUpdateTime.Text = "hh:mm:ss";
+                        tbUpdateKmB.Text = "0";
+                        tbUpdateTimeB.Text = "hh:mm:ss";
+                        lbGapA.Content = chosenPrevStation.BusStopKey + " <-> " + chosenBusStop.BusStopKey;
+                        lbGapB.Content = chosenBusStop.BusStopKey + " <-> " + chosenPrevStation.NextStation;
+                        tbAddStation.Text = "Submit changes";
+                        bAddStation.IsEnabled = true;
+                    }
+                    else if (!bl.IsConsecutiveExist(chosenPrevStation.BusStopKey, chosenBusStop.BusStopKey))
+                    {
+                        gUpdateConsecutive.Visibility = Visibility.Visible;
+                        lbGapB.Visibility = Visibility.Hidden;
+                        tbUpdateKmB.Visibility = Visibility.Hidden;
+                        tbUpdateTimeB.Visibility = Visibility.Hidden;
+                        tbUpdateKM.Text = "0";
+                        tbUpdateTime.Text = "hh:mm:ss";
+                        lbGapA.Content = chosenPrevStation.BusStopKey + " <-> " + chosenBusStop.BusStopKey;
+                        tbAddStation.Text = "Submit changes";
+                        bAddStation.IsEnabled = true;
+                    }
+                    else if (!bl.IsConsecutiveExist(chosenBusStop.BusStopKey, chosenPrevStation.NextStation))
+                    {
+                        gUpdateConsecutive.Visibility = Visibility.Visible;
+                        lbGapB.Visibility = Visibility.Hidden;
+                        tbUpdateKmB.Visibility = Visibility.Hidden;
+                        tbUpdateTimeB.Visibility = Visibility.Hidden;
+                        tbUpdateKM.Text = "0";
+                        tbUpdateTime.Text = "hh:mm:ss";
+                        lbGapA.Content = chosenBusStop.BusStopKey + " <-> " + chosenPrevStation.NextStation;
+                        tbAddStation.Text = "Submit changes";
+                        bAddStation.IsEnabled = true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
         private void rbFirstCheck(object sender, RoutedEventArgs e)
@@ -192,6 +263,7 @@ namespace PlGui
                 if (chosenBusStop != null && !bl.IsConsecutiveExist(chosenBusStop.BusStopKey, busLine.FirstBusStopKey))
                 {
                     gUpdateConsecutive.Visibility = Visibility.Visible;
+                    lbGapB.Visibility = Visibility.Hidden;
                     tbUpdateKmB.Visibility = Visibility.Hidden;
                     tbUpdateTimeB.Visibility = Visibility.Hidden;
                     tbUpdateKM.Text = "0";
@@ -213,26 +285,10 @@ namespace PlGui
             try
             {
                 if (chosenBusStop != null)
-                gChoosePrevStation.Visibility = Visibility.Visible;
-                cbChoosePrevStation.ItemsSource = from station in busLine.LineStations select station;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-        }
-
-        private void prevStationSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
-            BO.BusLineStation chosenPrevStation = cbChoosePrevStation.SelectedItem as BO.BusLineStation;
-            try
-            {
-                if (cbChoosePrevStation.SelectedItem != null)
                 {
-
+                    cbChoosePrevStation.Text = "After which station you wish to place the new station?";
+                    gChoosePrevStation.Visibility = Visibility.Visible;
+                    cbChoosePrevStation.ItemsSource = from station in busLine.LineStations where station.BusStopKey != busLine.LastBusStopKey select station;
                 }
             }
             catch (Exception)
@@ -242,6 +298,7 @@ namespace PlGui
             }
 
         }
+
 
         private void rbLastCheck(object sender, RoutedEventArgs e)
         {
@@ -253,6 +310,7 @@ namespace PlGui
                 if (chosenBusStop != null && !bl.IsConsecutiveExist(busLine.LastBusStopKey, chosenBusStop.BusStopKey))
                 {
                     gUpdateConsecutive.Visibility = Visibility.Visible;
+                    lbGapB.Visibility = Visibility.Hidden;
                     tbUpdateKmB.Visibility = Visibility.Hidden;
                     tbUpdateTimeB.Visibility = Visibility.Hidden;
                     tbUpdateKM.Text = "0";
