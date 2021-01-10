@@ -119,11 +119,15 @@ namespace PlGui
                         tbDeleteStation.Text = "Delete";
                     }
                 }
+                catch (BO.ExceptionBL_LessThanTwoStation)
+                {
+                    MessageBox.Show("There are only two station in the line", "Cannot delete station", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
                 catch (Exception)
                 {
-
                     throw;
                 }
+
             }
             else if (tbDeleteStation.Text == "Submit changes")
             {

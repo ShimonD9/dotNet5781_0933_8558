@@ -8,7 +8,7 @@ namespace DO
 {
     [Serializable]
 
-    //---------------------buses and station dl exception-----------------------
+    //---------------------Buses and station dl exception-----------------------
     public class ExceptionDAL_KeyNotFound : Exception
     {
         public int ID;
@@ -20,7 +20,6 @@ namespace DO
         public ExceptionDAL_KeyNotFound(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", bad id: {ID}";
     }
-
     public class ExceptionDAL_KeyAlreadyExist : Exception
     {
         public int ID;
@@ -34,7 +33,6 @@ namespace DO
         public ExceptionDAL_KeyAlreadyExist(int id, int idB, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", doesn't exist: {ID}";
     } 
-
     public class ExceptionDAL_Inactive : Exception
     {
         public int ID;
@@ -58,7 +56,7 @@ namespace DO
         public override string ToString() => base.ToString() + $", Exist Conscutive Stations : {ID}";
     }
 
-    //----------------------------user dl exception------------------------------
+    //----------------------------User dl exception------------------------------
     public class ExceptionDAL_UserKeyNotFound : Exception
     {
         public string ID;
@@ -84,4 +82,13 @@ namespace DO
         public override string ToString() => base.ToString() + $", bad id : {ID}";
     }
 
+    //----------------------------Unexpected problem------------------------------
+    public class ExceptionDAL_UnexpectedProblem : Exception
+    {
+        public string ID;
+        public ExceptionDAL_UnexpectedProblem(string id) : base() => ID = id;
+        public ExceptionDAL_UnexpectedProblem(string id, string message) : base(message) => ID = id;
+        public ExceptionDAL_UnexpectedProblem(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public override string ToString() => base.ToString() + $",Unexpected Problem : {ID}";
+    }
 }

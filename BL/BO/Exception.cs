@@ -52,13 +52,25 @@ namespace BO
         public override string ToString() => base.ToString() + $", bus stop : {ID} serves bus lines";
     }
 
+    public class ExceptionBL_LessThanTwoStation : Exception
+    {
+        public int ID;
+        public string ID1;
+
+        public ExceptionBL_LessThanTwoStation(string id) : base() => ID1 = id;
+        public ExceptionBL_LessThanTwoStation(int id) : base() => ID = id;
+        public ExceptionBL_LessThanTwoStation(int id, string message) : base(message) => ID = id;
+        public ExceptionBL_LessThanTwoStation(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public override string ToString() => base.ToString() + $", less than two station: {ID}";
+    }
+
     //----------------------------user bl exception------------------------------
     public class ExceptionBL_UserKeyNotFound : Exception
     {
         public string ID;
         public ExceptionBL_UserKeyNotFound(string message, Exception innerException) :
             base(message, innerException) => ID = ((DO.ExceptionDAL_UserKeyNotFound)innerException).ID;
-        public override string ToString() => base.ToString() + $", bad license id: {ID}";
+        public override string ToString() => base.ToString() + $", user not found: {ID}";
     }
 
     public class ExceptionBL_UserAlreadyExist : Exception
@@ -66,9 +78,17 @@ namespace BO
         public string ID;
         public ExceptionBL_UserAlreadyExist(string message, Exception innerException) :
             base(message, innerException) => ID = ((DO.ExceptionDAL_UserAlreadyExist)innerException).ID;
-        public override string ToString() => base.ToString() + $", bad license id: {ID}";
+        public override string ToString() => base.ToString() + $", user alredy exist: {ID}";
     }
 
+    //----------------------------Unexpected problem------------------------------
+    public class ExceptionBL_UnexpectedProblem : Exception
+    {
+        public string ID;
+        public ExceptionBL_UnexpectedProblem(string message, Exception innerException) :
+            base(message, innerException) => ID = ((DO.ExceptionDAL_UnexpectedProblem)innerException).ID;
+        public override string ToString() => base.ToString() + $", Unexpected Problem: {ID}";
+    }
 
 
 }
