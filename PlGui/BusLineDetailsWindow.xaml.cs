@@ -95,10 +95,11 @@ namespace PlGui
                         if (!bl.IsConsecutiveExist(chosenStation.PrevStation, chosenStation.NextStation))
                         {
                             gUpdateConsecutive.Visibility = Visibility.Visible;
+                            tbUpdateKmB.Visibility = Visibility.Hidden;
+                            tbUpdateTimeB.Visibility = Visibility.Hidden;
                             tbUpdateKM.Text = "0";
                             tbUpdateTime.Text = "hh:mm:ss";
-                            lbUpdateKM.Content = "Enter the KM from " + chosenStation.PrevStation + " to " + chosenStation.NextStation + ":";
-                            lbUpdateTime.Content = "Enter travel time from " + chosenStation.PrevStation + " to " + chosenStation.NextStation + ":";
+                            lbGapA.Content = chosenStation.PrevStation + " <-> " + chosenStation.NextStation;
                             tbDeleteStation.Text = "Submit changes";
                         }
                         else
@@ -140,6 +141,8 @@ namespace PlGui
                     bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, timeUpdate, kmUpdate);
                     BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
                     gUpdateConsecutive.Visibility = Visibility.Collapsed;
+                    tbUpdateKmB.Visibility = Visibility.Visible;
+                    tbUpdateTimeB.Visibility = Visibility.Visible;
                     tbDeleteStation.Text = "Delete";
                     bDeleteStation.IsEnabled = false;
                 }
