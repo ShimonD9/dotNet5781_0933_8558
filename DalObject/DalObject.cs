@@ -18,6 +18,7 @@ namespace DL
 
         //Implement IDL methods, CRUD
         #region Bus
+
         public IEnumerable<Bus> GetAllBuses()
         {
 
