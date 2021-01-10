@@ -445,9 +445,9 @@ namespace BL
 
         public void DeleteBusLineStation(int busLineID, int busStopCode, TimeSpan gapTimeUpdate, double gapKmUpdate)
         {
-            BusLine lastStationBus = GetBusLine(busLineID);
-            if (lastStationBus.LineStations.Count() < 3)
-                throw new ExceptionBL_LessThanTwoStation("there are only two stations in the line,Unable to delete station");
+            BusLine line = GetBusLine(busLineID);
+            if (line.LineStations.Count() < 3)
+                throw new ExceptionBL_LessThanThreeStation("there are only two stations in the line,Unable to delete station");
 
             DO.BusLineStation currentStation = dl.GetBusLineStation(busLineID, busStopCode);
             if (currentStation.PrevStation != 0 && currentStation.NextStation != 0) // It means the lateral stations are in the middle

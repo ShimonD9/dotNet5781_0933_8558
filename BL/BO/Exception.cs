@@ -52,15 +52,15 @@ namespace BO
         public override string ToString() => base.ToString() + $", bus stop : {ID} serves bus lines";
     }
 
-    public class ExceptionBL_LessThanTwoStation : Exception
+    public class ExceptionBL_LessThanThreeStation : Exception
     {
         public int ID;
         public string ID1;
 
-        public ExceptionBL_LessThanTwoStation(string id) : base() => ID1 = id;
-        public ExceptionBL_LessThanTwoStation(int id) : base() => ID = id;
-        public ExceptionBL_LessThanTwoStation(int id, string message) : base(message) => ID = id;
-        public ExceptionBL_LessThanTwoStation(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public ExceptionBL_LessThanThreeStation(string id) : base() => ID1 = id;
+        public ExceptionBL_LessThanThreeStation(int id) : base() => ID = id;
+        public ExceptionBL_LessThanThreeStation(int id, string message) : base(message) => ID = id;
+        public ExceptionBL_LessThanThreeStation(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", less than two station: {ID}";
     }
 
