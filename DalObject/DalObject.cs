@@ -301,6 +301,7 @@ namespace DL
         {
             BusLine busUpdate = GetBusLine(busLineNumber);
             update(busUpdate);
+            UpdateBusLine(busUpdate);
         }
         public void DeleteBusLine(int busLineID)
         {
