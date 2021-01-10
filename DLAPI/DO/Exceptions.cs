@@ -91,4 +91,14 @@ namespace DO
         public ExceptionDAL_UnexpectedProblem(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $",Unexpected Problem : {ID}";
     }
+
+    //----------------------------Xml------------------------------
+    public class ExceptionDAL_XMLFileLoadCreate : Exception
+    {
+        public string ID;
+        public ExceptionDAL_XMLFileLoadCreate(string id) : base() => ID = id;
+        public ExceptionDAL_XMLFileLoadCreate(string id, string message) : base(message) => ID = id;
+        public ExceptionDAL_XMLFileLoadCreate(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public override string ToString() => base.ToString() + $",Unexpected Problem : {ID}";
+    }
 }
