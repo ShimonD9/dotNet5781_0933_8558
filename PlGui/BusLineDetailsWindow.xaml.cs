@@ -110,6 +110,14 @@ namespace PlGui
                             tbDeleteStation.Text = "Delete";
                         }
                     }
+                    else if (chosenStation.PrevStation == 0 || chosenStation.NextStation == 0)
+                    {
+                        bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, TimeSpan.FromMinutes(0), 0);
+                        BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
+                        gUpdateConsecutive.Visibility = Visibility.Collapsed;
+                        bDeleteStation.IsEnabled = false;
+                        tbDeleteStation.Text = "Delete";
+                    }
                 }
                 catch (Exception)
                 {

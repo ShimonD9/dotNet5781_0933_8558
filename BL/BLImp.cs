@@ -446,8 +446,17 @@ namespace BL
         public void DeleteBusLineStation(int busLineID, int busStopCode, TimeSpan gapTimeUpdate, double gapKmUpdate)
         {
             DO.BusLineStation currentStation = dl.GetBusLineStation(busLineID, busStopCode);
-            dl.UpdateBusLineStation(busLineID, currentStation.PrevStation, station => station.NextStation = currentStation.NextStation);
-            dl.UpdateBusLineStation(busLineID, currentStation.NextStation, station => station.PrevStation = currentStation.PrevStation);
+            if (currentStation.PrevStation != 0 && currentStation.NextStation != 0) // It means the lateral stations are in the middle
+            {
+                dl.UpdateBusLineStation(busLineID, currentStation.PrevStation, station => station.NextStation = currentStation.NextStation);
+                dl.UpdateBusLineStation(busLineID, currentStation.NextStation, station => station.PrevStation = currentStation.PrevStation);
+            }
+            else if (currentStation.PrevStation == 0 && currentStation.NextStation != 0)
+                dl.UpdateBusLineStation(busLineID, currentStation.NextStation, station => station.PrevStation = 0);
+            else if (currentStation.PrevStation != 0 && currentStation.NextStation == 0)
+                dl.UpdateBusLineStation(busLineID, currentStation.PrevStation, station => station.NextStation = 0);
+
+
             // Indices update:
             int indexDeleted = currentStation.LineStationIndex;
             var query = (from station
@@ -459,8 +468,9 @@ namespace BL
                 dl.UpdateBusLineStation(busLineID, station.BusStopKey, x => x.LineStationIndex--);
             }
 
-            // Consecutive stations addition:
-            if (gapKmUpdate != 0) // It means there is need to fill the consecutive stations info gap (there are no consecutive stations to this case)
+            // Consecutive stations addition/deletion:
+
+            if (currentStation.PrevStation != 0 && currentStation.NextStation != 0 && gapKmUpdate != 0) // It means there is need to fill the consecutive stations info gap (there are no consecutive stations to this case)
             {
                 DO.ConsecutiveStations newCons = new DO.ConsecutiveStations();
 
@@ -470,7 +480,7 @@ namespace BL
                 newCons.TravelTime = gapTimeUpdate;
                 dl.AddConsecutiveStations(newCons);
             }
-            else //it means consecutive exist or inactive
+            else if (currentStation.PrevStation != 0 && currentStation.NextStation != 0 && gapKmUpdate == 0)//it means consecutive exist or inactive
             {
                 //DO.ConsecutiveStations existCon = dl.GetConsecutiveStations(currentStation.PrevStation, currentStation.NextStation);
                 //existCon.ObjectActive = true;
@@ -480,11 +490,21 @@ namespace BL
 
             dl.DeleteBusLineStation(busLineID, busStopCode);
 
-            // Deleting the consecutive stations (which existed before the bus line station deletion) if they aren't in use
-            if (!IsConsecutiveInUse(currentStation.PrevStation, currentStation.BusStopKey))
-                dl.DeleteConsecutiveStations(currentStation.PrevStation, currentStation.BusStopKey);
-            if (!IsConsecutiveInUse(currentStation.BusStopKey, currentStation.NextStation))
-                dl.DeleteConsecutiveStations(currentStation.BusStopKey, currentStation.NextStation);
+            // Deleting the consecutive stations (which existed before the bus line station deletion) if they aren't in use (after deleting the bus line station above)
+            if (currentStation.PrevStation != 0 && currentStation.NextStation != 0)
+            {
+                if (!IsConsecutiveInUse(currentStation.PrevStation, currentStation.BusStopKey))
+                    dl.DeleteConsecutiveStations(currentStation.PrevStation, currentStation.BusStopKey);
+                if (!IsConsecutiveInUse(currentStation.BusStopKey, currentStation.NextStation))
+                    dl.DeleteConsecutiveStations(currentStation.BusStopKey, currentStation.NextStation);
+            } 
+            // In case the station to delete is the first or the last one, will delete if they aren't in use
+            else if (currentStation.PrevStation == 0 && currentStation.NextStation != 0
+                && !IsConsecutiveInUse(currentStation.BusStopKey, currentStation.NextStation)) 
+                        dl.DeleteConsecutiveStations(currentStation.BusStopKey, currentStation.NextStation);
+            else if (currentStation.PrevStation != 0 && currentStation.NextStation == 0
+                && !IsConsecutiveInUse(currentStation.PrevStation, currentStation.BusStopKey))
+                        dl.DeleteConsecutiveStations(currentStation.PrevStation, currentStation.BusStopKey);
         }
 
         #endregion
