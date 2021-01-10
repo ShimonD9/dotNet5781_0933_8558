@@ -306,9 +306,13 @@ namespace PlGui
         private void newStationSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             gUpdateConsecutive.Visibility = Visibility.Collapsed;
+            gChoosePrevStation.Visibility = Visibility.Collapsed;
             rbFirst.IsEnabled = true;
             rbMiddle.IsEnabled = true;
             rbLast.IsEnabled = true;
+            rbFirst.IsChecked = false;
+            rbMiddle.IsChecked = false;
+            rbLast.IsChecked = false;
         }
 
 
