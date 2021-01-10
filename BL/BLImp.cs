@@ -244,7 +244,7 @@ namespace BL
         }
         public IEnumerable<BusStop> GetAllBusStops()
         {
-            return from doBusStop in dl.GetAllBusStops() select BusStopDoBoAdapter(doBusStop);
+            return from doBusStop in dl.GetAllBusStops() orderby doBusStop.BusStopKey select BusStopDoBoAdapter(doBusStop);
         }
 
         public BusStop GetBusStop(int busStopKeyDO)
@@ -489,6 +489,10 @@ namespace BL
 
 
             dl.DeleteBusLineStation(busLineID, busStopCode);
+            if (currentStation.PrevStation == 0 && currentStation.NextStation != 0)
+                dl.UpdateBusLine(busLineID, x => x.FirstBusStopKey = currentStation.NextStation);
+            else if (currentStation.PrevStation != 0 && currentStation.NextStation == 0)
+                dl.UpdateBusLine(busLineID, x => x.LastBusStopKey = currentStation.PrevStation);
 
             // Deleting the consecutive stations (which existed before the bus line station deletion) if they aren't in use (after deleting the bus line station above)
             if (currentStation.PrevStation != 0 && currentStation.NextStation != 0)
