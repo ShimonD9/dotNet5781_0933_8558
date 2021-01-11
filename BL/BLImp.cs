@@ -57,29 +57,39 @@ namespace BL
             return BusLineDoBoAdapter(dl.GetBusLine(busLineID));
         }
 
-        public int AddBusLine(BusLine busLine, double kmToNext, TimeSpan timeToNext, TimeSpan startTime, TimeSpan endTime, int frequency)
+        public void AddBusLine(BusLine busLine, BusLineStation busLineStationA, BusLineStation busLineStationB)
         {
             int idToReturn;
             DO.BusLine newBus = BusLineBoDoAdapter(busLine);
-            DO.ConsecutiveStations newConStations = new DO.ConsecutiveStations();
-            DO.LineDeparture newLineDeparture = new DO.LineDeparture();
+           
             try
             {
-                idToReturn = (DalFactory.GetDL()).AddBusLine(newBus);
+                idToReturn = dl.AddBusLine(newBus);
 
+                // Adding the consecutive stations entity if needed:
 
-                newConStations.BusStopKeyA = busLine.FirstBusStopKey;
-                newConStations.BusStopKeyB = busLine.LastBusStopKey;
-                newConStations.Distance = kmToNext;
-                newConStations.TravelTime = timeToNext;
                 if (!IsConsecutiveExist(busLine.FirstBusStopKey, busLine.LastBusStopKey))
+                {
+                    DO.ConsecutiveStations newConStations = new DO.ConsecutiveStations();
+                    newConStations.BusStopKeyA = busLine.FirstBusStopKey;
+                    newConStations.BusStopKeyB = busLine.LastBusStopKey;
+                    newConStations.Distance = busLineStationA.DistanceToNext;
+                    newConStations.TravelTime = busLineStationA.TimeToNext;
                     dl.AddConsecutiveStations(newConStations);
+                }
+
+                // Adding the bus line stations:
+                busLineStationA.BusLineID = idToReturn;
+                busLineStationB.BusLineID = idToReturn;
+                dl.AddBusLineStation(BusLineStationBoDoAdapter(busLineStationA));
+                dl.AddBusLineStation(BusLineStationBoDoAdapter(busLineStationB));
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBL_KeyAlreadyExist("Line already exist", ex);
+                throw new BO.ExceptionBL_KeyAlreadyExist("Key or bus stop already exist", ex);
             }
-            return idToReturn;
+
+            // EXPAND WITH ANOTHER CATCH FOR BUS STOP KEY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
         public void UpdateBusLine(BusLine busLineBO)

@@ -127,6 +127,7 @@ namespace PlGui
                         newStation.TimeToNext = TimeSpan.FromMinutes(0);
                     }
                     bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
+                    stationAdditionEndProcess();
                 }
                 else if (rbLast.IsChecked == true)  // Adding the line station to the end of the route
                 {
@@ -145,6 +146,7 @@ namespace PlGui
                         else
                         {
                             bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
+                            stationAdditionEndProcess();
                         }
                     }
                     else
@@ -173,6 +175,7 @@ namespace PlGui
                             newStation.TimeToNext = timeUpdateB;
                             newStation.DistanceToNext = kmUpdateB;
                             bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
+                            stationAdditionEndProcess();
                         }
                     }
                     else if (mustUpdateGapA == true)
@@ -184,6 +187,7 @@ namespace PlGui
                         else
                         {
                             bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
+                            stationAdditionEndProcess();
                         }
                     }
                     else if (mustUpdateGapB == true)
@@ -197,10 +201,11 @@ namespace PlGui
                             newStation.TimeToNext = timeUpdateB;
                             newStation.DistanceToNext = kmUpdateB;
                             bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
+                            stationAdditionEndProcess();
                         }
                     }
                 }
-                stationAdditionEndProcess();
+
             }
         }
 
