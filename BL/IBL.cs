@@ -34,7 +34,7 @@ namespace BLApi
         IEnumerable<BusLineStation> GetAllBusLineStations();
         IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate);
         BusLineStation GetBusLineStation(int busLineID, int busStopCode);
-        void AddBusLineStation(BusLineStation busLineStation);
+        void AddBusLineStation(BusLineStation station, TimeSpan prevGapTimeUpdate, double prevGapKmUpdate);
         void UpdateBusLineStation(BusLineStation busLineStation);
         void UpdateBusLineStation(int license, Action<BusLineStation> update); // method that knows to updt specific fields in Person
         void DeleteBusLineStation(int busLineID, int busStopCode, TimeSpan gapTimeUpdate, double gapKmUpdate);

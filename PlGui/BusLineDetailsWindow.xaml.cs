@@ -107,8 +107,6 @@ namespace PlGui
                 {
                     newStation.BusLineID = busLine.BusLineID;
                     newStation.BusStopKey = chosenBusStop.BusStopKey;
-                    newStation.BusStopName = chosenBusStop.BusStopName;
-                    newStation.LineStationIndex = 0;
                     newStation.NextStation = busLine.FirstBusStopKey;
                     newStation.PrevStation = 0;
                     if (mustUpdateGapA == true)
@@ -128,14 +126,12 @@ namespace PlGui
                         newStation.DistanceToNext = 0;
                         newStation.TimeToNext = TimeSpan.FromMinutes(0);
                     }
-                    // Send the object to the bl function - bl.addBusLineStationToStart(newStation)
+                    bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
                 }
                 else if (rbLast.IsChecked == true)  // Adding the line station to the end of the route
                 {
                     newStation.BusLineID = busLine.BusLineID;
                     newStation.BusStopKey = chosenBusStop.BusStopKey;
-                    newStation.BusStopName = chosenBusStop.BusStopName;
-                    newStation.LineStationIndex = busLine.LineStations.Count();
                     newStation.NextStation = 0;
                     newStation.PrevStation = busLine.LastBusStopKey;
                     newStation.DistanceToNext = 0;
@@ -148,15 +144,13 @@ namespace PlGui
                         }
                         else
                         {
-                            // Send the object to the bl function - bl.addBusLineStationToEnd(newStation, kmUpdate, timeUpdate)
+                            bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
                         }
                     }
                     else
                     {
-                        // Send the object to the bl function - bl.addBusLineStationToEnd(newStation)
+                        bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
                     }
-
-
                 }
                 else if (rbMiddle.IsChecked == true && chosenPrevStation != null)
                 {
@@ -178,7 +172,7 @@ namespace PlGui
                         {
                             newStation.TimeToNext = timeUpdateB;
                             newStation.DistanceToNext = kmUpdateB;
-                            // Send the object to the bl function - bl.addBusLineStationToMiddle(newStation, kmUpdate, timeUpdate)
+                            bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
                         }
                     }
                     else if (mustUpdateGapA == true)
@@ -189,7 +183,7 @@ namespace PlGui
                         }
                         else
                         {
-                            // Send the object to the bl function - bl.addBusLineStationToMiddle(newStation, kmUpdate, timeUpdate)
+                            bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
                         }
                     }
                     else if (mustUpdateGapB == true)
@@ -202,11 +196,11 @@ namespace PlGui
                         {
                             newStation.TimeToNext = timeUpdateB;
                             newStation.DistanceToNext = kmUpdateB;
-                            // Send the object to the bl function - bl.addBusLineStationToMiddle(newStation)
+                            bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
                         }
                     }
                 }
-
+                stationAdditionEndProcess();
             }
         }
 

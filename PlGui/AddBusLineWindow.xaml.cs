@@ -70,14 +70,14 @@ namespace PlGui
                     newStationB.PrevStation = 0;
                     newStationA.BusStopKey = newBusLine.FirstBusStopKey;
                     newStationA.NextStation = newBusLine.LastBusStopKey;
-                    bl.AddBusLineStation(newStationA);
+                    bl.AddBusLineStation(newStationA, TimeSpan.FromMinutes(0), 0);
 
                     newStationB.BusLineID = runningNumber;
                     newStationB.LineStationIndex = 1;
                     newStationB.BusStopKey = newBusLine.LastBusStopKey;
                     newStationB.PrevStation = newBusLine.FirstBusStopKey;
                     newStationB.NextStation = 0;
-                    bl.AddBusLineStation(newStationB);
+                    bl.AddBusLineStation(newStationB, TimeSpan.FromMinutes(0), 0);
                     this.Close();
                 }
             }
