@@ -34,7 +34,7 @@ namespace PlGui
             InitializeComponent();
         }
 
-        // A second builder, to get the item selected in the list box
+        // A second builder, to get the item selected data
         public BusLineDetailsWindow(object item)
         {
             InitializeComponent();
@@ -42,7 +42,7 @@ namespace PlGui
             busLine = item as BusLine;
         }
 
-
+        // Bus line update and delete methods:
 
         private void Button_Update(object sender, RoutedEventArgs e)
         {
@@ -81,6 +81,99 @@ namespace PlGui
                 }
 
         }
+
+
+        // Station delete methods:
+
+        private void Button_DeleteStation(object sender, RoutedEventArgs e)
+        {
+            BO.BusLineStation chosenStation = (lvLineStations.SelectedValue as BusLineStation);
+            if (isDeleteStationInProcess == false)
+            {
+                try
+                {
+                    isDeleteStationInProcess = true;
+                    bAddStation.IsEnabled = false;
+                    if (chosenStation != null && chosenStation.PrevStation != 0 && chosenStation.NextStation != 0)
+                    {
+                        if (!bl.IsConsecutiveExist(chosenStation.PrevStation, chosenStation.NextStation))
+                        {
+                            gUpdateConsecutive.Visibility = Visibility.Visible;
+                            tbUpdateKmB.Visibility = Visibility.Hidden;
+                            tbUpdateTimeB.Visibility = Visibility.Hidden;
+                            tbUpdateKM.Text = "0";
+                            tbUpdateTime.Text = "hh:mm:ss";
+                            lbGapA.Content = chosenStation.PrevStation + " -> " + chosenStation.NextStation;
+                            tbDeleteStation.Text = "Submit changes";
+                        }
+                        else
+                        {
+                            bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, TimeSpan.FromMinutes(0), 0);
+                            stationDeletionEndProcess();
+                        }
+                    }
+                    else if (chosenStation.PrevStation == 0 || chosenStation.NextStation == 0)
+                    {
+                        bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, TimeSpan.FromMinutes(0), 0);
+                        stationDeletionEndProcess();
+                    }
+                }
+                catch (BO.ExceptionBL_LessThanThreeStation)
+                {
+                    MessageBox.Show("There are only two station in the line", "Cannot delete station", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    stationDeletionEndProcess();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+            }
+            else if (tbDeleteStation.Text == "Submit changes")
+            {
+                if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                {
+                    MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, timeUpdate, kmUpdate);
+                    BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
+                    gUpdateConsecutive.Visibility = Visibility.Collapsed;
+                    tbUpdateKmB.Visibility = Visibility.Visible;
+                    tbUpdateTimeB.Visibility = Visibility.Visible;
+                    tbDeleteStation.Text = "Delete";
+                    bDeleteStation.IsEnabled = false;
+                }
+            }
+        }
+
+        private void stationDeletionEndProcess()
+        {
+            BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
+            busLine = bl.GetBusLine(busLine.BusLineID);
+            gUpdateConsecutive.Visibility = Visibility.Collapsed;
+            bDeleteStation.IsEnabled = false;
+            isDeleteStationInProcess = false;
+            bAddStation.IsEnabled = true;
+            tbDeleteStation.Text = "Delete the station";
+        }
+
+        private void lvStationsSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isDeleteStationInProcess || isAddStationInProcess)
+            {
+                stationDeletionEndProcess();
+                stationAdditionEndProcess();
+            }
+            else
+                bDeleteStation.IsEnabled = true;
+        }
+
+      
+
+
+        // Stations add methods:
 
         private void Button_AddStation(object sender, RoutedEventArgs e)
         {
@@ -209,80 +302,6 @@ namespace PlGui
             }
         }
 
-        private void Button_DeleteStation(object sender, RoutedEventArgs e)
-        {
-            BO.BusLineStation chosenStation = (lvLineStations.SelectedValue as BusLineStation);
-            if (isDeleteStationInProcess == false)
-            {
-                try
-                {
-                    isDeleteStationInProcess = true;
-                    bAddStation.IsEnabled = false;
-                    if (chosenStation != null && chosenStation.PrevStation != 0 && chosenStation.NextStation != 0)
-                    {
-                        if (!bl.IsConsecutiveExist(chosenStation.PrevStation, chosenStation.NextStation))
-                        {
-                            gUpdateConsecutive.Visibility = Visibility.Visible;
-                            tbUpdateKmB.Visibility = Visibility.Hidden;
-                            tbUpdateTimeB.Visibility = Visibility.Hidden;
-                            tbUpdateKM.Text = "0";
-                            tbUpdateTime.Text = "hh:mm:ss";
-                            lbGapA.Content = chosenStation.PrevStation + " -> " + chosenStation.NextStation;
-                            tbDeleteStation.Text = "Submit changes";
-                        }
-                        else
-                        {
-                            bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, TimeSpan.FromMinutes(0), 0);
-                            stationDeletionEndProcess();
-                        }
-                    }
-                    else if (chosenStation.PrevStation == 0 || chosenStation.NextStation == 0)
-                    {
-                        bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, TimeSpan.FromMinutes(0), 0);
-                        stationDeletionEndProcess();
-                    }
-                }
-                catch (BO.ExceptionBL_LessThanThreeStation)
-                {
-                    MessageBox.Show("There are only two station in the line", "Cannot delete station", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    stationDeletionEndProcess();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-
-            }
-            else if (tbDeleteStation.Text == "Submit changes")
-            {
-                if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
-                {
-                    MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                else
-                {
-                    bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, timeUpdate, kmUpdate);
-                    BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
-                    gUpdateConsecutive.Visibility = Visibility.Collapsed;
-                    tbUpdateKmB.Visibility = Visibility.Visible;
-                    tbUpdateTimeB.Visibility = Visibility.Visible;
-                    tbDeleteStation.Text = "Delete";
-                    bDeleteStation.IsEnabled = false;
-                }
-            }
-        }
-
-        private void stationDeletionEndProcess()
-        {
-            BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
-            busLine = bl.GetBusLine(busLine.BusLineID);
-            gUpdateConsecutive.Visibility = Visibility.Collapsed;
-            bDeleteStation.IsEnabled = false;
-            isDeleteStationInProcess = false;
-            bAddStation.IsEnabled = true;
-            tbDeleteStation.Text = "Delete the station";
-        }
-
         private void stationAdditionEndProcess()
         {
             BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
@@ -313,7 +332,6 @@ namespace PlGui
             rbMiddle.IsChecked = false;
             rbLast.IsChecked = false;
         }
-
 
         private void prevStationSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -386,6 +404,7 @@ namespace PlGui
                 if (chosenBusStop != null && !bl.IsConsecutiveExist(chosenBusStop.BusStopKey, busLine.FirstBusStopKey))
                 {
                     mustUpdateGapA = true;
+                    mustUpdateGapB = false;
                     gUpdateConsecutive.Visibility = Visibility.Visible;
                     lbGapB.Visibility = Visibility.Hidden;
                     tbUpdateKmB.Visibility = Visibility.Hidden;
@@ -436,6 +455,7 @@ namespace PlGui
                 if (chosenBusStop != null && !bl.IsConsecutiveExist(busLine.LastBusStopKey, chosenBusStop.BusStopKey))
                 {
                     mustUpdateGapA = true;
+                    mustUpdateGapB = false;
                     gUpdateConsecutive.Visibility = Visibility.Visible;
                     lbGapB.Visibility = Visibility.Hidden;
                     tbUpdateKmB.Visibility = Visibility.Hidden;
@@ -451,6 +471,17 @@ namespace PlGui
             {
                 throw;
             }
+        }
+
+
+
+
+        // Schedule delete or add methods:
+
+        private void lvScheduleSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            gAddDeparture.Visibility = Visibility.Collapsed;
+            bDeleteDeparture.IsEnabled = true;
         }
 
         private void Button_AddDeparture(object sender, RoutedEventArgs e)
@@ -494,22 +525,7 @@ namespace PlGui
             }
         }
 
-        private void lvStationsSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (isDeleteStationInProcess || isAddStationInProcess)
-            {
-                stationDeletionEndProcess();
-                stationAdditionEndProcess();
-            }
-            else
-                bDeleteStation.IsEnabled = true;
-        }
-
-        private void lvScheduleSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            gAddDeparture.Visibility = Visibility.Collapsed;
-            bDeleteDeparture.IsEnabled = true;
-        }
+        // Input validations:
 
         private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
         {

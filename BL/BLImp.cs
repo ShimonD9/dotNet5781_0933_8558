@@ -103,10 +103,12 @@ namespace BL
                 throw new BO.ExceptionBL_KeyNotFound("The bus line doesn't exist", ex);
             }
         }
+
         public void UpdateBusLine(int busLineID, Action<BusLine> update)
         {
             throw new NotImplementedException();
         }
+
         public void DeleteBusLine(int busLineID)
         {
             try
@@ -207,6 +209,7 @@ namespace BL
                         dl.AddConsecutiveStations(newCons);
                     }
                     newStation.LineStationIndex = 0;
+                    dl.UpdateBusLine(lineID, x => x.FirstBusStopKey = newStation.BusStopKey);
                 }
                 else if (newStation.PrevStation != 0 && newStation.NextStation == 0)  // The station added to the end of the route
                 {
@@ -224,6 +227,7 @@ namespace BL
                         dl.AddConsecutiveStations(newCons);
                     }
                     newStation.LineStationIndex = endStation.LineStationIndex + 1;
+                    dl.UpdateBusLine(lineID, x => x.LastBusStopKey = newStation.BusStopKey);
                 }
                 else if (newStation.PrevStation != 0 && newStation.NextStation != 0)  // The station added to the middle of the route
                 {
