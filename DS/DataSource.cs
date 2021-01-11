@@ -2073,7 +2073,7 @@ namespace DS
               {
                   new User
                   {
-                       UserName = "Maga4",
+                       UserName = "maga",
                        Password = "1234",
                        ManageAccess = false,
                        ObjectActive=true,
@@ -2081,8 +2081,8 @@ namespace DS
 
                   new User
                   {
-                       UserName = "Director",
-                       Password = "7890",
+                       UserName = "boss",
+                       Password = "2020",
                        ManageAccess = true,
                        ObjectActive=true,
                   }

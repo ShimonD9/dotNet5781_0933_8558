@@ -670,13 +670,12 @@ namespace BL
             try
             {
                 userDO = dl.GetUser(userName);
+                return userDoBoAdapter(userDO);
             }
             catch (DO.ExceptionDAL_UserKeyNotFound ex)
             {
                 throw new BO.ExceptionBL_UserKeyNotFound("user dose not exist", ex);
             }
-            return userDoBoAdapter(userDO);
-
         }
 
         public void AddUser(User userBO)
@@ -684,11 +683,11 @@ namespace BL
             try
             {
                 DO.User newUser = userBoDoAdapter(userBO);
-                (DalFactory.GetDL()).AddUser(newUser);
+                dl.AddUser(newUser);
             }
-            catch (DO.ExceptionDAL_UserKeyNotFound ex)
+            catch (DO.ExceptionDAL_UserAlreadyExist ex)
             {
-                throw new BO.ExceptionBL_UserKeyNotFound("user already exist", ex);
+                throw new BO.ExceptionBL_UserAlreadyExist("user already exist", ex);
             }
         }
 

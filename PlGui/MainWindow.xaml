@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
-        Title="Login" Height="425.65" Width="442" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Background="Azure">
+        Title="Login" Height="425.65" Width="442" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Background="LightGray">
     <Window.Resources>
         <!-- .... other resources .... -->
 
@@ -25,7 +25,7 @@
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                         <LinearGradientBrush.GradientStops>
                             <GradientStop Offset="0.0" Color="Red" />
-                            <GradientStop Offset="1.0" Color="#5BFFFF" />
+                            <GradientStop Offset="1.0" Color="Black" />
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
                 </Setter.Value>
@@ -68,50 +68,44 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Welcome to the ROSS Bus Company LTD." Style="{StaticResource TitleText}"/>
+        <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Welcome to ROSS Bus Company LTD." Style="{StaticResource TitleText}"/>
 
         <StackPanel HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal" Margin="49,0,83,0" Width="304">
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Enter your user name:" FontSize="18" FontWeight="Bold"/>
-            <TextBox Name="tbUserName"  HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"/>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center"  VerticalContentAlignment="Top" Content="Enter user name:" FontSize="18" FontWeight="Bold"/>
+            <TextBox Name="tbUserName"  HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Width="100" Margin="5,0,0,0"/>
         </StackPanel>
 
-        <StackPanel HorizontalAlignment="Center" Grid.Row="2" Orientation="Horizontal">
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Enter your password:" FontSize="18" FontWeight="Bold"/>
-            <TextBox Name="tbPasswordShow" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"/>
-            <PasswordBox Name="pbPassword" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"/>
-            <Image  Source="/PlGui;component/Images/eye.png" IsEnabled="True" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="30" Height="30" Margin="10" MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave"/>
+        <StackPanel HorizontalAlignment="Center" Grid.Row="2" Orientation="Horizontal" Margin="49,0,80,0" Width="307">
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="Enter password:" FontSize="18" FontWeight="Bold"/>
+            <PasswordBox x:Name="pbPassword" Visibility="Visible" HorizontalAlignment="Center" FontSize="14" VerticalAlignment="Center" Width="100"  Margin="13,0,0,0"/>
+            <TextBox x:Name="tbPasswordShow" Visibility="Collapsed" HorizontalAlignment="Center"  FontSize="14" VerticalAlignment="Center" Width="100" Margin="13,0,0,0"/>
+            <Image  Source="/PlGui;component/Images/eye.png" IsEnabled="True" Cursor="Hand" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="20" Height="20" Margin="10" MouseLeave="Image_MouseLeave" MouseLeftButtonDown="Image_MouseEnter"/>
         </StackPanel>
 
-        <StackPanel Name="spRepeatPassword" HorizontalAlignment="Center" Grid.Row="3" Orientation="Horizontal" Visibility="Collapsed" Margin="49,0,83,0" Width="304">
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Repeat the password:" FontSize="18" FontWeight="Bold"/>
-            <PasswordBox Name="pbRepeatPassword" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100"/>
+        <StackPanel Name="spRepeatPassword" HorizontalAlignment="Center" Visibility="Collapsed" Grid.Row="3" Orientation="Horizontal"  Margin="49,0,40,0" Width="347">
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Repeat password:" FontSize="18" FontWeight="Bold"/>
+            <PasswordBox Name="pbRepeatPassword" Visibility="Visible" HorizontalAlignment="Center" FontSize="14" VerticalAlignment="Center" Width="100"/>
+            <Button x:Name="bCancel" Width="67" Height="40" Margin="10,0,0,0" Content="Cancel"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Cursor="Hand" Click="ButtonCancel_Click"/>
         </StackPanel>
 
-        <StackPanel HorizontalAlignment="Center" Grid.Row="4" Orientation="Horizontal">
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Are you a human?" FontSize="18" FontWeight="Bold"/>
-            <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <StackPanel HorizontalAlignment="Center" Grid.Row="4" Orientation="Horizontal" Margin="49,0,127,0" Width="260">
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Are you a human?" FontSize="18" FontWeight="Bold"  Width="166"/>
+            <CheckBox Name="cbHuman" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="cbHuman_Checked" Margin="10,5,0,0"/>
         </StackPanel>
 
-        <StackPanel HorizontalAlignment="Center" Grid.Row="5" Orientation="Horizontal">
-            <Button Name="bSignUp" Width="200" Height="50" Margin="0,0,10,0"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold" Cursor="Hand" Click="ButtonSignUp_Click">
-                <Button.Content>
-                    <StackPanel>
-                        <TextBlock Text="Sign up" VerticalAlignment="Center"  FontSize="30" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-            <Button Name="bSignIn" Width="200" Height="50" Margin="0,0,0,0"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" FontWeight="Bold" Cursor="Hand" Click="ButtonSignIn_Click">
-                <Button.Content>
-                    <StackPanel>
-                        <TextBlock Text="Sign in" VerticalAlignment="Center"  FontSize="30" />
-                    </StackPanel>
-                </Button.Content>
-            </Button>
+        <StackPanel Name="spInfo" HorizontalAlignment="Center" Grid.Row="5" Orientation="Horizontal" Visibility="Collapsed">
+            <Label Name="lblInfo" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Foreground="PaleVioletRed"/>
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Center" Grid.Row="6" Orientation="Horizontal">
+            <Button Name="bSignUp" Width="200" Height="50" Margin="0,0,10,0"  HorizontalAlignment="Center" Content="Sign up" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Cursor="Hand" Click="ButtonSignUp_Click" MouseLeave="bSignUp_MouseLeave"/>
+            <Button Name="bSignIn" Width="200" Height="50" Margin="0,0,0,0"  HorizontalAlignment="Center" Content="Sign in" VerticalAlignment="Center" FontSize="30" FontWeight="Bold" Cursor="Hand" Click="ButtonSignIn_Click" MouseLeave="bSignIn_MouseLeave"/>
         </StackPanel>
     </Grid>
 </Window>

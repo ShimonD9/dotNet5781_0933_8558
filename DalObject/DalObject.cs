@@ -574,7 +574,7 @@ namespace DL
             }
             else
             {
-                existUser.ObjectActive = true;
+                user.ObjectActive = true;
                 DataSource.ListUsers.Add(user.Clone());
             }
         }
