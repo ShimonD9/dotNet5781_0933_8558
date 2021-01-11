@@ -27,14 +27,12 @@ namespace DL
                    select bus.Clone();
 
         }
-
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
         {
             return from bus in DataSource.ListBuses
                    where predicate(bus)
                    select bus.Clone();
         }
-
         public Bus GetBus(int license)
         {
             Bus bus = DataSource.ListBuses.Find(b => b.License == license);
@@ -45,7 +43,6 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(bus.License, $"license key not found: {bus.License}");
         }
-
         public void AddBus(Bus bus)
         {
             Bus existBus = DataSource.ListBuses.FirstOrDefault(b => b.License == bus.License);
@@ -57,10 +54,11 @@ namespace DL
                 existBus = bus.Clone();
             }
             else
+            {
                 bus.ObjectActive = true;
-            DataSource.ListBuses.Insert(0, bus.Clone());
+                DataSource.ListBuses.Insert(0, bus.Clone());
+            }
         }
-
         public void UpdateBus(Bus bus) //busUpdate
         {
             int index = DataSource.ListBuses.FindIndex(bus1 => bus1.License == bus.License);
@@ -71,13 +69,11 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(bus.License, $"license key not found: {bus.License}");
         }
-
         public void UpdateBus(int licenseNumber, Action<Bus> update)  // method that knows to update specific fields in Person
         {
             Bus busUpdate = GetBus(licenseNumber);
             update(busUpdate);
         }
-
         public void DeleteBus(int license)
         {
             Bus bus = DataSource.ListBuses.Find(b => b.License == license);
@@ -103,13 +99,13 @@ namespace DL
                    where predicate(busAtTravel)
                    select busAtTravel.Clone();
         }
-        public BusAtTravel GetBusAtTravel(int busLineID)
+        public BusAtTravel GetBusAtTravel(int license)
         {
-            BusAtTravel bus = DataSource.ListBusAtTravels.Find(b => b.BusLineID == busLineID);
+            BusAtTravel bus = DataSource.ListBusAtTravels.Find(b => b.License == license);
             if (bus != null && bus.ObjectActive)
                 return bus.Clone();
             else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busLineID, $"the bus is  inactive");
+                throw new DO.ExceptionDAL_Inactive(license, $"the bus is  inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(bus.License, $"Wrong license: {bus.License}");
         }
@@ -125,12 +121,15 @@ namespace DL
                 existBus = bus.Clone();
             }
             else
+            {
+                bus.BusLineID = Config.RunningNumBusAtTravel;
                 bus.ObjectActive = true;
-            DataSource.ListBusAtTravels.Add(bus.Clone());
+                DataSource.ListBusAtTravels.Add(bus.Clone());
+            }
         }
         public void UpdateBusAtTravel(BusAtTravel bus)
         {
-            int index = DataSource.ListBusAtTravels.FindIndex(bus1 => bus1.BusLineID == bus.BusLineID);
+            int index = DataSource.ListBusAtTravels.FindIndex(bus1 => bus1.License == bus.License);
             if (DataSource.ListBusAtTravels[index] != null && DataSource.ListBusAtTravels[index].ObjectActive)
                 DataSource.ListBusAtTravels[index] = bus.Clone();
             else if (DataSource.ListBusAtTravels[index] != null && !DataSource.ListBusAtTravels[index].ObjectActive)
@@ -574,10 +573,11 @@ namespace DL
                 existUser = user.Clone();
             }
             else
+            {
                 existUser.ObjectActive = true;
-            DataSource.ListUsers.Add(user.Clone());
+                DataSource.ListUsers.Add(user.Clone());
+            }
         }
-
         public void UpdateUser(User user)
         {
             int index = DataSource.ListUsers.FindIndex(user1 => user1.UserName == user.UserName);

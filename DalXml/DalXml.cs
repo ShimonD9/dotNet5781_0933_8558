@@ -121,6 +121,7 @@
 //                existBus.Element("BusStatus").Value = bus.BusStatus.ToString();
 //                existBus.Element("LastTreatmentDate").Value = bus.LastTreatmentDate.ToString();
 //                existBus.Element("MileageAtLastTreat").Value = bus.MileageAtLastTreat.ToString();
+//                //UpdateBus(bus);
 //                existBus.Element("ObjectActive").Value = true.ToString();
 //            }
 //            else
@@ -143,32 +144,38 @@
 //        public void DeleteBus(int license)
 //        {
 //            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
+
 //            XElement busToDelete = (from b in busRootElem.Elements()
 //                                    where int.Parse(b.Element("License").Value) == license
 //                                    select b).FirstOrDefault();
-//            if(busToDelete == null)
+
+//            if (busToDelete == null)
 //                throw new DO.ExceptionDAL_KeyNotFound(license, $"Bus not found: {license}");
+
+//            if (!bool.Parse(busToDelete.Element("ObjectActive").Value))
+//                throw new DO.ExceptionDAL_Inactive(license, $"Bus is alredy deleted: {license}");
 
 //            if (bool.Parse(busToDelete.Element("ObjectActive").Value))
 //            {
 //                busToDelete.Element("ObjectActive").Value = false.ToString();
 //                XMLTools.SaveListToXMLElement(busRootElem, busPath);
 //            }
-//            else if (!bool.Parse(busToDelete.Element("ObjectActive").Value))
-//                throw new DO.ExceptionDAL_Inactive(license, $"Bus is alredy deleted: {license}");
 //            else
 //                throw new DO.ExceptionDAL_UnexpectedProblem("Unexpected Problem");
-//        } 
+//        }
 
-//       public void UpdateBus(DO.Bus bus)
-//       {
+//        public void UpdateBus(DO.Bus bus)
+//        {
 //            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
 
 //            XElement busToUpdate = (from b in busRootElem.Elements()
-//                            where int.Parse(b.Element("License").Value) == bus.License
-//                            select b).FirstOrDefault();
+//                                    where int.Parse(b.Element("License").Value) == bus.License
+//                                    select b).FirstOrDefault();
 //            if (busToUpdate == null)
 //                throw new DO.ExceptionDAL_KeyNotFound(bus.License, $"Bus not found: {bus.License}");
+//            if (!bool.Parse(busToUpdate.Element("ObjectActive").Value))
+//                throw new DO.ExceptionDAL_Inactive(bus.License, $"The bus is inactive: {bus.License}");
+
 //            if (bool.Parse(busToUpdate.Element("ObjectActive").Value))
 //            {
 //                busToUpdate.Element("License").Value = bus.License.ToString();
@@ -182,200 +189,196 @@
 
 //                XMLTools.SaveListToXMLElement(busRootElem, busPath);
 //            }
-            
 //        }
 
-//////        public void UpdatePerson(int id, Action<DO.Person> update)
-//////        {
-//////            throw new NotImplementedException();
-//////        }
+//        public void UpdateBus(int id, Action<DO.Bus> update)
+//        {
+//            throw new NotImplementedException();
+//        }
 
-//////        #endregion Person
+//        #endregion Bus
 
-//////        #region Student
-//////        public DO.Student GetStudent(int id)
-//////        {
-//////            List<Student> ListStudents = XMLTools.LoadListFromXMLSerializer<Student>(studentsPath);
+//        #region BusAtTravel
+//        public DO.BusAtTravel GetBusAtTravel(int license)
+//        {
+//            List<BusAtTravel> ListBusAtravel = XMLTools.LoadListFromXMLSerializer<BusAtTravel>(busAtTravelPath);
 
-//////            DO.Student stu = ListStudents.Find(p => p.ID == id);
-//////            if (stu != null)
-//////                return stu; //no need to Clone()
-//////            else
-//////                throw new DO.BadPersonIdException(id, $"bad student id: {id}");
-//////        }
-//////        public void AddStudent(DO.Student student)
-//////        {
-//////            List<Student> ListStudents = XMLTools.LoadListFromXMLSerializer<Student>(studentsPath);
+//            DO.BusAtTravel bus = ListBusAtravel.Find(b => b.License == license);
+//            if (bus == null)
+//                throw new DO.ExceptionDAL_KeyNotFound(license, $"Bus not found: {license}");
+//            if (!bus.ObjectActive)
+//                throw new DO.ExceptionDAL_Inactive(license, $"Bus is inactive: {license}");
+//            return bus;  //no need to Clone()          
+//        }
+//        public void AddBusAtTravel(DO.BusAtTravel bus)
+//        {
+//            List<BusAtTravel> ListBusAtravel = XMLTools.LoadListFromXMLSerializer<BusAtTravel>(busAtTravelPath);
 
-//////            if (ListStudents.FirstOrDefault(s => s.ID == student.ID) != null)
-//////                throw new DO.BadPersonIdException(student.ID, "Duplicate student ID");
+//            BusAtTravel existBus = ListBusAtravel.FirstOrDefault(b => b.License == bus.License);
+//            if (existBus != null && existBus.ObjectActive)
+//                throw new DO.ExceptionDAL_KeyAlreadyExist(bus.License, "Bus already in travel");
 
-//////            if (GetPerson(student.ID) == null)
-//////                throw new DO.BadPersonIdException(student.ID, "Missing person ID");
+//            if (existBus != null && !existBus.ObjectActive)
+//            {
+//                existBus.ObjectActive = true;
+//                existBus = bus;
+//            }
+//            else
+//            {
+//                bus.ObjectActive = true;
+//                ListBusAtravel.Add(bus); //no need to Clone()
+//            }
+//            XMLTools.SaveListToXMLSerializer(ListBusAtravel, busAtTravelPath);
 
-//////            ListStudents.Add(student); //no need to Clone()
+//        }
+//        public IEnumerable<DO.BusAtTravel> GetAllBusesAtTravel()
+//        {
+//            List<BusAtTravel> ListBusAtravel = XMLTools.LoadListFromXMLSerializer<BusAtTravel>(busAtTravelPath);
 
-//////            XMLTools.SaveListToXMLSerializer(ListStudents, studentsPath);
+//            return from bus in ListBusAtravel
+//                   where bus.ObjectActive == true
+//                   select bus; //no need to Clone()
+//        }
+//        IEnumerable<BusAtTravel> GetAllBusesAtTravelBy(Predicate<BusAtTravel> predicate)
+//        {
+//            throw new NotImplementedException();
+//        }
 
-//////        }
-//////        public IEnumerable<DO.Student> GetAllStudents()
-//////        {
-//////            List<Student> ListStudents = XMLTools.LoadListFromXMLSerializer<Student>(studentsPath);
+//        public void UpdateBusAtTravel(DO.BusAtTravel bus)
+//        {
+//            List<BusAtTravel> ListBusAtTravels = XMLTools.LoadListFromXMLSerializer<BusAtTravel>(busAtTravelPath);
+//            int index = ListBusAtTravels.FindIndex(bus1 => bus1.License == bus.License);  //get index to update bus
+//            if (ListBusAtTravels[index] == null)
+//                throw new DO.ExceptionDAL_KeyNotFound(bus.License, $"The bus not found: {bus.License}");
+//            if (!ListBusAtTravels[index].ObjectActive)
+//                throw new DO.ExceptionDAL_Inactive(bus.License, $"The bus is inactive: {bus.License}");
 
-//////            return from student in ListStudents
-//////                   select student; //no need to Clone()
-//////        }
-//////        public IEnumerable<object> GetStudentFields(Func<int, string, object> generate)
-//////        {
-//////            List<Student> ListStudents = XMLTools.LoadListFromXMLSerializer<Student>(studentsPath);
+//                ListBusAtTravels[index] = bus;
 
-//////            return from student in ListStudents
-//////                   select generate(student.ID, GetPerson(student.ID).Name);
-//////        }
+//            XMLTools.SaveListToXMLSerializer(ListBusAtTravels, busAtTravelPath);
+//        }
 
-//////        public IEnumerable<object> GetStudentListWithSelectedFields(Func<DO.Student, object> generate)
-//////        {
-//////            List<Student> ListStudents = XMLTools.LoadListFromXMLSerializer<Student>(studentsPath);
-
-//////            return from student in ListStudents
-//////                   select generate(student);
-//////        }
-//////        public void UpdateStudent(DO.Student student)
-//////        {
-//////            List<Student> ListStudents = XMLTools.LoadListFromXMLSerializer<Student>(studentsPath);
-
-//////            DO.Student stu = ListStudents.Find(p => p.ID == student.ID);
-//////            if (stu != null)
-//////            {
-//////                ListStudents.Remove(stu);
-//////                ListStudents.Add(student); //no nee to Clone()
-//////            }
-//////            else
-//////                throw new DO.BadPersonIdException(student.ID, $"bad student id: {student.ID}");
-
-//////            XMLTools.SaveListToXMLSerializer(ListStudents, studentsPath);
-//////        }
-
-//////        public void UpdateStudent(int id, Action<DO.Student> update)
-//////        {
-//////            throw new NotImplementedException();
-//////        }
-
-//////        public void DeleteStudent(int id)
-//////        {
-//////            List<Student> ListStudents = XMLTools.LoadListFromXMLSerializer<Student>(studentsPath);
-
-//////            DO.Student stu = ListStudents.Find(p => p.ID == id);
-
-//////            if (stu != null)
-//////            {
-//////                ListStudents.Remove(stu);
-//////            }
-//////            else
-//////                throw new DO.BadPersonIdException(id, $"bad student id: {id}");
-
-//////            XMLTools.SaveListToXMLSerializer(ListStudents, studentsPath);
-//////        }
-//////        #endregion Student
-
-//////        #region StudentInCourse
-//////        public IEnumerable<DO.StudentInCourse> GetStudentsInCourseList(Predicate<DO.StudentInCourse> predicate)
-//////        {
-//////            List<StudentInCourse> ListStudInCourses = XMLTools.LoadListFromXMLSerializer<StudentInCourse>(studInCoursesPath);
-
-//////            return from sic in ListStudInCourses
-//////                   where predicate(sic)
-//////                   select sic; //no need to Clone()
-//////        }
-//////        public void AddStudentInCourse(int perID, int courseID, float grade = 0)
-//////        {
-//////            List<StudentInCourse> ListStudInCourses = XMLTools.LoadListFromXMLSerializer<StudentInCourse>(studInCoursesPath);
-
-//////            if (ListStudInCourses.FirstOrDefault(cis => (cis.PersonId == perID && cis.CourseId == courseID)) != null)
-//////                throw new DO.BadPersonIdCourseIDException(perID, courseID, "person ID is already registered to course ID");
-
-//////            DO.StudentInCourse sic = new DO.StudentInCourse() { PersonId = perID, CourseId = courseID, Grade = grade };
-
-//////            ListStudInCourses.Add(sic);
-
-//////            XMLTools.SaveListToXMLSerializer(ListStudInCourses, studInCoursesPath);
-//////        }
-
-//////        public void UpdateStudentGradeInCourse(int perID, int courseID, float grade)
-//////        {
-//////            List<StudentInCourse> ListStudInCourses = XMLTools.LoadListFromXMLSerializer<StudentInCourse>(studInCoursesPath);
-
-//////            DO.StudentInCourse sic = ListStudInCourses.Find(cis => (cis.PersonId == perID && cis.CourseId == courseID));
-
-//////            if (sic != null)
-//////            {
-//////                sic.Grade = grade;
-//////            }
-//////            else
-//////                throw new DO.BadPersonIdCourseIDException(perID, courseID, "person ID is NOT registered to course ID");
-
-//////            XMLTools.SaveListToXMLSerializer(ListStudInCourses, studInCoursesPath);
-//////        }
-
-//////        public void DeleteStudentInCourse(int perID, int courseID)
-//////        {
-//////            List<StudentInCourse> ListStudInCourses = XMLTools.LoadListFromXMLSerializer<StudentInCourse>(studInCoursesPath);
-
-//////            DO.StudentInCourse sic = ListStudInCourses.Find(cis => (cis.PersonId == perID && cis.CourseId == courseID));
-
-//////            if (sic != null)
-//////            {
-//////                ListStudInCourses.Remove(sic);
-//////            }
-//////            else
-//////                throw new DO.BadPersonIdCourseIDException(perID, courseID, "person ID is NOT registered to course ID");
-
-//////            XMLTools.SaveListToXMLSerializer(ListStudInCourses, studInCoursesPath);
-
-//////        }
-//////        public void DeleteStudentFromAllCourses(int perID)
-//////        {
-//////            List<StudentInCourse> ListStudInCourses = XMLTools.LoadListFromXMLSerializer<StudentInCourse>(studInCoursesPath);
-
-//////            ListStudInCourses.RemoveAll(p => p.PersonId == perID);
-
-//////            XMLTools.SaveListToXMLSerializer(ListStudInCourses, studInCoursesPath);
-
-//////        }
-
-//////        #endregion StudentInCourse
-
-//////        #region Course
-//////        public DO.Course GetCourse(int id)
-//////        {
-//////            List<Course> ListCourses = XMLTools.LoadListFromXMLSerializer<Course>(coursesPath);
-
-//////            return ListCourses.Find(c => c.ID == id); //no need to Clone()
-
-//////            //if not exist throw exception etc.
-//////        }
-
-//////        public IEnumerable<DO.Course> GetAllCourses()
-//////        {
-//////            List<Course> ListCourses = XMLTools.LoadListFromXMLSerializer<Course>(coursesPath);
-
-//////            return from course in ListCourses
-//////                   select course; //no need to Clone()
-//////        }
-
-//////        #endregion Course
-
-//////        #region Lecturer
-//////        public IEnumerable<DO.LecturerInCourse> GetLecturersInCourseList(Predicate<DO.LecturerInCourse> predicate)
-//////        {
-//////            List<LecturerInCourse> ListLectInCourses = XMLTools.LoadListFromXMLSerializer<LecturerInCourse>(lectInCoursesPath);
-
-//////            return from sic in ListLectInCourses
-//////                   where predicate(sic)
-//////                   select sic; //no need to Clone()
-//////        }
-//////        #endregion
+//        void UpdateBusAtTravel(int license, Action<BusAtTravel> update) // method that knows to updt specific fields in bus at travel
+//        {
+//            throw new NotImplementedException();
+//        }
 
 
-//////    }
-//////}
+//        public void DeleteBusAtTravel(int license)
+//        {
+//            List<Student> ListBusAtTravel = XMLTools.LoadListFromXMLSerializer<Student>(studentsPath);
+
+//            DO.Student stu = ListBusAtTravel.Find(p => p.ID == license);
+
+//            if (stu != null)
+//            {
+//                ListBusAtTravel.Remove(stu);
+//            }
+//            else
+//                throw new DO.BadPersonIdException(license, $"bad student id: {license}");
+
+//            XMLTools.SaveListToXMLSerializer(ListBusAtTravel, studentsPath);
+//        }
+//        #endregion Student
+
+//        #region StudentInCourse
+//        public IEnumerable<DO.StudentInCourse> GetStudentsInCourseList(Predicate<DO.StudentInCourse> predicate)
+//        {
+//            List<StudentInCourse> ListStudInCourses = XMLTools.LoadListFromXMLSerializer<StudentInCourse>(studInCoursesPath);
+
+//            return from sic in ListStudInCourses
+//                   where predicate(sic)
+//                   select sic; //no need to Clone()
+//        }
+//        public void AddStudentInCourse(int perID, int courseID, float grade = 0)
+//        {
+//            List<StudentInCourse> ListStudInCourses = XMLTools.LoadListFromXMLSerializer<StudentInCourse>(studInCoursesPath);
+
+//            if (ListStudInCourses.FirstOrDefault(cis => (cis.PersonId == perID && cis.CourseId == courseID)) != null)
+//                throw new DO.BadPersonIdCourseIDException(perID, courseID, "person ID is already registered to course ID");
+
+//            DO.StudentInCourse sic = new DO.StudentInCourse() { PersonId = perID, CourseId = courseID, Grade = grade };
+
+//            ListStudInCourses.Add(sic);
+
+//            XMLTools.SaveListToXMLSerializer(ListStudInCourses, studInCoursesPath);
+//        }
+
+//        public void UpdateStudentGradeInCourse(int perID, int courseID, float grade)
+//        {
+//            List<StudentInCourse> ListStudInCourses = XMLTools.LoadListFromXMLSerializer<StudentInCourse>(studInCoursesPath);
+
+//            DO.StudentInCourse sic = ListStudInCourses.Find(cis => (cis.PersonId == perID && cis.CourseId == courseID));
+
+//            if (sic != null)
+//            {
+//                sic.Grade = grade;
+//            }
+//            else
+//                throw new DO.BadPersonIdCourseIDException(perID, courseID, "person ID is NOT registered to course ID");
+
+//            XMLTools.SaveListToXMLSerializer(ListStudInCourses, studInCoursesPath);
+//        }
+
+//        public void DeleteStudentInCourse(int perID, int courseID)
+//        {
+//            List<StudentInCourse> ListStudInCourses = XMLTools.LoadListFromXMLSerializer<StudentInCourse>(studInCoursesPath);
+
+//            DO.StudentInCourse sic = ListStudInCourses.Find(cis => (cis.PersonId == perID && cis.CourseId == courseID));
+
+//            if (sic != null)
+//            {
+//                ListStudInCourses.Remove(sic);
+//            }
+//            else
+//                throw new DO.BadPersonIdCourseIDException(perID, courseID, "person ID is NOT registered to course ID");
+
+//            XMLTools.SaveListToXMLSerializer(ListStudInCourses, studInCoursesPath);
+
+//        }
+//        public void DeleteStudentFromAllCourses(int perID)
+//        {
+//            List<StudentInCourse> ListStudInCourses = XMLTools.LoadListFromXMLSerializer<StudentInCourse>(studInCoursesPath);
+
+//            ListStudInCourses.RemoveAll(p => p.PersonId == perID);
+
+//            XMLTools.SaveListToXMLSerializer(ListStudInCourses, studInCoursesPath);
+
+//        }
+
+//        #endregion StudentInCourse
+
+//        #region Course
+//        public DO.Course GetCourse(int id)
+//        {
+//            List<Course> ListCourses = XMLTools.LoadListFromXMLSerializer<Course>(coursesPath);
+
+//            return ListCourses.Find(c => c.ID == id); //no need to Clone()
+
+//            //if not exist throw exception etc.
+//        }
+
+//        public IEnumerable<DO.Course> GetAllCourses()
+//        {
+//            List<Course> ListCourses = XMLTools.LoadListFromXMLSerializer<Course>(coursesPath);
+
+//            return from course in ListCourses
+//                   select course; //no need to Clone()
+//        }
+
+//        #endregion Course
+
+//        #region Lecturer
+//        public IEnumerable<DO.LecturerInCourse> GetLecturersInCourseList(Predicate<DO.LecturerInCourse> predicate)
+//        {
+//            List<LecturerInCourse> ListLectInCourses = XMLTools.LoadListFromXMLSerializer<LecturerInCourse>(lectInCoursesPath);
+
+//            return from sic in ListLectInCourses
+//                   where predicate(sic)
+//                   select sic; //no need to Clone()
+//        }
+//        #endregion
+
+
+//    }
+//}
