@@ -57,29 +57,39 @@ namespace BL
             return BusLineDoBoAdapter(dl.GetBusLine(busLineID));
         }
 
-        public int AddBusLine(BusLine busLine, double kmToNext, TimeSpan timeToNext, TimeSpan startTime, TimeSpan endTime, int frequency)
+        public void AddBusLine(BusLine busLine, BusLineStation busLineStationA, BusLineStation busLineStationB)
         {
             int idToReturn;
             DO.BusLine newBus = BusLineBoDoAdapter(busLine);
-            DO.ConsecutiveStations newConStations = new DO.ConsecutiveStations();
-            DO.LineDeparture newLineDeparture = new DO.LineDeparture();
+           
             try
             {
-                idToReturn = (DalFactory.GetDL()).AddBusLine(newBus);
+                idToReturn = dl.AddBusLine(newBus);
 
+                // Adding the consecutive stations entity if needed:
 
-                newConStations.BusStopKeyA = busLine.FirstBusStopKey;
-                newConStations.BusStopKeyB = busLine.LastBusStopKey;
-                newConStations.Distance = kmToNext;
-                newConStations.TravelTime = timeToNext;
                 if (!IsConsecutiveExist(busLine.FirstBusStopKey, busLine.LastBusStopKey))
+                {
+                    DO.ConsecutiveStations newConStations = new DO.ConsecutiveStations();
+                    newConStations.BusStopKeyA = busLine.FirstBusStopKey;
+                    newConStations.BusStopKeyB = busLine.LastBusStopKey;
+                    newConStations.Distance = busLineStationA.DistanceToNext;
+                    newConStations.TravelTime = busLineStationA.TimeToNext;
                     dl.AddConsecutiveStations(newConStations);
+                }
+
+                // Adding the bus line stations:
+                busLineStationA.BusLineID = idToReturn;
+                busLineStationB.BusLineID = idToReturn;
+                dl.AddBusLineStation(BusLineStationBoDoAdapter(busLineStationA));
+                dl.AddBusLineStation(BusLineStationBoDoAdapter(busLineStationB));
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-                throw new BO.ExceptionBL_KeyAlreadyExist("Line already exist", ex);
+                throw new BO.ExceptionBL_KeyAlreadyExist("Key or bus stop already exist", ex);
             }
-            return idToReturn;
+
+            // EXPAND WITH ANOTHER CATCH FOR BUS STOP KEY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
         public void UpdateBusLine(BusLine busLineBO)
@@ -93,10 +103,12 @@ namespace BL
                 throw new BO.ExceptionBL_KeyNotFound("The bus line doesn't exist", ex);
             }
         }
+
         public void UpdateBusLine(int busLineID, Action<BusLine> update)
         {
             throw new NotImplementedException();
         }
+
         public void DeleteBusLine(int busLineID)
         {
             try
@@ -197,6 +209,7 @@ namespace BL
                         dl.AddConsecutiveStations(newCons);
                     }
                     newStation.LineStationIndex = 0;
+                    dl.UpdateBusLine(lineID, x => x.FirstBusStopKey = newStation.BusStopKey);
                 }
                 else if (newStation.PrevStation != 0 && newStation.NextStation == 0)  // The station added to the end of the route
                 {
@@ -213,9 +226,10 @@ namespace BL
                         newCons.TravelTime = prevGapTimeUpdate;
                         dl.AddConsecutiveStations(newCons);
                     }
-                    newStation.LineStationIndex = endStation.LineStationIndex;
+                    newStation.LineStationIndex = endStation.LineStationIndex + 1;
+                    dl.UpdateBusLine(lineID, x => x.LastBusStopKey = newStation.BusStopKey);
                 }
-                else if (newStation.PrevStation == 0 && newStation.NextStation == 0)  // The station added to the middle of the route
+                else if (newStation.PrevStation != 0 && newStation.NextStation != 0)  // The station added to the middle of the route
                 {
                     DO.BusLineStation prevStation = dl.GetBusLineStation(lineID, newStation.PrevStation);
                     DO.BusLineStation nextStation = dl.GetBusLineStation(lineID, newStation.NextStation);
@@ -604,11 +618,11 @@ namespace BL
                 newConStations = dl.GetConsecutiveStations(busStopKeyA, busStopKeyB);
                 return true;
             }
-            catch (DO.ExceptionDAL_Inactive ex)
+            catch (DO.ExceptionDAL_Inactive)
             {
                 return true;
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+            catch (DO.ExceptionDAL_KeyNotFound)
             {
                 return false;
             }

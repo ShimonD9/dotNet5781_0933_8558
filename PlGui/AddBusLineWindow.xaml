@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
-        Title="Add a new bus line"  Height="500" Width="322.763" ResizeMode="CanMinimize">
+        Title="Add a new bus line"  Height="398" Width="322.763" ResizeMode="CanMinimize">
 
     <Window.Background>
         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -21,9 +21,6 @@
                 <ColumnDefinition Width ="0.5*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height ="*"/>
-                <RowDefinition Height ="*"/>
-                <RowDefinition Height ="*"/>
                 <RowDefinition Height ="*"/>
                 <RowDefinition Height ="*"/>
                 <RowDefinition Height ="*"/>
@@ -78,36 +75,6 @@
             <Grid Grid.Row="5" Grid.Column="1">
                 <TextBox Name ="tbTimeToNext" Visibility="Collapsed" Text="hh:mm:ss"  MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
             </Grid>
-
-
-            <Grid Grid.Row="6" Grid.Column="0">
-                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the time of first departure:" Width="221"  Margin="5"/>
-            </Grid>
-
-            <Grid Grid.Row="6" Grid.Column="1">
-                <TextBox Name ="tbStartTime" Text="hh:mm:ss"  MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
-            </Grid>
-
-
-            <Grid Grid.Row="7" Grid.Column="0">
-                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the time of last departure:" Width="221"  Margin="5"/>
-            </Grid>
-
-            <Grid Grid.Row="7" Grid.Column="1">
-                <TextBox Name ="tbEndTime"  Text="hh:mm:ss" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic" />
-            </Grid>
-
-            <Grid Grid.Row="8" Grid.Column="0">
-                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Choose the frequency (in minutes):" Width="221"  Margin="5"/>
-            </Grid>
-
-            <Grid Grid.Row="8" Grid.Column="1">
-                <Slider Name ="sFrequency"  VerticalAlignment="Center" Minimum="5" Maximum="90" IsHitTestVisible="True"  Width="90" HorizontalAlignment="Center"  AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" />
-            </Grid>
-
-
-
-
         </Grid>
 
         <Button Content="Add the new bus line to the list" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Margin="20" Click="Button_Click"/>

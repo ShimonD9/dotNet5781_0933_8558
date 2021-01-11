@@ -34,7 +34,7 @@ namespace PlGui
             InitializeComponent();
         }
 
-        // A second builder, to get the item selected in the list box
+        // A second builder, to get the item selected data
         public BusLineDetailsWindow(object item)
         {
             InitializeComponent();
@@ -42,7 +42,7 @@ namespace PlGui
             busLine = item as BusLine;
         }
 
-
+        // Bus line update and delete methods:
 
         private void Button_Update(object sender, RoutedEventArgs e)
         {
@@ -82,127 +82,8 @@ namespace PlGui
 
         }
 
-        private void Button_AddStation(object sender, RoutedEventArgs e)
-        {
-            BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
-            BO.BusLineStation chosenPrevStation = cbChoosePrevStation.SelectedItem as BO.BusLineStation;
-            BO.BusLineStation newStation = new BO.BusLineStation();
 
-            // Beginning of addition:
-            if (!isAddStationInProcess && !isDeleteStationInProcess)
-            {
-                isAddStationInProcess = true;
-                gChooseNewStation.Visibility = Visibility.Visible;
-                bDeleteStation.IsEnabled = false;
-                bAddStation.IsEnabled = false;
-                cbChooseNewStation.ItemsSource = from busStop in bl.GetAllBusStops()
-                                                 where !busLine.LineStations.Any(x => x.BusStopKey == busStop.BusStopKey) // if the bus stop in use at the current line, it won't show in the combo box
-                                                 select busStop;
-            }
-
-            // Submiting the changes:
-            else if (isAddStationInProcess == true && chosenBusStop != null)
-            {
-                if (rbFirst.IsChecked == true) // Adding the line station to the head of the route
-                {
-                    newStation.BusLineID = busLine.BusLineID;
-                    newStation.BusStopKey = chosenBusStop.BusStopKey;
-                    newStation.NextStation = busLine.FirstBusStopKey;
-                    newStation.PrevStation = 0;
-                    if (mustUpdateGapA == true)
-                    {
-                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
-                        {
-                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        }
-                        else
-                        {
-                            newStation.DistanceToNext = kmUpdate;
-                            newStation.TimeToNext = timeUpdate;
-                        }
-                    }
-                    else
-                    {
-                        newStation.DistanceToNext = 0;
-                        newStation.TimeToNext = TimeSpan.FromMinutes(0);
-                    }
-                    bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
-                }
-                else if (rbLast.IsChecked == true)  // Adding the line station to the end of the route
-                {
-                    newStation.BusLineID = busLine.BusLineID;
-                    newStation.BusStopKey = chosenBusStop.BusStopKey;
-                    newStation.NextStation = 0;
-                    newStation.PrevStation = busLine.LastBusStopKey;
-                    newStation.DistanceToNext = 0;
-                    newStation.TimeToNext = TimeSpan.FromMinutes(0);
-                    if (mustUpdateGapA == true)
-                    {
-                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
-                        {
-                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        }
-                        else
-                        {
-                            bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
-                        }
-                    }
-                    else
-                    {
-                        bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
-                    }
-                }
-                else if (rbMiddle.IsChecked == true && chosenPrevStation != null)
-                {
-
-                    newStation.BusLineID = busLine.BusLineID;
-                    newStation.BusStopKey = chosenBusStop.BusStopKey;
-                    newStation.BusStopName = chosenBusStop.BusStopName;
-                    newStation.LineStationIndex = chosenPrevStation.LineStationIndex + 1;
-                    newStation.PrevStation = chosenPrevStation.BusStopKey;
-                    newStation.NextStation = chosenPrevStation.NextStation;
-                    if (mustUpdateGapA == true && mustUpdateGapB == true)
-                    {
-                        if (!Double.TryParse(tbUpdateKmB.GetLineText(0), out double kmUpdateB) || !TimeSpan.TryParse(tbUpdateTimeB.GetLineText(0), out TimeSpan timeUpdateB) || timeUpdateB == TimeSpan.FromMinutes(0) || kmUpdateB == 0 ||
-                            !Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
-                        {
-                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        }
-                        else
-                        {
-                            newStation.TimeToNext = timeUpdateB;
-                            newStation.DistanceToNext = kmUpdateB;
-                            bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
-                        }
-                    }
-                    else if (mustUpdateGapA == true)
-                    {
-                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
-                        {
-                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        }
-                        else
-                        {
-                            bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
-                        }
-                    }
-                    else if (mustUpdateGapB == true)
-                    {
-                        if (!Double.TryParse(tbUpdateKmB.GetLineText(0), out double kmUpdateB) || !TimeSpan.TryParse(tbUpdateTimeB.GetLineText(0), out TimeSpan timeUpdateB) || timeUpdateB == TimeSpan.FromMinutes(0) || kmUpdateB == 0)
-                        {
-                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        }
-                        else
-                        {
-                            newStation.TimeToNext = timeUpdateB;
-                            newStation.DistanceToNext = kmUpdateB;
-                            bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
-                        }
-                    }
-                }
-                stationAdditionEndProcess();
-            }
-        }
+        // Station delete methods:
 
         private void Button_DeleteStation(object sender, RoutedEventArgs e)
         {
@@ -278,6 +159,149 @@ namespace PlGui
             tbDeleteStation.Text = "Delete the station";
         }
 
+        private void lvStationsSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isDeleteStationInProcess || isAddStationInProcess)
+            {
+                stationDeletionEndProcess();
+                stationAdditionEndProcess();
+            }
+            else
+                bDeleteStation.IsEnabled = true;
+        }
+
+      
+
+
+        // Stations add methods:
+
+        private void Button_AddStation(object sender, RoutedEventArgs e)
+        {
+            BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
+            BO.BusLineStation chosenPrevStation = cbChoosePrevStation.SelectedItem as BO.BusLineStation;
+            BO.BusLineStation newStation = new BO.BusLineStation();
+
+            // Beginning of addition:
+            if (!isAddStationInProcess && !isDeleteStationInProcess)
+            {
+                isAddStationInProcess = true;
+                gChooseNewStation.Visibility = Visibility.Visible;
+                bDeleteStation.IsEnabled = false;
+                bAddStation.IsEnabled = false;
+                cbChooseNewStation.ItemsSource = from busStop in bl.GetAllBusStops()
+                                                 where !busLine.LineStations.Any(x => x.BusStopKey == busStop.BusStopKey) // if the bus stop in use at the current line, it won't show in the combo box
+                                                 select busStop;
+            }
+
+            // Submiting the changes:
+            else if (isAddStationInProcess == true && chosenBusStop != null)
+            {
+                if (rbFirst.IsChecked == true) // Adding the line station to the head of the route
+                {
+                    newStation.BusLineID = busLine.BusLineID;
+                    newStation.BusStopKey = chosenBusStop.BusStopKey;
+                    newStation.NextStation = busLine.FirstBusStopKey;
+                    newStation.PrevStation = 0;
+                    if (mustUpdateGapA == true)
+                    {
+                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                        {
+                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            newStation.DistanceToNext = kmUpdate;
+                            newStation.TimeToNext = timeUpdate;
+                        }
+                    }
+                    else
+                    {
+                        newStation.DistanceToNext = 0;
+                        newStation.TimeToNext = TimeSpan.FromMinutes(0);
+                    }
+                    bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
+                    stationAdditionEndProcess();
+                }
+                else if (rbLast.IsChecked == true)  // Adding the line station to the end of the route
+                {
+                    newStation.BusLineID = busLine.BusLineID;
+                    newStation.BusStopKey = chosenBusStop.BusStopKey;
+                    newStation.NextStation = 0;
+                    newStation.PrevStation = busLine.LastBusStopKey;
+                    newStation.DistanceToNext = 0;
+                    newStation.TimeToNext = TimeSpan.FromMinutes(0);
+                    if (mustUpdateGapA == true)
+                    {
+                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                        {
+                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
+                            stationAdditionEndProcess();
+                        }
+                    }
+                    else
+                    {
+                        bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
+                    }
+                }
+                else if (rbMiddle.IsChecked == true && chosenPrevStation != null)
+                {
+
+                    newStation.BusLineID = busLine.BusLineID;
+                    newStation.BusStopKey = chosenBusStop.BusStopKey;
+                    newStation.BusStopName = chosenBusStop.BusStopName;
+                    newStation.LineStationIndex = chosenPrevStation.LineStationIndex + 1;
+                    newStation.PrevStation = chosenPrevStation.BusStopKey;
+                    newStation.NextStation = chosenPrevStation.NextStation;
+                    if (mustUpdateGapA == true && mustUpdateGapB == true)
+                    {
+                        if (!Double.TryParse(tbUpdateKmB.GetLineText(0), out double kmUpdateB) || !TimeSpan.TryParse(tbUpdateTimeB.GetLineText(0), out TimeSpan timeUpdateB) || timeUpdateB == TimeSpan.FromMinutes(0) || kmUpdateB == 0 ||
+                            !Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                        {
+                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            newStation.TimeToNext = timeUpdateB;
+                            newStation.DistanceToNext = kmUpdateB;
+                            bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
+                            stationAdditionEndProcess();
+                        }
+                    }
+                    else if (mustUpdateGapA == true)
+                    {
+                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                        {
+                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
+                            stationAdditionEndProcess();
+                        }
+                    }
+                    else if (mustUpdateGapB == true)
+                    {
+                        if (!Double.TryParse(tbUpdateKmB.GetLineText(0), out double kmUpdateB) || !TimeSpan.TryParse(tbUpdateTimeB.GetLineText(0), out TimeSpan timeUpdateB) || timeUpdateB == TimeSpan.FromMinutes(0) || kmUpdateB == 0)
+                        {
+                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            newStation.TimeToNext = timeUpdateB;
+                            newStation.DistanceToNext = kmUpdateB;
+                            bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
+                            stationAdditionEndProcess();
+                        }
+                    }
+                }
+
+            }
+        }
+
         private void stationAdditionEndProcess()
         {
             BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
@@ -308,7 +332,6 @@ namespace PlGui
             rbMiddle.IsChecked = false;
             rbLast.IsChecked = false;
         }
-
 
         private void prevStationSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -381,6 +404,7 @@ namespace PlGui
                 if (chosenBusStop != null && !bl.IsConsecutiveExist(chosenBusStop.BusStopKey, busLine.FirstBusStopKey))
                 {
                     mustUpdateGapA = true;
+                    mustUpdateGapB = false;
                     gUpdateConsecutive.Visibility = Visibility.Visible;
                     lbGapB.Visibility = Visibility.Hidden;
                     tbUpdateKmB.Visibility = Visibility.Hidden;
@@ -431,6 +455,7 @@ namespace PlGui
                 if (chosenBusStop != null && !bl.IsConsecutiveExist(busLine.LastBusStopKey, chosenBusStop.BusStopKey))
                 {
                     mustUpdateGapA = true;
+                    mustUpdateGapB = false;
                     gUpdateConsecutive.Visibility = Visibility.Visible;
                     lbGapB.Visibility = Visibility.Hidden;
                     tbUpdateKmB.Visibility = Visibility.Hidden;
@@ -446,6 +471,17 @@ namespace PlGui
             {
                 throw;
             }
+        }
+
+
+
+
+        // Schedule delete or add methods:
+
+        private void lvScheduleSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            gAddDeparture.Visibility = Visibility.Collapsed;
+            bDeleteDeparture.IsEnabled = true;
         }
 
         private void Button_AddDeparture(object sender, RoutedEventArgs e)
@@ -481,30 +517,15 @@ namespace PlGui
             }
             catch (BO.ExceptionBL_KeyNotFound ex)
             {
-                MessageBox.Show("This time departure doesn't exist!");
+                MessageBox.Show("This time departure doesn't exist!", ex.Message);
             }
             catch (BO.ExceptionBL_Inactive ex)
             {
-                MessageBox.Show("This time departure already is inactive!");
+                MessageBox.Show("This time departure already is inactive!", ex.Message);
             }
         }
 
-        private void lvStationsSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (isDeleteStationInProcess || isAddStationInProcess)
-            {
-                stationDeletionEndProcess();
-                stationAdditionEndProcess();
-            }
-            else
-                bDeleteStation.IsEnabled = true;
-        }
-
-        private void lvScheduleSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            gAddDeparture.Visibility = Visibility.Collapsed;
-            bDeleteDeparture.IsEnabled = true;
-        }
+        // Input validations:
 
         private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
         {

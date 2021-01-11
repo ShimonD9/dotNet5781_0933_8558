@@ -27,8 +27,6 @@ namespace PlGui
         BO.BusLineStation newStationA = new BusLineStation();
         BO.BusLineStation newStationB = new BusLineStation();
 
-        int runningNumber;
-
         public AddBusLineWindow()
         {
             InitializeComponent();
@@ -49,8 +47,7 @@ namespace PlGui
             {
                 double kmToNext = 0;
                 TimeSpan timeToNext = new TimeSpan(0, 0, 0);
-                if (tbKmToNext.Visibility == Visibility.Visible && !Double.TryParse(tbKmToNext.GetLineText(0), out kmToNext) || tbTimeToNext.Visibility == Visibility.Visible && !TimeSpan.TryParse(tbTimeToNext.GetLineText(0), out timeToNext)
-                    || !TimeSpan.TryParse(tbStartTime.GetLineText(0), out TimeSpan startTime) || !TimeSpan.TryParse(tbEndTime.GetLineText(0), out TimeSpan endTime))
+                if (tbKmToNext.Visibility == Visibility.Visible && !Double.TryParse(tbKmToNext.GetLineText(0), out kmToNext) || tbTimeToNext.Visibility == Visibility.Visible && !TimeSpan.TryParse(tbTimeToNext.GetLineText(0), out timeToNext))
                 {
                     MessageBox.Show("You didn't fill correctly all the required information", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
@@ -61,23 +58,21 @@ namespace PlGui
                     newBusLine.Area = (Enums.AREA)cbArea.SelectedItem;
                     newBusLine.FirstBusStopKey = (cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey;
                     newBusLine.LastBusStopKey = (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey;
-                    runningNumber = bl.AddBusLine(newBusLine, kmToNext, timeToNext, startTime, endTime, (int)sFrequency.Value); // Inserts the new bus to the beginning of the list                 
 
-                    // Line Stations Addition:
-
-                    newStationA.BusLineID = runningNumber;
                     newStationA.LineStationIndex = 0;
-                    newStationB.PrevStation = 0;
+                    newStationA.PrevStation = 0;
                     newStationA.BusStopKey = newBusLine.FirstBusStopKey;
                     newStationA.NextStation = newBusLine.LastBusStopKey;
-                    bl.AddBusLineStation(newStationA, TimeSpan.FromMinutes(0), 0);
+                    newStationA.DistanceToNext = kmToNext;
+                    newStationA.TimeToNext = timeToNext;
 
-                    newStationB.BusLineID = runningNumber;
                     newStationB.LineStationIndex = 1;
                     newStationB.BusStopKey = newBusLine.LastBusStopKey;
                     newStationB.PrevStation = newBusLine.FirstBusStopKey;
                     newStationB.NextStation = 0;
-                    bl.AddBusLineStation(newStationB, TimeSpan.FromMinutes(0), 0);
+
+
+                    bl.AddBusLine(newBusLine, newStationA, newStationB); // Inserts the new bus to the beginning of the list (The consecutive updated there)            
                     this.Close();
                 }
             }
