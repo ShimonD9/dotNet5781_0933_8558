@@ -517,11 +517,11 @@ namespace PlGui
             }
             catch (BO.ExceptionBL_KeyNotFound ex)
             {
-                MessageBox.Show("This time departure doesn't exist!");
+                MessageBox.Show("This time departure doesn't exist!", ex.Message);
             }
             catch (BO.ExceptionBL_Inactive ex)
             {
-                MessageBox.Show("This time departure already is inactive!");
+                MessageBox.Show("This time departure already is inactive!", ex.Message);
             }
         }
 

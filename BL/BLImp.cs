@@ -618,11 +618,11 @@ namespace BL
                 newConStations = dl.GetConsecutiveStations(busStopKeyA, busStopKeyB);
                 return true;
             }
-            catch (DO.ExceptionDAL_Inactive ex)
+            catch (DO.ExceptionDAL_Inactive)
             {
                 return true;
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+            catch (DO.ExceptionDAL_KeyNotFound)
             {
                 return false;
             }
