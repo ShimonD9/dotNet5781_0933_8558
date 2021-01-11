@@ -18,7 +18,7 @@
 
         <!--A Style that extends the previous TextBlock Style with an x:Key of TitleText-->
         <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label" x:Key="TitleText">
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="23"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground">
                 <Setter.Value>
@@ -74,7 +74,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Welcome to ROSS Bus Company LTD." Style="{StaticResource TitleText}"/>
+        <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Welcome to Ross Bus Company Ltd." Style="{StaticResource TitleText}"/>
 
         <StackPanel HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal" Margin="49,0,83,0" Width="304">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center"  VerticalContentAlignment="Top" Content="Enter user name:" FontSize="18" FontWeight="Bold"/>
@@ -85,7 +85,7 @@
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="Enter password:" FontSize="18" FontWeight="Bold"/>
             <PasswordBox x:Name="pbPassword" Visibility="Visible" HorizontalAlignment="Center" FontSize="14" VerticalAlignment="Center" Width="100"  Margin="13,0,0,0"/>
             <TextBox x:Name="tbPasswordShow" Visibility="Collapsed" HorizontalAlignment="Center"  FontSize="14" VerticalAlignment="Center" Width="100" Margin="13,0,0,0"/>
-            <Image  Source="/PlGui;component/Images/eye.png" IsEnabled="True" Cursor="Hand" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="20" Height="20" Margin="10" MouseLeave="Image_MouseLeave" MouseLeftButtonDown="Image_MouseEnter"/>
+            <Image  Source="/PlGui;component/Images/eye.png" IsEnabled="True" Cursor="Hand" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="25" Height="25" Margin="10" MouseLeave="Image_MouseLeave" MouseLeftButtonDown="Image_MouseEnter"/>
         </StackPanel>
 
         <StackPanel Name="spRepeatPassword" HorizontalAlignment="Center" Visibility="Collapsed" Grid.Row="3" Orientation="Horizontal"  Margin="49,0,40,0" Width="347">
