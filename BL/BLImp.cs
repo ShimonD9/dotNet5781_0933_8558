@@ -223,9 +223,9 @@ namespace BL
                         newCons.TravelTime = prevGapTimeUpdate;
                         dl.AddConsecutiveStations(newCons);
                     }
-                    newStation.LineStationIndex = endStation.LineStationIndex;
+                    newStation.LineStationIndex = endStation.LineStationIndex + 1;
                 }
-                else if (newStation.PrevStation == 0 && newStation.NextStation == 0)  // The station added to the middle of the route
+                else if (newStation.PrevStation != 0 && newStation.NextStation != 0)  // The station added to the middle of the route
                 {
                     DO.BusLineStation prevStation = dl.GetBusLineStation(lineID, newStation.PrevStation);
                     DO.BusLineStation nextStation = dl.GetBusLineStation(lineID, newStation.NextStation);
