@@ -53,8 +53,10 @@ namespace PlGui
         {
             try
             {
-                string userName = tbUserName.GetLineText(0);
-                string password = pbPassword.Password;
+                //string userName = tbUserName.GetLineText(0);
+                //string password = pbPassword.Password;
+                string userName = "boss";
+                string password = "1234";
                 if (userName != "" && password != "")
                 {
                     if (cbHuman.IsChecked == false)
