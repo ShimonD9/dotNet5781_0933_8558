@@ -14,7 +14,16 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" HorizontalAlignment="Right" FontSize="20" FontWeight="DemiBold" Name="tbk_clock" Margin="0,0,10,0">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock VerticalAlignment="Center" Name="timeDisplay" Width="60" Margin="0,0,10,0" Visibility="Collapsed"/>
+            <TextBox Name="timeEdit" VerticalAlignment="Center" HorizontalContentAlignment="Center"  Visibility="Visible" Width="60" Margin="0,0,10,0" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"/>
+            <Button Name="Start_Pause" VerticalAlignment="Center" Click="Start_Pause_Click">
+                <TextBlock Text="Start" Name="tbStart_Pause"/>
+            </Button>
+            <Slider Name="intervalSlider" IsSnapToTickEnabled = "True" TickFrequency="1" Minimum="20" Maximum="1000" Width="100" IsHitTestVisible="True" Margin="10" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" />
+        </StackPanel>
+        
+            <!--<TextBlock Grid.Row="0" HorizontalAlignment="Right" FontSize="20" FontWeight="DemiBold" Name="tbk_clock" Margin="0,0,10,0">
                 <TextBlock.Foreground>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="White"/>
@@ -22,13 +31,13 @@
                     </LinearGradientBrush>
                 </TextBlock.Foreground>
 
-                <!--<TextBlock.Background>
+                --><!--<TextBlock.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="Blue" Offset="0"/>
                         <GradientStop Color="White" Offset="1"/>
                     </LinearGradientBrush>
-                </TextBlock.Background>-->
-            </TextBlock>
+                </TextBlock.Background>--><!--
+            </TextBlock>-->
 
             <Border Grid.Row="1"  BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="7" Margin="5">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="Please select your current bus stop:" FontSize="18" FontWeight="Bold"/>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,7 +26,9 @@ namespace PlGui
     public partial class PassengerUI_Window : Window
     {
         IBL bl = BLFactory.GetBL("1");
+        DateTime inputTime;
         BO.User passenger;
+        
 
         public PassengerUI_Window()
         {
@@ -35,8 +38,41 @@ namespace PlGui
         public PassengerUI_Window(BO.User user)
         {
             InitializeComponent();
-
             passenger = user;
+            changeTitleAsDayTime();
+            timeEdit.Text = DateTime.Now.ToString("hh:mm:ss");
+            cbBusStop.ItemsSource = bl.GetAllBusStops().OrderBy(busStop => busStop.BusStopKey);
+        }
+
+
+
+      
+        private void Start_Pause_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbStart_Pause.Text == "Start")
+            {
+                if (!DateTime.TryParse(timeEdit.Text, out inputTime))
+                    MessageBox.Show("Wront time input!");
+                else
+                {
+                    tbStart_Pause.Text = "Pause";
+                    timeDisplay.Visibility = Visibility.Visible;
+                    timeEdit.Visibility = Visibility.Collapsed;
+
+                    int interval = (int)intervalSlider.Value;
+                }
+            }
+            else if (tbStart_Pause.Text == "Pause")
+            {
+                tbStart_Pause.Text = "Start";
+                timeDisplay.Visibility = Visibility.Collapsed;
+                timeEdit.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void changeTitleAsDayTime()
+        {
+
             string time = "Hello,";
             if (DateTime.Now.Hour > 5 && DateTime.Now.Hour < 12)
                 time = "Good morning, ";
@@ -46,19 +82,14 @@ namespace PlGui
                 time = "Good evening, ";
             else if (DateTime.Now.Hour >= 20 && DateTime.Now.Hour < 5)
                 time = "Good night, ";
-            PassengerWindow.Title = time + user.UserName;
-
-            cbBusStop.ItemsSource = bl.GetAllBusStops().OrderBy(busStop => busStop.BusStopKey);
-
-            System.Windows.Threading.DispatcherTimer myDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            myDispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100); // 100 Milliseconds  
-            myDispatcherTimer.Tick += myDispatcherTimer_Tick;
-            myDispatcherTimer.Start();
+            PassengerWindow.Title = time + passenger.UserName;
         }
 
-        void myDispatcherTimer_Tick(object sender, EventArgs e)
+        private void NumberValidationTextBoxColon(object sender, TextCompositionEventArgs e)
         {
-            tbk_clock.Text = DateTime.Now.ToString("hh:mm:ss");
+            Regex regex = new Regex("[^0-9/:]$");
+            e.Handled = regex.IsMatch(e.Text);
         }
+
     }
 }

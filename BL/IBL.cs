@@ -83,5 +83,11 @@ namespace BLApi
         void DeleteUser(string license);
         #endregion
 
+        #region Time simulator
+
+        //void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime);
+        //void StopSimulator();
+        #endregion
+
     }
 }
