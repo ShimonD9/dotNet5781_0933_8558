@@ -240,7 +240,7 @@ namespace DL
             }
             else
             {
-                //bus.BusLineID = Config.RunningNumBusAtTravel;
+                bus.BusLineID = XMLConfig.BusAtTravelCounter();
                 bus.ObjectActive = true;
                 ListBusAtravel.Add(bus); //no need to Clone()
                 XMLTools.SaveListToXMLSerializer(ListBusAtravel, busAtTravelPath);
@@ -330,7 +330,7 @@ namespace DL
             }
             else
             {
-                //busLine.BusLineID = Config.RunningNumBusLine;
+                busLine.BusLineID = XMLConfig.BusLineCounter();
                 busLine.ObjectActive = true;
                 idToReturn = busLine.BusLineID;
                 ListBusLine.Add(busLine);
@@ -697,7 +697,7 @@ namespace DL
             }
             else
             {
-                //lineDeparture.DepartureID = Config.RunningNumLineDeparture;
+                lineDeparture.DepartureID = XMLConfig.LineDepartureCounter();
                 lineDeparture.ObjectActive = true;
                 ListLineDepartures.Add(lineDeparture);
                 XMLTools.SaveListToXMLSerializer(ListLineDepartures, lineDeparturePath);

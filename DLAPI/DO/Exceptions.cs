@@ -99,6 +99,14 @@ namespace DO
         public ExceptionDAL_XMLFileLoadCreate(string id) : base() => ID = id;
         public ExceptionDAL_XMLFileLoadCreate(string id, string message) : base(message) => ID = id;
         public ExceptionDAL_XMLFileLoadCreate(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
-        public override string ToString() => base.ToString() + $",Unexpected Problem : {ID}";
+        public override string ToString() => base.ToString() + $",Load fail : {ID}";
+    }
+    public class ExceptionDAL_XMLFileLoadCreateException : Exception
+    {
+        public string ID;
+        public ExceptionDAL_XMLFileLoadCreateException(string id) : base() => ID = id;
+        public ExceptionDAL_XMLFileLoadCreateException(string id, string message) : base(message) => ID = id;
+        public ExceptionDAL_XMLFileLoadCreateException(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public override string ToString() => base.ToString() + $",Load fail: {ID}";
     }
 }
