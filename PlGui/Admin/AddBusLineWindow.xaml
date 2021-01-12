@@ -41,7 +41,7 @@
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="1">
-                <ComboBox Name ="cbArea" HorizontalAlignment="Stretch" Margin="10" FontSize="10" Background="#FFFFFFE1" BorderBrush="White" OpacityMask="#FFE45252"/>
+                <ComboBox Name ="cbArea" HorizontalAlignment="Stretch" Margin="10" FontSize="10"/>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="0">
                 <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Choose the first bus stop:" Width="221"  Margin="5"/>

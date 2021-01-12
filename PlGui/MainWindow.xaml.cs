@@ -73,9 +73,11 @@ namespace PlGui
                                 this.Close();
                                 adminDisplayWindow.ShowDialog();
                             }
-                            else
+                            else if (!Application.Current.Windows.OfType<PassengerUI_Window>().Any())
                             {
-                                MessageBox.Show("Hey, user! there is no window for you yet!");
+                                PassengerUI_Window passengerUI_Window = new PassengerUI_Window(user); // Creates the new window, and then shows it
+                                this.Close();
+                                passengerUI_Window.ShowDialog();
                             }
                         }
                         else
