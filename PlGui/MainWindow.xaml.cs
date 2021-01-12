@@ -102,13 +102,6 @@ namespace PlGui
             spInfo.Visibility = Visibility.Collapsed;
         }
 
-        private void bSignIn_MouseLeave(object sender, MouseEventArgs e)
-        {
-            spInfo.Visibility = Visibility.Collapsed;
-        }
-
-
-
         private void ButtonSignUp_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -171,7 +164,7 @@ namespace PlGui
             bSignIn.IsEnabled = true;
         }
 
-        private void bSignUp_MouseLeave(object sender, MouseEventArgs e)
+        private void spInfo_MouseLeave(object sender, MouseEventArgs e)
         {
             spInfo.Visibility = Visibility.Collapsed;
             lblInfo.Foreground = Brushes.PaleVioletRed;

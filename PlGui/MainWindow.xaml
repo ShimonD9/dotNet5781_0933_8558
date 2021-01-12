@@ -99,13 +99,13 @@
             <CheckBox Name="cbHuman" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="cbHuman_Checked" Margin="10,5,0,0"/>
         </StackPanel>
 
-        <StackPanel Name="spInfo" HorizontalAlignment="Center" Grid.Row="5" Orientation="Horizontal" Visibility="Collapsed">
-            <Label Name="lblInfo" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Foreground="PaleVioletRed"/>
+        <StackPanel Name="spInfo" HorizontalAlignment="Center" Grid.Row="5" Orientation="Horizontal"   MouseLeave="spInfo_MouseLeave">
+            <Label Name="lblInfo" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Foreground="PaleVioletRed"/>
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Center" Grid.Row="6" Orientation="Horizontal">
-            <Button Name="bSignUp" Width="200" Height="50" Margin="0,0,10,0"  HorizontalAlignment="Center" Content="Sign up" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Cursor="Hand" Click="ButtonSignUp_Click" MouseLeave="bSignUp_MouseLeave"/>
-            <Button Name="bSignIn" Width="200" Height="50" Margin="0,0,0,0"  HorizontalAlignment="Center" Content="Sign in" VerticalAlignment="Center" FontSize="30" FontWeight="Bold" Cursor="Hand" Click="ButtonSignIn_Click" MouseLeave="bSignIn_MouseLeave"/>
+            <Button Name="bSignUp" Width="200" Height="50" Margin="0,0,10,0"  HorizontalAlignment="Center" Content="Sign up" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Cursor="Hand" Click="ButtonSignUp_Click"/>
+            <Button Name="bSignIn" Width="200" Height="50" Margin="0,0,0,0"  HorizontalAlignment="Center" Content="Sign in" VerticalAlignment="Center" FontSize="30" FontWeight="Bold" Cursor="Hand" Click="ButtonSignIn_Click"/>
         </StackPanel>
     </Grid>
 </Window>
