@@ -137,21 +137,22 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(bus.BusLineID, $"license key not found: {bus.BusLineID}");
         }
-        public void UpdateBusAtTravel(int BusLineID, Action<BusAtTravel> update) // method that knows to updt specific fields in Person
+        public void UpdateBusAtTravel(int license, Action<BusAtTravel> update) // method that knows to updt specific fields in Person
         {
-            BusAtTravel busUpdate = GetBusAtTravel(BusLineID);
+            BusAtTravel busUpdate = GetBusAtTravel(license);
             update(busUpdate);
+            UpdateBusAtTravel(busUpdate);
         }
-        public void DeleteBusAtTravel(int busLineID)
+        public void DeleteBusAtTravel(int license)
         {
-            BusAtTravel bus = DataSource.ListBusAtTravels.Find(b => b.BusLineID == busLineID);
+            BusAtTravel bus = DataSource.ListBusAtTravels.Find(b => b.License == license);
 
             if (bus != null && bus.ObjectActive)
                 bus.ObjectActive = false;
             else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(bus.BusLineID, $"the bus is  inactive");
+                throw new DO.ExceptionDAL_Inactive(bus.License, $"the bus is  inactive");
             else
-                throw new DO.ExceptionDAL_KeyNotFound(bus.BusLineID, $"license key not found: {bus.BusLineID}");
+                throw new DO.ExceptionDAL_KeyNotFound(bus.License, $"license key not found: {bus.License}");
         }
         #endregion
 
@@ -266,16 +267,16 @@ namespace DL
         public int AddBusLine(BusLine busLine)
         {
             int idToReturn;
-            BusLine exsistBusLine = DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber);
-            if (exsistBusLine != null && exsistBusLine.ObjectActive == true && exsistBusLine.FirstBusStopKey == busLine.FirstBusStopKey
-                && exsistBusLine.LastBusStopKey == busLine.LastBusStopKey)
+            BusLine existBusLine = DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber);
+            if (existBusLine != null && existBusLine.ObjectActive == true && existBusLine.FirstBusStopKey == busLine.FirstBusStopKey
+                && existBusLine.LastBusStopKey == busLine.LastBusStopKey)
                 throw new DO.ExceptionDAL_KeyAlreadyExist(busLine.BusLineNumber, "Duplicate bus line number");
 
-            else if (exsistBusLine != null && exsistBusLine.ObjectActive == false)
+            else if (existBusLine != null && existBusLine.ObjectActive == false)
             {
-                exsistBusLine.ObjectActive = true;
-                idToReturn = exsistBusLine.BusLineID;
-                exsistBusLine = busLine.Clone();
+                existBusLine.ObjectActive = true;
+                idToReturn = existBusLine.BusLineID;
+                existBusLine = busLine.Clone();
             }
             else
             {
