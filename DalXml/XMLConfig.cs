@@ -23,9 +23,9 @@ namespace DL
             if (!File.Exists(dir + configPath))
             {
                 root = new XElement("config",
-                    new XElement("BusInTravelCounter", 0),
-                    new XElement("BusLineCounter", 0),
-                     new XElement("PassengTravelCounter", 0)
+                    new XElement("BusInTravelCounter",0),
+                    new XElement("BusLineCounter",0),
+                     new XElement("PassengTravelCounter",0)
                      );
                 root.Save(dir + configPath);
             }
@@ -54,7 +54,7 @@ namespace DL
 
         public static int BusLineCounter()
         {
-            int counter = int.Parse(root.Element(" BusLineCounter").Value);
+            int counter = int.Parse(root.Element("BusLineCounter").Value);
             counter++;
             root.Element("BusInTravelCounter").Value = counter.ToString();
             root.Save(dir + configPath);
