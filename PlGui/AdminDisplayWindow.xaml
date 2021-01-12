@@ -1,4 +1,4 @@
-﻿<Window x:Class="PlGui.AdminDisplayWindow"
+﻿<Window Name="adminWindow" x:Class="PlGui.AdminDisplayWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,301 +6,312 @@
         xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
          Title="Bus management display" Height="650" Width="800" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
-    <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-        <TabItem Header="Buses">
-            <Grid Background="#FFE5E5E5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="77*"/>
-                    <RowDefinition Height="340*"/>
-                    <RowDefinition Height="126*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" VerticalAlignment="Bottom" Height="50" Margin="34,0,27,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="200" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="50" />
-                        <ColumnDefinition Width="50" />
-                    </Grid.ColumnDefinitions>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem>
+                <MenuItem.Icon>
+                    <Image Source="/PlGui;component/Images/admin.png"/>
+                </MenuItem.Icon>
+                <MenuItem Header="_Exit" Click="Exit_Click"/>
+            </MenuItem>
+        </Menu>
 
-                    <Border Grid.Column="0" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="License" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                    </Border>
+        <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <TabItem Header="Buses">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="77*"/>
+                        <RowDefinition Height="340*"/>
+                        <RowDefinition Height="126*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" VerticalAlignment="Bottom" Height="50" Margin="34,0,27,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="50" />
+                        </Grid.ColumnDefinitions>
 
-                    <Border Grid.Column="1" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Fuel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                    </Border>
+                        <Border Grid.Column="0" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="License" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Border>
 
-                    <Border Grid.Column="2" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Mileage" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
-                    </Border>
+                        <Border Grid.Column="1" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Fuel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Border>
 
-                    <Border Grid.Column="3" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Last treatment date" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
-                    </Border>
+                        <Border Grid.Column="2" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Mileage" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
+                        </Border>
 
-                    <Border Grid.Column="4" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Status" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                    </Border>
+                        <Border Grid.Column="3" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Last treatment date" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
+                        </Border>
 
-                    <Border Grid.Column="5" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock Text="Treat" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
-                    </Border>
+                        <Border Grid.Column="4" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Status" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Border>
 
-                    <Border Grid.Column="6" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Refuel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
-                    </Border>
-                </Grid>
-                <Grid Grid.Row="1" VerticalAlignment="Stretch">
-                    <ListView Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="LBBuses_MouseDoubleClick" Margin="27,0,27,0">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="0,2">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="80" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="200" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="50" />
-                                        <ColumnDefinition Width="50" />
-                                    </Grid.ColumnDefinitions>
+                        <Border Grid.Column="5" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock Text="Treat" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                        </Border>
 
-                                    <Border Grid.Column="0" BorderBrush="Black" Background="{Binding Path='StatusColor'}" BorderThickness="1 1 1 1">
-                                        <TextBlock Name ="tbLicense" Text="{Binding Path = 'License'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
-                                    </Border>
+                        <Border Grid.Column="6" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Refuel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                        </Border>
+                    </Grid>
+                    <Grid Grid.Row="1" VerticalAlignment="Stretch">
+                        <ListView Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="LBBuses_MouseDoubleClick" Margin="27,0,27,0">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="50" />
+                                        </Grid.ColumnDefinitions>
 
-                                    <Border Grid.Column="1" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
-                                        <ProgressBar Name ="pbFuel" Foreground="SeaGreen" Value="{Binding Path='Fuel'}" BorderThickness="1" Minimum="0" Maximum="1200" Margin="10"/>
-                                    </Border>
+                                        <Border Grid.Column="0" BorderBrush="Black" Background="{Binding Path='StatusColor'}" BorderThickness="1 1 1 1">
+                                            <TextBlock Name ="tbLicense" Text="{Binding Path = 'License'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
+                                        </Border>
 
-                                    <Border Grid.Column="1" BorderBrush="Black"  BorderThickness="0 1 1 1">
-                                        <TextBlock Name ="tbFuel" FontSize="20" Text="{Binding Path='Fuel'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
-                                    </Border>
+                                        <Border Grid.Column="1" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
+                                            <ProgressBar Name ="pbFuel" Foreground="SeaGreen" Value="{Binding Path='Fuel'}" BorderThickness="1" Minimum="0" Maximum="1200" Margin="10"/>
+                                        </Border>
 
-                                    <Border Grid.Column="2" BorderBrush="Black"  Background="LemonChiffon" BorderThickness="0 1 1 1">
-                                        <TextBlock Name ="tbMileage" FontSize="16" Text="{Binding Path='Mileage'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
-                                    </Border>
+                                        <Border Grid.Column="1" BorderBrush="Black"  BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbFuel" FontSize="20" Text="{Binding Path='Fuel'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
+                                        </Border>
 
-                                    <Border Grid.Column="3" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
-                                        <TextBlock Name ="tbLastTreatmentDate" FontSize="16" Text="{Binding Path='LastTreatmentDate'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
-                                    </Border>
+                                        <Border Grid.Column="2" BorderBrush="Black"  Background="LemonChiffon" BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbMileage" FontSize="16" Text="{Binding Path='Mileage'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
+                                        </Border>
 
-                                    <!--<Border Grid.Column="4" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
+                                        <Border Grid.Column="3" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbLastTreatmentDate" FontSize="16" Text="{Binding Path='LastTreatmentDate'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
+                                        </Border>
+
+                                        <!--<Border Grid.Column="4" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
                                             <ProgressBar Value="{Binding Path='WorkEndsIn'}" Grid.Column="1" BorderThickness="1" Minimum="0" Maximum="100" Margin="5"/>
                                         </Border>-->
 
-                                    <Border Grid.Column="4" BorderBrush="Black"  BorderThickness="0 1 1 1">
-                                        <TextBlock Name ="tbStatus" FontSize="9" Text="{Binding Path='BusStatus'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
-                                    </Border>
+                                        <Border Grid.Column="4" BorderBrush="Black"  BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbStatus" FontSize="9" Text="{Binding Path='BusStatus'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
+                                        </Border>
 
-                                    <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                        <Button HorizontalAlignment="Center" Cursor="Hand" IsEnabled="True" Background="CadetBlue" VerticalAlignment="Center" Height="40" Width="200">
-                                            <Button.Content>
-                                                <Image Source="/PLGui;component/Images/busRepair.png" />
-                                            </Button.Content>
-                                        </Button>
-                                    </Border>
+                                        <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                            <Button HorizontalAlignment="Center" Cursor="Hand" IsEnabled="True" Background="CadetBlue" VerticalAlignment="Center" Height="40" Width="200">
+                                                <Button.Content>
+                                                    <Image Source="/PLGui;component/Images/busRepair.png" />
+                                                </Button.Content>
+                                            </Button>
+                                        </Border>
 
-                                    <Border Grid.Column="6" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                        <Button Name = "bRefuel" HorizontalAlignment="Center" IsEnabled="True" Background="CadetBlue"  Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200">
-                                            <Button.Content>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="/PLGui;component/Images/fuelBus1.png" />
-                                                </StackPanel>
-                                            </Button.Content>
-                                        </Button>
-                                    </Border>
+                                        <Border Grid.Column="6" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                            <Button Name = "bRefuel" HorizontalAlignment="Center" IsEnabled="True" Background="CadetBlue"  Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200">
+                                                <Button.Content>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Image Source="/PLGui;component/Images/fuelBus1.png" />
+                                                    </StackPanel>
+                                                </Button.Content>
+                                            </Button>
+                                        </Border>
 
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                    <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="0,7.667,0.333,0.333" >
+                        <Button Name ="AddBus" Cursor="Hand"  Background="LemonChiffon" Click="Button_OpenAddBusWindow"  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Height="62" Width="68" >
+                            <Image Source="/PlGui;component/Images/busAdd.png" Height="52" Width="57" />
+                        </Button>
+                    </Grid>
                 </Grid>
-                <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="0,7.667,0.333,0.333" >
-                    <Button Name ="AddBus" Cursor="Hand"  Background="LemonChiffon" Click="Button_OpenAddBusWindow" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Height="62" Width="68" >
-                        <Image Source="/PlGui;component/Images/busAdd.png" Height="52" Width="57" />
-                    </Button>
+            </TabItem>
+            <TabItem Header="Bus Lines">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.3*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" VerticalAlignment="Bottom" Height="50" Margin="27,0,20,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="160" />
+                            <ColumnDefinition Width="160" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Bus Line ID" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Border>
+
+                        <Border Grid.Column="1" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Line number" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Border>
+
+                        <Border Grid.Column="2" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Area" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Border>
+
+                        <Border Grid.Column="3" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="First station code" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="18" FontWeight="Bold"/>
+                        </Border>
+
+                        <Border Grid.Column="4" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Last station code" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Border>
+                    </Grid>
+                    <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
+                        <ListView Name ="lbBusLines" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="LBBusLines_MouseDoubleClick" Margin="0,0,0,-300">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="120" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="160" />
+                                            <ColumnDefinition Width="160" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border Grid.Column="0" BorderBrush="Black" Background="{Binding Path='StatusColor'}" BorderThickness="1 1 1 1">
+                                            <TextBlock Name ="tbBusLineID" Text="{Binding Path = 'BusLineID'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
+                                        </Border>
+
+                                        <Border Grid.Column="1" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbBusLineNumber" Text="{Binding Path = 'BusLineNumber'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
+                                        </Border>
+
+                                        <Border Grid.Column="2" BorderBrush="Black"  BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbArea" Text="{Binding Path = 'Area'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
+
+                                        </Border>
+
+                                        <Border Grid.Column="3" BorderBrush="Black"  Background="LemonChiffon" BorderThickness="0 1 1 1">
+                                            <TextBlock Name = "tbFirstStation" Text="{Binding Path = 'FirstBusStopKey'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
+                                        </Border>
+
+                                        <Border Grid.Column="4" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
+                                            <TextBlock Name = "tbLastStation" Text="{Binding Path = 'LastBusStopKey'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                    <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="20,0,20,46">
+                        <Button Name ="AddBusLine"  Content="Add new bus line" Cursor="Hand" FontSize="16" FontWeight="Bold"  Background="LemonChiffon" Click="Button_OpenAddBusLineWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="140" />
+                    </Grid>
                 </Grid>
-            </Grid>
-        </TabItem>
-        <TabItem Header="Bus Lines">
-            <Grid Background="#FFE5E5E5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.2*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="0.3*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" VerticalAlignment="Bottom" Height="50" Margin="27,0,20,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="120" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="160" />
-                        <ColumnDefinition Width="160" />
-                    </Grid.ColumnDefinitions>
+            </TabItem>
+            <TabItem Header="Bus Stops">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="0.3*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" VerticalAlignment="Bottom" Height="50" Margin="27,0,20,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="50" />
+                            <ColumnDefinition Width="50" />
+                        </Grid.ColumnDefinitions>
 
-                    <Border Grid.Column="0" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Bus Line ID" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                    </Border>
+                        <Border Grid.Column="0" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Bus stop code" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Border>
 
-                    <Border Grid.Column="1" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Line number" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                    </Border>
+                        <Border Grid.Column="1" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Latitude" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Border>
 
-                    <Border Grid.Column="2" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Area" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                    </Border>
+                        <Border Grid.Column="2" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Longitude" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Border>
 
-                    <Border Grid.Column="3" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="First station code" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="18" FontWeight="Bold"/>
-                    </Border>
+                        <Border Grid.Column="3" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Bus stop name" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="18" FontWeight="Bold"/>
+                        </Border>
 
-                    <Border Grid.Column="4" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Last station code" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                    </Border>
+                        <Border Grid.Column="4" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Address" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Border>
+                        <Border Grid.Column="5" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Sunshade" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold"/>
+                        </Border>
+                        <Border Grid.Column="6" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Digital panel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold"/>
+                        </Border>
+                    </Grid>
+                    <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
+                        <ListView Name ="lbBusStops" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gainsboro" MouseDoubleClick="LBBusStops_MouseDoubleClick"  Margin="0,0,0,47">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="140" />
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="50" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border Grid.Column="0" BorderBrush="Black" Background="LemonChiffon" BorderThickness="1 1 1 1">
+                                            <TextBlock Name ="tbBusStopKey" FontSize="9" Text="{Binding Path='BusStopKey'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
+                                        </Border>
+
+                                        <Border Grid.Column="1" BorderBrush="Black"  BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbLatitude" FontSize="9" Text="{Binding Path='Latitude'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
+                                        </Border>
+
+                                        <Border Grid.Column="2" BorderBrush="Black"  BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbLongitude" FontSize="9" Text="{Binding Path='Longitude'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
+                                        </Border>
+
+                                        <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbBusStopName" FontSize="9" Text="{Binding Path='BusStopName'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
+                                        </Border>
+
+                                        <Border Grid.Column="4" BorderBrush="Black"  BorderThickness="0 1 1 1">
+                                            <TextBlock Name ="tbAddress" FontSize="9" Text="{Binding Path='BusStopAddress'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
+                                        </Border>
+
+                                        <Border Grid.Column="5" BorderBrush="Black"  BorderThickness="0 1 1 1">
+                                            <CheckBox Name ="cbSunshade" FontSize="9" IsEnabled="false" IsChecked="{Binding Path='Sunshade'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Grid.Column="1" Margin="5"/>
+                                        </Border>
+
+                                        <Border Grid.Column="6" BorderBrush="Black"  BorderThickness="0 1 1 1">
+                                            <CheckBox Name ="cbDigitalPanel" FontSize="9" IsEnabled="false" IsChecked="{Binding Path='DigitalPanel'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Grid.Column="1" Margin="5"/>
+                                        </Border>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                    <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="20,0,20,46">
+                        <Button Name ="AddBusStop" Content="Add new bus stop" Cursor="Hand" FontSize="16" FontWeight="Bold" Background="LemonChiffon" Click="Button_OpenAddBusStopWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="140" />
+                    </Grid>
                 </Grid>
-                <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
-                    <ListView Name ="lbBusLines" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="LBBusLines_MouseDoubleClick" Margin="0,0,0,-300">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="0,2">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="120" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="160" />
-                                        <ColumnDefinition Width="160" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Border Grid.Column="0" BorderBrush="Black" Background="{Binding Path='StatusColor'}" BorderThickness="1 1 1 1">
-                                        <TextBlock Name ="tbBusLineID" Text="{Binding Path = 'BusLineID'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
-                                    </Border>
-
-                                    <Border Grid.Column="1" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
-                                        <TextBlock Name ="tbBusLineNumber" Text="{Binding Path = 'BusLineNumber'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
-                                    </Border>
-
-                                    <Border Grid.Column="2" BorderBrush="Black"  BorderThickness="0 1 1 1">
-                                        <TextBlock Name ="tbArea" Text="{Binding Path = 'Area'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
-
-                                    </Border>
-
-                                    <Border Grid.Column="3" BorderBrush="Black"  Background="LemonChiffon" BorderThickness="0 1 1 1">
-                                        <TextBlock Name = "tbFirstStation" Text="{Binding Path = 'FirstBusStopKey'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
-                                    </Border>
-
-                                    <Border Grid.Column="4" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
-                                        <TextBlock Name = "tbLastStation" Text="{Binding Path = 'LastBusStopKey'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
-                                    </Border>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-                <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="20,0,20,46">
-                    <Button Name ="AddBusLine"  Content="Add new bus line" Cursor="Hand" FontSize="16" FontWeight="Bold"  Background="LemonChiffon" Click="Button_OpenAddBusLineWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="140" />
-                </Grid>
-            </Grid>
-        </TabItem>
-        <TabItem Header="Bus Stops">
-            <Grid Background="#FFE5E5E5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.2*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="0.3*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" VerticalAlignment="Bottom" Height="50" Margin="27,0,20,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="140" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="50" />
-                        <ColumnDefinition Width="50" />
-                    </Grid.ColumnDefinitions>
-
-                    <Border Grid.Column="0" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Bus stop code" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                    </Border>
-
-                    <Border Grid.Column="1" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Latitude" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                    </Border>
-
-                    <Border Grid.Column="2" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Longitude" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                    </Border>
-
-                    <Border Grid.Column="3" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Bus stop name" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="18" FontWeight="Bold"/>
-                    </Border>
-
-                    <Border Grid.Column="4" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Address" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                    </Border>
-                    <Border Grid.Column="5" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Sunshade" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold"/>
-                    </Border>
-                    <Border Grid.Column="6" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                        <TextBlock  Text="Digital panel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold"/>
-                    </Border>
-                </Grid>
-                <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
-                    <ListView Name ="lbBusStops" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gainsboro" MouseDoubleClick="LBBusStops_MouseDoubleClick"  Margin="0,0,0,47">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="0,2">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="140" />
-                                        <ColumnDefinition Width="100" />
-                                        <ColumnDefinition Width="50" />
-                                        <ColumnDefinition Width="50" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Border Grid.Column="0" BorderBrush="Black" Background="LemonChiffon" BorderThickness="1 1 1 1">
-                                        <TextBlock Name ="tbBusStopKey" FontSize="9" Text="{Binding Path='BusStopKey'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
-                                    </Border>
-
-                                    <Border Grid.Column="1" BorderBrush="Black"  BorderThickness="0 1 1 1">
-                                        <TextBlock Name ="tbLatitude" FontSize="9" Text="{Binding Path='Latitude'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
-                                    </Border>
-
-                                    <Border Grid.Column="2" BorderBrush="Black"  BorderThickness="0 1 1 1">
-                                        <TextBlock Name ="tbLongitude" FontSize="9" Text="{Binding Path='Longitude'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
-                                    </Border>
-
-                                    <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                        <TextBlock Name ="tbBusStopName" FontSize="9" Text="{Binding Path='BusStopName'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
-                                    </Border>
-
-                                    <Border Grid.Column="4" BorderBrush="Black"  BorderThickness="0 1 1 1">
-                                        <TextBlock Name ="tbAddress" FontSize="9" Text="{Binding Path='BusStopAddress'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
-                                    </Border>
-
-                                    <Border Grid.Column="5" BorderBrush="Black"  BorderThickness="0 1 1 1">
-                                        <CheckBox Name ="cbSunshade" FontSize="9" IsEnabled="false" IsChecked="{Binding Path='Sunshade'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Grid.Column="1" Margin="5"/>
-                                    </Border>
-
-                                    <Border Grid.Column="6" BorderBrush="Black"  BorderThickness="0 1 1 1">
-                                        <CheckBox Name ="cbDigitalPanel" FontSize="9" IsEnabled="false" IsChecked="{Binding Path='DigitalPanel'}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"  Grid.Column="1" Margin="5"/>
-                                    </Border>
-
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-                <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="20,0,20,46">
-                    <Button Name ="AddBusStop" Content="Add new bus stop" Cursor="Hand" FontSize="16" FontWeight="Bold" Background="LemonChiffon" Click="Button_OpenAddBusStopWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="140" />
-                </Grid>
-            </Grid>
-        </TabItem>
-    </TabControl>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
 </Window>

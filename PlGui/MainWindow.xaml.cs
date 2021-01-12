@@ -69,7 +69,8 @@ namespace PlGui
                         {
                             if (user.ManageAccess == true && !Application.Current.Windows.OfType<AdminDisplayWindow>().Any()) // To prevent the openning of another same window
                             {
-                                AdminDisplayWindow adminDisplayWindow = new AdminDisplayWindow(); // Creates the new window, and then shows it
+                                AdminDisplayWindow adminDisplayWindow = new AdminDisplayWindow(user); // Creates the new window, and then shows it
+                                this.Close();
                                 adminDisplayWindow.ShowDialog();
                             }
                             else

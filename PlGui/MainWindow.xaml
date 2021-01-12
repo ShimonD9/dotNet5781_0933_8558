@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
-        Title="Login" Height="425.65" Width="442" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Background="LightGray">
+        Title="Welcome" Height="425.65" Width="442" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Background="LightGray">
     <Window.Resources>
         <!-- .... other resources .... -->
 
@@ -18,7 +18,7 @@
 
         <!--A Style that extends the previous TextBlock Style with an x:Key of TitleText-->
         <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label" x:Key="TitleText">
-            <Setter Property="FontSize" Value="23"/>
+            <Setter Property="FontSize" Value="35"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground">
                 <Setter.Value>
@@ -42,9 +42,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border CornerRadius="20" Background="{TemplateBinding Background}">
-                            <Grid>
-                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
-                            </Grid>
+                            <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
                         </Border>
 
                         <ControlTemplate.Triggers>
@@ -74,7 +72,10 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Welcome to Ross Bus Company Ltd." Style="{StaticResource TitleText}"/>
+        <Border  Grid.Row="0"  BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="7">
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Ross Bus Company Ltd." Style="{StaticResource TitleText}"/>
+        </Border>
+        
 
         <StackPanel HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal" Margin="49,0,83,0" Width="304">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center"  VerticalContentAlignment="Top" Content="Enter user name:" FontSize="18" FontWeight="Bold"/>

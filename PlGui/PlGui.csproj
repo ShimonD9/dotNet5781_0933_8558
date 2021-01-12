@@ -61,6 +61,9 @@
     <Compile Include="AdminDisplayWindow.xaml.cs">
       <DependentUpon>AdminDisplayWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Admin\AdminsDetailsWindow.xaml.cs">
+      <DependentUpon>AdminsDetailsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Admin\BusDetailsWindow.xaml.cs">
       <DependentUpon>BusDetailsWindow.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Admin\AddBusWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Admin\AdminsDetailsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,6 +180,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\eye.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\admin.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

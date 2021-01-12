@@ -25,6 +25,8 @@ namespace PlGui
     public partial class AdminDisplayWindow : Window
     {
         IBL bl = BLFactory.GetBL("1");
+        BO.User admin;
+
         public AdminDisplayWindow()
         {
             InitializeComponent();
@@ -33,7 +35,26 @@ namespace PlGui
             lbBusLines.DataContext = bl.GetAllBusLines();
         }
 
-    private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        public AdminDisplayWindow(BO.User user)
+        {
+            InitializeComponent();
+            admin = user;
+            string time = "Hello,";
+            if (DateTime.Now.Hour > 5 && DateTime.Now.Hour < 12)
+                time = "Good morning, ";
+            else if (DateTime.Now.Hour >= 12 && DateTime.Now.Hour < 17)
+                time = "Good afternoon, ";
+            else if (DateTime.Now.Hour >= 17 && DateTime.Now.Hour < 20)
+                time = "Good evening, ";
+            else if (DateTime.Now.Hour >= 20 && DateTime.Now.Hour < 5)
+                time = "Good night, ";
+            adminWindow.Title = time + admin.UserName;
+            lbBuses.DataContext = bl.GetAllBuses();
+            lbBusStops.DataContext = bl.GetAllBusStops();
+            lbBusLines.DataContext = bl.GetAllBusLines();
+        }
+
+        private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         if (!Application.Current.Windows.OfType<BusDetailsWindow>().Any())
         {
@@ -125,5 +146,20 @@ namespace PlGui
         }
     }
 
-}
+        private void Admins_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Application.Current.Windows.OfType<AddBusStopWindow>().Any()) // To prevent the openning of another same window
+            {
+                AddBusStopWindow addBusStopWindow = new AddBusStopWindow(); // Creates the new window, and then shows it
+                addBusStopWindow.ShowDialog();
+                lbBusStops.ItemsSource = bl.GetAllBusStops();
+                //lbBuses.Items.Refresh(); // For seeing the new bus added on the list view
+            }
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+    }
 }
