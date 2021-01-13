@@ -47,7 +47,8 @@ namespace PlGui
             {
                 double kmToNext = 0;
                 TimeSpan timeToNext = new TimeSpan(0, 0, 0);
-                if (tbKmToNext.Visibility == Visibility.Visible && !Double.TryParse(tbKmToNext.GetLineText(0), out kmToNext) || tbTimeToNext.Visibility == Visibility.Visible && !TimeSpan.TryParse(tbTimeToNext.GetLineText(0), out timeToNext))
+                if (tbKmToNext.GetLineText(0) == "" || tbTimeToNext.GetLineText(0) == "" || tbLineNumber.GetLineText(0) == "" ||
+                    tbKmToNext.Visibility == Visibility.Visible && !Double.TryParse(tbKmToNext.GetLineText(0), out kmToNext) || tbTimeToNext.Visibility == Visibility.Visible && !TimeSpan.TryParse(tbTimeToNext.GetLineText(0), out timeToNext))
                 {
                     MessageBox.Show("You didn't fill correctly all the required information", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }

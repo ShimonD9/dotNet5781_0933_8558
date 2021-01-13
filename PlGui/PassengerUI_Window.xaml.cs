@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -73,14 +75,14 @@ namespace PlGui
         private void changeTitleAsDayTime()
         {
 
-            string time = "Hello,";
+            string time = "Hello, ";
             if (DateTime.Now.Hour > 5 && DateTime.Now.Hour < 12)
                 time = "Good morning, ";
             else if (DateTime.Now.Hour >= 12 && DateTime.Now.Hour < 17)
                 time = "Good afternoon, ";
             else if (DateTime.Now.Hour >= 17 && DateTime.Now.Hour < 20)
                 time = "Good evening, ";
-            else if (DateTime.Now.Hour >= 20 && DateTime.Now.Hour < 5)
+            else if (DateTime.Now.Hour >= 20 || DateTime.Now.Hour < 5)
                 time = "Good night, ";
             PassengerWindow.Title = time + passenger.UserName;
         }
@@ -91,5 +93,58 @@ namespace PlGui
             e.Handled = regex.IsMatch(e.Text);
         }
 
+
+        private BackgroundWorker clockWorker;  
+
+        /// <summary>
+        ///
+        /// </summary>
+        public void Clock()         
+        {
+            clockWorker = new BackgroundWorker();              //initialize the background worker
+                  // creatig part of km to add in the progress bar
+
+            clockWorker.WorkerReportsProgress = true;
+
+            clockWorker.ProgressChanged += (sender, args) =>   //the progress changed function
+            {
+                                       //add fuel to the bus in parts
+            };
+
+            clockWorker.DoWork += (sender, args) =>            //the DoWork function 
+            {
+                    // while
+                    if (clockWorker.CancellationPending == true)
+                    {
+
+                    }
+                    else
+                    {
+                        clockWorker.ReportProgress(0);                     
+                        try { Thread.Sleep(100); } catch (Exception) { }   
+                    }
+            };
+
+            if (clockWorker.IsBusy != true)                      
+                clockWorker.RunWorkerAsync();
+
+            clockWorker.RunWorkerCompleted += (sender, args) =>       
+            {
+                if (args.Cancelled == true)
+                {
+
+                }
+                else
+                {
+                
+                }
+            };
+        }
+
+        private void cbBusStop_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BO.BusStop busStop = cbBusStop.SelectedItem as BO.BusStop;
+            lvLinesStopHere.DataContext = busStop;
+        }
     }
 }

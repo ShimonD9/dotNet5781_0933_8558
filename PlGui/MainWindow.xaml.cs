@@ -51,56 +51,53 @@ namespace PlGui
 
         private void ButtonSignIn_Click(object sender, RoutedEventArgs e)
         {
-            AdminDisplayWindow adminDisplayWindow = new AdminDisplayWindow(); // Creates the new window, and then shows it
-            this.Close();
-            adminDisplayWindow.ShowDialog();
-            //try
-            //{
-            //    string userName = tbUserName.GetLineText(0);
-            //    string password = pbPassword.Password;
-            //    if (userName != "" && password != "")
-            //    {
-            //        if (cbHuman.IsChecked == false)
-            //        {
-            //            spInfo.Visibility = Visibility.Visible;
-            //            lblInfo.Content = "So... are you a zombie?";
-            //        }
-            //        else
-            //        {
-            //            BO.User user = bl.GetUser(userName);
-            //            if (user.Password == password)
-            //            {
-            //                if (user.ManageAccess == true && !Application.Current.Windows.OfType<AdminDisplayWindow>().Any()) // To prevent the openning of another same window
-            //                {
-            //                    AdminDisplayWindow adminDisplayWindow = new AdminDisplayWindow(user); // Creates the new window, and then shows it
-            //                    this.Close();
-            //                    adminDisplayWindow.ShowDialog();
-            //                }
-            //                else if (!Application.Current.Windows.OfType<PassengerUI_Window>().Any())
-            //                {
-            //                    PassengerUI_Window passengerUI_Window = new PassengerUI_Window(user); // Creates the new window, and then shows it
-            //                    this.Close();
-            //                    passengerUI_Window.ShowDialog();
-            //                }
-            //            }
-            //            else
-            //            {
-            //                spInfo.Visibility = Visibility.Visible;
-            //                lblInfo.Content = "The password is incorrect. Please try again.";
-            //            }
-            //        }
-            //    }
-            //    else
-            //    {
-            //        spInfo.Visibility = Visibility.Visible;
-            //        lblInfo.Content = "Please fill the required fields.";
-            //    }
-            //}
-            //catch (BO.ExceptionBL_UserKeyNotFound)
-            //{
-            //    spInfo.Visibility = Visibility.Visible;
-            //    lblInfo.Content = "The user name you have entered does not exist.";
-            //}
+            try
+            {
+                string userName = tbUserName.GetLineText(0);
+                string password = pbPassword.Password;
+                if (userName != "" && password != "")
+                {
+                    if (cbHuman.IsChecked == false)
+                    {
+                        spInfo.Visibility = Visibility.Visible;
+                        lblInfo.Content = "So... are you a zombie?";
+                    }
+                    else
+                    {
+                        BO.User user = bl.GetUser(userName);
+                        if (user.Password == password)
+                        {
+                            if (user.ManageAccess == true && !Application.Current.Windows.OfType<AdminDisplayWindow>().Any()) // To prevent the openning of another same window
+                            {
+                                AdminDisplayWindow adminDisplayWindow = new AdminDisplayWindow(user); // Creates the new window, and then shows it
+                                this.Close();
+                                adminDisplayWindow.ShowDialog();
+                            }
+                            else if (!Application.Current.Windows.OfType<PassengerUI_Window>().Any())
+                            {
+                                PassengerUI_Window passengerUI_Window = new PassengerUI_Window(user); // Creates the new window, and then shows it
+                                this.Close();
+                                passengerUI_Window.ShowDialog();
+                            }
+                        }
+                        else
+                        {
+                            spInfo.Visibility = Visibility.Visible;
+                            lblInfo.Content = "The password is incorrect. Please try again.";
+                        }
+                    }
+                }
+                else
+                {
+                    spInfo.Visibility = Visibility.Visible;
+                    lblInfo.Content = "Please fill the required fields.";
+                }
+            }
+            catch (BO.ExceptionBL_UserKeyNotFound)
+            {
+                spInfo.Visibility = Visibility.Visible;
+                lblInfo.Content = "The user name you have entered does not exist.";
+            }
         }
 
         private void cbHuman_Checked(object sender, RoutedEventArgs e)
