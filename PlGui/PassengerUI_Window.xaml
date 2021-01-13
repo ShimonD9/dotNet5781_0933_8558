@@ -12,6 +12,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -44,15 +45,62 @@
         </Border>
 
         <Grid Grid.Row="2">
-            <ComboBox Name ="cbBusStop" HorizontalAlignment="Center" Width="200" Margin="10" FontSize="10" HorizontalContentAlignment="Center"/>
+            <ComboBox Name ="cbBusStop" HorizontalAlignment="Center" Width="200" Margin="10" FontSize="10" HorizontalContentAlignment="Center" SelectionChanged="cbBusStop_SelectionChanged"/>
         </Grid>
 
-        <Grid Grid.Row="3">
-            <ListView Name="lvLinesStopHere"/>
+        <Grid Grid.Row="3" Name="lvLinesStopHere" DataContext="{Binding}">
+            <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid ShowGridLines="True"  HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.1*"/>
+                        <RowDefinition Height="0.1*"/>
+                        <RowDefinition Height="0.8*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center" Background="LightGoldenrodYellow" Content="Bus Lines stopping at this bus stop:" FontWeight="Bold" />
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="130" />
+                            <ColumnDefinition Width="170" />
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Grid.Row="1" BorderBrush="Black" Background="Yellow" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Bus Line Number" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold"/>
+                        </Border>
+
+                        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" Background="Yellow" BorderThickness="0 1 1 1">
+                            <TextBlock  Text="Last Bus Stop Name" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="15" FontWeight="Bold"/>
+                        </Border>
+                    </Grid>
+
+
+                    <ListView Grid.Row="2" ItemsSource="{Binding Path='LinesStopHere'}" Background="Yellow" HorizontalAlignment="Stretch" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid  Margin="7,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="115" />
+                                        <ColumnDefinition Width="140" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1 1 1 1">
+                                        <TextBlock Text="{Binding Path = 'BusLineNumber'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" TextAlignment="Center" />
+                                    </Border>
+
+                                    <Border Grid.Column="1" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                        <TextBlock Text="{Binding Path = 'LastBusStopName'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" TextAlignment="Center" />
+                                    </Border>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
         </Grid>
 
         <Grid Grid.Row="4">
-            <ListView Name="lvMinutesToBus"/>
+            <ListView Name="lvMinutesToBus" Height="100" Margin="100"/>
         </Grid>
 
 
