@@ -56,7 +56,7 @@ namespace DL
         {
             int counter = int.Parse(root.Element("BusLineCounter").Value);
             counter++;
-            root.Element("BusInTravelCounter").Value = counter.ToString();
+            root.Element("BusLineCounter").Value = counter.ToString();
             root.Save(dir + configPath);
             return counter;
         }
@@ -65,7 +65,7 @@ namespace DL
         {
             int counter = int.Parse(root.Element("PassengTravelCounter").Value);
             counter++;
-            root.Element("BusInTravelCounter").Value = counter.ToString();
+            root.Element("PassengTravelCounter").Value = counter.ToString();
             root.Save(dir + configPath);
             return counter;
         }

@@ -80,7 +80,6 @@ namespace DL
                     }
                    );
         }
-
         public IEnumerable<DO.Bus> GetAllBusesBy(Predicate<DO.Bus> predicate)
         {
             XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
@@ -138,7 +137,6 @@ namespace DL
 
             XMLTools.SaveListToXMLElement(busRootElem, busPath);
         }
-
         public void DeleteBus(int license)
         {
             XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
@@ -161,7 +159,6 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_UnexpectedProblem("Unexpected Problem");
         }
-
         public void UpdateBus(DO.Bus bus)
         {
             XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
@@ -188,7 +185,6 @@ namespace DL
                 XMLTools.SaveListToXMLElement(busRootElem, busPath);
             }
         }
-
         public void UpdateBus(int id, Action<DO.Bus> update)
         {
             throw new NotImplementedException();
