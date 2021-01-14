@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace DO
 {
@@ -10,7 +13,21 @@ namespace DO
     {
         public int DepartureID { get; set; }  // Entity Key A - Running number
         public int BusLineID { get; set; }
-        public TimeSpan DepartureTime { get; set; }
+
+        private TimeSpan departureTime;
+        [XmlIgnore]
+        public TimeSpan DepartureTime
+        {
+            get { return departureTime; }
+            set { departureTime = value; }
+        }
+        [XmlElement("DepartureTime", DataType = "duration")]
+        [DefaultValue("PT10M")]
+        public string XmlTime
+        {
+            get { return XmlConvert.ToString(departureTime); }
+            set { departureTime = XmlConvert.ToTimeSpan(value); }
+        }
         public bool ObjectActive { get; set; }
         /// <summary>
         /// Formats a string which represents the Bus object

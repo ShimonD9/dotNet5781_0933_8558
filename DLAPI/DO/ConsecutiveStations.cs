@@ -14,22 +14,21 @@ namespace DO
         public int BusStopKeyA { get; set; }   // Entity Key A
         public int BusStopKeyB { get; set; }   // Entity Key B
         public double Distance { get; set; }
-        public TimeSpan TravelTime { get; set; }
-        //private TimeSpan travelTime;
+        private TimeSpan travelTime;
 
-        //[XmlIgnore]
-        //public TimeSpan TravelTime
-        //{
-        //    get { return travelTime; }
-        //    set { travelTime = value; }
-        //}
-        //[XmlElement("TravelTime", DataType = "duration")]
-        //[DefaultValue("PT10M")]
-        //public string XmlTime
-        //{
-        //    get { return XmlConvert.ToString(travelTime); }
-        //    set { travelTime = XmlConvert.ToTimeSpan(value); }
-        //}
+        [XmlIgnore]
+        public TimeSpan TravelTime
+        {
+            get { return travelTime; }
+            set { travelTime = value; }
+        }
+        [XmlElement("TravelTime", DataType = "duration")]
+        [DefaultValue("PT10M")]
+        public string XmlTime
+        {
+            get { return XmlConvert.ToString(travelTime); }
+            set { travelTime = XmlConvert.ToTimeSpan(value); }
+        }
         public bool ObjectActive { get; set; }
 /// <summary>
 /// Formats a string which represents the Bus object

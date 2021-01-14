@@ -56,7 +56,6 @@
     <Compile Include="DO\LineDeparture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DO\User.cs" />
-    <Compile Include="XmlTimeSpan.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
