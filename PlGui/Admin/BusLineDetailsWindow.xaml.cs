@@ -170,9 +170,7 @@ namespace PlGui
                 bDeleteStation.IsEnabled = true;
         }
 
-      
-
-
+    
         // Stations add methods:
 
         private void Button_AddStation(object sender, RoutedEventArgs e)
@@ -180,6 +178,7 @@ namespace PlGui
             BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
             BO.BusLineStation chosenPrevStation = cbChoosePrevStation.SelectedItem as BO.BusLineStation;
             BO.BusLineStation newStation = new BO.BusLineStation();
+ 
 
             // Beginning of addition:
             if (!isAddStationInProcess && !isDeleteStationInProcess)
@@ -188,9 +187,7 @@ namespace PlGui
                 gChooseNewStation.Visibility = Visibility.Visible;
                 bDeleteStation.IsEnabled = false;
                 bAddStation.IsEnabled = false;
-                cbChooseNewStation.ItemsSource = from busStop in bl.GetAllBusStops()
-                                                 where !busLine.LineStations.Any(x => x.BusStopKey == busStop.BusStopKey) // if the bus stop in use at the current line, it won't show in the combo box
-                                                 select busStop;
+                cbChooseNewStation.ItemsSource = bl.GetAllBusStops().Where(f => !busLine.LineStations.Any(x => x.BusStopKey == f.BusStopKey)); 
             }
 
             // Submiting the changes:
