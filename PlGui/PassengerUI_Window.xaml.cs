@@ -57,6 +57,7 @@ namespace PlGui
                     MessageBox.Show("Wront time input!");
                 else
                 {
+                    clockWorker.CancelAsync();
                     tbStart_Pause.Text = "Pause";
                     timeDisplay.Visibility = Visibility.Visible;
                     timeEdit.Visibility = Visibility.Collapsed;
@@ -108,7 +109,7 @@ namespace PlGui
 
             clockWorker.ProgressChanged += (sender, args) =>   //the progress changed function
             {
-                                       //add fuel to the bus in parts
+                                    
             };
 
             clockWorker.DoWork += (sender, args) =>            //the DoWork function 
