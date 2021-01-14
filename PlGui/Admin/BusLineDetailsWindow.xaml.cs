@@ -294,6 +294,11 @@ namespace PlGui
                             stationAdditionEndProcess();
                         }
                     }
+                    else // No need to update the gaps (there are consecutive stations for both sides!)
+                    {
+                        bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
+                        stationAdditionEndProcess();
+                    }
                 }
 
             }
@@ -375,9 +380,14 @@ namespace PlGui
                         lbGapB.Visibility = Visibility.Hidden;
                         tbUpdateKmB.Visibility = Visibility.Hidden;
                         tbUpdateTimeB.Visibility = Visibility.Hidden;
-                        tbUpdateKM.Text = "0";
-                        tbUpdateTime.Text = "hh:mm:ss";
-                        lbGapA.Content = chosenBusStop.BusStopKey + " -> " + chosenPrevStation.NextStation;
+                        tbUpdateKmB.Text = "0";
+                        tbUpdateTimeB.Text = "hh:mm:ss";
+                        lbGapB.Content = chosenBusStop.BusStopKey + " -> " + chosenPrevStation.NextStation;
+                        tbAddStation.Text = "Submit changes";
+                        bAddStation.IsEnabled = true;
+                    }
+                    else // There are consecutive stations for both sides
+                    {
                         tbAddStation.Text = "Submit changes";
                         bAddStation.IsEnabled = true;
                     }
