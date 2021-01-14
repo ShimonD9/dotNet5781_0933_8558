@@ -61,7 +61,7 @@ namespace BL
         {
             int idToReturn;
             DO.BusLine newBus = BusLineBoDoAdapter(busLine);
-           
+
             try
             {
                 idToReturn = dl.AddBusLine(newBus);
@@ -606,7 +606,7 @@ namespace BL
         }
         #endregion
 
- 
+
 
         #region Consecutive Stations
 
@@ -720,6 +720,80 @@ namespace BL
                 throw new BO.ExceptionBL_UserKeyNotFound("user does not exist Or inactive", ex);
             }
         }
+        #endregion
+
+        #region Time simulator
+
+        public class Clock
+        {
+            // Lazy singleton:
+            class Nested
+            {
+                static Nested() { }
+                internal static readonly Clock instance = new Clock();
+            }
+
+            static Clock() { }
+            Clock() { }
+            public static Clock Instance { get { return Nested.instance; } }
+
+            // Event Handler
+
+
+            private TimeSpan currentValue = TimeSpan.Zero;
+
+            public event EventHandler ValueChanged;
+
+            protected void OnValueChanged(ValueChangedEventArgs args)
+            {
+                if (ValueChanged != null)
+                {
+                    ValueChanged(this, args);
+                }
+            }
+
+            public TimeSpan Value
+            {
+                get => currentValue; 
+
+                set
+                {
+                    ValueChangedEventArgs args = new ValueChangedEventArgs(value);
+                    currentValue = value;
+                    OnValueChanged(args);
+                }
+            }
+
+            public class ValueChangedEventArgs : EventArgs
+            {
+                public readonly TimeSpan NewValue;
+
+                public ValueChangedEventArgs(TimeSpan newTemp)
+                {
+                    NewValue = newTemp;
+                }
+            }
+
+
+        }
+
+        public void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime)
+        {
+            
+            
+        }
+
+        public void StopSimulator()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetStationPanel(int station, Action<BO.LineTiming> updateBus)
+        {
+
+        }
+
+
         #endregion
     }
 }
