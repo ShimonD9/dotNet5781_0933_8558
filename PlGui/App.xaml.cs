@@ -13,5 +13,6 @@ namespace PlGui
     /// </summary>
     public partial class App : Application
     {
+
     }
 }

@@ -85,8 +85,8 @@ namespace BLApi
 
         #region Time simulator
 
-        //void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime);
-        //void StopSimulator();
+        void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime);
+        void StopSimulator();
         #endregion
 
     }

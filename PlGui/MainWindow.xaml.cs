@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using BLApi;
 using BO;
 
+
 namespace PlGui
 {
     /// <summary>
@@ -29,7 +30,7 @@ namespace PlGui
         public MainWindow()
         {
             InitializeComponent();
-
+           
         }
 
 
@@ -170,7 +171,7 @@ namespace PlGui
         private void spInfo_MouseLeave(object sender, MouseEventArgs e)
         {
             spInfo.Visibility = Visibility.Collapsed;
-            lblInfo.Foreground = Brushes.PaleVioletRed;
+            lblInfo.Foreground = Brushes.DarkBlue;
         }
 
     }

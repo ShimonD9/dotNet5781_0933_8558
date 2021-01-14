@@ -79,7 +79,7 @@
 
         </Grid>
 
-        <Button Content="Add the new bus stop to the list" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Margin="20" Click="Button_Click"/>
+        <Button Content="Add the new bus stop" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Margin="20" Click="Button_Click"/>
     </StackPanel>
 </Window>
 

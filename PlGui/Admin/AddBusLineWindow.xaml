@@ -77,7 +77,7 @@
             </Grid>
         </Grid>
 
-        <Button Content="Add the new bus line to the list" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Margin="20" Click="Button_Click"/>
+        <Button Content="Add the new bus line" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Margin="20" Click="Button_Click"/>
 
     </StackPanel>
 

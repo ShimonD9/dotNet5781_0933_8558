@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
-        Title="Welcome" Height="425.65" Width="442" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Background="LightGray">
+        Title="Welcome" Height="452.65" Width="442" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <!-- .... other resources .... -->
 
@@ -24,45 +24,20 @@
                 <Setter.Value>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                         <LinearGradientBrush.GradientStops>
-                            <GradientStop Offset="0.0" Color="Red" />
-                            <GradientStop Offset="1.0" Color="Black" />
+                            <GradientStop Offset="0.0" Color="Gray" />
+                            <GradientStop Offset="0.4" Color="Black" />
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="#373737" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border CornerRadius="20" Background="{TemplateBinding Background}">
-                            <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#E59400" />
-                                <Setter Property="Foreground" Value="White" />
-                            </Trigger>
-
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="Green" />
-                                <Setter Property="Foreground" Value="White" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Window.Resources>
 
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/PlGui;component/Images/22.jpeg" Stretch="UniformToFill"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -78,30 +53,30 @@
         
 
         <StackPanel HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal" Margin="49,0,83,0" Width="304">
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center"  VerticalContentAlignment="Top" Content="Enter user name:" FontSize="18" FontWeight="Bold"/>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center"  VerticalContentAlignment="Top" Content="Enter user name:" FontSize="20" FontWeight="SemiBold"/>
             <TextBox Name="tbUserName"  HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Width="100" Margin="5,0,0,0"/>
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Center" Grid.Row="2" Orientation="Horizontal" Margin="49,0,80,0" Width="307">
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="Enter password:" FontSize="18" FontWeight="Bold"/>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="Enter password:" FontSize="20" FontWeight="SemiBold"/>
             <PasswordBox x:Name="pbPassword" Visibility="Visible" HorizontalAlignment="Center" FontSize="14" VerticalAlignment="Center" Width="100"  Margin="13,0,0,0"/>
             <TextBox x:Name="tbPasswordShow" Visibility="Collapsed" HorizontalAlignment="Center"  FontSize="14" VerticalAlignment="Center" Width="100" Margin="13,0,0,0"/>
             <Image  Source="/PlGui;component/Images/eye.png" IsEnabled="True" Cursor="Hand" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="25" Height="25" Margin="10" MouseLeave="Image_MouseLeave" MouseLeftButtonDown="Image_MouseEnter"/>
         </StackPanel>
 
         <StackPanel Name="spRepeatPassword" HorizontalAlignment="Center" Visibility="Collapsed" Grid.Row="3" Orientation="Horizontal"  Margin="49,0,40,0" Width="347">
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Repeat password:" FontSize="18" FontWeight="Bold"/>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Repeat password:" FontSize="18" FontWeight="SemiBold"/>
             <PasswordBox Name="pbRepeatPassword" Visibility="Visible" HorizontalAlignment="Center" FontSize="14" VerticalAlignment="Center" Width="100"/>
             <Button x:Name="bCancel" Width="67" Height="40" Margin="10,0,0,0" Content="Cancel"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Cursor="Hand" Click="ButtonCancel_Click"/>
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Center" Grid.Row="4" Orientation="Horizontal" Margin="49,0,127,0" Width="260">
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Are you a human?" FontSize="18" FontWeight="Bold"  Width="166"/>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Are you a human?" FontSize="20" FontWeight="SemiBold"  Width="175" Margin="0,24"/>
             <CheckBox Name="cbHuman" HorizontalAlignment="Center" VerticalAlignment="Center" Checked="cbHuman_Checked" Margin="10,5,0,0"/>
         </StackPanel>
 
         <StackPanel Name="spInfo" HorizontalAlignment="Center" Grid.Row="5" Orientation="Horizontal"   MouseLeave="spInfo_MouseLeave">
-            <Label Name="lblInfo" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Foreground="PaleVioletRed"/>
+            <Label Name="lblInfo" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Foreground="DarkBlue"/>
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Center" Grid.Row="6" Orientation="Horizontal">

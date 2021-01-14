@@ -64,7 +64,7 @@
 
         <DatePicker Name="dateLastTreat" DisplayDateStart="01.01.2010" VerticalAlignment="Center" Width="206" Style="{DynamicResource DatePickerStyle2}" Margin="10"/>
 
-        <Button Content="Add the new bus to the list" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Margin="20" Click="Button_Click"/>
+        <Button Content="Add the new bus" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Margin="20" FontSize="20" Click="Button_Click"/>
 
     </StackPanel>
 

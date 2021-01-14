@@ -196,7 +196,7 @@
                                             <Button.Content>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Image />
-                                                    <TextBlock Name="tbAddStation" Text="Add a station"  FontSize="16" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                                                    <TextBlock Name="tbAddStation" Text="Add a station"  FontSize="20" VerticalAlignment="Center" FontWeight="SemiBold"/>
                                                 </StackPanel>
                                             </Button.Content>
                                         </Button>
@@ -204,7 +204,7 @@
                                             <Button.Content>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Image  />
-                                                    <TextBlock Name="tbDeleteStation" Text="Delete the station" FontSize="16" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                                    <TextBlock Name="tbDeleteStation" Text="Delete the station" FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center"/>
                                                 </StackPanel>
                                             </Button.Content>
                                         </Button>
@@ -269,7 +269,7 @@
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image />
-                            <TextBlock Text="Update the changes" VerticalAlignment="Center" FontSize="20" FontWeight="SemiBold" Margin="10"/>
+                            <TextBlock Text="Update the changes" VerticalAlignment="Center" FontSize="20" FontWeight="SemiBold" Margin="5"/>
                         </StackPanel>
                     </Button.Content>
                 </Button>

@@ -54,10 +54,9 @@ namespace PlGui
             if (tbStart_Pause.Text == "Start")
             {
                 if (!DateTime.TryParse(timeEdit.Text, out inputTime))
-                    MessageBox.Show("Wront time input!");
+                    MessageBox.Show("Wrong time input!");
                 else
                 {
-                    clockWorker.CancelAsync();
                     tbStart_Pause.Text = "Pause";
                     timeDisplay.Visibility = Visibility.Visible;
                     timeEdit.Visibility = Visibility.Collapsed;
