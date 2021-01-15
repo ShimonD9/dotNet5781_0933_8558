@@ -145,6 +145,7 @@ namespace PlGui
         {
             BO.BusStop busStop = cbBusStop.SelectedItem as BO.BusStop;
             lvLinesStopHere.DataContext = busStop;
+            lvMinutesToBus.ItemsSource = bl.GetLineTimingsPerStation(busStop, DateTime.Now.TimeOfDay);
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlGui"
         mc:Ignorable="d"
-        Name="PassengerWindow" Title="Passenger display" Height="552.228" Width="375.07" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
+        Name="PassengerWindow" Title="Passenger display" Height="552.228" Width="487.57" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -100,7 +100,31 @@
         </Grid>
 
         <Grid Grid.Row="4">
-            <ListView Name="lvMinutesToBus" Height="100" Margin="100"/>
+            <ListView  Name="lvMinutesToBus"  Height="100" Margin="100" ItemsSource="{Binding}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid  Margin="7,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="115" />
+                                <ColumnDefinition Width="140" />
+                                <ColumnDefinition Width="115" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1 1 1 1">
+                                <TextBlock Text="{Binding Path = 'BusLineNumber'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" TextAlignment="Center" />
+                            </Border>
+
+                            <Border Grid.Column="1" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                <TextBlock Text="{Binding Path = 'LastBusStopName'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" TextAlignment="Center" />
+                            </Border>
+
+                            <Border Grid.Column="2" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                <TextBlock Text="{Binding Path = 'MinutesLeftUntilArrival'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" TextAlignment="Center" />
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
 
 

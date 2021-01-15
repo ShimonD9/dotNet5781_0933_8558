@@ -754,7 +754,7 @@ namespace BL
 
             public TimeSpan Value
             {
-                get => currentValue; 
+                get => currentValue;
 
                 set
                 {
@@ -779,8 +779,8 @@ namespace BL
 
         public void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime)
         {
-            
-            
+
+
         }
 
         public void StopSimulator()
@@ -788,12 +788,28 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        public void SetStationPanel(int station, Action<BO.LineTiming> updateBus)
+        public IEnumerable<LineTiming> GetLineTimingsPerStation(BusStop currBusStop, TimeSpan tsCurrentTime)
         {
-
+            IEnumerable<LineTiming> stationTimings = from lineDeparture in dl.GetAllLineDeparture()
+                                                         let timeLeft = lineDeparture.DepartureTime.Add(StationTimeCalculation(lineDeparture.BusLineID, currBusStop.BusStopKey)).Subtract(tsCurrentTime)
+                                                     where timeLeft.Hours == 0 //GetBusStop(currBusStop.BusStopKey).LinesStopHere.Any(x => x.BusLineID == lineDeparture.BusLineID) //&& 
+                                                     select new LineTiming
+                                                     {
+                                                         BusLineID = lineDeparture.BusLineID,
+                                                         BusLineNumber = dl.GetBusLine(lineDeparture.BusLineID).BusLineNumber,
+                                                         LastBusStopName = dl.GetBusStop((dl.GetBusLine(lineDeparture.BusLineID).LastBusStopKey)).BusStopName,
+                                                         DepartureTime = lineDeparture.DepartureTime,
+                                                         MinutesLeftUntilArrival = timeLeft.Minutes,
+                                                     };
+            return stationTimings.OrderByDescending(x => x.MinutesLeftUntilArrival);
         }
 
-
+        public TimeSpan StationTimeCalculation(int busLineID, int busStopCode)
+        {
+            return GetBusLine(busLineID).LineStations.TakeWhile(x => x.BusStopKey != busStopCode).Aggregate
+                (TimeSpan.Zero,
+                (sumSoFar, nextMyObject) => sumSoFar + nextMyObject.TimeToNext);
+        }
         #endregion
     }
 }
