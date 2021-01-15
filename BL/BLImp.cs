@@ -791,8 +791,8 @@ namespace BL
         public IEnumerable<LineTiming> GetLineTimingsPerStation(BusStop currBusStop, TimeSpan tsCurrentTime)
         {
             IEnumerable<LineTiming> stationTimings = from lineDeparture in dl.GetAllLineDeparture()
-                                                         let timeLeft = lineDeparture.DepartureTime.Add(StationTimeCalculation(lineDeparture.BusLineID, currBusStop.BusStopKey)).Subtract(tsCurrentTime)
-                                                     where timeLeft.Hours == 0 //GetBusStop(currBusStop.BusStopKey).LinesStopHere.Any(x => x.BusLineID == lineDeparture.BusLineID) //&& 
+                                                     let timeLeft = lineDeparture.DepartureTime.Add(StationTimeCalculation(lineDeparture.BusLineID, currBusStop.BusStopKey)).Subtract(tsCurrentTime)
+                                                     where timeLeft.Hours == 0 && timeLeft.Minutes >= 0 // &&  GetBusStop(currBusStop.BusStopKey).LinesStopHere.Any(x => x.BusLineID == lineDeparture.BusLineID)  
                                                      select new LineTiming
                                                      {
                                                          BusLineID = lineDeparture.BusLineID,
