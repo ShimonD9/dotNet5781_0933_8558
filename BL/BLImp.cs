@@ -790,19 +790,31 @@ namespace BL
 
         public IEnumerable<LineTiming> GetLineTimingsPerStation(BusStop currBusStop, TimeSpan tsCurrentTime)
         {
-            IEnumerable<LineTiming> stationTimings = from lineDeparture in dl.GetAllLineDeparture()
-                                                     let timeLeft = lineDeparture.DepartureTime.Add(StationTimeCalculation(lineDeparture.BusLineID, currBusStop.BusStopKey)).Subtract(tsCurrentTime)
-                                                     where timeLeft.Hours == 0 && timeLeft.Minutes >= 0 // &&  GetBusStop(currBusStop.BusStopKey).LinesStopHere.Any(x => x.BusLineID == lineDeparture.BusLineID)  
+            IEnumerable<LineTiming> stationTimings = from lineAtStop in GetBusStop(currBusStop.BusStopKey).LinesStopHere
+                                                     let depTime = FindLastDepartureTime(lineAtStop.BusLineID, tsCurrentTime)
+                                                     let travelTime = StationTimeCalculation(lineAtStop.BusLineID, currBusStop.BusStopKey)
+                                                     let timeLeft = depTime.Add(travelTime).Subtract(tsCurrentTime)
+                                                     where timeLeft.CompareTo(TimeSpan.FromMinutes(-5)) > 0
                                                      select new LineTiming
                                                      {
-                                                         BusLineID = lineDeparture.BusLineID,
-                                                         BusLineNumber = dl.GetBusLine(lineDeparture.BusLineID).BusLineNumber,
-                                                         LastBusStopName = dl.GetBusStop((dl.GetBusLine(lineDeparture.BusLineID).LastBusStopKey)).BusStopName,
-                                                         DepartureTime = lineDeparture.DepartureTime,
-                                                         MinutesLeftUntilArrival = timeLeft.Minutes,
+                                                         BusLineID = lineAtStop.BusLineID,
+                                                         LastBusStopName = lineAtStop.LastBusStopName,
+                                                         DepartureTime = depTime,
+                                                         ArrivalTime = depTime.Add(travelTime),
+                                                         MinutesToShow = timeLeft.CompareTo(TimeSpan.Zero) > 0 ? timeLeft.Minutes.ToString() : "!!!",
                                                      };
-            return stationTimings.OrderByDescending(x => x.MinutesLeftUntilArrival);
+
+
+            return stationTimings;
         }
+
+        public TimeSpan FindLastDepartureTime(int busLineID, TimeSpan tsCurrentTime)
+        {
+            return (from lineDeparture in dl.GetAllLineDeparture()
+                    where lineDeparture.BusLineID == busLineID
+                    select lineDeparture).OrderBy(x => x.DepartureTime).First().DepartureTime;
+        }
+
 
         public TimeSpan StationTimeCalculation(int busLineID, int busStopCode)
         {
