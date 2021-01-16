@@ -12,7 +12,8 @@ namespace BO
         public int BusLineNumber { get; set; }
         public TimeSpan DepartureTime { get; set; }
         public TimeSpan ArrivalTime { get; set; }
-        public String MinutesToShow { get; set; }
+        public int MinutesToArrival { get; set; }
+        public String ShowMinutesOrArrow { get; set; }
         public string LastBusStopName { get; set; }
     }
 }

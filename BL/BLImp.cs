@@ -794,33 +794,48 @@ namespace BL
                                                      let depTime = FindLastDepartureTime(lineAtStop.BusLineID, tsCurrentTime)
                                                      let travelTime = StationTimeCalculation(lineAtStop.BusLineID, currBusStop.BusStopKey)
                                                      let timeLeft = depTime.Add(travelTime).Subtract(tsCurrentTime)
-                                                     where timeLeft.CompareTo(TimeSpan.FromMinutes(-5)) > 0
+                                                     //where timeLeft.CompareTo(TimeSpan.FromMinutes(-5)) > 0 // It means the bus is late or passed maximum by 5 minutes
                                                      select new LineTiming
                                                      {
-                                                         BusLineID = lineAtStop.BusLineID,
+                                                         BusLineNumber = lineAtStop.BusLineNumber,
                                                          LastBusStopName = lineAtStop.LastBusStopName,
                                                          DepartureTime = depTime,
                                                          ArrivalTime = depTime.Add(travelTime),
-                                                         MinutesToShow = timeLeft.CompareTo(TimeSpan.Zero) > 0 ? timeLeft.Minutes.ToString() : "!!!",
+                                                         MinutesToArrival = timeLeft.Minutes,
+                                                         ShowMinutesOrArrow = timeLeft.CompareTo(TimeSpan.Zero) > 0 ? timeLeft.Minutes.ToString() : "↓",
                                                      };
 
 
-            return stationTimings;
+            return stationTimings.OrderBy(x => x.MinutesToArrival);
         }
 
         public TimeSpan FindLastDepartureTime(int busLineID, TimeSpan tsCurrentTime)
         {
-            return (from lineDeparture in dl.GetAllLineDeparture()
-                    where lineDeparture.BusLineID == busLineID
-                    select lineDeparture).OrderBy(x => x.DepartureTime).First().DepartureTime;
+            var collection = (from lineDeparture in dl.GetAllLineDeparture()
+                              where lineDeparture.BusLineID == busLineID
+                              select lineDeparture);
+            if (collection.Count() == 0) // It means the line has no departure times (yet, or by manager accident)
+                return TimeSpan.FromMinutes(-1000); // A very far number so it will be exculded in the Linq Query of GetLineTimingsPerStation
+            else
+            {
+                var lastDep = collection.OrderBy(x => tsCurrentTime.Subtract(x.DepartureTime)).First().DepartureTime;
+                return lastDep;
+            }
         }
 
 
         public TimeSpan StationTimeCalculation(int busLineID, int busStopCode)
         {
-            return GetBusLine(busLineID).LineStations.TakeWhile(x => x.BusStopKey != busStopCode).Aggregate
-                (TimeSpan.Zero,
-                (sumSoFar, nextMyObject) => sumSoFar + nextMyObject.TimeToNext);
+            var collection = GetBusLine(busLineID).LineStations.TakeWhile(x => x.BusStopKey != busStopCode);
+            if (collection == null) // It means that the bus stop is the first one, so it returns zero timeSpan
+                return TimeSpan.Zero;
+            else
+            {
+                TimeSpan calc = collection.Aggregate
+                    (TimeSpan.Zero,
+                    (sumSoFar, nextMyObject) => sumSoFar + nextMyObject.TimeToNext);
+                return calc;
+            }
         }
         #endregion
     }

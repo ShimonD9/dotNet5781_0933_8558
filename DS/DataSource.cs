@@ -1353,7 +1353,7 @@ namespace DS
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[0].BusLineID,
-                    DepartureTime = new TimeSpan(10,0,0),
+                    DepartureTime = new TimeSpan(20,0,0),
                     ObjectActive=true,
                  },
 
@@ -1543,14 +1543,14 @@ namespace DS
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[2].BusLineID,
-                    DepartureTime = new TimeSpan(10,40,0),
+                    DepartureTime = new TimeSpan(20,05,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[2].BusLineID,
-                    DepartureTime = new TimeSpan(6,20,0),
+                    DepartureTime = new TimeSpan(19,20,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
@@ -1592,7 +1592,7 @@ namespace DS
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[3].BusLineID,
-                    DepartureTime = new TimeSpan(11,15,0),
+                    DepartureTime = new TimeSpan(19,55,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
