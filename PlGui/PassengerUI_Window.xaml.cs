@@ -30,7 +30,8 @@ namespace PlGui
         IBL bl = BLFactory.GetBL("1");
         DateTime inputTime;
         BO.User passenger;
-        
+        BO.BusStop busStop;
+        TimeSpan changingNow;
 
         public PassengerUI_Window()
         {
@@ -57,6 +58,9 @@ namespace PlGui
                     MessageBox.Show("Wrong time input!");
                 else
                 {
+                    //shouldStop = false;
+                    //changingNow = DateTime.Now.TimeOfDay;
+                    //RunClock();
                     tbStart_Pause.Text = "Pause";
                     timeDisplay.Visibility = Visibility.Visible;
                     timeEdit.Visibility = Visibility.Collapsed;
@@ -66,6 +70,7 @@ namespace PlGui
             }
             else if (tbStart_Pause.Text == "Pause")
             {
+                //shouldStop = true;
                 tbStart_Pause.Text = "Start";
                 timeDisplay.Visibility = Visibility.Collapsed;
                 timeEdit.Visibility = Visibility.Visible;
@@ -94,62 +99,71 @@ namespace PlGui
         }
 
 
-        private BackgroundWorker clockWorker;  
-
-        /// <summary>
-        ///
-        /// </summary>
-        public void Clock()         
-        {
-            clockWorker = new BackgroundWorker();              //initialize the background worker
-                  // creatig part of km to add in the progress bar
-
-            clockWorker.WorkerReportsProgress = true;
-
-            clockWorker.ProgressChanged += (sender, args) =>   //the progress changed function
-            {
-                                    
-            };
-
-            clockWorker.DoWork += (sender, args) =>            //the DoWork function 
-            {
-                    // while
-                    if (clockWorker.CancellationPending == true)
-                    {
-
-                    }
-                    else
-                    {
-                        clockWorker.ReportProgress(0);                     
-                        try { Thread.Sleep(100); } catch (Exception) { }   
-                    }
-            };
-
-            if (clockWorker.IsBusy != true)                      
-                clockWorker.RunWorkerAsync();
-
-            clockWorker.RunWorkerCompleted += (sender, args) =>       
-            {
-                if (args.Cancelled == true)
-                {
-
-                }
-                else
-                {
-                
-                }
-            };
-        }
+             
 
         private void cbBusStop_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             tbNoBuses.Visibility = Visibility.Collapsed;
-            BO.BusStop busStop = cbBusStop.SelectedItem as BO.BusStop;
+            busStop = cbBusStop.SelectedItem as BO.BusStop;
             lvLinesStopHere.DataContext = busStop;
-            var minutesToBus = bl.GetLineTimingsPerStation(busStop, DateTime.Now.TimeOfDay);
+            var minutesToBus = bl.GetLineTimingsPerStation(busStop, changingNow);
             if (minutesToBus.Count() == 0)
                 tbNoBuses.Visibility = Visibility.Visible;
             lvMinutesToBus.ItemsSource = minutesToBus;
+            //shouldStop = true;
         }
+
+
+        //public static bool shouldStop = true;
+
+        //// The background worker for the clock:
+        //private readonly BackgroundWorker clockWorker = new BackgroundWorker();
+
+        //public void RunClock()
+        //{
+
+        //    clockWorker.WorkerReportsProgress = true;
+
+        //    clockWorker.ProgressChanged += (sender, args) =>
+        //    {
+        //        timeDisplay.Text = changingNow.ToString();
+        //var minutesToBus = bl.GetLineTimingsPerStation(busStop, changingNow);
+        //        changingNow.Add(TimeSpan.FromMinutes(1));
+        //        if (minutesToBus.Count() == 0)
+        //            tbNoBuses.Visibility = Visibility.Visible;
+        //        lvMinutesToBus.ItemsSource = minutesToBus;
+        //    };
+
+        //    clockWorker.DoWork += (sender, args) =>
+        //    {
+        //        if (clockWorker.CancellationPending == true)
+        //        {
+
+        //        }
+        //        else
+        //        {
+        //            while (shouldStop == false)
+        //            {
+        //                clockWorker.ReportProgress(0);
+        //                try { Thread.Sleep(10000); } catch (Exception) { }
+        //            }
+        //        }
+        //    };
+
+        //    if (clockWorker.IsBusy != true)
+        //        clockWorker.RunWorkerAsync();
+
+        //    clockWorker.RunWorkerCompleted += (sender, args) =>
+        //    {
+        //        if (args.Cancelled == true)
+        //        {
+
+        //        }
+        //        else
+        //        {
+
+        //        }
+        //    };
+        //}
     }
 }
