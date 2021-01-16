@@ -193,5 +193,10 @@
   <ItemGroup>
     <Resource Include="Images\exit.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\busFront.png" />
+    <Resource Include="Images\clock.png" />
+    <Resource Include="Images\end.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

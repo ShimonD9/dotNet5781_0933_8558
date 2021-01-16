@@ -143,9 +143,13 @@ namespace PlGui
 
         private void cbBusStop_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            tbNoBuses.Visibility = Visibility.Collapsed;
             BO.BusStop busStop = cbBusStop.SelectedItem as BO.BusStop;
             lvLinesStopHere.DataContext = busStop;
-            lvMinutesToBus.ItemsSource = bl.GetLineTimingsPerStation(busStop, DateTime.Now.TimeOfDay);
+            var minutesToBus = bl.GetLineTimingsPerStation(busStop, DateTime.Now.TimeOfDay);
+            if (minutesToBus.Count() == 0)
+                tbNoBuses.Visibility = Visibility.Visible;
+            lvMinutesToBus.ItemsSource = minutesToBus;
         }
     }
 }
