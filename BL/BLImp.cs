@@ -794,7 +794,7 @@ namespace BL
                                                      let depTime = FindLastDepartureTime(lineAtStop.BusLineID, tsCurrentTime)
                                                      let travelTime = StationTimeCalculation(lineAtStop.BusLineID, currBusStop.BusStopKey)
                                                      let timeLeft = depTime.Add(travelTime).Subtract(tsCurrentTime)
-                                                     //where timeLeft.CompareTo(TimeSpan.FromMinutes(-5)) > 0 // It means the bus is late or passed maximum by 5 minutes
+                                                     where timeLeft.CompareTo(TimeSpan.FromMinutes(-5)) > 0 // It means the bus is late or passed maximum by 5 minutes
                                                      select new LineTiming
                                                      {
                                                          BusLineNumber = lineAtStop.BusLineNumber,

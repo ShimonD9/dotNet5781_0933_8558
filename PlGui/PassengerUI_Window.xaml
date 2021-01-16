@@ -87,8 +87,8 @@
             </Border>
         </Grid>
 
-        <Grid Grid.Row="4" Margin="0,30,0,0">
-            <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Grid.Row="4" Margin="0,30,0,0" >
+            <Border Background="MediumAquamarine" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
 
                     <Grid.RowDefinitions>
@@ -98,39 +98,40 @@
                     </Grid.RowDefinitions>
 
 
-                    <Grid Grid.Row="0" Background="MediumAquamarine">
+                    <Grid Grid.Row="0" Margin="10,0,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="50" />
-                            <ColumnDefinition Width="160" />
+                            <ColumnDefinition  Width="160" />
                             <ColumnDefinition Width="115" />
                             <ColumnDefinition Width="50" />
                         </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" Grid.Row="0" BorderBrush="Black" BorderThickness="1 1 1 1">
+                        <Border Grid.Column="0" Grid.Row="0" BorderBrush="Black" BorderThickness="0 0 1 0">
                             <Image Source="/PlGui;component/Images/busFront.png" Width="30" Height="30" Margin="5"/>
                         </Border>
 
-                        <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 1 1">
+                        <Border Grid.Column="1" Grid.Row="0" BorderBrush="Black" BorderThickness="0 0 1 0">
                             <Image Source="/PlGui;component/Images/end.png" Width="30" Height="30"  Margin="5"/>
                         </Border>
 
-                        <Border Grid.Column="2" Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 1 1">
-                          
+                        <Border Grid.Column="2" Grid.Row="0" BorderBrush="Black" BorderThickness="0 0 1 0">
+                            <TextBlock Text="Departure Time" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="14" FontWeight="Bold" TextAlignment="Center" />
                         </Border>
 
-                        <Border Grid.Column="3" Grid.Row="0" BorderBrush="Black" BorderThickness="0 1 1 1">
+                        <Border Grid.Column="3" Grid.Row="0" BorderBrush="Black" BorderThickness="0 0 0 0">
                             <Image Source="/PlGui;component/Images/clock.png" Width="30" Height="30"  Margin="5"/>
                         </Border>
                     </Grid>
 
-                    <TextBlock Grid.Row="1" Name="tbNoBuses"  Text="No bus lines in the coming hour" Foreground="LightGreen" Background="Black" TextAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" Visibility="Collapsed" />
+                    <TextBlock Grid.Row="1" Name="tbNoBuses"  Text="No bus lines expected in the next hour" Foreground="LightGreen" Background="Black" TextAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" Visibility="Collapsed" />
 
-                    <ListView Background="Black"  Name="lvMinutesToBus" Grid.Row="2" Height="100" ItemsSource="{Binding}" >
+                    <ListView Background="Black"  Name="lvMinutesToBus" Grid.Row="2" Height="100" ItemsSource="{Binding}">
                         <ListView.ItemTemplate  >
                             <DataTemplate>
-                                <Grid  Margin="7,0,0,0">
+                                <Grid >
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="50" />
                                         <ColumnDefinition  Width="160" />
+                                        <ColumnDefinition Width="115" />
                                         <ColumnDefinition Width="115" />
                                         <ColumnDefinition Width="50" />
                                     </Grid.ColumnDefinitions>
@@ -144,10 +145,14 @@
                                     </Border>
 
                                     <Border Grid.Column="2" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                        <TextBlock Text="{Binding Path = 'ArrivalTime'}" Foreground="LightGreen" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" />
+                                    </Border>
+                                    
+                                    <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0 1 1 1">
                                         <TextBlock Text="{Binding Path = 'DepartureTime'}" Foreground="LightGreen" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" />
                                     </Border>
 
-                                    <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0 1 1 1">
+                                    <Border Grid.Column="4" BorderBrush="Black" BorderThickness="0 1 1 1">
                                         <TextBlock Text="{Binding Path = 'ShowMinutesOrArrow'}" Foreground="LightGreen" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold"/>
                                     </Border>
                                 </Grid>
