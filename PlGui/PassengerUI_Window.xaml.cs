@@ -72,6 +72,7 @@ namespace PlGui
             else if (tbStart_Pause.Text == "Pause")
             {
                 timeEdit.Text = RunningTime.ToString();
+                clockWorker.CancelAsync();
                 shouldStop = true;
                 tbStart_Pause.Text = "Start";
                 timeDisplay.Visibility = Visibility.Collapsed;
@@ -150,6 +151,7 @@ namespace PlGui
         {
             int t = 60 / secondsInterval;
             clockWorker.WorkerReportsProgress = true;
+            clockWorker.WorkerSupportsCancellation = true;
 
             clockWorker.ProgressChanged += (sender, args) =>
             {

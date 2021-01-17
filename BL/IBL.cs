@@ -85,11 +85,9 @@ namespace BLApi
 
         #region Time simulator and Line Timing
 
-        void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime);
-        void StopSimulator();
         IEnumerable<LineTiming> GetLineTimingsPerStation(BusStop currBusStation, TimeSpan tsCurrentTime);
         TimeSpan FindLastDepartureTime(int busLineID, TimeSpan tsCurrentTime);
-            TimeSpan StationTimeCalculation(int busLineID, int busStopCode);
+        TimeSpan StationTravelTimeCalculation(int busLineID, int busStopCode);
         #endregion
 
     }
