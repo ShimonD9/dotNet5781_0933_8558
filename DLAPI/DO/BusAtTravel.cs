@@ -16,6 +16,7 @@ namespace DO
         public int BusLineID { get; set; }  // Entity Key B
 
         private TimeSpan formalDepartureTime;
+        [XmlIgnore]
         public TimeSpan FormalDepartureTime // Entity Key C
         {
             get { return formalDepartureTime; }
@@ -30,6 +31,7 @@ namespace DO
         }
 
         private TimeSpan actualDepartureTime;
+        [XmlIgnore]
         public TimeSpan ActualDepartureTime 
         {
             get { return actualDepartureTime; }
@@ -42,9 +44,11 @@ namespace DO
             get { return XmlConvert.ToString(actualDepartureTime); }
             set { actualDepartureTime = XmlConvert.ToTimeSpan(value); }
         }
+
         public int PrevBusLineStationNumber { get; set; }
 
         private TimeSpan prevStationArrivalTime;
+        [XmlIgnore]
         public TimeSpan PrevStationArrivalTime
         {
             get { return prevStationArrivalTime; }
@@ -57,7 +61,9 @@ namespace DO
             get { return XmlConvert.ToString(prevStationArrivalTime); }
             set { prevStationArrivalTime = XmlConvert.ToTimeSpan(value); }
         }
+
         private TimeSpan nextStationArrivalTime;
+        [XmlIgnore]
         public TimeSpan NextStationArrivalTime
         {
             get { return nextStationArrivalTime; }
