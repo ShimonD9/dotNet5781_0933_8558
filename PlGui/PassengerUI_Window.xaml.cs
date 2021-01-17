@@ -43,7 +43,7 @@ namespace PlGui
             InitializeComponent();
             passenger = user;
             changeTitleAsDayTime();
-            timeEdit.Text = DateTime.Now.ToString("hh:mm:ss");
+            timeEdit.Text = DateTime.Now.ToString("HH:mm:ss");
             cbBusStop.ItemsSource = bl.GetAllBusStops().OrderBy(busStop => busStop.BusStopKey);
         }
 
@@ -117,6 +117,8 @@ namespace PlGui
 
         //////////////////////////////////////////////// CLOCK ////////////////////////////////////////////////
         ///
+
+        int secondsInterval;
         // For updating the simulator clock on the GUI we used the PropertyChanged method
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string property)
@@ -137,7 +139,7 @@ namespace PlGui
             set { runningTime = value; OnPropertyChanged("RunningTime"); }
         }
 
-        int secondsInterval;
+
 
         public static bool shouldStop = true;
 
@@ -146,20 +148,20 @@ namespace PlGui
 
         public void RunClock()
         {
-            int t = 120 / secondsInterval;
+            int t = 60 / secondsInterval;
             clockWorker.WorkerReportsProgress = true;
 
             clockWorker.ProgressChanged += (sender, args) =>
             {
                 timeDisplay.Text = RunningTime.ToString();
                 RunningTime = RunningTime.Add(TimeSpan.FromSeconds(secondsInterval));
-                if (t == 120 / secondsInterval) // Per minute should update the table
+                if (t == 60 / secondsInterval)
                 {
                     var minutesToBus = bl.GetLineTimingsPerStation(busStop, RunningTime);
                     if (minutesToBus.Count() == 0)
-                    tbNoBuses.Visibility = Visibility.Visible;
+                        tbNoBuses.Visibility = Visibility.Visible;
                     lvMinutesToBus.ItemsSource = minutesToBus;
-                    t = -1;
+                    t = 0;
                 }
                 t++;
             };
@@ -195,5 +197,6 @@ namespace PlGui
                 }
             };
         }
+
     }
 }
