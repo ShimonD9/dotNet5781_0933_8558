@@ -479,7 +479,7 @@ namespace BL
                                       in GetAllBusLines()
                                       where boBusLine.LineStations.Any(line => line.BusStopKey == busStopBO.BusStopKey)
                                       orderby boBusLine.BusLineNumber
-                                      select BusLinetoBusLineAtStopConvertor(boBusLine);
+                                      select BusLinetoBusLineAtStopConvertor(boBusLine, code);
             return busStopBO;
         }
 
@@ -563,11 +563,12 @@ namespace BL
         #endregion
 
         #region BusLineAtBusStop
-        BO.BusLineAtBusStop BusLinetoBusLineAtStopConvertor(BO.BusLine busLine)
+        BO.BusLineAtBusStop BusLinetoBusLineAtStopConvertor(BO.BusLine busLine, int busStopCode)
         {
             BO.BusLineAtBusStop busLineAtBusStop = new BO.BusLineAtBusStop();
             busLine.CopyPropertiesTo(busLineAtBusStop);
             busLineAtBusStop.LastBusStopName = dl.GetBusStop(busLineAtBusStop.LastBusStopKey).BusStopName;
+            busLineAtBusStop.TravelTimeToBusStop = StationTravelTimeCalculation(busLine.BusLineID, busStopCode);
             return busLineAtBusStop;
         }
         #endregion
@@ -722,85 +723,19 @@ namespace BL
         }
         #endregion
 
-        #region Time simulator
-
-        public class Clock
-        {
-            // Lazy singleton:
-            class Nested
-            {
-                static Nested() { }
-                internal static readonly Clock instance = new Clock();
-            }
-
-            static Clock() { }
-            Clock() { }
-            public static Clock Instance { get { return Nested.instance; } }
-
-            // Event Handler
-
-
-            private TimeSpan currentValue = TimeSpan.Zero;
-
-            public event EventHandler ValueChanged;
-
-            protected void OnValueChanged(ValueChangedEventArgs args)
-            {
-                if (ValueChanged != null)
-                {
-                    ValueChanged(this, args);
-                }
-            }
-
-            public TimeSpan Value
-            {
-                get => currentValue;
-
-                set
-                {
-                    ValueChangedEventArgs args = new ValueChangedEventArgs(value);
-                    currentValue = value;
-                    OnValueChanged(args);
-                }
-            }
-
-            public class ValueChangedEventArgs : EventArgs
-            {
-                public readonly TimeSpan NewValue;
-
-                public ValueChangedEventArgs(TimeSpan newTemp)
-                {
-                    NewValue = newTemp;
-                }
-            }
-
-
-        }
-
-        public void StartSimulator(TimeSpan startTime, int Rate, Action<TimeSpan> updateTime)
-        {
-
-
-        }
-
-        public void StopSimulator()
-        {
-            throw new NotImplementedException();
-        }
 
         public IEnumerable<LineTiming> GetLineTimingsPerStation(BusStop currBusStop, TimeSpan tsCurrentTime)
         {
             IEnumerable<LineTiming> stationTimings = from lineAtStop in GetBusStop(currBusStop.BusStopKey).LinesStopHere
                                                      let depTime = FindLastDepartureTime(lineAtStop.BusLineID, tsCurrentTime)
-                                                     let travelTime = StationTimeCalculation(lineAtStop.BusLineID, currBusStop.BusStopKey)
-                                                     let timeLeft = depTime.Add(travelTime).Subtract(tsCurrentTime)
+                                                     let timeLeft = depTime.Add(lineAtStop.TravelTimeToBusStop).Subtract(tsCurrentTime)
                                                      where timeLeft.CompareTo(TimeSpan.FromMinutes(-5)) > 0 // It means the bus is late or passed maximum by 5 minutes
                                                      select new LineTiming
                                                      {
                                                          BusLineNumber = lineAtStop.BusLineNumber,
                                                          LastBusStopName = lineAtStop.LastBusStopName,
                                                          DepartureTime = depTime,
-                                                         ArrivalTime = depTime.Add(travelTime),
+                                                         ArrivalTime = depTime.Add(lineAtStop.TravelTimeToBusStop),
                                                          MinutesToArrival = timeLeft.Minutes,
                                                          ShowMinutesOrArrow = timeLeft.CompareTo(TimeSpan.Zero) > 0 ? timeLeft.Minutes.ToString() : "↓",
                                                      };
@@ -818,13 +753,17 @@ namespace BL
                 return TimeSpan.FromMinutes(-1000); // A very far number so it will be exculded in the Linq Query of GetLineTimingsPerStation
             else
             {
-                var lastDep = collection.OrderBy(x => tsCurrentTime.Subtract(x.DepartureTime)).First().DepartureTime;
-                return lastDep;
+                var collB = collection.OrderBy(x => tsCurrentTime.Subtract(x.DepartureTime));
+                var lastDep = collB.FirstOrDefault(x => tsCurrentTime.Subtract(x.DepartureTime).CompareTo(TimeSpan.Zero) > 0);
+                if (lastDep == null)
+                    return TimeSpan.FromMinutes(-1000);
+                else
+                    return lastDep.DepartureTime;
             }
         }
 
 
-        public TimeSpan StationTimeCalculation(int busLineID, int busStopCode)
+        public TimeSpan StationTravelTimeCalculation(int busLineID, int busStopCode)
         {
             var collection = GetBusLine(busLineID).LineStations.TakeWhile(x => x.BusStopKey != busStopCode);
             if (collection == null) // It means that the bus stop is the first one, so it returns zero timeSpan
@@ -837,6 +776,6 @@ namespace BL
                 return calc;
             }
         }
-        #endregion
+
     }
 }

@@ -12,6 +12,7 @@ namespace BO
         public int BusLineNumber { get; set; }
         public int LastBusStopKey { get; set; }
         public string LastBusStopName { get; set; }
+        public TimeSpan TravelTimeToBusStop { get; set; }
 
 
         /// <summary>

@@ -28,8 +28,6 @@ namespace PlGui
     public partial class PassengerUI_Window : Window, INotifyPropertyChanged // Inotify - for the clock simulator property changes
     {
         IBL bl = BLFactory.GetBL("1");
-        DateTime inputTime;
-        int secondsInterval;
         BO.User passenger;
         BO.BusStop busStop;
 
@@ -45,13 +43,13 @@ namespace PlGui
             InitializeComponent();
             passenger = user;
             changeTitleAsDayTime();
-            timeEdit.Text = DateTime.Now.ToString("hh:mm:ss");
+            timeEdit.Text = DateTime.Now.ToString("HH:mm:ss");
             cbBusStop.ItemsSource = bl.GetAllBusStops().OrderBy(busStop => busStop.BusStopKey);
         }
 
 
 
-      
+
         private void Start_Pause_Click(object sender, RoutedEventArgs e)
         {
             if (tbStart_Pause.Text == "Start")
@@ -62,20 +60,25 @@ namespace PlGui
                 {
                     RunningTime = inputTime;
                     shouldStop = false;
+                    secondsInterval = (int)intervalSlider.Value;
                     RunClock();
                     tbStart_Pause.Text = "Pause";
                     timeDisplay.Visibility = Visibility.Visible;
                     timeEdit.Visibility = Visibility.Collapsed;
-                    secondsInterval = (int)intervalSlider.Value;
+                    intervalSlider.IsEnabled = false;
+                    cbBusStop.IsEnabled = false;
                 }
             }
             else if (tbStart_Pause.Text == "Pause")
             {
                 timeEdit.Text = RunningTime.ToString();
+                clockWorker.CancelAsync();
                 shouldStop = true;
                 tbStart_Pause.Text = "Start";
                 timeDisplay.Visibility = Visibility.Collapsed;
                 timeEdit.Visibility = Visibility.Visible;
+                intervalSlider.IsEnabled = true;
+                cbBusStop.IsEnabled = true;
             }
         }
 
@@ -114,6 +117,9 @@ namespace PlGui
         }
 
         //////////////////////////////////////////////// CLOCK ////////////////////////////////////////////////
+        ///
+
+        int secondsInterval;
         // For updating the simulator clock on the GUI we used the PropertyChanged method
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string property)
@@ -143,17 +149,23 @@ namespace PlGui
 
         public void RunClock()
         {
-
+            int t = 60 / secondsInterval;
             clockWorker.WorkerReportsProgress = true;
+            clockWorker.WorkerSupportsCancellation = true;
 
             clockWorker.ProgressChanged += (sender, args) =>
             {
                 timeDisplay.Text = RunningTime.ToString();
                 RunningTime = RunningTime.Add(TimeSpan.FromSeconds(secondsInterval));
-                var minutesToBus = bl.GetLineTimingsPerStation(busStop, RunningTime);
-                //if (minutesToBus.Count() == 0)
-                //    tbNoBuses.Visibility = Visibility.Visible;
-                //lvMinutesToBus.ItemsSource = minutesToBus;
+                if (t == 60 / secondsInterval)
+                {
+                    var minutesToBus = bl.GetLineTimingsPerStation(busStop, RunningTime);
+                    if (minutesToBus.Count() == 0)
+                        tbNoBuses.Visibility = Visibility.Visible;
+                    lvMinutesToBus.ItemsSource = minutesToBus;
+                    t = 0;
+                }
+                t++;
             };
 
             clockWorker.DoWork += (sender, args) =>
@@ -167,7 +179,7 @@ namespace PlGui
                     while (shouldStop == false)
                     {
                         clockWorker.ReportProgress(0);
-                        try { Thread.Sleep(100); } catch (Exception) { }
+                        try { Thread.Sleep(1000); } catch (Exception) { }
                     }
                 }
             };
@@ -187,5 +199,6 @@ namespace PlGui
                 }
             };
         }
+
     }
 }
