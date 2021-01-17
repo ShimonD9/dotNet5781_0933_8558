@@ -48,7 +48,7 @@ namespace PlGui
         }
 
 
-
+        bool everStarted = false;
 
         private void Start_Pause_Click(object sender, RoutedEventArgs e)
         {
@@ -58,10 +58,12 @@ namespace PlGui
                     MessageBox.Show("Wrong time input!");
                 else
                 {
-                    RunningTime = inputTime;
                     shouldStop = false;
-                    secondsInterval = (int)intervalSlider.Value;
-                    RunClock();
+                    RunningTime = inputTime;
+                    if (!everStarted)
+                        RunClock();
+                    else clockWorker.RunWorkerAsync();
+                    everStarted = true;
                     tbStart_Pause.Text = "Pause";
                     timeDisplay.Visibility = Visibility.Visible;
                     timeEdit.Visibility = Visibility.Collapsed;
@@ -71,8 +73,11 @@ namespace PlGui
             }
             else if (tbStart_Pause.Text == "Pause")
             {
+                if (clockWorker.IsBusy)
+                {
+                    clockWorker.CancelAsync();
+                }
                 timeEdit.Text = RunningTime.ToString();
-                clockWorker.CancelAsync();
                 shouldStop = true;
                 tbStart_Pause.Text = "Start";
                 timeDisplay.Visibility = Visibility.Collapsed;
@@ -86,13 +91,14 @@ namespace PlGui
         {
 
             string time = "Hello, ";
-            if (DateTime.Now.Hour > 5 && DateTime.Now.Hour < 12)
+            int hour = RunningTime.Hours;
+            if (hour > 5 && hour < 12)
                 time = "Good morning, ";
-            else if (DateTime.Now.Hour >= 12 && DateTime.Now.Hour < 17)
+            else if (hour >= 12 && hour < 17)
                 time = "Good afternoon, ";
-            else if (DateTime.Now.Hour >= 17 && DateTime.Now.Hour < 20)
+            else if (hour >= 17 && hour < 20)
                 time = "Good evening, ";
-            else if (DateTime.Now.Hour >= 20 || DateTime.Now.Hour < 5)
+            else if (hour >= 20 || hour < 5)
                 time = "Good night, ";
             PassengerWindow.Title = time + passenger.UserName;
         }
@@ -106,6 +112,7 @@ namespace PlGui
 
         private void cbBusStop_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Start_Pause.IsEnabled = true;
             tbNoBuses.Visibility = Visibility.Collapsed;
             busStop = cbBusStop.SelectedItem as BO.BusStop;
             lvLinesStopHere.DataContext = busStop;
@@ -149,19 +156,24 @@ namespace PlGui
 
         public void RunClock()
         {
-            int t = 60 / secondsInterval;
+            int t = 5;
             clockWorker.WorkerReportsProgress = true;
             clockWorker.WorkerSupportsCancellation = true;
 
             clockWorker.ProgressChanged += (sender, args) =>
             {
+                secondsInterval = (int)intervalSlider.Value;
                 timeDisplay.Text = RunningTime.ToString();
                 RunningTime = RunningTime.Add(TimeSpan.FromSeconds(secondsInterval));
-                if (t == 60 / secondsInterval)
+                changeTitleAsDayTime();
+                if (RunningTime.Days > 0) RunningTime = RunningTime.Subtract(TimeSpan.FromDays(RunningTime.Days));
+                if (t == 5)
                 {
                     var minutesToBus = bl.GetLineTimingsPerStation(busStop, RunningTime);
                     if (minutesToBus.Count() == 0)
                         tbNoBuses.Visibility = Visibility.Visible;
+                    else
+                        tbNoBuses.Visibility = Visibility.Collapsed;
                     lvMinutesToBus.ItemsSource = minutesToBus;
                     t = 0;
                 }
@@ -185,7 +197,10 @@ namespace PlGui
             };
 
             if (clockWorker.IsBusy != true)
+            {
                 clockWorker.RunWorkerAsync();
+            }
+                
 
             clockWorker.RunWorkerCompleted += (sender, args) =>
             {
@@ -199,6 +214,15 @@ namespace PlGui
                 }
             };
         }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            if (clockWorker.IsBusy)
+            {
+                clockWorker.CancelAsync();
+            }
+        }
+
 
     }
 }

@@ -46,6 +46,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Border  Grid.Row="0"  BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="7">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Ross Bus Company Ltd." Style="{StaticResource TitleText}"/>
@@ -82,6 +83,10 @@
         <StackPanel HorizontalAlignment="Center" Grid.Row="6" Orientation="Horizontal">
             <Button Name="bSignUp" Width="200" Height="50" Margin="0,0,10,0"  HorizontalAlignment="Center" Content="Sign up" VerticalAlignment="Center"  FontSize="30" FontWeight="Bold" Cursor="Hand" Click="ButtonSignUp_Click"/>
             <Button Name="bSignIn" Width="200" Height="50" Margin="0,0,0,0"  HorizontalAlignment="Center" Content="Sign in" VerticalAlignment="Center" FontSize="30" FontWeight="Bold" Cursor="Hand" Click="ButtonSignIn_Click"/>
+        </StackPanel>
+
+        <StackPanel Name="spCreated" HorizontalAlignment="Center" Grid.Row="7" Orientation="Horizontal"   MouseLeave="spInfo_MouseLeave">
+            <Label Name="lblCreated" Content="Powered by Mendy Ben Ezra and Shimon Dyskin 2021 Ⓒ"  HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" FontSize="13" FontWeight="Bold" Foreground="RoyalBlue"/>
         </StackPanel>
     </Grid>
 </Window>
