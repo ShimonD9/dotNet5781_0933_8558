@@ -49,7 +49,7 @@ namespace PlGui
 
 
 
-      
+
         private void Start_Pause_Click(object sender, RoutedEventArgs e)
         {
             if (tbStart_Pause.Text == "Start")
@@ -60,11 +60,13 @@ namespace PlGui
                 {
                     RunningTime = inputTime;
                     shouldStop = false;
+                    secondsInterval = (int)intervalSlider.Value;
                     RunClock();
                     tbStart_Pause.Text = "Pause";
                     timeDisplay.Visibility = Visibility.Visible;
                     timeEdit.Visibility = Visibility.Collapsed;
-                    secondsInterval = (int)intervalSlider.Value;
+                    intervalSlider.IsEnabled = false;
+                    cbBusStop.IsEnabled = false;
                 }
             }
             else if (tbStart_Pause.Text == "Pause")
@@ -74,6 +76,8 @@ namespace PlGui
                 tbStart_Pause.Text = "Start";
                 timeDisplay.Visibility = Visibility.Collapsed;
                 timeEdit.Visibility = Visibility.Visible;
+                intervalSlider.IsEnabled = true;
+                cbBusStop.IsEnabled = true;
             }
         }
 
@@ -112,6 +116,7 @@ namespace PlGui
         }
 
         //////////////////////////////////////////////// CLOCK ////////////////////////////////////////////////
+        ///
         // For updating the simulator clock on the GUI we used the PropertyChanged method
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string property)
@@ -141,17 +146,22 @@ namespace PlGui
 
         public void RunClock()
         {
-
+            int t = 120 / secondsInterval;
             clockWorker.WorkerReportsProgress = true;
 
             clockWorker.ProgressChanged += (sender, args) =>
             {
                 timeDisplay.Text = RunningTime.ToString();
                 RunningTime = RunningTime.Add(TimeSpan.FromSeconds(secondsInterval));
-                var minutesToBus = bl.GetLineTimingsPerStation(busStop, RunningTime);
-                if (minutesToBus.Count() == 0)
+                if (t == 120 / secondsInterval) // Per minute should update the table
+                {
+                    var minutesToBus = bl.GetLineTimingsPerStation(busStop, RunningTime);
+                    if (minutesToBus.Count() == 0)
                     tbNoBuses.Visibility = Visibility.Visible;
-                lvMinutesToBus.ItemsSource = minutesToBus;
+                    lvMinutesToBus.ItemsSource = minutesToBus;
+                    t = -1;
+                }
+                t++;
             };
 
             clockWorker.DoWork += (sender, args) =>
@@ -165,7 +175,7 @@ namespace PlGui
                     while (shouldStop == false)
                     {
                         clockWorker.ReportProgress(0);
-                        try { Thread.Sleep(100); } catch (Exception) { }
+                        try { Thread.Sleep(1000); } catch (Exception) { }
                     }
                 }
             };

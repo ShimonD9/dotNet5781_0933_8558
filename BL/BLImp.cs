@@ -818,8 +818,12 @@ namespace BL
                 return TimeSpan.FromMinutes(-1000); // A very far number so it will be exculded in the Linq Query of GetLineTimingsPerStation
             else
             {
-                var lastDep = collection.OrderBy(x => tsCurrentTime.Subtract(x.DepartureTime)).First().DepartureTime;
-                return lastDep;
+                    var collB = collection.OrderBy(x => tsCurrentTime.Subtract(x.DepartureTime));
+                var lastDep = collB.FirstOrDefault(x => tsCurrentTime.Subtract(x.DepartureTime).CompareTo(TimeSpan.Zero) > 0);
+                if (lastDep == null)
+                    return TimeSpan.FromMinutes(-1000);
+                else
+                    return lastDep.DepartureTime;
             }
         }
 
