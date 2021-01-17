@@ -28,8 +28,6 @@ namespace PlGui
     public partial class PassengerUI_Window : Window, INotifyPropertyChanged // Inotify - for the clock simulator property changes
     {
         IBL bl = BLFactory.GetBL("1");
-        DateTime inputTime;
-        int secondsInterval;
         BO.User passenger;
         BO.BusStop busStop;
 
@@ -134,7 +132,7 @@ namespace PlGui
             set { runningTime = value; OnPropertyChanged("RunningTime"); }
         }
 
-
+        int secondsInterval;
 
         public static bool shouldStop = true;
 
@@ -151,9 +149,9 @@ namespace PlGui
                 timeDisplay.Text = RunningTime.ToString();
                 RunningTime = RunningTime.Add(TimeSpan.FromSeconds(secondsInterval));
                 var minutesToBus = bl.GetLineTimingsPerStation(busStop, RunningTime);
-                //if (minutesToBus.Count() == 0)
-                //    tbNoBuses.Visibility = Visibility.Visible;
-                //lvMinutesToBus.ItemsSource = minutesToBus;
+                if (minutesToBus.Count() == 0)
+                    tbNoBuses.Visibility = Visibility.Visible;
+                lvMinutesToBus.ItemsSource = minutesToBus;
             };
 
             clockWorker.DoWork += (sender, args) =>
