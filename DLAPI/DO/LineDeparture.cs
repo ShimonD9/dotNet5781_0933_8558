@@ -15,6 +15,7 @@ namespace DO
         public int BusLineID { get; set; }
 
         private TimeSpan departureTime;
+
         [XmlIgnore]
         public TimeSpan DepartureTime
         {
