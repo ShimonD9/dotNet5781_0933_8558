@@ -498,7 +498,7 @@ namespace PlGui
             else
                 try
                 {
-                    if (TimeSpan.TryParse(tbAddDeparture.GetLineText(0), out TimeSpan timeDeparture))
+                    if (TimeSpan.TryParse(tbAddDeparture.GetLineText(0), out TimeSpan timeDeparture) || timeDeparture.Hours > 23 || timeDeparture.Minutes > 59 || timeDeparture.Seconds > 59)
                     {
                         bl.AddLineDeparture(timeDeparture, busLine.BusLineID);
                         BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
