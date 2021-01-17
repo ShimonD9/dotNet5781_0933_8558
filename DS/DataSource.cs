@@ -1353,7 +1353,7 @@ namespace DS
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[0].BusLineID,
-                    DepartureTime = new TimeSpan(23,45,0),
+                    DepartureTime = new TimeSpan(6,0,0),
                     ObjectActive=true,
                  },
 
@@ -1361,7 +1361,7 @@ namespace DS
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[0].BusLineID,
-                    DepartureTime = new TimeSpan(10,50,0),
+                    DepartureTime = new TimeSpan(7,50,0),
                     ObjectActive=true,
                  },
                  new LineDeparture
@@ -1369,27 +1369,6 @@ namespace DS
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[0].BusLineID,
                     DepartureTime = new TimeSpan(8,30,0),
-                    ObjectActive=true,
-                 },
-                 new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[0].BusLineID,
-                    DepartureTime = new TimeSpan(12,0,0),
-                    ObjectActive=true,
-                 },
-                 new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[0].BusLineID,
-                    DepartureTime = new TimeSpan(7,0,0),
-                    ObjectActive=true,
-                 },
-                 new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[0].BusLineID,
-                    DepartureTime = new TimeSpan(11,0,0),
                     ObjectActive=true,
                  },
                  new LineDeparture
@@ -1403,21 +1382,42 @@ namespace DS
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[0].BusLineID,
-                    DepartureTime = new TimeSpan(22,30,0),
+                    DepartureTime = new TimeSpan(11,0,0),
                     ObjectActive=true,
                  },
                  new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[0].BusLineID,
-                    DepartureTime = new TimeSpan(23,00,0),
+                    DepartureTime = new TimeSpan(13,0,0),
                     ObjectActive=true,
                  },
                  new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[0].BusLineID,
-                     DepartureTime = new TimeSpan(13,45,0),
+                    DepartureTime = new TimeSpan(14,0,0),
+                    ObjectActive=true,
+                 },
+                 new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[0].BusLineID,
+                    DepartureTime = new TimeSpan(16,30,0),
+                    ObjectActive=true,
+                 },
+                 new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[0].BusLineID,
+                    DepartureTime = new TimeSpan(18,0,0),
+                    ObjectActive=true,
+                 },
+                 new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[0].BusLineID,
+                     DepartureTime = new TimeSpan(19,0,0),
                     ObjectActive=true,
                  },
                  new LineDeparture
@@ -1431,125 +1431,62 @@ namespace DS
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[1].BusLineID,
-                    DepartureTime = new TimeSpan(23,45,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[1].BusLineID,
-                    DepartureTime = new TimeSpan(14,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[1].BusLineID,
-                    DepartureTime = new TimeSpan(8,45,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[1].BusLineID,
-                    DepartureTime = new TimeSpan(11,0,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[1].BusLineID,
-                    DepartureTime = new TimeSpan(6,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[1].BusLineID,
-                    DepartureTime = new TimeSpan(22,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[1].BusLineID,
-                    DepartureTime = new TimeSpan(8,10,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[1].BusLineID,
-                    DepartureTime = new TimeSpan(9,15,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[1].BusLineID,
-                    DepartureTime = new TimeSpan(10,50,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[2].BusLineID,
-                     DepartureTime = new TimeSpan(22,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[2].BusLineID,
-                    DepartureTime = new TimeSpan(15,0,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[2].BusLineID,
-                    DepartureTime = new TimeSpan(5,45,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[2].BusLineID,
-                    DepartureTime = new TimeSpan(23,45,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[2].BusLineID,
-                    DepartureTime = new TimeSpan(11,15,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[2].BusLineID,
                     DepartureTime = new TimeSpan(9,30,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[2].BusLineID,
-                    DepartureTime = new TimeSpan(8,30,0),
+                    BusLineID = ListBusLines[1].BusLineID,
+                    DepartureTime = new TimeSpan(10,30,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[2].BusLineID,
-                    DepartureTime = new TimeSpan(20,05,0),
+                    BusLineID = ListBusLines[1].BusLineID,
+                    DepartureTime = new TimeSpan(11,45,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[2].BusLineID,
+                    BusLineID = ListBusLines[1].BusLineID,
+                    DepartureTime = new TimeSpan(12,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[1].BusLineID,
+                    DepartureTime = new TimeSpan(13,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[1].BusLineID,
+                    DepartureTime = new TimeSpan(15,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[1].BusLineID,
+                    DepartureTime = new TimeSpan(16,10,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[1].BusLineID,
+                    DepartureTime = new TimeSpan(17,15,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[1].BusLineID,
                     DepartureTime = new TimeSpan(19,20,0),
                     ObjectActive=true,
                  },
@@ -1557,217 +1494,280 @@ namespace DS
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[2].BusLineID,
-                    DepartureTime = new TimeSpan(13,30,0),
+                     DepartureTime = new TimeSpan(10,30,0),
                     ObjectActive=true,
                  },
-                    new LineDeparture
+                   new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[3].BusLineID,
+                    BusLineID = ListBusLines[2].BusLineID,
+                    DepartureTime = new TimeSpan(11,20,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[2].BusLineID,
                     DepartureTime = new TimeSpan(12,30,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[2].BusLineID,
+                    DepartureTime = new TimeSpan(14,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[2].BusLineID,
+                    DepartureTime = new TimeSpan(15,10,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[2].BusLineID,
+                    DepartureTime = new TimeSpan(16,40,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[2].BusLineID,
+                    DepartureTime = new TimeSpan(18,00,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[2].BusLineID,
+                    DepartureTime = new TimeSpan(20,00,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[2].BusLineID,
+                    DepartureTime = new TimeSpan(21,20,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[2].BusLineID,
+                    DepartureTime = new TimeSpan(22,15,0),
+                    ObjectActive=true,
+                 },
+                    new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[3].BusLineID,
+                    DepartureTime = new TimeSpan(13,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[3].BusLineID,
+                    DepartureTime = new TimeSpan(14,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[3].BusLineID,
+                     DepartureTime = new TimeSpan(15,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[3].BusLineID,
+                    DepartureTime = new TimeSpan(16,45,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[3].BusLineID,
+                    DepartureTime = new TimeSpan(18,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[3].BusLineID,
+                    DepartureTime = new TimeSpan(19,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[3].BusLineID,
+                    DepartureTime = new TimeSpan(21,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[3].BusLineID,
+                    DepartureTime = new TimeSpan(22,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[3].BusLineID,
+                    DepartureTime = new TimeSpan(6,20,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[3].BusLineID,
+                    DepartureTime = new TimeSpan(23,30,0),
+                    ObjectActive=true,
+                 },
+                    new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[4].BusLineID,
+                    DepartureTime = new TimeSpan(10,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[4].BusLineID,
+                     DepartureTime = new TimeSpan(11,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[4].BusLineID,
+                    DepartureTime = new TimeSpan(13,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[4].BusLineID,
+                    DepartureTime = new TimeSpan(14,15,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[4].BusLineID,
+                    DepartureTime = new TimeSpan(16,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[4].BusLineID,
+                    DepartureTime = new TimeSpan(17,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[4].BusLineID,
+                    DepartureTime = new TimeSpan(19,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[4].BusLineID,
+                     DepartureTime = new TimeSpan(20,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[4].BusLineID,
+                    DepartureTime = new TimeSpan(21,20,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[4].BusLineID,
+                    DepartureTime = new TimeSpan(22,15,0),
+                    ObjectActive=true,
+                 },
+                    new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[5].BusLineID,
                     DepartureTime = new TimeSpan(15,0,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[3].BusLineID,
-                     DepartureTime = new TimeSpan(22,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[3].BusLineID,
-                    DepartureTime = new TimeSpan(10,0,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[3].BusLineID,
-                    DepartureTime = new TimeSpan(19,55,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[3].BusLineID,
-                    DepartureTime = new TimeSpan(9,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[3].BusLineID,
-                    DepartureTime = new TimeSpan(8,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[3].BusLineID,
-                    DepartureTime = new TimeSpan(23,45,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[3].BusLineID,
-                    DepartureTime = new TimeSpan(6,20,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[3].BusLineID,
-                    DepartureTime = new TimeSpan(13,30,0),
-                    ObjectActive=true,
-                 },
-                    new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[4].BusLineID,
-                    DepartureTime = new TimeSpan(12,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[4].BusLineID,
-                     DepartureTime = new TimeSpan(22,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[4].BusLineID,
-                    DepartureTime = new TimeSpan(5,45,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[4].BusLineID,
-                    DepartureTime = new TimeSpan(10,0,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[4].BusLineID,
-                    DepartureTime = new TimeSpan(11,15,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[4].BusLineID,
-                    DepartureTime = new TimeSpan(9,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[4].BusLineID,
-                    DepartureTime = new TimeSpan(8,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[4].BusLineID,
-                     DepartureTime = new TimeSpan(22,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[4].BusLineID,
-                    DepartureTime = new TimeSpan(6,20,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[4].BusLineID,
-                    DepartureTime = new TimeSpan(23,45,0),
-                    ObjectActive=true,
-                 },
-                    new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[5].BusLineID,
-                    DepartureTime = new TimeSpan(12,30,0),
+                    DepartureTime = new TimeSpan(16,0,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[5].BusLineID,
-                    DepartureTime = new TimeSpan(15,0,0),
+                    DepartureTime = new TimeSpan(17,0,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[5].BusLineID,
-                    DepartureTime = new TimeSpan(5,45,0),
+                    DepartureTime = new TimeSpan(18,0,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[5].BusLineID,
-                    DepartureTime = new TimeSpan(10,0,0),
+                     DepartureTime = new TimeSpan(19,30,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[5].BusLineID,
-                     DepartureTime = new TimeSpan(22,30,0),
+                    DepartureTime = new TimeSpan(21,0,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[5].BusLineID,
-                    DepartureTime = new TimeSpan(9,30,0),
+                    DepartureTime = new TimeSpan(22,30,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[5].BusLineID,
-                    DepartureTime = new TimeSpan(23,45,0),
+                    DepartureTime = new TimeSpan(23,30,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[5].BusLineID,
-                    DepartureTime = new TimeSpan(10,40,0),
+                    DepartureTime = new TimeSpan(00,0,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[5].BusLineID,
-                    DepartureTime = new TimeSpan(6,20,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[5].BusLineID,
-                    DepartureTime = new TimeSpan(13,30,0),
+                    DepartureTime = new TimeSpan(00,30,0),
                     ObjectActive=true,
                  },
                     new LineDeparture
@@ -1775,6 +1775,55 @@ namespace DS
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[6].BusLineID,
                     DepartureTime = new TimeSpan(12,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[6].BusLineID,
+                    DepartureTime = new TimeSpan(13,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[6].BusLineID,
+                    DepartureTime = new TimeSpan(14,45,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[6].BusLineID,
+                    DepartureTime = new TimeSpan(15,45,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[6].BusLineID,
+                    DepartureTime = new TimeSpan(17,15,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[6].BusLineID,
+                    DepartureTime = new TimeSpan(18,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[6].BusLineID,
+                    DepartureTime = new TimeSpan(20,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[6].BusLineID,
+                    DepartureTime = new TimeSpan(21,00,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
@@ -1788,91 +1837,21 @@ namespace DS
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[6].BusLineID,
-                    DepartureTime = new TimeSpan(5,45,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[6].BusLineID,
-                    DepartureTime = new TimeSpan(10,0,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[6].BusLineID,
-                    DepartureTime = new TimeSpan(11,15,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[6].BusLineID,
-                    DepartureTime = new TimeSpan(9,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[6].BusLineID,
-                    DepartureTime = new TimeSpan(23,45,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[6].BusLineID,
-                    DepartureTime = new TimeSpan(10,40,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[6].BusLineID,
-                    DepartureTime = new TimeSpan(6,20,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[6].BusLineID,
-                    DepartureTime = new TimeSpan(13,30,0),
+                    DepartureTime = new TimeSpan(23,30,0),
                     ObjectActive=true,
                  },
                     new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[7].BusLineID,
-                   DepartureTime = new TimeSpan(22,30,0),
+                   DepartureTime = new TimeSpan(5,30,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[7].BusLineID,
-                    DepartureTime = new TimeSpan(15,0,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[7].BusLineID,
-                    DepartureTime = new TimeSpan(5,45,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[7].BusLineID,
-                    DepartureTime = new TimeSpan(10,0,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[7].BusLineID,
-                    DepartureTime = new TimeSpan(11,15,0),
+                    DepartureTime = new TimeSpan(7,30,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
@@ -1886,14 +1865,35 @@ namespace DS
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[7].BusLineID,
-                    DepartureTime = new TimeSpan(8,30,0),
+                    DepartureTime = new TimeSpan(11,30,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[7].BusLineID,
-                    DepartureTime = new TimeSpan(10,40,0),
+                    DepartureTime = new TimeSpan(13,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[7].BusLineID,
+                    DepartureTime = new TimeSpan(15,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[7].BusLineID,
+                    DepartureTime = new TimeSpan(17,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[7].BusLineID,
+                    DepartureTime = new TimeSpan(19,30,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
@@ -1907,38 +1907,10 @@ namespace DS
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[7].BusLineID,
-                    DepartureTime = new TimeSpan(13,30,0),
+                    DepartureTime = new TimeSpan(22,30,0),
                     ObjectActive=true,
                  },
                     new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[8].BusLineID,
-                    DepartureTime = new TimeSpan(12,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[8].BusLineID,
-                    DepartureTime = new TimeSpan(15,0,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[8].BusLineID,
-                    DepartureTime = new TimeSpan(5,45,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[8].BusLineID,
-                    DepartureTime = new TimeSpan(10,0,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[8].BusLineID,
@@ -1949,42 +1921,127 @@ namespace DS
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[8].BusLineID,
-                     DepartureTime = new TimeSpan(22,30,0),
+                    DepartureTime = new TimeSpan(12,30,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[8].BusLineID,
-                    DepartureTime = new TimeSpan(8,30,0),
+                    DepartureTime = new TimeSpan(13,45,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[8].BusLineID,
-                    DepartureTime = new TimeSpan(10,40,0),
+                    DepartureTime = new TimeSpan(15,15,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[8].BusLineID,
-                    DepartureTime = new TimeSpan(6,20,0),
+                    DepartureTime = new TimeSpan(16,30,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[8].BusLineID,
-                    DepartureTime = new TimeSpan(13,30,0),
+                     DepartureTime = new TimeSpan(17,45,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[8].BusLineID,
+                    DepartureTime = new TimeSpan(19,15,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[8].BusLineID,
+                    DepartureTime = new TimeSpan(20,30,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[8].BusLineID,
+                    DepartureTime = new TimeSpan(21,45,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[8].BusLineID,
+                    DepartureTime = new TimeSpan(23,0,0),
                     ObjectActive=true,
                  },
                     new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
                     BusLineID = ListBusLines[9].BusLineID,
-                    DepartureTime = new TimeSpan(12,30,0),
+                    DepartureTime = new TimeSpan(6,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[9].BusLineID,
+                    DepartureTime = new TimeSpan(7,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[9].BusLineID,
+                    DepartureTime = new TimeSpan(8,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[9].BusLineID,
+                    DepartureTime = new TimeSpan(9,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[9].BusLineID,
+                     DepartureTime = new TimeSpan(10,0,0),
+                    ObjectActive=true,
+                 },
+
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[9].BusLineID,
+                    DepartureTime = new TimeSpan(11,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[9].BusLineID,
+                    DepartureTime = new TimeSpan(12,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[9].BusLineID,
+                    DepartureTime = new TimeSpan(13,0,0),
+                    ObjectActive=true,
+                 },
+                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[9].BusLineID,
+                    DepartureTime = new TimeSpan(14,0,0),
                     ObjectActive=true,
                  },
                    new LineDeparture
@@ -1994,63 +2051,77 @@ namespace DS
                     DepartureTime = new TimeSpan(15,0,0),
                     ObjectActive=true,
                  },
-                   new LineDeparture
+                     new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[9].BusLineID,
-                    DepartureTime = new TimeSpan(5,45,0),
+                    BusLineID = ListBusLines[10].BusLineID,
+                    DepartureTime = new TimeSpan(12,40,0),
                     ObjectActive=true,
                  },
-                   new LineDeparture
+                       new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[9].BusLineID,
-                    DepartureTime = new TimeSpan(10,0,0),
+                    BusLineID = ListBusLines[10].BusLineID,
+                    DepartureTime = new TimeSpan(14,0,0),
                     ObjectActive=true,
                  },
-                   new LineDeparture
+                         new LineDeparture
                  {
                     DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[9].BusLineID,
-                     DepartureTime = new TimeSpan(22,30,0),
+                    BusLineID = ListBusLines[10].BusLineID,
+                    DepartureTime = new TimeSpan(15,0,0),
+                    ObjectActive=true,
+                 },
+                           new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[10].BusLineID,
+                    DepartureTime = new TimeSpan(16,15,0),
+                    ObjectActive=true,
+                 },
+                             new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[10].BusLineID,
+                    DepartureTime = new TimeSpan(17,15,0),
+                    ObjectActive=true,
+                 },
+                               new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[10].BusLineID,
+                    DepartureTime = new TimeSpan(18,45,0),
+                    ObjectActive=true,
+                 },
+                                 new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[10].BusLineID,
+                    DepartureTime = new TimeSpan(20,0,0),
+                    ObjectActive=true,
+                 },
+                                   new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[10].BusLineID,
+                    DepartureTime = new TimeSpan(21,15,0),
+                    ObjectActive=true,
+                 },
+                                     new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[10].BusLineID,
+                    DepartureTime = new TimeSpan(22,45,0),
+                    ObjectActive=true,
+                 },
+                                       new LineDeparture
+                 {
+                    DepartureID = Config.RunningNumLineDeparture,
+                    BusLineID = ListBusLines[10].BusLineID,
+                    DepartureTime = new TimeSpan(00,0,0),
                     ObjectActive=true,
                  },
 
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[9].BusLineID,
-                    DepartureTime = new TimeSpan(9,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[9].BusLineID,
-                    DepartureTime = new TimeSpan(8,30,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[9].BusLineID,
-                    DepartureTime = new TimeSpan(10,40,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[9].BusLineID,
-                    DepartureTime = new TimeSpan(6,20,0),
-                    ObjectActive=true,
-                 },
-                   new LineDeparture
-                 {
-                    DepartureID = Config.RunningNumLineDeparture,
-                    BusLineID = ListBusLines[9].BusLineID,
-                    DepartureTime = new TimeSpan(13,30,0),
-                    ObjectActive=true,
-                 }
              };
 
             ListBusAtTravels = new List<BusAtTravel>
