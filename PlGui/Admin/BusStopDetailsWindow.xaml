@@ -23,6 +23,9 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+
+                <!--Bus stop details-->
+
                 <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Grid ShowGridLines="True"  HorizontalAlignment="Center" Height="339" VerticalAlignment="Center" Width="333" Visibility="Visible">
                         <Grid.ColumnDefinitions>
@@ -54,6 +57,9 @@
                         <CheckBox Name="cbDigitalPanel" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=DigitalPanel, Mode=OneWay}"/>
                     </Grid>
                 </Border>
+
+                <!--Lines stoping here grid-->
+
                 <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Grid ShowGridLines="True"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="300" Width="300">
 
@@ -63,8 +69,11 @@
                             <RowDefinition Height="0.8*"/>
                         </Grid.RowDefinitions>
 
+                        <!--Lines stoping at the bus stop headline-->
                         <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Bus Lines stopping at this bus stop:" FontWeight="Bold" />
 
+
+                        <!--Lines stoping at the bus stop columns headlines-->
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="130" />
@@ -78,7 +87,8 @@
                                 <TextBlock  Text="Last Bus Stop Name" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="15" FontWeight="Bold"/>
                             </Border>
                         </Grid>
-                     
+
+                        <!--Lines stoping at the bus stop list view-->
 
                         <ListView Grid.Row="2" ItemsSource="{Binding Path='LinesStopHere'}" HorizontalAlignment="Stretch" >
                             <ListView.ItemTemplate>
@@ -104,6 +114,9 @@
                 </Border>
             </Grid>
         </Border>
+        
+        <!--Buttons grid-->
+        
         <Border Grid.Row="1">
             <Grid>
                 <Grid.ColumnDefinitions>

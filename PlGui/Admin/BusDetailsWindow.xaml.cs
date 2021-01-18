@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BLApi;
 using BO;
+using System.Text.RegularExpressions;
 
 namespace PlGui
 {
@@ -25,13 +26,18 @@ namespace PlGui
         IBL bl = BLFactory.GetBL("1");
         BO.Bus bus;
 
+        /// <summary>
+        /// Default window ctor
+        /// </summary>
+        public BusDetailsWindow()
+        {
+            InitializeComponent();
+        }
 
-        //public BusDetailsWindow()
-        //{
-        //    InitializeComponent();
-        //}
-
-        // A second builder, to get the item selected in the list box
+        /// <summary>
+        /// Second window ctor recieving the bus details double-clicked item
+        /// </summary>
+        /// <param name="item"></param>
         public BusDetailsWindow(object item)
         {
             InitializeComponent();
@@ -41,53 +47,61 @@ namespace PlGui
 
 
         /// <summary>
-        /// The refuel button click event
+        /// The update button click event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Button_Update(object sender, RoutedEventArgs e)
         {
+            // Chosen dates (of license and last treatment) declared:
             DateTime startDateChosen;
             DateTime treatDateChosen;
-            if (!dpLicenseDate.SelectedDate.HasValue || !dpTreatmentDate.SelectedDate.HasValue) // Checks if the user chose a date
+            try
             {
-                MessageBox.Show("You didn't fill the required date fields!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                // Checks if the user chose a date
+                if (!dpLicenseDate.SelectedDate.HasValue || !dpTreatmentDate.SelectedDate.HasValue) // Checks if the user chose a date
+                {
+                    MessageBox.Show("You didn't fill the required date fields!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    // The dates initialized:
+                    startDateChosen = dpLicenseDate.SelectedDate.Value;
+                    treatDateChosen = dpTreatmentDate.SelectedDate.Value;
+
+                    // Checks if the inputs are correct, and pops an appropriate message if not (not made in BL because the connection to the text box length and the double parse of string)                try
+                    {
+                        if (startDateChosen.Year < 2018 && tbLicense.Text.Length < 7
+                        || startDateChosen.Year > 2017 && tbLicense.Text.Length < 8)
+                        {
+                            MessageBox.Show("The license you entered is too short!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else if (!Double.TryParse(tbMileage.GetLineText(0), out double milNow) || !Double.TryParse(tbMileageAtTreat.GetLineText(0), out double milTreat))
+                        {
+                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                        else
+                        {
+                            // Initializes the new bus properties:
+                            bus.Fuel = sliderFuel.Value;
+                            bus.LicenseDate = startDateChosen;
+                            bus.LastTreatmentDate = treatDateChosen;
+                            bus.Mileage = double.Parse(tbMileage.Text);
+                            bus.MileageAtLastTreat = double.Parse(tbMileageAtTreat.Text);
+                            bl.UpdateBus(bus);
+                            this.Close(); // Closes the window
+                        }
+                    }
+
+                }
             }
-            else
+            catch (BO.ExceptionBL_KeyNotFound) // In case the bus doesn't exist or has been deactivated
             {
-                startDateChosen = dpLicenseDate.SelectedDate.Value;
-                treatDateChosen = dpTreatmentDate.SelectedDate.Value;
-                // Checks if the inputs are correct, and pops an appropriate message if not:
-                try
-                {
-                    if (startDateChosen.Year < 2018 && tbLicense.Text.Length < 7
-                    || startDateChosen.Year > 2017 && tbLicense.Text.Length < 8)
-                    {
-                        MessageBox.Show("The license you entered is too short!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
-                    else if (!Double.TryParse(tbMileage.GetLineText(0), out double milNow) || !Double.TryParse(tbMileageAtTreat.GetLineText(0), out double milTreat))
-                    {
-                        MessageBox.Show("You didn't fill correctly all the required information", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
-                    else if (double.Parse(tbMileageAtTreat.Text) > double.Parse(tbMileage.Text))
-                    {
-                        MessageBox.Show("The total mileage cannot be smaller than the mileage at the last treat!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
-                    else
-                    {
-                        bus.Fuel = sliderFuel.Value;
-                        bus.LicenseDate = startDateChosen;
-                        bus.LastTreatmentDate = treatDateChosen;
-                        bus.Mileage = double.Parse(tbMileage.Text);
-                        bus.MileageAtLastTreat = double.Parse(tbMileageAtTreat.Text);
-                        bl.UpdateBus(bus);                        
-                        this.Close(); // Closes the window
-                    }
-                }
-                catch (BO.ExceptionBL_KeyNotFound)
-                {
-                    MessageBox.Show("The bus license you entered already exists in the company!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                MessageBox.Show("License does not exist or bus inactive", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (BO.ExceptionBL_MileageValuesConflict) // In case there is a logical conflict between the two mileages entered
+            {
+                MessageBox.Show("The total mileage cannot be smaller than the mileage at the last treat!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -98,19 +112,34 @@ namespace PlGui
         /// <param name="e"></param>
         private void Button_Delete(object sender, RoutedEventArgs e)
         {
+            // Asks if the admin surely wants to delete the object:
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this bus?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+            
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
-                    bl.DeleteBus(bus.License);
+                    bl.DeleteBus(bus.License); // Calls the bl.DeleteBus function
                 }
-                catch (BO.ExceptionBL_KeyNotFound)
+                catch (BO.ExceptionBL_KeyNotFound) // Catchs and prints message if the bus wasn't found
                 {
                     MessageBox.Show("The bus license doesn't exist or the bus is inactive!", "Cannot delete the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 this.Close(); // Closes the window
             }
         }
+
+
+        /// <summary>
+        /// Preview keyboard input to numbers with dots
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9/.]$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
     }
 }

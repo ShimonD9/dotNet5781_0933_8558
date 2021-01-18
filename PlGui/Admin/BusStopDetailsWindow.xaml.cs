@@ -25,12 +25,18 @@ namespace PlGui
         IBL bl = BLFactory.GetBL("1");
         BO.BusStop busStop;
 
+        /// <summary>
+        /// Default window ctor
+        /// </summary>
         public BusStopDetailsWindow()
         {
             InitializeComponent();
         }
 
-        // A second builder, to get the item selected in the list box
+        /// <summary>
+        /// Second window ctor recieving the bus stop details double-clicked item
+        /// </summary>
+        /// <param name="item"></param>
         public BusStopDetailsWindow(object item)
         {
             InitializeComponent();
@@ -38,6 +44,11 @@ namespace PlGui
             busStop = item as BO.BusStop;
         }
 
+        /// <summary>
+        /// Update button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Update(object sender, RoutedEventArgs e)
         {
             try
@@ -68,6 +79,11 @@ namespace PlGui
             }
         }
 
+        /// <summary>
+        /// Delete button click event    
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Delete(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this bus stop?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
@@ -92,16 +108,29 @@ namespace PlGui
 
         // Using regex to unable wrongs inputs in the text box:
 
+
+        /// <summary>
+        /// Preview keyboard input to numbers with dots
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9/.]$");
             e.Handled = regex.IsMatch(e.Text);
         }
 
+
+        /// <summary>
+        /// Preview keyboard input to numbers only
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]$");
             e.Handled = regex.IsMatch(e.Text);
         }
+
     }
 }

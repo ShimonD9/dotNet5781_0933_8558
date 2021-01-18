@@ -41,11 +41,12 @@ namespace PlGui
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           // Chosen dates (of license and last treatment) initialized and proccesed:
+           // Chosen dates (of license and last treatment) declared:
             DateTime startDateChosen;
             DateTime treatDateChosen;
 
-            if (!dateStart.SelectedDate.HasValue || !dateLastTreat.SelectedDate.HasValue) // Checks if the user chose a date
+            // Checks if the user chose a date
+            if (!dateStart.SelectedDate.HasValue || !dateLastTreat.SelectedDate.HasValue) 
             {
                 MessageBox.Show("You didn't fill the required date fields!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
@@ -81,7 +82,7 @@ namespace PlGui
                         this.Close();
                     }
                 }
-                catch (BO.ExceptionBL_KeyNotFound) // In case the bus already exist
+                catch (BO.ExceptionBL_KeyAlreadyExist) // In case the bus already exist
                 {
                     MessageBox.Show("The bus license you entered already exists in the company!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }

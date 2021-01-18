@@ -17,6 +17,9 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
+
+        <!--Fields grid-->
+
         <Border Grid.Row="0">
             <Border BorderBrush="Black" BorderThickness="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid ShowGridLines="True"  HorizontalAlignment="Center" Height="339" VerticalAlignment="Center" Width="333" Visibility="Visible">
@@ -40,13 +43,16 @@
                     <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Fuel status (km left to ride):"/>
                     <TextBlock Name ="tbLicense" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=License,Mode=OneWay}"/>
                     <DatePicker Name ="dpLicenseDate" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=LicenseDate,Mode=OneWay}"/>
-                    <TextBox Name ="tbMileage" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Mileage,Mode=OneWay}"/>
+                    <TextBox Name ="tbMileage" PreviewTextInput="NumberValidationTextBox" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Mileage,Mode=OneWay}"/>
                     <DatePicker Name ="dpTreatmentDate" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=LastTreatmentDate,Mode=OneWay}"/>
-                    <TextBox Name ="tbMileageAtTreat" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=MileageAtLastTreat,Mode=OneWay}"/>
+                    <TextBox Name ="tbMileageAtTreat" PreviewTextInput="NumberValidationTextBox" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=MileageAtLastTreat,Mode=OneWay}"/>
                     <Slider Name="sliderFuel" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Minimum="0" Maximum="1200"  IsSnapToTickEnabled="True"  IsHitTestVisible="True" Width="90" HorizontalAlignment="Center"  AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0"  Value="{Binding Path=Fuel,Mode=OneWay}"/>
                 </Grid>
             </Border>
         </Border>
+        
+        <!--Buttons grid-->
+        
         <Border Grid.Row="1">
             <Grid>
                 <Grid.ColumnDefinitions>
