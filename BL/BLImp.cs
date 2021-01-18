@@ -151,7 +151,7 @@ namespace BL
                                               in dl.GetAllConsecutiveStations()
                                                where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
                                                      doConStations.BusStopKeyB == busLineStationBO.NextStation
-                                               select doConStations.Distance).ToString().FirstOrDefault();
+                                               select doConStations.Distance).FirstOrDefault();
             busLineStationBO.TimeToNext = (from doConStations
                                               in dl.GetAllConsecutiveStations()
                                            where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
