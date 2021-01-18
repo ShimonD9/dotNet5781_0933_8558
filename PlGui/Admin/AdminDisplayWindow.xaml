@@ -16,6 +16,11 @@
                 <MenuItem Header="Add a new bus line" Click="Button_OpenAddBusLineWindow" Cursor="Hand"/>
                 <MenuItem Header="Add a new bus stop" Click="Button_OpenAddBusStopWindow" Cursor="Hand"/>
                 <Separator />
+                <MenuItem Header="Back to Login Window" Click="Back_Click" Cursor="Hand">
+                    <MenuItem.Icon>
+                        <Image Source="/PlGui;component/Images/back.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Header="Exit" Click="Exit_Click" Cursor="Hand">
                     <MenuItem.Icon>
                         <Image Source="/PlGui;component/Images/exit.png" />
