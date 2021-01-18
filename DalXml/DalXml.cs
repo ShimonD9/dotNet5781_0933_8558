@@ -464,17 +464,7 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busStopCode, $"Station key not found: {busStopCode}");
         }
-        public void DeleteBusLineStationsByID(int busLineID)
-        {
-            List<BusLineStation> ListBusLineStations = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
 
-            foreach (BusLineStation item in ListBusLineStations)
-            {
-                if (item.BusLineID == busLineID)
-                    item.ObjectActive = false;
-            }
-            XMLTools.SaveListToXMLSerializer(ListBusLineStations, busLineStationPath);
-        }
         #endregion
 
         #region BusStop
@@ -578,7 +568,7 @@ namespace DL
                         BusStopKeyA = Int32.Parse(b.Element("BusStopKeyA").Value),
                         BusStopKeyB = Int32.Parse(b.Element("BusStopKeyB").Value),
                         Distance = double.Parse(b.Element("Distance").Value),
-                        TravelTime = TimeSpan.Parse(b.Element("TravelTime").Value),
+                        TravelTime = TimeSpan.Parse(b.Element("TravelTime").Value.ToString()),
                         ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
                     }
                    );
@@ -632,7 +622,7 @@ namespace DL
                                  select b).FirstOrDefault();
             if (existCon != null && bool.Parse(existCon.Element("ObjectActive").Value) == true)
                 throw new DO.ExceptionDAL_KeyAlreadyExist("ConsecutiveStations already exist");
-            else if (existCon != null && bool.Parse(existCon.Element("ObjectActive").Value == false))
+            else if (existCon != null && bool.Parse(existCon.Element("ObjectActive").Value) == false)
             {
                 existCon.Element("ObjectActive").Value = true.ToString();
             }
@@ -685,9 +675,9 @@ namespace DL
             XElement conRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
 
             XElement conStationToDelete = (from b in conRootElem.Elements()
-                                    where int.Parse(b.Element("BusStopKeyA").Value) == busStopCodeA &&
-                                          int.Parse(b.Element("BusStopKeyB").Value) == busStopCodeB
-                                    select b).FirstOrDefault();
+                                           where int.Parse(b.Element("BusStopKeyA").Value) == busStopCodeA &&
+                                                 int.Parse(b.Element("BusStopKeyB").Value) == busStopCodeB
+                                           select b).FirstOrDefault();
 
             if (conStationToDelete == null)
                 throw new DO.ExceptionDAL_KeyNotFound("Consecutive Stations not found");
@@ -746,14 +736,36 @@ namespace DL
             XElement conRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
 
             LineDeparture lineDepartStation = (from b in conRootElem.Elements()
-                                              where int.Parse(b.Element("BusLineID").Value) == busLineID                                              
-                                              select new LineDeparture()
-                                              {
-                                                  DepartureID = Int32.Parse(b.Element("DepartureID").Value),
-                                                  BusLineID = Int32.Parse(b.Element("BusLineID").Value),
-                                                  DepartureTime = TimeSpan.Parse(b.Element("DepartureTime").Value),
-                                                  ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
-                                              }
+                                               where int.Parse(b.Element("BusLineID").Value) == busLineID
+                                               select new LineDeparture()
+                                               {
+                                                   DepartureID = Int32.Parse(b.Element("DepartureID").Value),
+                                                   BusLineID = Int32.Parse(b.Element("BusLineID").Value),
+                                                   DepartureTime = TimeSpan.Parse(b.Element("DepartureTime").Value),
+                                                   ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
+                                               }
+                        ).FirstOrDefault();
+
+            if (lineDepartStation == null)
+                throw new DO.ExceptionDAL_KeyNotFound(busLineID, $"the line departure is not found");
+            else if (lineDepartStation != null && !lineDepartStation.ObjectActive)
+                throw new DO.ExceptionDAL_Inactive(busLineID, $"the line departure is inactive");
+            return lineDepartStation;
+        }
+        public LineDeparture GetLineDepartureByTimeAndLine(TimeSpan departureTime, int busLineID)
+        {
+            XElement conRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
+
+            LineDeparture lineDepartStation = (from b in conRootElem.Elements()
+                                               where int.Parse(b.Element("BusLineID").Value) == busLineID &&
+                                        TimeSpan.Parse(b.Element("DepartureTime").Value) == departureTime
+                                               select new LineDeparture()
+                                               {
+                                                   DepartureID = Int32.Parse(b.Element("DepartureID").Value),
+                                                   BusLineID = Int32.Parse(b.Element("BusLineID").Value),
+                                                   DepartureTime = TimeSpan.Parse(b.Element("DepartureTime").Value),
+                                                   ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
+                                               }
                         ).FirstOrDefault();
 
             if (lineDepartStation == null)
@@ -767,28 +779,27 @@ namespace DL
             XElement lineRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
 
             XElement existLineDepart = (from b in lineRootElem.Elements()
-                                 where int.Parse(b.Element("BusLineID").Value) == lineDeparture.BusLineID &&
-                                 TimeSpan.Parse(b.Element("DepartureTime").Value) == lineDeparture.DepartureTime
-                                 select b).FirstOrDefault();
-            if (existLineDepart == null)
-            {
-                XElement newLineElem = new XElement("LineDeparture",
-                       new XElement("BusLineID", lineDeparture.BusLineID),
-                       new XElement("BusLineID", lineDeparture.BusLineID),
-                       new XElement("DepartureTime", lineDeparture.DepartureTime.ToString()),
-                       new XElement("ObjectActive", lineDeparture.ObjectActive = true));
-                List<LineDeparture> ListBusLine = XMLTools.LoadListFromXMLSerializer<LineDeparture>(lineDeparturePath);
-                LineDeparture existBus = ListBusLine.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID);
+                                        where int.Parse(b.Element("BusLineID").Value) == lineDeparture.BusLineID &&
+                                        TimeSpan.Parse(b.Element("DepartureTime").Value) == lineDeparture.DepartureTime
+                                        select b).FirstOrDefault();
 
-                newLineElem.Element("DepartureID").Value = XMLConfig.LineDepartureCounter().ToString();
-                lineRootElem.Add(newLineElem);
-            }
-            else if (existLineDepart != null && bool.Parse(existLineDepart.Element("ObjectActive").Value) == true)
+            if (existLineDepart != null && bool.Parse(existLineDepart.Element("ObjectActive").Value) == true)
                 throw new DO.ExceptionDAL_KeyNotFound(lineDeparture.BusLineID, $"The line departure is already exist");
-            else if (existLineDepart != null && bool.Parse(existLineDepart.Element("ObjectActive").Value)==false)
+            else if (existLineDepart != null && bool.Parse(existLineDepart.Element("ObjectActive").Value) == false)
             {
                 existLineDepart.Element("ObjectActive").Value = true.ToString();
             }
+            else
+            {
+                XElement newLineElem = new XElement("LineDeparture",
+                       new XElement("BusLineID", lineDeparture.BusLineID),
+                       new XElement("DepartureID", lineDeparture.DepartureID),
+                       new XElement("DepartureTime", lineDeparture.DepartureTime.ToString()),
+                       new XElement("ObjectActive", lineDeparture.ObjectActive = true));
+                newLineElem.Element("DepartureID").Value = XMLConfig.LineDepartureCounter().ToString();
+                lineRootElem.Add(newLineElem);
+            }
+
             XMLTools.SaveListToXMLElement(lineRootElem, lineDeparturePath);
         }
         public void UpdateLineDeparture(LineDeparture lineDeparture)
@@ -820,32 +831,29 @@ namespace DL
             update(busUpdate);
             UpdateLineDeparture(busUpdate);
         }
-        public void DeleteLineDeparture(TimeSpan departureTime, int busLineID)
+        public void DeleteLineDeparture(int departureID)
         {
-            List<LineDeparture> ListLineDepartures = XMLTools.LoadListFromXMLSerializer<LineDeparture>(lineDeparturePath);
+            XElement lineRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
 
-            LineDeparture bus = ListLineDepartures.Find(b => b.BusLineID == busLineID && b.DepartureTime == departureTime);
-            if (bus != null && bus.ObjectActive)
+            XElement lineToDelete = (from b in lineRootElem.Elements()
+                                     where int.Parse(b.Element("DepartureID").Value) == departureID
+                                     select b).FirstOrDefault();
+
+            if (lineToDelete == null)
+                throw new DO.ExceptionDAL_KeyNotFound("Line departure not found");
+
+            if (bool.Parse(lineToDelete.Element("ObjectActive").Value) == false)
+                throw new DO.ExceptionDAL_Inactive("Line departure are inactive");
+
+            if (bool.Parse(lineToDelete.Element("ObjectActive").Value) == true)
             {
-                bus.ObjectActive = false;
-                XMLTools.SaveListToXMLSerializer(ListLineDepartures, lineDeparturePath);
+                lineToDelete.Element("ObjectActive").Value = false.ToString();
+                XMLTools.SaveListToXMLElement(lineRootElem, lineDeparturePath);
             }
-            else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(bus.DepartureID, $"The line departure is inactive");
             else
-                throw new DO.ExceptionDAL_KeyNotFound(bus.DepartureID, $"Line departure key not found: {bus.DepartureID}");
+                throw new DO.ExceptionDAL_UnexpectedProblem("Unexpected Problem");
         }
-        public void DeleteLineDepartureByID(int busLineID)
-        {
-            List<LineDeparture> ListLineDepartures = XMLTools.LoadListFromXMLSerializer<LineDeparture>(lineDeparturePath);
 
-            foreach (LineDeparture item in ListLineDepartures)
-            {
-                if (item.BusLineID == busLineID)
-                    item.ObjectActive = false;
-            }
-            XMLTools.SaveListToXMLSerializer(ListLineDepartures, lineDeparturePath);
-        }
         #endregion
 
         #region User

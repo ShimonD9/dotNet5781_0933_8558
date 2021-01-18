@@ -113,8 +113,17 @@ namespace BL
         {
             try
             {
-                dl.DeleteLineDepartureByID(busLineID);
-                dl.DeleteBusLineStationsByID(busLineID);
+                
+                foreach (DO.LineDeparture item in dl.GetAllLineDepartureBy(x=>x.BusLineID == busLineID))
+                {
+                        dl.DeleteLineDeparture(item.DepartureID);
+                }
+
+                foreach (DO.BusLineStation item in dl.GetAllBusLineStationsBy(x => x.BusLineID == busLineID))
+                {
+
+                    dl.DeleteBusLineStation(item.BusLineID, item.BusStopKey);
+                }
                 dl.DeleteBusLine(busLineID);
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
@@ -142,7 +151,7 @@ namespace BL
                                               in dl.GetAllConsecutiveStations()
                                                where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
                                                      doConStations.BusStopKeyB == busLineStationBO.NextStation
-                                               select doConStations.Distance).FirstOrDefault();
+                                               select doConStations.Distance).ToString().FirstOrDefault();
             busLineStationBO.TimeToNext = (from doConStations
                                               in dl.GetAllConsecutiveStations()
                                            where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
@@ -602,7 +611,8 @@ namespace BL
         {
             try
             {
-                dl.DeleteLineDeparture(departureTime, busLineID);
+               DO.LineDeparture dep =  dl.GetLineDepartureByTimeAndLine(departureTime,busLineID);
+                dl.DeleteLineDeparture(dep.DepartureID);
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {

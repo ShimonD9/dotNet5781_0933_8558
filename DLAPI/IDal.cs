@@ -47,7 +47,6 @@ namespace DalApi
         void UpdateBusLineStation(BusLineStation busLineStation);
         void UpdateBusLineStation(int busLineID, int busStopCode, Action<BusLineStation> update); // method that knows to updt specific fields in Person
         void DeleteBusLineStation(int busLineID, int busStopCode);
-        void DeleteBusLineStationsByID(int busLineID);
 
         #endregion
 
@@ -78,8 +77,8 @@ namespace DalApi
         void AddLineDeparture(LineDeparture lineDeparture);
         void UpdateLineDeparture(LineDeparture lineDeparture);
         void UpdateLineDeparture(int busLineID, Action<LineDeparture> update); // method that knows to updt specific fields in Person
-        void DeleteLineDeparture(TimeSpan departureTime, int busLineID);
-        void DeleteLineDepartureByID(int busLineID);
+        void DeleteLineDeparture(int departureID);
+        LineDeparture GetLineDepartureByTimeAndLine(TimeSpan departureTime, int busLineID);
         #endregion
 
         #region User

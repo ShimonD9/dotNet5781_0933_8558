@@ -229,14 +229,6 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busStopCode, $"station key not found: {busStopCode}");
         }
-        public void DeleteBusLineStationsByID(int busLineID)
-        {
-            foreach (BusLineStation item in DataSource.ListBusLineStations)
-            {
-                if (item.BusLineID == busLineID)
-                    item.ObjectActive = false;
-            }
-        }
         #endregion
 
         #region BusLine
@@ -485,6 +477,16 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busLineID, $"line departure key not found: {busLineID}");
         }
+        public LineDeparture GetLineDepartureByTimeAndLine(TimeSpan departureTime, int busLineID)
+        {
+            LineDeparture bus = DataSource.ListLineDepartures.Find(b => b.BusLineID == busLineID && b.DepartureTime == departureTime);
+            if (bus != null && bus.ObjectActive)
+                return bus.Clone();
+            else if (bus != null && !bus.ObjectActive)
+                throw new DO.ExceptionDAL_Inactive(busLineID, $"the line departure is inactive");
+            else
+                throw new DO.ExceptionDAL_KeyNotFound(busLineID, $"line departure key not found: {busLineID}");
+        }
 
         public void AddLineDeparture(LineDeparture lineDeparture)
         {
@@ -518,24 +520,17 @@ namespace DL
             LineDeparture busUpdate = GetLineDeparture(busLineID);
             update(busUpdate);
         }
-        public void DeleteLineDeparture(TimeSpan departureTime, int busLineID)
+        public void DeleteLineDeparture(int departureID)
         {
-            LineDeparture bus = DataSource.ListLineDepartures.Find(b => b.BusLineID == busLineID && b.DepartureTime == departureTime);
-            if (bus != null && bus.ObjectActive)
-                bus.ObjectActive = false;
-            else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(bus.DepartureID, $"the line departure is inactive");
+            LineDeparture dep = DataSource.ListLineDepartures.Find(b => b.DepartureID == departureID);
+            if (dep != null && dep.ObjectActive)
+                dep.ObjectActive = false;
+            else if (dep != null && !dep.ObjectActive)
+                throw new DO.ExceptionDAL_Inactive(dep.DepartureID, $"the line departure is inactive");
             else
-                throw new DO.ExceptionDAL_KeyNotFound(bus.DepartureID, $"line departure key not found: {bus.DepartureID}");
+                throw new DO.ExceptionDAL_KeyNotFound(dep.DepartureID, $"line departure key not found: {dep.DepartureID}");
         }
-        public void DeleteLineDepartureByID(int busLineID)
-        {
-            foreach (LineDeparture item in DataSource.ListLineDepartures)
-            {
-                if (item.BusLineID == busLineID)
-                    item.ObjectActive = false;
-            }
-        }
+
         #endregion
 
         #region User
