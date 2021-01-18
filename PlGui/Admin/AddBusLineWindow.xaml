@@ -28,6 +28,7 @@
                 <RowDefinition Height ="*"/>
                 <RowDefinition Height ="*"/>
             </Grid.RowDefinitions>
+            
             <Grid Grid.Row="0" Grid.Column="0">
                 <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the bus line number:" Width="149" Margin="5"/>
             </Grid>

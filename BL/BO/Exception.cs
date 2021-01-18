@@ -64,6 +64,27 @@ namespace BO
         public override string ToString() => base.ToString() + $", less than two station: {ID}";
     }
 
+   
+    public class ExceptionBL_Incorrect_coordinates : Exception
+    {
+        public string ID;
+
+        public ExceptionBL_Incorrect_coordinates(string id) : base() => ID = id;
+        public ExceptionBL_Incorrect_coordinates(string id, string message) : base(message) => ID = id;
+        public ExceptionBL_Incorrect_coordinates(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public override string ToString() => base.ToString() + $", The longitude or the latitude are incorrect: {ID}";
+    }
+
+    public class ExceptionBL_MileageValuesConflict : Exception
+    {
+        public string ID;
+
+        public ExceptionBL_MileageValuesConflict(string id) : base() => ID = id;
+        public ExceptionBL_MileageValuesConflict(string id, string message) : base(message) => ID = id;
+        public ExceptionBL_MileageValuesConflict(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public override string ToString() => base.ToString() + $",  Conflict between mileage values: {ID}";
+    }
+
     //----------------------------user bl exception------------------------------
     public class ExceptionBL_UserKeyNotFound : Exception
     {

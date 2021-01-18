@@ -421,6 +421,10 @@ namespace BL
         {
             try
             {
+                if (busBO.MileageAtLastTreat > busBO.Mileage)
+                {
+                    throw new BO.ExceptionBL_MileageValuesConflict("Conflict between mileage values");
+                }
                 BusStatusUpdate(busBO);
                 DO.Bus newBus = busBoDoAdapter(busBO);
                 (DalFactory.GetDL()).AddBus(newBus);
@@ -537,12 +541,16 @@ namespace BL
         {
             try
             {
+                if (busStopBO.Latitude > 33.3 || busStopBO.Latitude < 31 || busStopBO.Longitude < 34.3 || busStopBO.Longitude > 35.5)
+                {
+                    throw new BO.ExceptionBL_Incorrect_coordinates("The longitude or the latitude are not matching the range.");
+                }
                 DO.BusStop newStop = BusStopBoDoAdapter(busStopBO);
                 (DalFactory.GetDL()).AddBusStop(newStop);
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+            catch (DO.ExceptionDAL_KeyAlreadyExist ex)
             {
-                throw new BO.ExceptionBL_KeyNotFound("Bus stop code already exist", ex);
+                throw new BO.ExceptionBL_KeyAlreadyExist("Bus stop code already exist", ex);
             }
         }
 
