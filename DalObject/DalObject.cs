@@ -432,7 +432,7 @@ namespace DL
 
         public void UpdateConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
-            int index = DataSource.ListConsecutiveStations.FindIndex(consecutive => consecutive.BusStopKeyA == consecutiveStations.BusStopKeyA);
+            int index = DataSource.ListConsecutiveStations.FindIndex(consecutive => consecutive.BusStopKeyA == consecutiveStations.BusStopKeyA && consecutive.BusStopKeyB == consecutiveStations.BusStopKeyB);
             if (DataSource.ListConsecutiveStations[index] != null && DataSource.ListConsecutiveStations[index].ObjectActive)
                 DataSource.ListConsecutiveStations[index] = consecutiveStations.Clone();
             else if (DataSource.ListConsecutiveStations[index] != null && !DataSource.ListConsecutiveStations[index].ObjectActive)
