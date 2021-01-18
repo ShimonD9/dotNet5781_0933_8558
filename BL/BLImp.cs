@@ -800,7 +800,7 @@ namespace BL
 
         public bool isTimeSpanInvalid(TimeSpan timeUpdate)
         {
-            return (timeUpdate.Hours > 23 || timeUpdate.Minutes > 59 || timeUpdate.Seconds > 59);
+            return (timeUpdate.Days > 0 || timeUpdate.Hours > 23 || timeUpdate.Minutes > 59 || timeUpdate.Seconds > 59);
         }
 
     }
