@@ -13,22 +13,7 @@ namespace DO
     {
         public int DepartureID { get; set; }  // Entity Key A - Running number
         public int BusLineID { get; set; }
-
-        private TimeSpan departureTime;
-
-        [XmlIgnore]
-        public TimeSpan DepartureTime
-        {
-            get { return departureTime; }
-            set { departureTime = value; }
-        }
-        [XmlElement("DepartureTime", DataType = "duration")]
-        [DefaultValue("PT10M")]
-        public string XmlTime
-        {
-            get { return XmlConvert.ToString(departureTime); }
-            set { departureTime = XmlConvert.ToTimeSpan(value); }
-        }
+        public TimeSpan DepartureTime { get; set; }
         public bool ObjectActive { get; set; }
         /// <summary>
         /// Formats a string which represents the Bus object
