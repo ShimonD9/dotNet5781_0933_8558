@@ -84,7 +84,7 @@ namespace BL
                 dl.AddBusLineStation(BusLineStationBoDoAdapter(busLineStationA));
                 dl.AddBusLineStation(BusLineStationBoDoAdapter(busLineStationB));
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+            catch (DO.ExceptionDAL_KeyAlreadyExist ex)
             {
                 throw new BO.ExceptionBL_KeyAlreadyExist("Key or bus stop already exist", ex);
             }
