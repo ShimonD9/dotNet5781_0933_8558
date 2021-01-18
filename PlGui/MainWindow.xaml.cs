@@ -110,7 +110,7 @@ namespace PlGui
                                 adminDisplayWindow.ShowDialog();
                             }
                             // If the user is a simple passenger
-                            else if (!Application.Current.Windows.OfType<PassengerUI_Window>().Any())
+                            else if (user.ManageAccess == false && !Application.Current.Windows.OfType<PassengerUI_Window>().Any())
                             {
                                 PassengerUI_Window passengerUI_Window = new PassengerUI_Window(user); // Creates the new window, and then shows it
                                 this.Close();

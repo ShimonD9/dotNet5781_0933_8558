@@ -224,5 +224,17 @@ namespace PlGui
         {
             this.Close();
         }
+
+        /// <summary>
+        /// Back to login window click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow(); // Creates the new window, and then shows it
+            mainWindow.Show();
+            this.Close();
+        }
     }
 }

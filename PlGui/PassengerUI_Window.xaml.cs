@@ -105,7 +105,17 @@ namespace PlGui
             e.Handled = regex.IsMatch(e.Text);
         }
 
-
+        /// <summary>
+        /// Logout mouse down event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow(); // Creates the new window, and then shows it
+            mainWindow.Show();
+            this.Close();
+        }
 
         #region Clock simulator
 
@@ -252,8 +262,11 @@ namespace PlGui
             {
                 clockWorker.CancelAsync();
             }
+
         }
 
         #endregion
+
+
     }
 }
