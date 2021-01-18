@@ -118,7 +118,6 @@ namespace DL
                 existBus.Element("BusStatus").Value = bus.BusStatus.ToString();
                 existBus.Element("LastTreatmentDate").Value = bus.LastTreatmentDate.ToString();
                 existBus.Element("MileageAtLastTreat").Value = bus.MileageAtLastTreat.ToString();
-                //UpdateBus(bus);
                 existBus.Element("ObjectActive").Value = true.ToString();
             }
             else
@@ -187,7 +186,10 @@ namespace DL
         }
         public void UpdateBus(int id, Action<DO.Bus> update)
         {
-            throw new NotImplementedException();
+            Bus updateBus = GetBus(id);
+            update(updateBus);
+            UpdateBus(updateBus);
+
         }
 
         #endregion Bus
@@ -567,152 +569,256 @@ namespace DL
         #region ConsecutiveStations
         public IEnumerable<ConsecutiveStations> GetAllConsecutiveStations()
         {
-            List<ConsecutiveStations> ListConsecutiveStations = XMLTools.LoadListFromXMLSerializer<ConsecutiveStations>(consecutiveStationPath);
+            List<ConsecutiveStations> ListCon = XMLTools.LoadListFromXMLSerializer<ConsecutiveStations>(consecutiveStationPath);
 
-            return from busConsecutiveStations in ListConsecutiveStations
-                   where busConsecutiveStations.ObjectActive == true
-                   select busConsecutiveStations;
+            return from busLineStation in ListCon
+                   where busLineStation.ObjectActive == true
+                   select busLineStation;
+
+            //XElement consRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
+
+            //return (from b in consRootElem.Elements()
+            //        where bool.Parse(b.Element("ObjectActive").Value) == true
+            //        select new ConsecutiveStations()
+            //        {
+            //            BusStopKeyA = Int32.Parse(b.Element("BusStopKeyA").Value),
+            //            BusStopKeyB = Int32.Parse(b.Element("BusStopKeyB").Value),
+            //            Distance = double.Parse(b.Element("Distance").Value),
+            //            TravelTime = TimeSpan.Parse(b.Element("TravelTime").Value),
+            //            ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
+            //        }
+            //       );
         }
         public IEnumerable<ConsecutiveStations> GetAllConsecutiveStationsBy(Predicate<ConsecutiveStations> predicate)
         {
-            List<ConsecutiveStations> ListConsecutiveStations = XMLTools.LoadListFromXMLSerializer<ConsecutiveStations>(consecutiveStationPath);
+            XElement conRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
 
-            return from busConsecutiveStations in ListConsecutiveStations
-                   where predicate(busConsecutiveStations)
-                   select busConsecutiveStations;
+            return from b in conRootElem.Elements()
+                   let conStation = new ConsecutiveStations()
+                   {
+                       BusStopKeyA = Int32.Parse(b.Element("BusStopKeyA").Value),
+                       BusStopKeyB = Int32.Parse(b.Element("BusStopKeyB").Value),
+                       Distance = double.Parse(b.Element("Distance").Value),
+                       TravelTime = TimeSpan.Parse(b.Element("TravelTime").Value),
+                       ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
+                   }
+                   where predicate(conStation)
+                   select conStation;
         }
         public ConsecutiveStations GetConsecutiveStations(int busStopCodeA, int busStopCodeB)
         {
-            List<ConsecutiveStations> ListConsecutiveStations = XMLTools.LoadListFromXMLSerializer<ConsecutiveStations>(consecutiveStationPath);
+            XElement conRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
 
-            ConsecutiveStations conStations = ListConsecutiveStations.Find(b => b.BusStopKeyA == busStopCodeA && b.BusStopKeyB == busStopCodeB);
-            if (conStations != null && conStations.ObjectActive)
-                return conStations;
-            else if (conStations != null && !conStations.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive("the consecutive stations is  inactive");
-            else
+            ConsecutiveStations conStation = (from b in conRootElem.Elements()
+                                              where int.Parse(b.Element("BusStopKeyA").Value) == busStopCodeA &&
+                                              int.Parse(b.Element("BusStopKeyB").Value) == busStopCodeB
+                                              select new ConsecutiveStations()
+                                              {
+                                                  BusStopKeyA = Int32.Parse(b.Element("BusStopKeyA").Value),
+                                                  BusStopKeyB = Int32.Parse(b.Element("BusStopKeyB").Value),
+                                                  Distance = double.Parse(b.Element("Distance").Value),
+                                                  TravelTime = TimeSpan.Parse(b.Element("TravelTime").Value),
+                                                  ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
+                                              }
+                        ).FirstOrDefault();
+
+            if (conStation == null)
                 throw new DO.ExceptionDAL_KeyNotFound("the consecutive stations not found");
+            else if (conStation != null && !conStation.ObjectActive)
+                throw new DO.ExceptionDAL_Inactive("the consecutive stations is  inactive");
+            return conStation;
         }
         public void AddConsecutiveStations(ConsecutiveStations newConsecutiveStations)
         {
-            List<ConsecutiveStations> ListConsecutiveStations = XMLTools.LoadListFromXMLSerializer<ConsecutiveStations>(consecutiveStationPath);
+            XElement conRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
 
-            ConsecutiveStations existConsecutiveStations = ListConsecutiveStations.FirstOrDefault(b => b.BusStopKeyA == newConsecutiveStations.BusStopKeyA && b.BusStopKeyB == newConsecutiveStations.BusStopKeyB);
-            if (existConsecutiveStations != null && existConsecutiveStations.ObjectActive == true)
-                throw new DO.ExceptionDAL_KeyAlreadyExist("Duplicate consecutive stations object");
-            else if (existConsecutiveStations != null && existConsecutiveStations.ObjectActive == false)
+            XElement existCon = (from b in conRootElem.Elements()
+                                 where int.Parse(b.Element("BusStopKeyA").Value) == newConsecutiveStations.BusStopKeyA &&
+                                 int.Parse(b.Element("BusStopKeyB").Value) == newConsecutiveStations.BusStopKeyB
+                                 select b).FirstOrDefault();
+            if (existCon == null)
+                throw new DO.ExceptionDAL_KeyNotFound("ConsecutiveStations not found");
+            if (existCon != null && bool.Parse(existCon.Element("ObjectActive").Value))
+                throw new DO.ExceptionDAL_KeyAlreadyExist("ConsecutiveStations already exist");
+            if (existCon != null && !bool.Parse(existCon.Element("ObjectActive").Value))
             {
-                existConsecutiveStations.ObjectActive = true;
-                XMLTools.SaveListToXMLSerializer(ListConsecutiveStations, consecutiveStationPath);
+                existCon.Element("ObjectActive").Value = true.ToString();
             }
             else
             {
-                newConsecutiveStations.ObjectActive = true;
-                ListConsecutiveStations.Add(newConsecutiveStations);
-                XMLTools.SaveListToXMLSerializer(ListConsecutiveStations, consecutiveStationPath);
+                XElement newConElem = new XElement("ConsecutiveStations",
+                                       new XElement("BusStopKeyA", newConsecutiveStations.BusStopKeyA),
+                                       new XElement("BusStopKeyB", newConsecutiveStations.BusStopKeyB),
+                                       new XElement("Distance", newConsecutiveStations.Distance),
+                                       new XElement("TravelTime", newConsecutiveStations.TravelTime),
+                                       new XElement("ObjectActive", newConsecutiveStations.ObjectActive = true));
+                conRootElem.Add(newConElem);
             }
+            XMLTools.SaveListToXMLElement(conRootElem, consecutiveStationPath);
         }
         public void UpdateConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
-            List<ConsecutiveStations> ListConsecutiveStations = XMLTools.LoadListFromXMLSerializer<ConsecutiveStations>(consecutiveStationPath);
+            XElement conRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
 
-            int index = ListConsecutiveStations.FindIndex(consecutive => consecutive.BusStopKeyA == consecutiveStations.BusStopKeyA);
-            if (ListConsecutiveStations[index] != null && ListConsecutiveStations[index].ObjectActive)
+            XElement conToUpdate = (from b in conRootElem.Elements()
+                                    where int.Parse(b.Element("BusStopKeyA").Value) == consecutiveStations.BusStopKeyA &&
+                                    int.Parse(b.Element("BusStopKeyB").Value) == consecutiveStations.BusStopKeyB
+                                    select b).FirstOrDefault();
+            if (conToUpdate == null)
+                throw new DO.ExceptionDAL_KeyNotFound("ConsecutiveStations not found");
+            if (bool.Parse(conToUpdate.Element("ObjectActive").Value))
             {
-                ListConsecutiveStations[index] = consecutiveStations;
-                XMLTools.SaveListToXMLSerializer(ListConsecutiveStations, consecutiveStationPath);
+                conToUpdate.Element("BusStopKeyA").Value = consecutiveStations.BusStopKeyA.ToString();
+                conToUpdate.Element("BusStopKeyB").Value = consecutiveStations.BusStopKeyB.ToString();
+                conToUpdate.Element("Distance").Value = consecutiveStations.Distance.ToString();
+                conToUpdate.Element("TravelTime").Value = consecutiveStations.TravelTime.ToString();
+                conToUpdate.Element("BusStatus").Value = consecutiveStations.ToString();
+                conToUpdate.Element("ObjectActive").Value = consecutiveStations.ObjectActive.ToString();
+
+                XMLTools.SaveListToXMLElement(conRootElem, consecutiveStationPath);
             }
-            else if (ListConsecutiveStations[index] != null && !ListConsecutiveStations[index].ObjectActive)
-                throw new DO.ExceptionDAL_Inactive("The consecutive stations is inactive");
             else
-                throw new DO.ExceptionDAL_KeyNotFound("The consecutive stations not found");
+            {
+                throw new ExceptionDAL_UnexpectedProblem("Unexpected problem");
+            }
         }
-        public void UpdateConsecutiveStations(int busStopCodeA, int busStopCodeB, Action<ConsecutiveStations> update) // method that knows to updt specific fields in Person
+        public void UpdateConsecutiveStations(int busStopCodeA, int busStopCodeB, Action<DO.ConsecutiveStations> update) // method that knows to updt specific fields in Person
         {
-            ConsecutiveStations busConsecutiveUpdate = GetConsecutiveStations(busStopCodeA, busStopCodeB);
-            update(busConsecutiveUpdate);
-            UpdateConsecutiveStations(busConsecutiveUpdate);
+            ConsecutiveStations conUpdate = GetConsecutiveStations(busStopCodeA, busStopCodeB);
+            update(conUpdate);
+            UpdateConsecutiveStations(conUpdate);
         }
         public void DeleteConsecutiveStations(int busStopCodeA, int busStopCodeB)
         {
-            List<ConsecutiveStations> ListConsecutiveStations = XMLTools.LoadListFromXMLSerializer<ConsecutiveStations>(consecutiveStationPath);
+            XElement conRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
 
-            ConsecutiveStations busConsecutive = ListConsecutiveStations.Find(b => b.BusStopKeyA == busStopCodeA && b.BusStopKeyB == busStopCodeB);
-            if (busConsecutive != null && busConsecutive.ObjectActive)
+            XElement conStationToDelete = (from b in conRootElem.Elements()
+                                    where int.Parse(b.Element("BusStopKeyA").Value) == busStopCodeA &&
+                                          int.Parse(b.Element("BusStopKeyB").Value) == busStopCodeB
+                                    select b).FirstOrDefault();
+
+            if (conStationToDelete == null)
+                throw new DO.ExceptionDAL_KeyNotFound("Consecutive Stations not found");
+
+            if (!bool.Parse(conStationToDelete.Element("ObjectActive").Value))
+                throw new DO.ExceptionDAL_Inactive("Consecutive Stations are inactive");
+
+            if (bool.Parse(conStationToDelete.Element("ObjectActive").Value))
             {
-                busConsecutive.ObjectActive = false;
-                XMLTools.SaveListToXMLSerializer(ListConsecutiveStations, consecutiveStationPath);
+                conStationToDelete.Element("ObjectActive").Value = false.ToString();
+                XMLTools.SaveListToXMLElement(conRootElem, consecutiveStationPath);
             }
-            else if (busConsecutive != null && !busConsecutive.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive("The consecutive stations is inactive");
             else
-                throw new DO.ExceptionDAL_KeyNotFound("The consecutive stations not found");
+                throw new DO.ExceptionDAL_UnexpectedProblem("Unexpected Problem");
         }
         #endregion  //
 
         #region LineDeparture
         public IEnumerable<LineDeparture> GetAllLineDeparture()
         {
-            List<LineDeparture> ListLineDepartures = XMLTools.LoadListFromXMLSerializer<LineDeparture>(lineDeparturePath);
+            List<LineDeparture> ListCon = XMLTools.LoadListFromXMLSerializer<LineDeparture>(lineDeparturePath);
 
-            return from busLineDeparture in ListLineDepartures
-                   where busLineDeparture.ObjectActive == true
-                   select busLineDeparture;
+            return from busLineStation in ListCon
+                   where busLineStation.ObjectActive == true
+                   select busLineStation;
+            //XElement lineRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
+
+            //return (from b in lineRootElem.Elements()
+            //        where bool.Parse(b.Element("ObjectActive").Value) == true
+            //        select new LineDeparture()
+            //        {
+            //            DepartureID = Int32.Parse(b.Element("DepartureID").Value),
+            //            BusLineID = Int32.Parse(b.Element("BusLineID").Value),
+            //            DepartureTime = TimeSpan.Parse(b.Element("DepartureTime").Value),
+            //            ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
+            //        }
+            //       );
         }
         public IEnumerable<LineDeparture> GetAllLineDepartureBy(Predicate<LineDeparture> predicate)
         {
-            List<LineDeparture> ListLineDepartures = XMLTools.LoadListFromXMLSerializer<LineDeparture>(lineDeparturePath);
+            XElement lineRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
 
-            return from busLineDeparture in ListLineDepartures
-                   where predicate(busLineDeparture)
-                   select busLineDeparture;
+            return from b in lineRootElem.Elements()
+                   let lineDeparture = new LineDeparture()
+                   {
+                       DepartureID = Int32.Parse(b.Element("DepartureID").Value),
+                       BusLineID = Int32.Parse(b.Element("BusLineID").Value),
+                       DepartureTime = TimeSpan.Parse(b.Element("DepartureTime").Value),
+                       ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
+                   }
+                   where predicate(lineDeparture)
+                   select lineDeparture;
         }
         public LineDeparture GetLineDeparture(int busLineID)
         {
-            List<LineDeparture> ListLineDepartures = XMLTools.LoadListFromXMLSerializer<LineDeparture>(lineDeparturePath);
+            XElement conRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
 
-            LineDeparture bus = ListLineDepartures.Find(b => b.BusLineID == busLineID);
-            if (bus != null && bus.ObjectActive)
-                return bus;
-            else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busLineID, $"The line departure is inactive");
-            else
-                throw new DO.ExceptionDAL_KeyNotFound(busLineID, $"Line departure key not found: {busLineID}");
+            LineDeparture lineDepartStation = (from b in conRootElem.Elements()
+                                              where int.Parse(b.Element("BusLineID").Value) == busLineID                                              
+                                              select new LineDeparture()
+                                              {
+                                                  DepartureID = Int32.Parse(b.Element("DepartureID").Value),
+                                                  BusLineID = Int32.Parse(b.Element("BusLineID").Value),
+                                                  DepartureTime = TimeSpan.Parse(b.Element("DepartureTime").Value),
+                                                  ObjectActive = bool.Parse(b.Element("ObjectActive").Value)
+                                              }
+                        ).FirstOrDefault();
+
+            if (lineDepartStation == null)
+                throw new DO.ExceptionDAL_KeyNotFound(busLineID, $"the line departure is not found");
+            else if (lineDepartStation != null && !lineDepartStation.ObjectActive)
+                throw new DO.ExceptionDAL_Inactive(busLineID, $"the line departure is inactive");
+            return lineDepartStation;
         }
         public void AddLineDeparture(LineDeparture lineDeparture)
         {
-            List<LineDeparture> ListLineDepartures = XMLTools.LoadListFromXMLSerializer<LineDeparture>(lineDeparturePath);
+            XElement lineRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
 
-            LineDeparture existLineDeparture = ListLineDepartures.FirstOrDefault(b => b.BusLineID == lineDeparture.BusLineID && b.DepartureTime == lineDeparture.DepartureTime);
-            if (existLineDeparture != null && existLineDeparture.ObjectActive == true)
-                throw new DO.ExceptionDAL_KeyAlreadyExist(lineDeparture.BusLineID, "Duplicate line departure time");
-            else if (existLineDeparture != null && existLineDeparture.ObjectActive == false)
+            XElement existLineDepart = (from b in lineRootElem.Elements()
+                                 where int.Parse(b.Element("BusLineID").Value) == lineDeparture.BusLineID &&
+                                 TimeSpan.Parse(b.Element("DepartureTime").Value) == lineDeparture.DepartureTime
+                                 select b).FirstOrDefault();
+            if (existLineDepart == null)
+                throw new DO.ExceptionDAL_KeyNotFound(lineDeparture.BusLineID, $"The line departure is not found");
+            if (existLineDepart != null && bool.Parse(existLineDepart.Element("ObjectActive").Value))
+                throw new DO.ExceptionDAL_KeyNotFound(lineDeparture.BusLineID, $"The line departure is already exist");
+            if (existLineDepart != null && !bool.Parse(existLineDepart.Element("ObjectActive").Value))
             {
-                existLineDeparture.ObjectActive = true;
-                XMLTools.SaveListToXMLSerializer(ListLineDepartures, lineDeparturePath);
+                existLineDepart.Element("ObjectActive").Value = true.ToString();
             }
             else
             {
-                lineDeparture.DepartureID = XMLConfig.LineDepartureCounter();
-                lineDeparture.ObjectActive = true;
-                ListLineDepartures.Add(lineDeparture);
-                XMLTools.SaveListToXMLSerializer(ListLineDepartures, lineDeparturePath);
+                XElement newLineElem = new XElement("LineDeparture",
+                                       new XElement("BusLineID", lineDeparture.BusLineID),
+                                       new XElement("DepartureTime", lineDeparture.DepartureTime),
+                                       new XElement("ObjectActive", lineDeparture.ObjectActive = true));
+                newLineElem.Element("DepartureID").Value = XMLConfig.LineDepartureCounter().ToString();
+                lineRootElem.Add(newLineElem);
             }
+            XMLTools.SaveListToXMLElement(lineRootElem, lineDeparturePath);
         }
         public void UpdateLineDeparture(LineDeparture lineDeparture)
         {
-            List<LineDeparture> ListLineDepartures = XMLTools.LoadListFromXMLSerializer<LineDeparture>(lineDeparturePath);
+            XElement lineRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
 
-            int index = ListLineDepartures.FindIndex(lineDep => lineDep.BusLineID == lineDeparture.BusLineID);
-            if (ListLineDepartures[index] != null && ListLineDepartures[index].ObjectActive)
+            XElement lineToUpdate = (from b in lineRootElem.Elements()
+                                     where int.Parse(b.Element("BusLineID").Value) == lineDeparture.BusLineID
+                                     select b).FirstOrDefault();
+            if (lineToUpdate == null)
+                throw new DO.ExceptionDAL_KeyNotFound(lineDeparture.BusLineID, $"The line departure is not found");
+            if (bool.Parse(lineToUpdate.Element("ObjectActive").Value))
             {
-                ListLineDepartures[index] = lineDeparture;
-                XMLTools.SaveListToXMLSerializer(ListLineDepartures, lineDeparturePath);
+                lineToUpdate.Element("BusLineID").Value = lineDeparture.BusLineID.ToString();
+                lineToUpdate.Element("DepartureID").Value = lineDeparture.DepartureID.ToString();
+                lineToUpdate.Element("DepartureTime").Value = lineDeparture.DepartureTime.ToString();
+                lineToUpdate.Element("ObjectActive").Value = lineDeparture.ObjectActive.ToString();
+
+                XMLTools.SaveListToXMLElement(lineRootElem, lineDeparturePath);
             }
-            else if (ListLineDepartures[index] != null && !ListLineDepartures[index].ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(lineDeparture.BusLineID, $"the line departure is inactive");
             else
-                throw new DO.ExceptionDAL_KeyNotFound(lineDeparture.BusLineID, $"line departure key not found: {lineDeparture.BusLineID}");
+            {
+                throw new ExceptionDAL_UnexpectedProblem("Unexpected problem");
+            }
         }
         public void UpdateLineDeparture(int busLineID, Action<LineDeparture> update) // method that knows to updt specific fields in Person
         {
@@ -812,7 +918,7 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_UserKeyNotFound(user.UserName, $"User name not found: {user.UserName}");
         }
-        public void UpdateUser(string userName, Action<User> update)  
+        public void UpdateUser(string userName, Action<User> update)
         {
             User userUpdate = GetUser(userName);
             update(userUpdate);
