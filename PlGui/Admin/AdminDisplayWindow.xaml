@@ -22,9 +22,18 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </MenuItem>
+            <MenuItem>
+                <MenuItem.Icon>
+                    <Image Source="/PlGui;component/Images/question.png" />
+                </MenuItem.Icon>
+                <Label Content="Tip: Double click on an item to see its details" FontWeight="DemiBold"></Label>
+            </MenuItem>
         </Menu>
 
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            
+            <!--Buses tab - list of buses, with option to add a bus-->
+            
             <TabItem Header="Buses">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
@@ -32,6 +41,9 @@
                         <RowDefinition Height="340*"/>
                         <RowDefinition Height="126*"/>
                     </Grid.RowDefinitions>
+                    
+                    <!--headline of the list-->
+                    
                     <Grid Grid.Row="0" VerticalAlignment="Bottom" Height="50" Margin="34,0,27,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="80" />
@@ -56,7 +68,7 @@
                         </Border>
 
                         <Border Grid.Column="3" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                            <TextBlock  Text="Last treatment date" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"/>
+                            <TextBlock  Text="Last treatment date" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18"  FontWeight="Bold"/>
                         </Border>
 
                         <Border Grid.Column="4" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
@@ -71,6 +83,9 @@
                             <TextBlock  Text="Refuel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                         </Border>
                     </Grid>
+                    
+                    <!--List of buses-->
+                    
                     <Grid Grid.Row="1" VerticalAlignment="Stretch">
                         <ListView Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="LBBuses_MouseDoubleClick" Margin="27,0,27,0">
                             <ListView.ItemTemplate>
@@ -106,16 +121,12 @@
                                             <TextBlock Name ="tbLastTreatmentDate" FontSize="16" Text="{Binding Path='LastTreatmentDate'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
                                         </Border>
 
-                                        <!--<Border Grid.Column="4" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
-                                            <ProgressBar Value="{Binding Path='WorkEndsIn'}" Grid.Column="1" BorderThickness="1" Minimum="0" Maximum="100" Margin="5"/>
-                                        </Border>-->
-
                                         <Border Grid.Column="4" BorderBrush="Black"  BorderThickness="0 1 1 1">
                                             <TextBlock Name ="tbStatus" FontSize="9" Text="{Binding Path='BusStatus'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontWeight="Bold"  TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
                                         </Border>
 
                                         <Border Grid.Column="5" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                            <Button HorizontalAlignment="Center" Cursor="Hand" IsEnabled="True" Background="CadetBlue" VerticalAlignment="Center" Height="40" Width="200">
+                                            <Button Name="bTreat" HorizontalAlignment="Center" Cursor="Hand" IsEnabled="True" Background="CadetBlue" VerticalAlignment="Center" Height="40" Width="200" Click="bTreat_Click">
                                                 <Button.Content>
                                                     <Image Source="/PLGui;component/Images/busRepair.png" />
                                                 </Button.Content>
@@ -123,7 +134,7 @@
                                         </Border>
 
                                         <Border Grid.Column="6" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                            <Button Name = "bRefuel" HorizontalAlignment="Center" IsEnabled="True" Background="CadetBlue"  Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200">
+                                            <Button Name = "bRefuel" HorizontalAlignment="Center" IsEnabled="True" Background="CadetBlue"  Cursor="Hand" VerticalAlignment="Center" Height="40" Width="200" Click="bRefuel_Click">
                                                 <Button.Content>
                                                     <StackPanel Orientation="Horizontal">
                                                         <Image Source="/PLGui;component/Images/fuelBus1.png" />
@@ -144,6 +155,9 @@
                     </Grid>
                 </Grid>
             </TabItem>
+
+            <!--Bus lines tab - list of busses, with option to add a bus line-->
+
             <TabItem Header="Bus Lines">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
@@ -151,6 +165,9 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
+
+                    <!--headline of the list-->
+
                     <Grid Grid.Row="0" VerticalAlignment="Bottom" Height="50" Margin="27,0,20,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100" />
@@ -180,6 +197,9 @@
                             <TextBlock  Text="Last station code" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
                         </Border>
                     </Grid>
+
+                    <!--List of bus lines-->
+
                     <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
                         <ListView Name ="lbBusLines" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="LBBusLines_MouseDoubleClick" Margin="0,0,0,-330">
                             <ListView.ItemTemplate>
@@ -218,11 +238,15 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </Grid>
+                    
                     <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="20,0,20,46">
                         <Button Name ="AddBusLine"  Content="Add a new bus line" Cursor="Hand" FontSize="16" FontWeight="Bold"  Click="Button_OpenAddBusLineWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="161" Margin="304,3,283,3" />
                     </Grid>
                 </Grid>
             </TabItem>
+
+            <!--Bus stops tab - list of bus stops, with option to add a bus stop-->
+
             <TabItem Header="Bus Stops">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
@@ -230,6 +254,9 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
+
+                    <!--headline of the list-->
+
                     <Grid Grid.Row="0" VerticalAlignment="Bottom" Height="50" Margin="27,0,20,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="100" />
@@ -267,6 +294,9 @@
                             <TextBlock  Text="Digital panel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold"/>
                         </Border>
                     </Grid>
+                    
+                    <!--List of bus stops-->
+                    
                     <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
                         <ListView Name ="lbBusStops" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gainsboro" MouseDoubleClick="LBBusStops_MouseDoubleClick"  Margin="0,0,0,47">
                             <ListView.ItemTemplate>

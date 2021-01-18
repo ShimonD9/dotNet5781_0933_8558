@@ -23,35 +23,39 @@ namespace PlGui
     /// </summary>
     public partial class AddBusWindow : Window
     {
-        BO.Bus newBus;
-        IBL myBL;
+        BO.Bus newBus = new BO.Bus();
+        IBL bl = BLFactory.GetBL("1");
 
+        /// <summary>
+        /// Default window ctor
+        /// </summary>
         public AddBusWindow()
         {
             InitializeComponent();
-            myBL = BLFactory.GetBL("1");
-            newBus = new BO.Bus();
         }
 
         /// <summary>
-        /// The adding bus button method
+        /// The adding bus button click event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           
+           // Chosen dates (of license and last treatment) initialized and proccesed:
             DateTime startDateChosen;
             DateTime treatDateChosen;
+
             if (!dateStart.SelectedDate.HasValue || !dateLastTreat.SelectedDate.HasValue) // Checks if the user chose a date
             {
                 MessageBox.Show("You didn't fill the required date fields!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
             else
             {
+                // The dates initialized:
                 startDateChosen = dateStart.SelectedDate.Value;
                 treatDateChosen = dateLastTreat.SelectedDate.Value;
-                // Checks if the inputs are correct, and pops an appropriate message if not:
+
+                // Checks if the inputs are correct, and pops an appropriate message if not (not made in BL because the connection to the text box length and the double parse of string)
                 try
                 {
                     if (startDateChosen.Year < 2018 && license.Text.Length < 7
@@ -63,12 +67,9 @@ namespace PlGui
                     {
                         MessageBox.Show("You didn't fill correctly all the required information", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
-                    else if (double.Parse(mileageAtLastTreat.Text) > double.Parse(mileageNow.Text))
-                    {
-                        MessageBox.Show("The total mileage cannot be smaller than the mileage at the last treat!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    }
                     else
                     {
+                        // Initializes the new bus properties:
                         newBus.License = int.Parse(license.GetLineText(0));
                         newBus.Mileage = milNow;
                         newBus.MileageAtLastTreat = milTreat;
@@ -76,25 +77,39 @@ namespace PlGui
                         newBus.LastTreatmentDate = treatDateChosen;
                         newBus.Fuel = Math.Round(fuel.Value * 12,2);  // The info from the slider
                         newBus.ObjectActive = true;
-                        myBL.AddBus(newBus);    // Inserts the new bus to the beginning of the list                 
+                        bl.AddBus(newBus);    // Inserts the new bus to the beginning of the list                 
                         this.Close();
                     }
                 }
-                catch (BO.ExceptionBL_KeyNotFound)
+                catch (BO.ExceptionBL_KeyNotFound) // In case the bus already exist
                 {
                     MessageBox.Show("The bus license you entered already exists in the company!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                catch (BO.ExceptionBL_MileageValuesConflict) // In case there is a logical conflict between the two mileages entered
+                {
+                    MessageBox.Show("The total mileage cannot be smaller than the mileage at the last treat!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
 
         // Using regex to unable wrongs inputs in the text box:
 
+        /// <summary>
+        /// Preview keyboard input to numbers with dots
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9/.]$");
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        /// <summary>
+        /// Preview keyboard input to numbers only
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]$");
@@ -103,7 +118,7 @@ namespace PlGui
 
 
         /// <summary>
-        /// The change of date event, helps with some style issues
+        /// The change of date event, helps with some style issues, and decides the length of the license
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -116,6 +131,8 @@ namespace PlGui
                 license.FontStyle = FontStyles.Normal;
                 license.Text = "";
                 dateChosen = dateStart.SelectedDate.Value;
+
+                // The length of the license text box dependes on the year:
                 if (dateChosen.Year < 2018)
                 {
                     license.MaxLength = 7;

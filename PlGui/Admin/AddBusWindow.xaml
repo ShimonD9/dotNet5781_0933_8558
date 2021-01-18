@@ -30,7 +30,7 @@
                 <RowDefinition Height ="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Grid.Column="0">
-                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the license number:" Width="149" Margin="5"/>
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="The license number:" Width="149" Margin="5" FontWeight="DemiBold"/>
             </Grid>
 
             <Grid Grid.Row="0" Grid.Column="1">
@@ -38,7 +38,7 @@
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0">
-                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the total mileage:" Width="149"  Margin="5"/>
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="The total mileage:" Width="149" FontWeight="DemiBold" Margin="5"/>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="1">
@@ -46,7 +46,7 @@
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="0">
-                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Enter the mileage at the last treatment:" Width="221"  Margin="5"/>
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Mileage at the last treatment:" Width="221" FontWeight="DemiBold" Margin="5"/>
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="1">
@@ -54,7 +54,7 @@
             </Grid>
 
             <Grid Grid.Row="3" Grid.Column="0">
-                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Choose the fuel precentage left:" Width="221"  Margin="5"/>
+                <Label HorizontalAlignment="Left" VerticalAlignment="Center" Content="Choose the fuel precentage left:" Width="221" FontWeight="DemiBold" Margin="5"/>
             </Grid>
 
             <Grid Grid.Row="3" Grid.Column="1">

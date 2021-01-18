@@ -8,6 +8,10 @@
         Closing="Window_Closing" 
         Name="PassengerWindow" Title="Passenger display" Height="552.228" Width="487.57" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/PlGui;component/Images/22.jpeg" Stretch="UniformToFill"/>
+        </Grid.Background>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -16,17 +20,17 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        
-               <Border Grid.Row="0"  BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="7" Margin="5">
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="Please select your current bus stop:" FontSize="18" FontWeight="Bold"/>
+        <!--Bus stop selection-->
+        <Border Grid.Row="0"  BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="7" Margin="5">
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="Please select your current bus stop:" FontSize="18" FontWeight="Bold"  Background="LightGoldenrodYellow"/>
         </Border>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" >
             <ComboBox Name ="cbBusStop" HorizontalAlignment="Center" Width="200" Margin="10" FontSize="10" HorizontalContentAlignment="Center" SelectionChanged="cbBusStop_SelectionChanged"/>
         </Grid>
 
-
-        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" DataContext="{Binding ElementName=UI}">
+        <!--Clock time and interval selection-->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" DataContext="{Binding ElementName=UI}" Margin="0,30,0,0">
             <TextBlock VerticalAlignment="Center" TextAlignment="Center" Text="Time:" FontWeight="bold" FontSize="18" Width="60" Margin="0,0,10,0" />
             <Border  BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock VerticalAlignment="Center" Name="timeDisplay" TextAlignment="Center"  Background="Black" Foreground="LightGreen" Text="{Binding Path='RunningTime'}" Width="60" Margin="0,0,10,0" Visibility="Collapsed"/>
@@ -39,7 +43,8 @@
             </Button>
         </StackPanel>
 
-        <Grid Grid.Row="3" Name="lvLinesStopHere" DataContext="{Binding}">
+        <!--Lines stoping list view-->
+        <Grid Grid.Row="3" Name="lvLinesStopHere" DataContext="{Binding}" Margin="0,30,0,0">
             <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid ShowGridLines="True"  HorizontalAlignment="Center" VerticalAlignment="Center">
 
@@ -49,6 +54,7 @@
                         <RowDefinition Height="0.8*"/>
                     </Grid.RowDefinitions>
 
+                    <!--Headline-->
                     <Label Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center" Background="LightGoldenrodYellow" Content="Bus lines stopping at this bus stop:" FontWeight="Bold" />
 
                     <Grid Grid.Row="1">
@@ -56,6 +62,8 @@
                             <ColumnDefinition Width="130" />
                             <ColumnDefinition Width="170" />
                         </Grid.ColumnDefinitions>
+
+                        <!--Columns Headlines-->
                         <Border Grid.Column="0" Grid.Row="1" BorderBrush="Black" Background="Yellow" BorderThickness="1 1 1 1">
                             <TextBlock  Text="Bus Line Number" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="13" FontWeight="Bold"/>
                         </Border>
@@ -65,7 +73,7 @@
                         </Border>
                     </Grid>
 
-
+                    <!--The list view-->
                     <ListView Grid.Row="2" ItemsSource="{Binding Path='LinesStopHere'}" Background="Yellow" HorizontalAlignment="Stretch" >
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -90,6 +98,7 @@
             </Border>
         </Grid>
 
+        <!--Digital panel list view-->
         <Grid Grid.Row="4" Margin="0,30,0,0" >
             <Border Background="MediumAquamarine" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -108,6 +117,8 @@
                             <ColumnDefinition Width="115" />
                             <ColumnDefinition Width="50" />
                         </Grid.ColumnDefinitions>
+                        
+                        <!--Columns Headlines-->
                         <Border Grid.Column="0" Grid.Row="0" BorderBrush="Black" BorderThickness="0 0 1 0">
                             <Image Source="/PlGui;component/Images/busFront.png" Width="30" Height="30" Margin="5"/>
                         </Border>
@@ -125,8 +136,10 @@
                         </Border>
                     </Grid>
 
+                    <!--No close buses collapsed text block-->
                     <TextBlock Grid.Row="1" Name="tbNoBuses"  Text="No bus lines expected in the next hour" Foreground="LightGreen" Background="Black" TextAlignment="Center"  HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" Visibility="Collapsed" />
-
+                    
+                    <!--The list view-->
                     <ListView Background="Black"  Name="lvMinutesToBus" Grid.Row="2" Height="100" ItemsSource="{Binding}">
                         <ListView.ItemTemplate  >
                             <DataTemplate>
@@ -150,7 +163,7 @@
                                     <Border Grid.Column="2" BorderBrush="Black" BorderThickness="0 1 1 1">
                                         <TextBlock Text="{Binding Path = 'ArrivalTime'}" Foreground="LightGreen" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" />
                                     </Border>
-                                    
+
                                     <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0 1 1 1">
                                         <TextBlock Text="{Binding Path = 'DepartureTime'}" Foreground="LightGreen" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" />
                                     </Border>
