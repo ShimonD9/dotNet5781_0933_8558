@@ -25,8 +25,9 @@ namespace PlGui
     /// </summary>
     public partial class AddBusStopWindow : Window
     {
-        BO.BusStop newBusStop = new BO.BusStop(); 
+
         IBL bl = BLFactory.GetBL("1"); // Calls and stores the instance of the bl interface
+        BO.BusStop newBusStop = new BO.BusStop(); // Creates a new BO.BusStop to be added
 
         /// <summary>
         /// Default window ctor
@@ -79,6 +80,7 @@ namespace PlGui
                 MessageBox.Show("The bus company is in Israel, the coordinates should be in range!", "Cannot add the bus stop", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
 
         // Using regex to unable wrongs inputs in the text box:
 

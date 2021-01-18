@@ -131,7 +131,7 @@ namespace PlGui
             }
             else if (tbDeleteStation.Text == "Submit changes")
             {
-                if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0)
                 {
                     MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
@@ -201,7 +201,7 @@ namespace PlGui
                     newStation.PrevStation = 0;
                     if (mustUpdateGapA == true)
                     {
-                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0)
                         {
                             MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
@@ -229,7 +229,7 @@ namespace PlGui
                     newStation.TimeToNext = TimeSpan.FromMinutes(0);
                     if (mustUpdateGapA == true)
                     {
-                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0)
                         {
                             MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
@@ -255,8 +255,8 @@ namespace PlGui
                     newStation.NextStation = chosenPrevStation.NextStation;
                     if (mustUpdateGapA == true && mustUpdateGapB == true)
                     {
-                        if (!Double.TryParse(tbUpdateKmB.GetLineText(0), out double kmUpdateB) || !TimeSpan.TryParse(tbUpdateTimeB.GetLineText(0), out TimeSpan timeUpdateB) || timeUpdateB == TimeSpan.FromMinutes(0) || kmUpdateB == 0 ||
-                            !Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                        if (!Double.TryParse(tbUpdateKmB.GetLineText(0), out double kmUpdateB) || !TimeSpan.TryParse(tbUpdateTimeB.GetLineText(0), out TimeSpan timeUpdateB) || timeUpdateB == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdateB) || kmUpdateB == 0 ||
+                            !Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0)
                         {
                             MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
@@ -270,7 +270,7 @@ namespace PlGui
                     }
                     else if (mustUpdateGapA == true)
                     {
-                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || kmUpdate == 0)
+                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0)
                         {
                             MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
@@ -282,7 +282,7 @@ namespace PlGui
                     }
                     else if (mustUpdateGapB == true)
                     {
-                        if (!Double.TryParse(tbUpdateKmB.GetLineText(0), out double kmUpdateB) || !TimeSpan.TryParse(tbUpdateTimeB.GetLineText(0), out TimeSpan timeUpdateB) || timeUpdateB == TimeSpan.FromMinutes(0) || kmUpdateB == 0)
+                        if (!Double.TryParse(tbUpdateKmB.GetLineText(0), out double kmUpdateB) || !TimeSpan.TryParse(tbUpdateTimeB.GetLineText(0), out TimeSpan timeUpdateB) || timeUpdateB == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdateB) || kmUpdateB == 0)
                         {
                             MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
@@ -498,7 +498,7 @@ namespace PlGui
             else
                 try
                 {
-                    if (TimeSpan.TryParse(tbAddDeparture.GetLineText(0), out TimeSpan timeDeparture) || timeDeparture.Hours > 23 || timeDeparture.Minutes > 59 || timeDeparture.Seconds > 59)
+                    if (TimeSpan.TryParse(tbAddDeparture.GetLineText(0), out TimeSpan timeDeparture) || bl.isTimeSpanInvalid(timeDeparture))
                     {
                         bl.AddLineDeparture(timeDeparture, busLine.BusLineID);
                         BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
@@ -551,6 +551,8 @@ namespace PlGui
             Regex regex = new Regex("[^0-9/.]$");
             e.Handled = regex.IsMatch(e.Text);
         }
+
+
 
 
     }

@@ -23,8 +23,8 @@ namespace PlGui
     /// </summary>
     public partial class BusDetailsWindow : Window
     {
-        IBL bl = BLFactory.GetBL("1");
-        BO.Bus bus;
+        IBL bl = BLFactory.GetBL("1"); // Calls and stores the instance of the bl interface
+        BO.Bus bus; 
 
         /// <summary>
         /// Default window ctor
@@ -120,12 +120,12 @@ namespace PlGui
                 try
                 {
                     bl.DeleteBus(bus.License); // Calls the bl.DeleteBus function
+                    this.Close(); // Closes the window
                 }
                 catch (BO.ExceptionBL_KeyNotFound) // Catchs and prints message if the bus wasn't found
                 {
                     MessageBox.Show("The bus license doesn't exist or the bus is inactive!", "Cannot delete the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-                this.Close(); // Closes the window
             }
         }
 

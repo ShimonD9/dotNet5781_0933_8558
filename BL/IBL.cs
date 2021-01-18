@@ -90,5 +90,7 @@ namespace BLApi
         TimeSpan StationTravelTimeCalculation(int busLineID, int busStopCode);
         #endregion
 
+        bool isTimeSpanInvalid(TimeSpan timeUpdate);
+
     }
 }

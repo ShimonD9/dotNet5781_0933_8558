@@ -23,8 +23,8 @@ namespace PlGui
     /// </summary>
     public partial class AddBusWindow : Window
     {
-        BO.Bus newBus = new BO.Bus();
-        IBL bl = BLFactory.GetBL("1");
+        IBL bl = BLFactory.GetBL("1"); // Calls and stores the instance of the bl interface
+        BO.Bus newBus = new BO.Bus(); // Creates a new BO.Bus to be added
 
         /// <summary>
         /// Default window ctor

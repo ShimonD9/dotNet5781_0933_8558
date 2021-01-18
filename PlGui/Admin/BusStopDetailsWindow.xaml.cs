@@ -22,7 +22,7 @@ namespace PlGui
     /// </summary>
     public partial class BusStopDetailsWindow : Window
     {
-        IBL bl = BLFactory.GetBL("1");
+        IBL bl = BLFactory.GetBL("1");  // Calls and stores the instance of the bl interface
         BO.BusStop busStop;
 
         /// <summary>
@@ -57,25 +57,26 @@ namespace PlGui
                 {
                     MessageBox.Show("You didn't fill correctly all the required information", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-                else if (double.Parse(tbLatitude.Text) > 33.3 || double.Parse(tbLatitude.Text) < 31 || double.Parse(tbLongitude.Text) < 34.3 || double.Parse(tbLongitude.Text) > 35.5)
-                {
-                    MessageBox.Show("The bus company is in Israel, the coordinates should be in range!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
                 else
                 {
+                    // Initializing the bus stop:
                     busStop.Sunshade = (bool)cbSunshade.IsChecked;
                     busStop.DigitalPanel = (bool)cbDigitalPanel.IsChecked;
                     busStop.BusStopName = tbStopName.GetLineText(0);
                     busStop.BusStopAddress = tbAddress.GetLineText(0);
                     busStop.Latitude = lati;
                     busStop.Longitude = longi;
-                    bl.UpdateBusStop(busStop);   // Inserts the new bus to the beginning of the list                 
+                    bl.UpdateBusStop(busStop);   // Updates the bus stop by the bl 
                     this.Close();
                 }
             }
-            catch (BO.ExceptionBL_KeyNotFound)
+            catch (BO.ExceptionBL_KeyNotFound) // In case the bus stop doesn't found
             {
-                MessageBox.Show("The updated bus stop code you entered already exists in the company!", "Cannot add the bus stop", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("The bus stop code does not exists in the company!", "Cannot update the bus stop", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (BO.ExceptionBL_Incorrect_coordinates)
+            {
+                MessageBox.Show("The bus company is in Israel, the coordinates should be in range!", "Cannot update the bus stop", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -86,28 +87,30 @@ namespace PlGui
         /// <param name="e"></param>
         private void Button_Delete(object sender, RoutedEventArgs e)
         {
+            // Asks if the admin surely wants to delete the object:
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this bus stop?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+            
             if (result == MessageBoxResult.Yes)
             {
                 try
                 {
-                    bl.DeleteBusStop(busStop.BusStopKey);
+                    bl.DeleteBusStop(busStop.BusStopKey); // Calls the bl.DeleteBusStop function
                     this.Close(); // Closes the window
                 }
-                catch (BO.ExceptionBL_KeyNotFound)
+                catch (BO.ExceptionBL_KeyNotFound) // Catchs and prints message if the bus wasn't found
                 {
                     MessageBox.Show("The bus license doesn't exist or the bus is inactive!", "Cannot delete the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-                catch
+                catch (BO.ExceptionBL_LinesStopHere) // In case the bus stop serves bus lines, the admin won't be able to delete it.
                 {
-                    string busLines = string.Join(", ", from lineBus in busStop.LinesStopHere select lineBus.BusLineNumber);
+                    string busLines = string.Join(", ", from lineBus in busStop.LinesStopHere select lineBus.BusLineNumber); // Creates string of the bus line numbers the bus stop serve
                     MessageBox.Show("This bus stop serves the next bus lines: \n" + busLines + ".\nYou must remove the bus station from the bus lines details window, before deleting the bus stop itself.", "Unable to delte the bus stop!", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }
 
-        // Using regex to unable wrongs inputs in the text box:
 
+        // Using regex to unable wrongs inputs in the text box:
 
         /// <summary>
         /// Preview keyboard input to numbers with dots

@@ -526,6 +526,10 @@ namespace BL
         {
             try
             {
+                if (busStopBO.Latitude > 33.3 || busStopBO.Latitude < 31 || busStopBO.Longitude < 34.3 || busStopBO.Longitude > 35.5)
+                {
+                    throw new BO.ExceptionBL_Incorrect_coordinates("The longitude or the latitude are not matching the range.");
+                }
                 dl.UpdateBusStop(BusStopBoDoAdapter(busStopBO));
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
@@ -554,8 +558,7 @@ namespace BL
                 {
                     throw new BO.ExceptionBL_Incorrect_coordinates("The longitude or the latitude are not matching the range.");
                 }
-                DO.BusStop newStop = BusStopBoDoAdapter(busStopBO);
-                (DalFactory.GetDL()).AddBusStop(newStop);
+                dl.AddBusStop(BusStopBoDoAdapter(busStopBO));
             }
             catch (DO.ExceptionDAL_KeyAlreadyExist ex)
             {
@@ -793,6 +796,11 @@ namespace BL
                     (sumSoFar, nextMyObject) => sumSoFar + nextMyObject.TimeToNext);
                 return calc;
             }
+        }
+
+        public bool isTimeSpanInvalid(TimeSpan timeUpdate)
+        {
+            return (timeUpdate.Hours > 23 || timeUpdate.Minutes > 59 || timeUpdate.Seconds > 59);
         }
 
     }
