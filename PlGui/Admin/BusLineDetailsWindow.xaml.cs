@@ -67,7 +67,7 @@ namespace PlGui
             {
                 MessageBox.Show("The bus line is inactive", "Unable to delete");
             }
-            catch (BO.ExceptionBL_UnexpectedProblem) // For other exceptions
+            catch // For other exceptions
             {
                 MessageBox.Show("An unexpected problem occured", "Unable to delete");
             }
@@ -96,7 +96,7 @@ namespace PlGui
                 {
                     MessageBox.Show("The bus line has been already deleted", "Unable to delete");
                 }
-                catch (BO.ExceptionBL_UnexpectedProblem) // For other exceptions
+                catch // For other exceptions
                 {
                     MessageBox.Show("An unexpected problem occured", "Unable to delete");
                 }
@@ -157,10 +157,10 @@ namespace PlGui
                 }
                 catch (BO.ExceptionBL_LessThanThreeStation) // Unable to delete if there are only two stations left!
                 {
-                    MessageBox.Show("There are only two station in the line", "Cannot delete station", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("A bus line must contain at least two stations", "Cannot delete station", MessageBoxButton.OK, MessageBoxImage.Warning);
                     stationDeletionEndProcess(); // The proccess ended, and the function will update the relevant grids
                 }
-                catch (BO.ExceptionBL_UnexpectedProblem)
+                catch
                 {
                     MessageBox.Show("An unexpected problem occured", "Unable to delete");
                 }
@@ -285,7 +285,7 @@ namespace PlGui
                     }
                 }
             }
-            catch (BO.ExceptionBL_UnexpectedProblem) // For unexpected issues
+            catch // For unexpected issues
             {
                 MessageBox.Show("An unexpected problem occured", "Unable to delete");
             }
@@ -315,7 +315,7 @@ namespace PlGui
                                                       select station;
                 }
             }
-            catch (BO.ExceptionBL_UnexpectedProblem)  // For unexpected issues
+            catch // For unexpected issues
             {
                 MessageBox.Show("An unexpected problem occured", "Unable to delete");
             }
@@ -364,7 +364,7 @@ namespace PlGui
                     }
                 }
             }
-            catch (BO.ExceptionBL_UnexpectedProblem) // For unexpected issues
+            catch // For unexpected issues
             {
                 MessageBox.Show("An unexpected problem occured", "Unable to delete");
             }
@@ -454,7 +454,7 @@ namespace PlGui
                     }
                 }
             }
-            catch (BO.ExceptionBL_UnexpectedProblem) // For unexpected issues
+            catch // For unexpected issues
             {
                 MessageBox.Show("An unexpected problem occured", "Unable to delete");
             }
@@ -636,7 +636,7 @@ namespace PlGui
 
                 }
             }
-            catch (BO.ExceptionBL_UnexpectedProblem) // In case there are unexpected issues
+            catch // In case there are unexpected issues
             {
                 MessageBox.Show("An unexpected problem occured", "Unable to delete");
             }
@@ -719,7 +719,7 @@ namespace PlGui
                 {
                     MessageBox.Show("This time departure already exist!");
                 }
-                catch (BO.ExceptionBL_UnexpectedProblem) // For other exceptions
+                catch // For other exceptions
                 {
                     MessageBox.Show("An unexpected problem occured", "Unable to delete");
                 }
@@ -735,8 +735,10 @@ namespace PlGui
             try
             {
                 gAddDeparture.Visibility = Visibility.Collapsed; // Collapsing the addition grid
-                bl.DeleteLineDeparture((TimeSpan)lvSchedule.SelectedValue, busLine.BusLineID); // Calls bl for the deletion of the list view selected item
+                if (lvSchedule.SelectedValue != null) // Checks that a selection actually has been made
+                    bl.DeleteLineDeparture((TimeSpan)lvSchedule.SelectedValue, busLine.BusLineID); // Calls bl for the deletion of the list view selected item
                 BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID); // Updates the list view
+                bDeleteDeparture.IsEnabled = false;
             }
             catch (BO.ExceptionBL_KeyNotFound ex) // In case the time departure doesn't exist
             {
@@ -746,7 +748,7 @@ namespace PlGui
             {
                 MessageBox.Show("This time departure already is inactive!", ex.Message);
             }
-            catch (BO.ExceptionBL_UnexpectedProblem) // For other exceptions
+            catch // For other exceptions
             {
                 MessageBox.Show("An unexpected problem occured", "Unable to delete");
             }

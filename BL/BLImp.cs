@@ -113,13 +113,11 @@ namespace BL
         {
             try
             {
-                
-                foreach (DO.LineDeparture item in dl.GetAllLineDepartureBy(x=>x.BusLineID == busLineID))
+                foreach (DO.LineDeparture item in dl.GetAllLineDepartureBy(x => x.BusLineID == busLineID && x.ObjectActive == true))
                 {
-                        dl.DeleteLineDeparture(item.DepartureID);
+                    dl.DeleteLineDeparture(item.DepartureID);
                 }
-
-                foreach (DO.BusLineStation item in dl.GetAllBusLineStationsBy(x => x.BusLineID == busLineID))
+                foreach (DO.BusLineStation item in dl.GetAllBusLineStationsBy(x => x.BusLineID == busLineID && x.ObjectActive == true))
                 {
 
                     dl.DeleteBusLineStation(item.BusLineID, item.BusStopKey);
@@ -128,7 +126,6 @@ namespace BL
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
-
                 throw new BO.ExceptionBL_KeyNotFound("The bus line not exist", ex);
             }
         }
@@ -614,7 +611,7 @@ namespace BL
         {
             try
             {
-               DO.LineDeparture dep =  dl.GetLineDepartureByTimeAndLine(departureTime,busLineID);
+                DO.LineDeparture dep = dl.GetLineDepartureByTimeAndLine(departureTime, busLineID);
                 dl.DeleteLineDeparture(dep.DepartureID);
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
