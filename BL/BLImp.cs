@@ -750,7 +750,7 @@ namespace BL
             IEnumerable<LineTiming> stationTimings = from lineAtStop in GetBusStop(currBusStop.BusStopKey).LinesStopHere
                                                      let depTime = FindLastDepartureTime(lineAtStop.BusLineID, tsCurrentTime)
                                                      let timeLeft = depTime.Add(lineAtStop.TravelTimeToBusStop).Subtract(tsCurrentTime)
-                                                     where timeLeft.Hours == 0 && timeLeft.Minutes > -5 // It means the bus is late or passed maximum by 5 minutes
+                                                     where timeLeft.Hours == 0 && timeLeft.Minutes > -5 // It means the bus is late or passed maximum by 5 minutes, but only buses in a margin of one hour will be showed
                                                      select new LineTiming
                                                      {
                                                          BusLineNumber = lineAtStop.BusLineNumber,

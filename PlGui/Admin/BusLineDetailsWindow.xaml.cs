@@ -24,10 +24,7 @@ namespace PlGui
     {
         BO.BusLine busLine;
         IBL bl = BLFactory.GetBL("1");
-        bool isAddStationInProcess = false;
-        bool isDeleteStationInProcess = false;
-        bool mustUpdateGapA = false;
-        bool mustUpdateGapB = false;
+
 
         public BusLineDetailsWindow()
         {
@@ -83,7 +80,12 @@ namespace PlGui
         }
 
 
-        // Station delete methods:
+        #region Station deletion:
+
+        bool isAddStationInProcess = false;
+        bool isDeleteStationInProcess = false;
+        bool mustUpdateGapA = false;
+        bool mustUpdateGapB = false;
 
         private void Button_DeleteStation(object sender, RoutedEventArgs e)
         {
@@ -170,9 +172,9 @@ namespace PlGui
                 bDeleteStation.IsEnabled = true;
         }
 
-    
-        // Stations add methods:
+        #endregion
 
+        #region Station addition:
         private void Button_AddStation(object sender, RoutedEventArgs e)
         {
             BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
@@ -481,9 +483,9 @@ namespace PlGui
         }
 
 
+        #endregion
 
-
-        // Schedule delete or add methods:
+        #region Schedule delete/add methods:
 
         private void lvScheduleSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -532,7 +534,10 @@ namespace PlGui
             }
         }
 
-        // Input validations:
+        #endregion
+
+        #region input validations
+
 
         private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
         {
@@ -552,8 +557,6 @@ namespace PlGui
             e.Handled = regex.IsMatch(e.Text);
         }
 
-
-
-
+        #endregion
     }
 }
