@@ -108,7 +108,7 @@ namespace PlGui
         #region Station deletion
 
         // Bool fields for grid and style manipulations:
-        bool isAddStationInProcess = false; 
+        bool isAddStationInProcess = false;
         bool isDeleteStationInProcess = false;
         bool mustUpdateGapA = false;
         bool mustUpdateGapB = false;
@@ -129,7 +129,7 @@ namespace PlGui
                     bAddStation.IsEnabled = false; // The button is disabled while waiting for the next selections
 
                     // In case a station was actually selected is in the middle:
-                    if (chosenStation != null && chosenStation.PrevStation != 0 && chosenStation.NextStation != 0) 
+                    if (chosenStation != null && chosenStation.PrevStation != 0 && chosenStation.NextStation != 0)
                     {
                         // Checks by bl if the consecutive stations object of the stations on the sides are existing:
                         if (!bl.IsConsecutiveExist(chosenStation.PrevStation, chosenStation.NextStation))
@@ -214,134 +214,431 @@ namespace PlGui
         #endregion
 
         #region Station addition
-        private void Button_AddStation(object sender, RoutedEventArgs e)
-        {
-            BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
-            BO.BusLineStation chosenPrevStation = cbChoosePrevStation.SelectedItem as BO.BusLineStation;
-            BO.BusLineStation newStation = new BO.BusLineStation();
- 
 
-            // Beginning of addition:
-            if (!isAddStationInProcess && !isDeleteStationInProcess)
+        /// <summary>
+        /// new station selection changed event - makes grid manipulations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void newStationSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Grids visibility update:
+
+            gUpdateConsecutive.Visibility = Visibility.Collapsed;
+            gChoosePrevStation.Visibility = Visibility.Collapsed;
+
+            // Radio buttons update to delete previous changes:
+
+            rbFirst.IsEnabled = true;
+            rbMiddle.IsEnabled = true;
+            rbLast.IsEnabled = true;
+
+            rbFirst.IsChecked = false;
+            rbMiddle.IsChecked = false;
+            rbLast.IsChecked = false;
+        }
+
+        /// <summary>
+        /// First radio button check event - the admin wants to add the bus stop to the head of the list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void rbFirstCheck(object sender, RoutedEventArgs e)
+        {
+            BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop; // Storing the selected bus stop
+
+            // Grids visibility update:
+            gChoosePrevStation.Visibility = Visibility.Collapsed;
+            gUpdateConsecutive.Visibility = Visibility.Collapsed;
+
+            try
             {
-                isAddStationInProcess = true;
-                gChooseNewStation.Visibility = Visibility.Visible;
-                bDeleteStation.IsEnabled = false;
-                bAddStation.IsEnabled = false;
-                cbChooseNewStation.ItemsSource = bl.GetAllBusStops().Where(f => !busLine.LineStations.Any(x => x.BusStopKey == f.BusStopKey)); 
+                if (chosenBusStop != null)
+                {
+                    // Asks the bl if the consecutive first and new exist:
+                    bool isConsecutiveExist = bl.IsConsecutiveExist(chosenBusStop.BusStopKey, busLine.FirstBusStopKey);
+                    // If bus stop has been chosen and it has no consecutive to the head bus station
+                    // If the are already consecutive stations, the admin will simply press submit changes
+                    if (!isConsecutiveExist)
+                    {
+                        // Boolean gaps and button update:
+                        mustUpdateGapA = true;
+                        mustUpdateGapB = false;
+                        bAddStation.IsEnabled = true;
+                        tbAddStation.Text = "Submit changes";
+
+                        // Visibility updates:
+                        gUpdateConsecutive.Visibility = Visibility.Visible;
+                        lbGapB.Visibility = Visibility.Hidden;
+                        tbUpdateKmB.Visibility = Visibility.Hidden;
+                        tbUpdateTimeB.Visibility = Visibility.Hidden;
+
+                        // Text updates:
+                        tbUpdateKM.Text = "0";
+                        tbUpdateTime.Text = "hh:mm:ss";
+                        lbGapA.Content = chosenBusStop.BusStopKey + " -> " + busLine.FirstBusStopKey;
+                    }
+                    else // No need to update consecutive, only enables the button
+                    {
+                        bAddStation.IsEnabled = true;
+                        tbAddStation.Text = "Submit changes";
+                    }
+                }
+            }
+            catch (BO.ExceptionBL_UnexpectedProblem) // For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured", "Unable to delete");
+            }
+        }
+
+        /// <summary>
+        /// Middle radio button check event - the admin wants to add the bus stop to the middle of the list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void rbMiddleCheck(object sender, RoutedEventArgs e)
+        {
+            BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop; // Stores the selected bus stop
+            gUpdateConsecutive.Visibility = Visibility.Collapsed; // Collapsing in case it was open
+            bAddStation.IsEnabled = false; // Because the admin need to choose the station before the new one
+            try
+            {
+                if (chosenBusStop != null) // In case the first station was actually chosen
+                {
+                    // Enables to choose the station before:
+                    cbChoosePrevStation.Text = "After which station you wish to place the new station?";
+                    gChoosePrevStation.Visibility = Visibility.Visible;
+                    cbChoosePrevStation.ItemsSource = from station
+                                                      in busLine.LineStations
+                                                          // The query excludes the last station (for placing to the last, there is a radio button for last)
+                                                      where station.BusStopKey != busLine.LastBusStopKey
+                                                      select station;
+                }
+            }
+            catch (BO.ExceptionBL_UnexpectedProblem)  // For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured", "Unable to delete");
+            }
+        }
+
+        /// <summary>
+        /// Last radio button check event - the admin wants to add the bus stop to the end of the list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void rbLastCheck(object sender, RoutedEventArgs e)
+        {
+            BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;  // Stores the selected bus stop
+            gChoosePrevStation.Visibility = Visibility.Collapsed; // Closes the prev station grid if was visible
+            gUpdateConsecutive.Visibility = Visibility.Collapsed; // Closes the consecutive if was visible
+
+            try
+            {
+                if (chosenBusStop != null)
+                {
+                    bool isConsecutiveExist = bl.IsConsecutiveExist(busLine.LastBusStopKey, chosenBusStop.BusStopKey);
+                    if (!isConsecutiveExist)
+                    {
+                        // Boolean gaps and button update:
+                        mustUpdateGapA = true;
+                        mustUpdateGapB = false;
+                        tbAddStation.Text = "Submit changes";
+                        bAddStation.IsEnabled = true;
+
+                        // Visibility updates:
+                        gUpdateConsecutive.Visibility = Visibility.Visible;
+                        lbGapB.Visibility = Visibility.Hidden;
+                        tbUpdateKmB.Visibility = Visibility.Hidden;
+                        tbUpdateTimeB.Visibility = Visibility.Hidden;
+
+                        // Text updates:
+                        tbUpdateKM.Text = "0";
+                        tbUpdateTime.Text = "hh:mm:ss";
+                        lbGapA.Content = busLine.LastBusStopKey + " -> " + chosenBusStop.BusStopKey;
+
+                    }
+                    else // No need to update consecutive, only enables the button
+                    {
+                        tbAddStation.Text = "Submit changes";
+                        bAddStation.IsEnabled = true;
+                    }
+                }
+            }
+            catch (BO.ExceptionBL_UnexpectedProblem) // For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured", "Unable to delete");
+            }
+        }
+
+        /// <summary>
+        /// previous station selection changed event - for grid manipulations in accordance with with consecutive stations needs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void prevStationSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop; // Stores the selected bus stop
+            BO.BusLineStation chosenPrevStation = cbChoosePrevStation.SelectedItem as BO.BusLineStation; // Stores the selected previous station
+
+            try
+            {
+                if (chosenBusStop != null && chosenPrevStation != null) // Checks if the bus stops were actually selected
+                {
+                    bool isConsecutiveExistA = bl.IsConsecutiveExist(chosenPrevStation.BusStopKey, chosenBusStop.BusStopKey);
+                    bool isConsecutiveExistB = bl.IsConsecutiveExist(chosenBusStop.BusStopKey, chosenPrevStation.NextStation);
+                    if (!isConsecutiveExistA && !isConsecutiveExistB) // in case the both consecutive doesn't exist, there is a need to create them
+                    {
+                        // Boolean gaps and button update:
+                        mustUpdateGapA = true;
+                        mustUpdateGapB = true;
+                        lbGapB.Content = chosenBusStop.BusStopKey + " -> " + chosenPrevStation.NextStation;
+                        tbAddStation.Text = "Submit changes";
+                        bAddStation.IsEnabled = true;
+
+                        // Visibility updates:
+                        gUpdateConsecutive.Visibility = Visibility.Visible;
+                        lbGapB.Visibility = Visibility.Visible;
+                        tbUpdateKmB.Visibility = Visibility.Visible;
+                        tbUpdateTimeB.Visibility = Visibility.Visible;
+
+                        // Text updates:
+                        tbUpdateKM.Text = "0";
+                        tbUpdateTime.Text = "hh:mm:ss";
+                        tbUpdateKmB.Text = "0";
+                        tbUpdateTimeB.Text = "hh:mm:ss";
+                        lbGapA.Content = chosenPrevStation.BusStopKey + " -> " + chosenBusStop.BusStopKey;
+
+                    }
+                    else if (!isConsecutiveExistA)  // in case only the first pair of consecutive doesn't exist, there is a need to create them
+                    {
+                        // Boolean gaps and button update:
+                        mustUpdateGapA = true;
+                        tbAddStation.Text = "Submit changes";
+                        bAddStation.IsEnabled = true;
+
+                        // Visibility updates:
+                        gUpdateConsecutive.Visibility = Visibility.Visible;
+                        lbGapB.Visibility = Visibility.Hidden;
+                        tbUpdateKmB.Visibility = Visibility.Hidden;
+                        tbUpdateTimeB.Visibility = Visibility.Hidden;
+
+                        // Text updates:
+                        tbUpdateKM.Text = "0";
+                        tbUpdateTime.Text = "hh:mm:ss";
+                        lbGapA.Content = chosenPrevStation.BusStopKey + " -> " + chosenBusStop.BusStopKey;
+
+                    }
+                    else if (!isConsecutiveExistB)  // in case only the second pair of consecutive doesn't exist, there is a need to create them
+                    {
+                        // Boolean gaps and button update:
+                        mustUpdateGapB = true;
+                        tbAddStation.Text = "Submit changes";
+                        bAddStation.IsEnabled = true;
+
+                        // Visibility updates:
+                        gUpdateConsecutive.Visibility = Visibility.Visible;
+                        lbGapB.Visibility = Visibility.Hidden;
+                        tbUpdateKmB.Visibility = Visibility.Hidden;
+                        tbUpdateTimeB.Visibility = Visibility.Hidden;
+
+                        // Text updates:
+                        tbUpdateKmB.Text = "0";
+                        tbUpdateTimeB.Text = "hh:mm:ss";
+                        lbGapB.Content = chosenBusStop.BusStopKey + " -> " + chosenPrevStation.NextStation;
+
+                    }
+                    else // // in case the both pairs of consecutive stations exist, there is only left to click the button
+                    {
+                        tbAddStation.Text = "Submit changes";
+                        bAddStation.IsEnabled = true;
+                    }
+                }
+            }
+            catch (BO.ExceptionBL_UnexpectedProblem) // For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured", "Unable to delete");
             }
 
-            // Submiting the changes:
-            else if (isAddStationInProcess == true && chosenBusStop != null)
+        }
+
+        /// <summary>
+        /// Add station button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_AddStation(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                if (rbFirst.IsChecked == true) // Adding the line station to the head of the route
+                BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop; // Stores the new chosen bus stop
+                BO.BusLineStation chosenPrevStation = cbChoosePrevStation.SelectedItem as BO.BusLineStation; // Stores the new chosen bus stop
+                BO.BusLineStation newStation = new BO.BusLineStation(); // Creats a new bus line station to add later in this method
+
+                // Beginning of addition (BEFORE ANY RADIO BUTTON HAS BEEN CLICKED)
+                if (!isAddStationInProcess && !isDeleteStationInProcess)
                 {
-                    newStation.BusLineID = busLine.BusLineID;
-                    newStation.BusStopKey = chosenBusStop.BusStopKey;
-                    newStation.NextStation = busLine.FirstBusStopKey;
-                    newStation.PrevStation = 0;
-                    if (mustUpdateGapA == true)
+                    // The proccess starts and the buttons being unabled
+                    isAddStationInProcess = true;
+                    gChooseNewStation.Visibility = Visibility.Visible;
+                    bDeleteStation.IsEnabled = false;
+                    bAddStation.IsEnabled = false;
+
+                    // The linq query makes sure the combo box of new bus stops won't have exisiting stations in the bus line:
+                    cbChooseNewStation.ItemsSource = bl.GetAllBusStops().Where(f => !busLine.LineStations.Any(x => x.BusStopKey == f.BusStopKey));
+                }
+
+                // A quick explanation of the process:
+                // During the stations and radio buttons choosing, the booleans of mustUpdateGapA/B
+                // were changed, so now the code can determine how to send the obtained info about the consecutive stations
+
+                // Submiting the changes, if the addition proccess is on and the chosen bus isn't null:
+                else if (isAddStationInProcess == true && chosenBusStop != null)
+                {
+
+                    // Adding the line station to the head of the route:
+                    if (rbFirst.IsChecked == true)
                     {
-                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0)
+                        // Initializing the station fields:
+                        newStation.BusLineID = busLine.BusLineID;
+                        newStation.BusStopKey = chosenBusStop.BusStopKey;
+                        newStation.NextStation = busLine.FirstBusStopKey;
+
+                        // Because the new station is at the head:
+                        newStation.PrevStation = 0;
+
+                        if (mustUpdateGapA == true) // The admin was asked to fill the consecutive stations info (from the new to the first in the list)
                         {
-                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            // Validity of input check:
+                            if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0)
+                            {
+                                MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                            else
+                            {
+                                newStation.DistanceToNext = kmUpdate;
+                                newStation.TimeToNext = timeUpdate;
+                                bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0); // Calls the bl to add the bus line station and the consecutive if needed (by km and time to next stored in the newStation properties)
+                                stationAdditionEndProcess(); // The addition proccess ends
+                            }
                         }
-                        else
+                        else // The consecutive already exist
                         {
-                            newStation.DistanceToNext = kmUpdate;
-                            newStation.TimeToNext = timeUpdate;
+                            newStation.DistanceToNext = 0;
+                            newStation.TimeToNext = TimeSpan.FromMinutes(0);
+                            bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0); // Calls the bl to add the bus line station and the consecutive if needed (by km and time to next stored in the newStation properties)
+                            stationAdditionEndProcess(); // The addition proccess ends
                         }
                     }
-                    else
+
+
+                    // Adding the line station to the end of the route:
+                    else if (rbLast.IsChecked == true)
                     {
+                        // Initializing the station fields:
+                        newStation.BusLineID = busLine.BusLineID;
+                        newStation.BusStopKey = chosenBusStop.BusStopKey;
+                        newStation.PrevStation = busLine.LastBusStopKey;
+
+                        // Because the new station is at the end:
+                        newStation.NextStation = 0;
                         newStation.DistanceToNext = 0;
                         newStation.TimeToNext = TimeSpan.FromMinutes(0);
-                    }
-                    bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
-                    stationAdditionEndProcess();
-                }
-                else if (rbLast.IsChecked == true)  // Adding the line station to the end of the route
-                {
-                    newStation.BusLineID = busLine.BusLineID;
-                    newStation.BusStopKey = chosenBusStop.BusStopKey;
-                    newStation.NextStation = 0;
-                    newStation.PrevStation = busLine.LastBusStopKey;
-                    newStation.DistanceToNext = 0;
-                    newStation.TimeToNext = TimeSpan.FromMinutes(0);
-                    if (mustUpdateGapA == true)
-                    {
-                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0)
-                        {
-                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        }
-                        else
-                        {
-                            bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
-                            stationAdditionEndProcess();
-                        }
-                    }
-                    else
-                    {
-                        bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
-                    }
-                }
-                else if (rbMiddle.IsChecked == true && chosenPrevStation != null)
-                {
 
-                    newStation.BusLineID = busLine.BusLineID;
-                    newStation.BusStopKey = chosenBusStop.BusStopKey;
-                    newStation.BusStopName = chosenBusStop.BusStopName;
-                    newStation.LineStationIndex = chosenPrevStation.LineStationIndex + 1;
-                    newStation.PrevStation = chosenPrevStation.BusStopKey;
-                    newStation.NextStation = chosenPrevStation.NextStation;
-                    if (mustUpdateGapA == true && mustUpdateGapB == true)
-                    {
-                        if (!Double.TryParse(tbUpdateKmB.GetLineText(0), out double kmUpdateB) || !TimeSpan.TryParse(tbUpdateTimeB.GetLineText(0), out TimeSpan timeUpdateB) || timeUpdateB == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdateB) || kmUpdateB == 0 ||
-                            !Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0)
+                        if (mustUpdateGapA == true) // The admin was asked to fill the consecutive stations info (from the last to the new in the list)
                         {
-                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            // Validity of input check:
+                            if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0)
+                            {
+                                MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                            else
+                            {
+                                bl.AddBusLineStation(newStation, timeUpdate, kmUpdate); // Sends the new station to the bl addition function, with the info about the km and time from the previous
+                                stationAdditionEndProcess();
+                            }
                         }
                         else
                         {
-                            newStation.TimeToNext = timeUpdateB;
-                            newStation.DistanceToNext = kmUpdateB;
-                            bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
+                            bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0); // Calls the bl to add the bus line station (no consecutive addition needed)                 
                             stationAdditionEndProcess();
                         }
-                    }
-                    else if (mustUpdateGapA == true)
-                    {
-                        if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0)
-                        {
-                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        }
-                        else
-                        {
-                            bl.AddBusLineStation(newStation, timeUpdate, kmUpdate);
-                            stationAdditionEndProcess();
-                        }
-                    }
-                    else if (mustUpdateGapB == true)
-                    {
-                        if (!Double.TryParse(tbUpdateKmB.GetLineText(0), out double kmUpdateB) || !TimeSpan.TryParse(tbUpdateTimeB.GetLineText(0), out TimeSpan timeUpdateB) || timeUpdateB == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdateB) || kmUpdateB == 0)
-                        {
-                            MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
-                        }
-                        else
-                        {
-                            newStation.TimeToNext = timeUpdateB;
-                            newStation.DistanceToNext = kmUpdateB;
-                            bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
-                            stationAdditionEndProcess();
-                        }
-                    }
-                    else // No need to update the gaps (there are consecutive stations for both sides!)
-                    {
-                        bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);
-                        stationAdditionEndProcess();
-                    }
-                }
 
+                    }
+
+                    // Adding the line station to the middle of the route:
+                    else if (rbMiddle.IsChecked == true && chosenPrevStation != null) // In case the previous station was actually chosen
+                    {
+                        // Initializing the station fields:
+                        newStation.BusLineID = busLine.BusLineID;
+                        newStation.BusStopKey = chosenBusStop.BusStopKey;
+                        newStation.BusStopName = chosenBusStop.BusStopName;
+                        newStation.LineStationIndex = chosenPrevStation.LineStationIndex + 1; // The index is determined now, before sending the newStation to bl (unlike when the new station matched the head or to the end)
+                        newStation.PrevStation = chosenPrevStation.BusStopKey;
+                        newStation.NextStation = chosenPrevStation.NextStation;
+
+                        // The admin was asked to fill a pair of consecutive stations info (from the previous to the new one, and from the new one to the next in the list)
+                        if (mustUpdateGapA == true && mustUpdateGapB == true)
+                        {
+                            // Input validation check:
+                            if (!Double.TryParse(tbUpdateKmB.GetLineText(0), out double kmUpdateB) || !TimeSpan.TryParse(tbUpdateTimeB.GetLineText(0), out TimeSpan timeUpdateB) || timeUpdateB == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdateB) || kmUpdateB == 0 ||
+                                !Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0)
+                            {
+                                MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                            else
+                            {
+                                // The fields updateded and will be used for the consecutive stations creation later in the bl:
+                                newStation.TimeToNext = timeUpdateB;
+                                newStation.DistanceToNext = kmUpdateB;
+                                bl.AddBusLineStation(newStation, timeUpdate, kmUpdate); // The last two paramters represent the first pair of consecutive stations information
+                                stationAdditionEndProcess(); // The addition proccess ends
+                            }
+                        }
+
+                        // The admin was asked to fill the consecutive stations info (from the prev to the new one)
+                        else if (mustUpdateGapA == true)
+                        {
+                            // Input validation check:
+                            if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0)
+                            {
+                                MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                            else
+                            {
+                                bl.AddBusLineStation(newStation, timeUpdate, kmUpdate); // The last two paramters represent the first pair of consecutive stations information
+                                stationAdditionEndProcess(); // The addition proccess ends
+                            }
+                        }
+
+                        // The admin was asked to fill the consecutive stations info (from the new one to the next in the list)
+                        else if (mustUpdateGapB == true)
+                        {
+                            // Input validation checked:
+                            if (!Double.TryParse(tbUpdateKmB.GetLineText(0), out double kmUpdateB) || !TimeSpan.TryParse(tbUpdateTimeB.GetLineText(0), out TimeSpan timeUpdateB) || timeUpdateB == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdateB) || kmUpdateB == 0)
+                            {
+                                MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                            else
+                            {
+                                // The fields updateded and will be used for the consecutive stations creation later in the bl:s
+                                newStation.TimeToNext = timeUpdateB;
+                                newStation.DistanceToNext = kmUpdateB;
+                                bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);  // The last two paramters are zero because there is no need to create consecutive stations from the previous to the new
+                                stationAdditionEndProcess();  // The addition proccess ends
+                            }
+                        }
+                        else // No need to update the gaps (there are already consecutive stations for both sides!)
+                        {
+                            bl.AddBusLineStation(newStation, TimeSpan.FromMinutes(0), 0);   // The last two paramters are zero because there is no need to create consecutive stations from the previous to the new
+                            stationAdditionEndProcess(); // The addition proccess ends
+                        }
+                    }
+
+                }
+            }
+            catch (BO.ExceptionBL_UnexpectedProblem) // In case there are unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured", "Unable to delete");
             }
         }
 
@@ -350,179 +647,34 @@ namespace PlGui
         /// </summary>
         private void stationAdditionEndProcess()
         {
+            // Data context updates:
             BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
             busLine = bl.GetBusLine(busLine.BusLineID);
+
+            // Grid visibility updates:
             gUpdateConsecutive.Visibility = Visibility.Collapsed;
             gChooseNewStation.Visibility = Visibility.Collapsed;
+            gChoosePrevStation.Visibility = Visibility.Collapsed;
+
+
+            // Boolean variables updates:
             mustUpdateGapA = false;
             mustUpdateGapB = false;
+            isAddStationInProcess = false;
+
+            // Radio buttons and add button updates::
             rbFirst.IsEnabled = false;
             rbMiddle.IsEnabled = false;
             rbLast.IsEnabled = false;
+            bAddStation.IsEnabled = true;
+
+            // Text updates:
             cbChoosePrevStation.Text = "After which station you wish to place the new station?";
             cbChooseNewStation.Text = "Choose the new station";
-            gChoosePrevStation.Visibility = Visibility.Collapsed;
-            isAddStationInProcess = false;
-            bAddStation.IsEnabled = true;
             tbAddStation.Text = "Add a station";
         }
 
-        private void newStationSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            gUpdateConsecutive.Visibility = Visibility.Collapsed;
-            gChoosePrevStation.Visibility = Visibility.Collapsed;
-            rbFirst.IsEnabled = true;
-            rbMiddle.IsEnabled = true;
-            rbLast.IsEnabled = true;
-            rbFirst.IsChecked = false;
-            rbMiddle.IsChecked = false;
-            rbLast.IsChecked = false;
-        }
 
-        private void prevStationSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
-            BO.BusLineStation chosenPrevStation = cbChoosePrevStation.SelectedItem as BO.BusLineStation;
-            try
-            {
-                if (chosenBusStop != null && chosenPrevStation != null)
-                {
-                    if (!bl.IsConsecutiveExist(chosenPrevStation.BusStopKey, chosenBusStop.BusStopKey) && !bl.IsConsecutiveExist(chosenBusStop.BusStopKey, chosenPrevStation.NextStation))
-                    {
-                        mustUpdateGapA = true;
-                        mustUpdateGapB = true;
-                        gUpdateConsecutive.Visibility = Visibility.Visible;
-                        lbGapB.Visibility = Visibility.Visible;
-                        tbUpdateKmB.Visibility = Visibility.Visible;
-                        tbUpdateTimeB.Visibility = Visibility.Visible;
-                        tbUpdateKM.Text = "0";
-                        tbUpdateTime.Text = "hh:mm:ss";
-                        tbUpdateKmB.Text = "0";
-                        tbUpdateTimeB.Text = "hh:mm:ss";
-                        lbGapA.Content = chosenPrevStation.BusStopKey + " -> " + chosenBusStop.BusStopKey;
-                        lbGapB.Content = chosenBusStop.BusStopKey + " -> " + chosenPrevStation.NextStation;
-                        tbAddStation.Text = "Submit changes";
-                        bAddStation.IsEnabled = true;
-                    }
-                    else if (!bl.IsConsecutiveExist(chosenPrevStation.BusStopKey, chosenBusStop.BusStopKey))
-                    {
-                        mustUpdateGapA = true;
-                        gUpdateConsecutive.Visibility = Visibility.Visible;
-                        lbGapB.Visibility = Visibility.Hidden;
-                        tbUpdateKmB.Visibility = Visibility.Hidden;
-                        tbUpdateTimeB.Visibility = Visibility.Hidden;
-                        tbUpdateKM.Text = "0";
-                        tbUpdateTime.Text = "hh:mm:ss";
-                        lbGapA.Content = chosenPrevStation.BusStopKey + " -> " + chosenBusStop.BusStopKey;
-                        tbAddStation.Text = "Submit changes";
-                        bAddStation.IsEnabled = true;
-                    }
-                    else if (!bl.IsConsecutiveExist(chosenBusStop.BusStopKey, chosenPrevStation.NextStation))
-                    {
-                        mustUpdateGapB = true;
-                        gUpdateConsecutive.Visibility = Visibility.Visible;
-                        lbGapB.Visibility = Visibility.Hidden;
-                        tbUpdateKmB.Visibility = Visibility.Hidden;
-                        tbUpdateTimeB.Visibility = Visibility.Hidden;
-                        tbUpdateKmB.Text = "0";
-                        tbUpdateTimeB.Text = "hh:mm:ss";
-                        lbGapB.Content = chosenBusStop.BusStopKey + " -> " + chosenPrevStation.NextStation;
-                        tbAddStation.Text = "Submit changes";
-                        bAddStation.IsEnabled = true;
-                    }
-                    else // There are consecutive stations for both sides
-                    {
-                        tbAddStation.Text = "Submit changes";
-                        bAddStation.IsEnabled = true;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-        }
-
-        private void rbFirstCheck(object sender, RoutedEventArgs e)
-        {
-            BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
-            gChoosePrevStation.Visibility = Visibility.Collapsed;
-            gUpdateConsecutive.Visibility = Visibility.Collapsed;
-            try
-            {
-                if (chosenBusStop != null && !bl.IsConsecutiveExist(chosenBusStop.BusStopKey, busLine.FirstBusStopKey))
-                {
-                    mustUpdateGapA = true;
-                    mustUpdateGapB = false;
-                    gUpdateConsecutive.Visibility = Visibility.Visible;
-                    lbGapB.Visibility = Visibility.Hidden;
-                    tbUpdateKmB.Visibility = Visibility.Hidden;
-                    tbUpdateTimeB.Visibility = Visibility.Hidden;
-                    tbUpdateKM.Text = "0";
-                    tbUpdateTime.Text = "hh:mm:ss";
-                    lbGapA.Content = chosenBusStop.BusStopKey + " -> " + busLine.FirstBusStopKey;
-                    tbAddStation.Text = "Submit changes";
-                    bAddStation.IsEnabled = true;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        private void rbMiddleCheck(object sender, RoutedEventArgs e)
-        {
-            BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
-            gUpdateConsecutive.Visibility = Visibility.Collapsed;
-            bAddStation.IsEnabled = false;
-            try
-            {
-                if (chosenBusStop != null)
-                {
-                    cbChoosePrevStation.Text = "After which station you wish to place the new station?";
-                    gChoosePrevStation.Visibility = Visibility.Visible;
-                    cbChoosePrevStation.ItemsSource = from station in busLine.LineStations where station.BusStopKey != busLine.LastBusStopKey select station;
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-        }
-
-        private void rbLastCheck(object sender, RoutedEventArgs e)
-        {
-
-            gChoosePrevStation.Visibility = Visibility.Collapsed;
-            gUpdateConsecutive.Visibility = Visibility.Collapsed;
-            BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
-            try
-            {
-                if (chosenBusStop != null && !bl.IsConsecutiveExist(busLine.LastBusStopKey, chosenBusStop.BusStopKey))
-                {
-                    mustUpdateGapA = true;
-                    mustUpdateGapB = false;
-                    gUpdateConsecutive.Visibility = Visibility.Visible;
-                    lbGapB.Visibility = Visibility.Hidden;
-                    tbUpdateKmB.Visibility = Visibility.Hidden;
-                    tbUpdateTimeB.Visibility = Visibility.Hidden;
-                    tbUpdateKM.Text = "0";
-                    tbUpdateTime.Text = "hh:mm:ss";
-                    lbGapA.Content = busLine.LastBusStopKey + " -> " + chosenBusStop.BusStopKey;
-                    tbAddStation.Text = "Submit changes";
-                    bAddStation.IsEnabled = true;
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
 
 
         #endregion
