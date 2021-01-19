@@ -124,6 +124,7 @@ namespace PlGui
 
         private void Start_Pause_Click(object sender, RoutedEventArgs e)
         {
+            try { 
             if (tbStart_Pause.Text == "Start")
             {
                 if (!TimeSpan.TryParse(timeEdit.Text, out TimeSpan inputTime))
@@ -156,6 +157,11 @@ namespace PlGui
                 timeEdit.Visibility = Visibility.Visible;
                 intervalSlider.IsEnabled = true;
                 cbBusStop.IsEnabled = true;
+            }
+            }
+            catch(BO.ExceptionBL_UnexpectedProblem)
+            {
+                MessageBox.Show("Sorry, the program as met an unexpected problem. Please sign in again.");
             }
         }
 
@@ -262,11 +268,10 @@ namespace PlGui
             {
                 clockWorker.CancelAsync();
             }
-
         }
 
-        #endregion
 
+        #endregion
 
     }
 }
