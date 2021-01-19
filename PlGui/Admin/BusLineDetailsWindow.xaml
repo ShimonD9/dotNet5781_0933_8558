@@ -17,24 +17,30 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
+        
         <Border Grid.Row="0">
             <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+
+                <!--Bus Line info grid-->
+                
                 <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Grid ShowGridLines="True"  HorizontalAlignment="Center" VerticalAlignment="Center"  Height="339" Width="333">
+                 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
-
                         </Grid.RowDefinitions>
+                        
                         <Label Grid.Row="0" Grid.Column="0" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Bus line identifier:"/>
                         <Label Grid.Row="1" Grid.Column="0" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Bus line number:"/>
                         <Label Grid.Row="2" Grid.Column="0" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Area:"/>
@@ -44,9 +50,11 @@
                     </Grid>
                 </Border>
                 <Border Grid.Column="1" BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                    <!--Route and schedule tab control grid-->
+
                     <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Height="420" Width="400">
                         <TabItem Header="Route">
-
                             <Grid ShowGridLines="True"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0.1*"/>
@@ -55,8 +63,10 @@
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="0.3*"/>
-
                                 </Grid.RowDefinitions>
+
+                                <!--Columns headlines grid-->
+                                
                                 <Grid Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="7,0,0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="70" />
@@ -82,6 +92,8 @@
                                     </Border>
                                 </Grid>
 
+                                <!--Line Station list view-->
+                                
                                 <ListView Grid.Row="1" Name ="lvLineStations" ItemsSource="{Binding Path='LineStations'}"  SelectionChanged="lvStationsSelectionChanged">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
@@ -113,13 +125,17 @@
                                     </ListView.ItemTemplate>
                                 </ListView>
 
+                                <!--Add/Delete Station grid-->
+                                
                                 <Grid Grid.Row="2" Name="gChooseNewStation" Visibility="Collapsed"   ShowGridLines="True">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
-                                    <StackPanel Grid.Row="0" Margin="10">
+                                    <!--Choosing the new station grid-->
+
+                                        <StackPanel Grid.Row="0" Margin="10">
                                         <ComboBox Name="cbChooseNewStation"  IsEditable="True" IsReadOnly="True" Text="Choose the new station" ItemsSource="{Binding}" SelectionChanged="newStationSelectionChanged">
                                             <ComboBox.ItemTemplate>
                                                 <DataTemplate>
@@ -144,6 +160,8 @@
                                     </StackPanel>
                                 </Grid>
 
+                                <!--Choosing the previous station grid-->
+                                
                                 <Grid Grid.Row="3" Name="gChoosePrevStation" Visibility="Collapsed"  ShowGridLines="True">
                                     <StackPanel Grid.Row="0" Margin="10">
                                         <ComboBox Name="cbChoosePrevStation" SelectionChanged="prevStationSelectionChanged" IsEditable="True" IsReadOnly="True"  ItemsSource="{Binding}"  Text="After which station you wish to place the new station?">
@@ -163,6 +181,8 @@
                                     </StackPanel>
                                 </Grid>
 
+                                <!--Updating consecutive info grid-->
+                                
                                 <Grid Grid.Row="4" Name="gUpdateConsecutive" Visibility="Collapsed"  ShowGridLines="True">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
@@ -185,7 +205,8 @@
                                     <TextBox Grid.Column="2"  Grid.Row="2"  Name="tbUpdateKmB" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="5" PreviewTextInput="NumberValidationTextBoxDots"/>
                                 </Grid>
 
-
+                                <!--Add/Delete station buttons grid-->
+                                
                                 <Border Grid.Row="5">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -213,6 +234,8 @@
 
                             </Grid>
 
+                        <!--Line departures list view grid-->
+                            
                         </TabItem>
                         <TabItem Header="Line departure times">
                             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="300" Width="350">
@@ -224,6 +247,9 @@
                                 <Grid Grid.Row="0" HorizontalAlignment="Stretch">
                                     <ListView Name ="lvSchedule" Grid.Row="1"  HorizontalContentAlignment="Center" ItemsSource="{Binding Path='Schedule'}" SelectionChanged="lvScheduleSelectionChanged"/>
                                 </Grid>
+
+                                <!--Add departure grid-->
+
                                 <Grid Name="gAddDeparture" Visibility="Collapsed" Grid.Row="1">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
@@ -232,6 +258,9 @@
                                     <Label Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center"  Content="Enter the new departure time:" FontWeight="DemiBold"  />
                                     <TextBox Name="tbAddDeparture" Grid.Column="1" Text="hh:mm:ss" VerticalAlignment="Center" HorizontalAlignment="Left"  HorizontalContentAlignment="Center" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"/>
                                 </Grid>
+
+                                <!--Add departure time buttons grid-->
+
                                 <Grid Grid.Row="2">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
@@ -252,13 +281,15 @@
                                         </Button.Content>
                                     </Button>
                                 </Grid>
-
                             </Grid>
                         </TabItem>
                     </TabControl>
                 </Border>
             </Grid>
         </Border>
+
+        <!--Update delete bus line buttons grid-->
+
         <Border Grid.Row="1">
             <Grid>
                 <Grid.ColumnDefinitions>

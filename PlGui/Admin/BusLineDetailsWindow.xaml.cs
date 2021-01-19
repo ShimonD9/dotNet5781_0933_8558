@@ -22,16 +22,21 @@ namespace PlGui
     /// </summary>
     public partial class BusLineDetailsWindow : Window
     {
-        BO.BusLine busLine;
-        IBL bl = BLFactory.GetBL("1");
+        IBL bl = BLFactory.GetBL("1"); // Calls and stores the instance of the bl interface
+        BO.BusLine busLine;  // Creates a BO.busLine to store the sent item from the list in admin window
 
-
+        /// <summary>
+        /// Default window ctor
+        /// </summary>
         public BusLineDetailsWindow()
         {
             InitializeComponent();
         }
 
-        // A second builder, to get the item selected data
+        /// <summary>
+        /// Second window ctor recieving the bus details double-clicked item
+        /// </summary>
+        /// <param name="item"></param>
         public BusLineDetailsWindow(object item)
         {
             InitializeComponent();
@@ -39,67 +44,97 @@ namespace PlGui
             busLine = item as BusLine;
         }
 
-        // Bus line update and delete methods:
+        #region Bus line add/delete
 
+        /// <summary>
+        /// The update button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Update(object sender, RoutedEventArgs e)
         {
             try
             {
-                busLine.BusLineNumber = int.Parse(tbLineNumber.GetLineText(0));
-                bl.UpdateBusLine(busLine);
+                busLine.BusLineNumber = int.Parse(tbLineNumber.GetLineText(0)); // There's only updating the line number (but not area, because of logical reasons)
+                bl.UpdateBusLine(busLine); // Calls the bl to update the bus line
                 this.Close();
             }
-            catch (BO.ExceptionBL_KeyNotFound)
+            catch (BO.ExceptionBL_KeyNotFound) // In case the bus doesn't exist
             {
                 MessageBox.Show("The bus line does not exist", "Unable to update");
             }
-            catch (BO.ExceptionBL_Inactive)
+            catch (BO.ExceptionBL_Inactive) // In case the bus isn't active
             {
                 MessageBox.Show("The bus line is inactive", "Unable to delete");
             }
+            catch (BO.ExceptionBL_UnexpectedProblem) // For other exceptions
+            {
+                MessageBox.Show("An unexpected problem occured", "Unable to delete");
+            }
         }
 
+        /// <summary>
+        /// The delete button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Delete(object sender, RoutedEventArgs e)
         {
+            // Asks if the admin surely wants to delete the object:
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this bus line?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
             if (result == MessageBoxResult.Yes)
                 try
                 {
-                    bl.DeleteBusLine(busLine.BusLineID);
+                    bl.DeleteBusLine(busLine.BusLineID); // Calls the bl to the delete the bus line
                     this.Close();
                 }
-                catch (BO.ExceptionBL_KeyNotFound)
+                catch (BO.ExceptionBL_KeyNotFound) // In case the bus line doesn't exist
                 {
                     MessageBox.Show("The bus line does not exist", "Unable to delete");
                 }
-                catch (BO.ExceptionBL_Inactive)
+                catch (BO.ExceptionBL_Inactive) // In case the bus line is inactive (already been delted)
                 {
-                    MessageBox.Show("The bus line already deleted", "Unable to delete");
+                    MessageBox.Show("The bus line has been already deleted", "Unable to delete");
+                }
+                catch (BO.ExceptionBL_UnexpectedProblem) // For other exceptions
+                {
+                    MessageBox.Show("An unexpected problem occured", "Unable to delete");
                 }
 
         }
 
+        #endregion
 
-        #region Station deletion:
+        #region Station deletion
 
-        bool isAddStationInProcess = false;
+        // Bool fields for grid and style manipulations:
+        bool isAddStationInProcess = false; 
         bool isDeleteStationInProcess = false;
         bool mustUpdateGapA = false;
         bool mustUpdateGapB = false;
 
+        /// <summary>
+        /// Delete line station click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_DeleteStation(object sender, RoutedEventArgs e)
         {
-            BO.BusLineStation chosenStation = (lvLineStations.SelectedValue as BusLineStation);
-            if (isDeleteStationInProcess == false)
+            BO.BusLineStation chosenStation = (lvLineStations.SelectedValue as BusLineStation); // Stores the selected station to deleted
+            if (isDeleteStationInProcess == false) // If the deletion only being started
             {
                 try
                 {
-                    isDeleteStationInProcess = true;
-                    bAddStation.IsEnabled = false;
-                    if (chosenStation != null && chosenStation.PrevStation != 0 && chosenStation.NextStation != 0)
+                    isDeleteStationInProcess = true; // Needed for the grid and radio buttons manipulations
+                    bAddStation.IsEnabled = false; // The button is disabled while waiting for the next selections
+
+                    // In case a station was actually selected is in the middle:
+                    if (chosenStation != null && chosenStation.PrevStation != 0 && chosenStation.NextStation != 0) 
                     {
+                        // Checks by bl if the consecutive stations object of the stations on the sides are existing:
                         if (!bl.IsConsecutiveExist(chosenStation.PrevStation, chosenStation.NextStation))
                         {
+                            // Makes the update grid visible and manipulates the text boxes accordingly:
                             gUpdateConsecutive.Visibility = Visibility.Visible;
                             tbUpdateKmB.Visibility = Visibility.Hidden;
                             tbUpdateTimeB.Visibility = Visibility.Hidden;
@@ -108,52 +143,51 @@ namespace PlGui
                             lbGapA.Content = chosenStation.PrevStation + " -> " + chosenStation.NextStation;
                             tbDeleteStation.Text = "Submit changes";
                         }
-                        else
+                        else // If the consecutive stations exist, only need to delete the bus line station trough bl
                         {
-                            bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, TimeSpan.FromMinutes(0), 0);
-                            stationDeletionEndProcess();
+                            bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, TimeSpan.FromMinutes(0), 0); // Sends the bus line id, the bus stop key and time span and km equals to 0
+                            stationDeletionEndProcess(); // The proccess ended, and the function will update the relevant grids
                         }
                     }
-                    else if (chosenStation.PrevStation == 0 || chosenStation.NextStation == 0)
+                    else if (chosenStation.PrevStation == 0 || chosenStation.NextStation == 0) // It means the station is in the end or the beggining, and no need to update the consecutive stations
                     {
-                        bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, TimeSpan.FromMinutes(0), 0);
-                        stationDeletionEndProcess();
+                        bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, TimeSpan.FromMinutes(0), 0); // Sends the bus line id, the bus stop key and time span and km equals to 0
+                        stationDeletionEndProcess(); // The proccess ended, and the function will update the relevant grids
                     }
                 }
-                catch (BO.ExceptionBL_LessThanThreeStation)
+                catch (BO.ExceptionBL_LessThanThreeStation) // Unable to delete if there are only two stations left!
                 {
                     MessageBox.Show("There are only two station in the line", "Cannot delete station", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    stationDeletionEndProcess();
+                    stationDeletionEndProcess(); // The proccess ended, and the function will update the relevant grids
                 }
-                catch (Exception)
+                catch (BO.ExceptionBL_UnexpectedProblem)
                 {
-                    throw;
+                    MessageBox.Show("An unexpected problem occured", "Unable to delete");
                 }
 
             }
-            else if (tbDeleteStation.Text == "Submit changes")
+            else if (tbDeleteStation.Text == "Submit changes") // If it need to submit changes, it means there is need to update consecutive
             {
-                if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate) || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0)
+                if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate)  // Checks the string by tryparse
+                    || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0) // If there is need to update, the km and time shoudln't be zero, and bl checks the logic of the timeSpan
                 {
                     MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-                else
+                else // If the input correct, it deletes trough the bl
                 {
                     bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, timeUpdate, kmUpdate);
-                    BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
-                    gUpdateConsecutive.Visibility = Visibility.Collapsed;
-                    tbUpdateKmB.Visibility = Visibility.Visible;
-                    tbUpdateTimeB.Visibility = Visibility.Visible;
-                    tbDeleteStation.Text = "Delete";
-                    bDeleteStation.IsEnabled = false;
+                    stationDeletionEndProcess(); // The proccess ended, and the function will update the relevant grids
                 }
             }
         }
 
+        /// <summary>
+        /// A function made for list context, grid and buttons style manipulations, when the deletion proccess ends
+        /// </summary>
         private void stationDeletionEndProcess()
         {
             BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
-            busLine = bl.GetBusLine(busLine.BusLineID);
+            busLine = bl.GetBusLine(busLine.BusLineID); // Gets again the bus line for the next actions if needed
             gUpdateConsecutive.Visibility = Visibility.Collapsed;
             bDeleteStation.IsEnabled = false;
             isDeleteStationInProcess = false;
@@ -161,9 +195,14 @@ namespace PlGui
             tbDeleteStation.Text = "Delete the station";
         }
 
+        /// <summary>
+        /// lvStations selection changed - a selection will end an existing proccess
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lvStationsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (isDeleteStationInProcess || isAddStationInProcess)
+            if (isDeleteStationInProcess || isAddStationInProcess) // If in proccess, it will end, if not, it will able the deletion button
             {
                 stationDeletionEndProcess();
                 stationAdditionEndProcess();
@@ -174,7 +213,7 @@ namespace PlGui
 
         #endregion
 
-        #region Station addition:
+        #region Station addition
         private void Button_AddStation(object sender, RoutedEventArgs e)
         {
             BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop;
@@ -306,6 +345,9 @@ namespace PlGui
             }
         }
 
+        /// <summary>
+        /// A function made for list context, grid and buttons style manipulations, when the addition proccess ends
+        /// </summary>
         private void stationAdditionEndProcess()
         {
             BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
@@ -485,52 +527,76 @@ namespace PlGui
 
         #endregion
 
-        #region Schedule delete/add methods:
+        #region Schedule delete/add methods
 
+        /// <summary>
+        /// List view - selection change event collapsing the add departure grid and enables the deletion button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lvScheduleSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             gAddDeparture.Visibility = Visibility.Collapsed;
             bDeleteDeparture.IsEnabled = true;
         }
 
+        /// <summary>
+        /// Add departure button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_AddDeparture(object sender, RoutedEventArgs e)
         {
-            if (gAddDeparture.Visibility != Visibility.Visible)
+            if (gAddDeparture.Visibility != Visibility.Visible) // If the grid of add departure isn't visible, it makes it visible
                 gAddDeparture.Visibility = Visibility.Visible;
             else
                 try
                 {
-                    if (TimeSpan.TryParse(tbAddDeparture.GetLineText(0), out TimeSpan timeDeparture) && !bl.isTimeSpanInvalid(timeDeparture))
+                    if (TimeSpan.TryParse(tbAddDeparture.GetLineText(0), out TimeSpan timeDeparture) && // Checks if the input correct
+                        !bl.isTimeSpanInvalid(timeDeparture)) // Calls the logical check of the timeSpan entered
                     {
-                        bl.AddLineDeparture(timeDeparture, busLine.BusLineID);
-                        BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
-                        gAddDeparture.Visibility = Visibility.Collapsed;
+                        bl.AddLineDeparture(timeDeparture, busLine.BusLineID); // Adds by the bl
+                        BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID); // Updates the list view of the departures
+                        gAddDeparture.Visibility = Visibility.Collapsed; // The grid of adding collapsing 
                         tbAddDeparture.Text = "hh:mm:ss";
                     }
                     else
                         MessageBox.Show("You have entered a wrong time departure!");
                 }
-                catch (ExceptionBL_KeyAlreadyExist)
+                catch (ExceptionBL_KeyAlreadyExist) // In case the time departure already exist
                 {
                     MessageBox.Show("This time departure already exist!");
                 }
+                catch (BO.ExceptionBL_UnexpectedProblem) // For other exceptions
+                {
+                    MessageBox.Show("An unexpected problem occured", "Unable to delete");
+                }
         }
 
+        /// <summary>
+        /// Delete departure button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_DeleteDeparture(object sender, RoutedEventArgs e)
         {
             try
             {
-                gAddDeparture.Visibility = Visibility.Collapsed;
-                bl.DeleteLineDeparture((TimeSpan)lvSchedule.SelectedValue, busLine.BusLineID);
-                BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID);
+                gAddDeparture.Visibility = Visibility.Collapsed; // Collapsing the addition grid
+                bl.DeleteLineDeparture((TimeSpan)lvSchedule.SelectedValue, busLine.BusLineID); // Calls bl for the deletion of the list view selected item
+                BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID); // Updates the list view
             }
-            catch (BO.ExceptionBL_KeyNotFound ex)
+            catch (BO.ExceptionBL_KeyNotFound ex) // In case the time departure doesn't exist
             {
                 MessageBox.Show("This time departure doesn't exist!", ex.Message);
             }
-            catch (BO.ExceptionBL_Inactive ex)
+            catch (BO.ExceptionBL_Inactive ex) // In case the time departure is inactive
             {
                 MessageBox.Show("This time departure already is inactive!", ex.Message);
+            }
+            catch (BO.ExceptionBL_UnexpectedProblem) // For other exceptions
+            {
+                MessageBox.Show("An unexpected problem occured", "Unable to delete");
             }
         }
 
@@ -538,19 +604,33 @@ namespace PlGui
 
         #region input validations
 
-
+        /// <summary>
+        /// Preview keyboard input to numbers only
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]$");
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        /// <summary>
+        /// Preview keyboard input to numbers with colons
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NumberValidationTextBoxColon(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9/:]$");
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        /// <summary>
+        /// Preview keyboard input to numbers with dots
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NumberValidationTextBoxDots(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9/.]$");

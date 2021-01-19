@@ -94,42 +94,6 @@ namespace PlGui
         }
 
 
-        // Using regex to unable wrongs inputs in the text box:
-
-        /// <summary>
-        /// Preview keyboard input to numbers with colons
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void NumberValidationTextBoxColon(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9/:]$");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
-        /// <summary>
-        /// Preview keyboard input to numbers with dots
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void NumberValidationTextBoxDots(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9/.]$");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
-        /// <summary>
-        /// Preview keyboard input to numbers only
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex("[^0-9]$");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
-
         /// <summary>
         /// The first bus stop item selection event
         /// </summary>
@@ -177,5 +141,42 @@ namespace PlGui
                 }
             }
         }
+
+        #region Using regex to unable wrongs inputs in the text box:
+
+        /// <summary>
+        /// Preview keyboard input to numbers with colons
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NumberValidationTextBoxColon(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9/:]$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        /// <summary>
+        /// Preview keyboard input to numbers with dots
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NumberValidationTextBoxDots(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9/.]$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        /// <summary>
+        /// Preview keyboard input to numbers only
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]$");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        #endregion
+
     }
 }
