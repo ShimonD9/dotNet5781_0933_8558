@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DO;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,12 +8,16 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
+
 namespace DL
 {
-     class XMLTools     //xmlTools(save and load)
+
+    class XMLTools     //xmlTools(save and load)
     {
         static string dir = @"xml\";
+
         static XMLTools()
+
         {
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
