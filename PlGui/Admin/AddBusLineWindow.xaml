@@ -34,7 +34,7 @@
             </Grid>
 
             <Grid Grid.Row="0" Grid.Column="1">
-                <TextBox x:Name="tbLineNumber" MaxLength="3" PreviewTextInput="NumberValidationTextBoxNoDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+                <TextBox x:Name="tbLineNumber" MaxLength="3" PreviewTextInput="numberValidationTextBoxNoDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0">
@@ -65,7 +65,7 @@
             </Grid>
 
             <Grid Grid.Row="4" Grid.Column="1">
-                <TextBox Name ="tbKmToNext" Text="0"  Visibility="Collapsed" MaxLength="8" PreviewTextInput="NumberValidationTextBoxDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+                <TextBox Name ="tbKmToNext" Text="0"  Visibility="Collapsed" MaxLength="8" PreviewTextInput="numberValidationTextBoxDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
             </Grid>
 
 
@@ -74,11 +74,11 @@
             </Grid>
 
             <Grid Grid.Row="5" Grid.Column="1">
-                <TextBox Name ="tbTimeToNext" Visibility="Collapsed" Text="hh:mm:ss"  MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+                <TextBox Name ="tbTimeToNext" Visibility="Collapsed" Text="hh:mm:ss"  MaxLength="8" PreviewTextInput="numberValidationTextBoxColon"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
             </Grid>
         </Grid>
 
-        <Button Content="Add the new bus line" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Margin="20" Click="Button_Click"/>
+        <Button Content="Add the new bus line" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Margin="20" Click="button_Click"/>
 
     </StackPanel>
 

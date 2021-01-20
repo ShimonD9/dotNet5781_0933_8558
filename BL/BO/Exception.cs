@@ -43,6 +43,8 @@ namespace BO
         public override string ToString() => base.ToString() + $", bus stop : {ID} serves bus lines";
     }
 
+
+
     public class ExceptionBL_WrongDetails: Exception
     {
         public string ID;
@@ -84,6 +86,7 @@ namespace BO
         public ExceptionBL_MileageValuesConflict(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $",  Conflict between mileage values: {ID}";
     }
+
 
     //----------------------------user bl exception------------------------------
     public class ExceptionBL_UserKeyNotFound : Exception

@@ -36,10 +36,10 @@
             <Border  BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock VerticalAlignment="Center" Name="timeDisplay" TextAlignment="Center"  Background="Black" Foreground="LightGreen" Text="{Binding Path='RunningTime'}" Width="60" Margin="0,0,10,0" Visibility="Collapsed"/>
             </Border>
-            <TextBox Name="timeEdit" VerticalAlignment="Center" HorizontalContentAlignment="Center"  Visibility="Visible" Width="60" Margin="0,0,10,0" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"/>
+            <TextBox Name="timeEdit" VerticalAlignment="Center" HorizontalContentAlignment="Center"  Visibility="Visible" Width="60" Margin="0,0,10,0" MaxLength="8" PreviewTextInput="numberValidationTextBoxColon"/>
             <TextBlock VerticalAlignment="Center" TextAlignment="Center" Text="Interval:" FontWeight="bold" FontSize="20" Width="80" Margin="0,0,10,0"  />
             <Slider Name="intervalSlider" IsSnapToTickEnabled = "True" TickFrequency="1" Minimum="1" Maximum="20" Width="100" IsHitTestVisible="True" Margin="10" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0" />
-            <Button Name="Start_Pause" VerticalAlignment="Center" Click="Start_Pause_Click" Width="70" IsEnabled="False">
+            <Button Name="Start_Pause" VerticalAlignment="Center" Click="start_Pause_Click" Width="70" IsEnabled="False">
                 <TextBlock Text="Start" Name="tbStart_Pause"/>
             </Button>
         </StackPanel>
@@ -180,7 +180,7 @@
             </Border>
         </Grid>
 
-        <Image Grid.Row="0" Source="/PlGui;component/Images/logout.png" Width="40" Height="40"  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,0,0" Cursor="Hand" MouseDown="Image_MouseDown"/>
+        <Image Grid.Row="0" Source="/PlGui;component/Images/logout.png" Width="40" Height="40"  HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,0,0" Cursor="Hand" MouseDown="image_MouseDown"/>
 
 
     </Grid>

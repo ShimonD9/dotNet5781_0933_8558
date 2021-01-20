@@ -51,7 +51,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Update(object sender, RoutedEventArgs e)
+        private void button_Update(object sender, RoutedEventArgs e)
         {
             // Chosen dates (of license and last treatment) declared:
             DateTime startDateChosen;
@@ -110,7 +110,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Delete(object sender, RoutedEventArgs e)
+        private void button_Delete(object sender, RoutedEventArgs e)
         {
             // Asks if the admin surely wants to delete the object:
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this bus?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
@@ -135,7 +135,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        private void numberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9/.]$");
             e.Handled = regex.IsMatch(e.Text);

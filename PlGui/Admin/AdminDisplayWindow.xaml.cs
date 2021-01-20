@@ -61,7 +61,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void LBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void lBBuses_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (!Application.Current.Windows.OfType<BusDetailsWindow>().Any())
             {
@@ -82,7 +82,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_OpenAddBusWindow(object sender, RoutedEventArgs e)
+        private void button_openAddBusWindow(object sender, RoutedEventArgs e)
         {
             if (!Application.Current.Windows.OfType<AddBusWindow>().Any()) // To prevent the openning of another same window
             {
@@ -147,7 +147,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void LBBusLines_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void lBBusLines_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (!Application.Current.Windows.OfType<BusLineDetailsWindow>().Any())
             {
@@ -167,7 +167,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_OpenAddBusLineWindow(object sender, RoutedEventArgs e)
+        private void button_OpenAddBusLineWindow(object sender, RoutedEventArgs e)
         {
             if (!Application.Current.Windows.OfType<AddBusLineWindow>().Any()) // To prevent the openning of another same window
             {
@@ -184,7 +184,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void LBBusStops_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void lBBusStops_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (!Application.Current.Windows.OfType<BusStopDetailsWindow>().Any())
             {
@@ -204,7 +204,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_OpenAddBusStopWindow(object sender, RoutedEventArgs e)
+        private void button_OpenAddBusStopWindow(object sender, RoutedEventArgs e)
         {
             if (!Application.Current.Windows.OfType<AddBusStopWindow>().Any()) // To prevent the openning of another same window
             {
@@ -220,7 +220,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Exit_Click(object sender, RoutedEventArgs e)
+        private void exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
@@ -230,7 +230,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Back_Click(object sender, RoutedEventArgs e)
+        private void back_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow(); // Creates the new window, and then shows it
             mainWindow.Show();

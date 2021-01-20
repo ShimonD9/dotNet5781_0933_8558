@@ -34,7 +34,7 @@
             </Grid>
 
             <Grid Grid.Row="0" Grid.Column="1">
-                <TextBox x:Name="tbBusStopCode" MaxLength="5" PreviewTextInput="NumberValidationTextBoxNoDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
+                <TextBox x:Name="tbBusStopCode" MaxLength="5" PreviewTextInput="numberValidationTextBoxNoDots"  VerticalAlignment="Center" Width="90" TextAlignment="Center" HorizontalAlignment="Center" FontStyle="Italic"/>
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0">
@@ -58,7 +58,7 @@
             </Grid>
 
             <Grid Grid.Row="3" Grid.Column="1">
-                <TextBox Name="tbLatitude" Text="0" MaxLength="7" PreviewTextInput="NumberValidationTextBox"  TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
+                <TextBox Name="tbLatitude" Text="0" MaxLength="7" PreviewTextInput="numberValidationTextBox"  TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
             </Grid>
 
             <Grid Grid.Row="4" Grid.Column="0">
@@ -66,7 +66,7 @@
             </Grid>
 
             <Grid Grid.Row="4" Grid.Column="1">
-                <TextBox Name="tbLongitude" Text="0" MaxLength="7" PreviewTextInput="NumberValidationTextBox"  TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
+                <TextBox Name="tbLongitude" Text="0" MaxLength="7" PreviewTextInput="numberValidationTextBox"  TextAlignment="Center" VerticalAlignment="Center"   Width="90" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="18,4,17,4" />
             </Grid>
 
             <Grid Grid.Row="5" Grid.Column="0">
@@ -79,7 +79,7 @@
 
         </Grid>
 
-        <Button Content="Add the new bus stop" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Margin="20" Click="Button_Click"/>
+        <Button Content="Add the new bus stop" Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="53" Width="195" Margin="20" Click="button_Click"/>
     </StackPanel>
 </Window>
 

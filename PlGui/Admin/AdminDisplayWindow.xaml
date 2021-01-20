@@ -12,16 +12,16 @@
                 <MenuItem.Icon>
                     <Image Source="/PlGui;component/Images/admin.png"/>
                 </MenuItem.Icon>
-                <MenuItem Header="Add a new bus" Click="Button_OpenAddBusWindow" Cursor="Hand"/>
-                <MenuItem Header="Add a new bus line" Click="Button_OpenAddBusLineWindow" Cursor="Hand"/>
-                <MenuItem Header="Add a new bus stop" Click="Button_OpenAddBusStopWindow" Cursor="Hand"/>
+                <MenuItem Header="Add a new bus" Click="button_openAddBusWindow" Cursor="Hand"/>
+                <MenuItem Header="Add a new bus line" Click="button_OpenAddBusLineWindow" Cursor="Hand"/>
+                <MenuItem Header="Add a new bus stop" Click="button_OpenAddBusStopWindow" Cursor="Hand"/>
                 <Separator />
-                <MenuItem Header="Back to Login Window" Click="Back_Click" Cursor="Hand">
+                <MenuItem Header="Back to Login Window" Click="back_Click" Cursor="Hand">
                     <MenuItem.Icon>
                         <Image Source="/PlGui;component/Images/back.png" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="Exit" Click="Exit_Click" Cursor="Hand">
+                <MenuItem Header="Exit" Click="exit_Click" Cursor="Hand">
                     <MenuItem.Icon>
                         <Image Source="/PlGui;component/Images/exit.png" />
                     </MenuItem.Icon>
@@ -92,7 +92,7 @@
                     <!--List of buses-->
                     
                     <Grid Grid.Row="1" VerticalAlignment="Stretch">
-                        <ListView Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="LBBuses_MouseDoubleClick" Margin="27,0,27,0">
+                        <ListView Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="lBBuses_MouseDoubleClick" Margin="27,0,27,0">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="0,2">
@@ -154,7 +154,7 @@
                         </ListView>
                     </Grid>
                     <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="0,7.667,0.333,0.333" >
-                        <Button Name ="AddBus" Cursor="Hand"  Background="LemonChiffon" Click="Button_OpenAddBusWindow"  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Height="62" Width="68" >
+                        <Button Name ="AddBus" Cursor="Hand"  Background="LemonChiffon" Click="button_openAddBusWindow"  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="1" Height="62" Width="68" >
                             <Image Source="/PlGui;component/Images/busAdd.png" Height="40" Width="57" />
                         </Button>
                     </Grid>
@@ -206,7 +206,7 @@
                     <!--List of bus lines-->
 
                     <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
-                        <ListView Name ="lbBusLines" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="LBBusLines_MouseDoubleClick" Margin="0,0,0,-330">
+                        <ListView Name ="lbBusLines" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="lBBusLines_MouseDoubleClick" Margin="0,0,0,-330">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="0,2">
@@ -245,7 +245,7 @@
                     </Grid>
                     
                     <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="20,0,20,46">
-                        <Button Name ="AddBusLine"  Content="Add a new bus line" Cursor="Hand" FontSize="16" FontWeight="Bold"  Click="Button_OpenAddBusLineWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="161" Margin="304,3,283,3" />
+                        <Button Name ="AddBusLine"  Content="Add a new bus line" Cursor="Hand" FontSize="16" FontWeight="Bold"  Click="button_OpenAddBusLineWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="161" Margin="304,3,283,3" />
                     </Grid>
                 </Grid>
             </TabItem>
@@ -303,7 +303,7 @@
                     <!--List of bus stops-->
                     
                     <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
-                        <ListView Name ="lbBusStops" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gainsboro" MouseDoubleClick="LBBusStops_MouseDoubleClick"  Margin="0,0,0,47">
+                        <ListView Name ="lbBusStops" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gainsboro" MouseDoubleClick="lBBusStops_MouseDoubleClick"  Margin="0,0,0,47">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="0,2">
@@ -351,7 +351,7 @@
                         </ListView>
                     </Grid>
                     <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="20,0,20,46">
-                        <Button Name ="AddBusStop" Content="Add a new bus stop" Cursor="Hand" FontSize="16" FontWeight="Bold" Click="Button_OpenAddBusStopWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="178" Margin="304,3,266,3" />
+                        <Button Name ="AddBusStop" Content="Add a new bus stop" Cursor="Hand" FontSize="16" FontWeight="Bold" Click="button_OpenAddBusStopWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="178" Margin="304,3,266,3" />
                     </Grid>
                 </Grid>
             </TabItem>

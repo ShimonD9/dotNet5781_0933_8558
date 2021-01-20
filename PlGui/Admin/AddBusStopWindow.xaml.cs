@@ -43,7 +43,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void button_Click(object sender, RoutedEventArgs e)
         {
            
             try
@@ -89,7 +89,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        private void numberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9/.]$");
             e.Handled = regex.IsMatch(e.Text);
@@ -100,7 +100,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
+        private void numberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]$");
             e.Handled = regex.IsMatch(e.Text);

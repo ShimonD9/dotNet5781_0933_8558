@@ -48,11 +48,11 @@
                         <Label Grid.Row="4" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Longitude (34.3, 35.5):"/>
                         <Label Grid.Row="5" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Sunshade:"/>
                         <Label  Grid.Row="6" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Digital Panel:"/>
-                        <TextBlock Name="tbStopKey" Grid.Row="0" Grid.Column="1" PreviewTextInput="NumberValidationTextBoxNoDots" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusStopKey, Mode=OneWay}"/>
+                        <TextBlock Name="tbStopKey" Grid.Row="0" Grid.Column="1" PreviewTextInput="numberValidationTextBoxNoDots" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusStopKey, Mode=OneWay}"/>
                         <TextBox Name="tbStopName" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusStopName, Mode=OneWay}"/>
                         <TextBox Name="tbAddress" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusStopAddress, Mode=OneWay}"/>
-                        <TextBox Name="tbLatitude" Grid.Row="3" Grid.Column="1" MaxLength="7" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Latitude, Mode=OneWay}"/>
-                        <TextBox Name="tbLongitude" Grid.Row="4" Grid.Column="1" MaxLength="7" PreviewTextInput="NumberValidationTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Longitude, Mode=OneWay}"/>
+                        <TextBox Name="tbLatitude" Grid.Row="3" Grid.Column="1" MaxLength="7" PreviewTextInput="numberValidationTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Latitude, Mode=OneWay}"/>
+                        <TextBox Name="tbLongitude" Grid.Row="4" Grid.Column="1" MaxLength="7" PreviewTextInput="numberValidationTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Longitude, Mode=OneWay}"/>
                         <CheckBox Name="cbSunshade" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=Sunshade, Mode=OneWay}"/>
                         <CheckBox Name="cbDigitalPanel" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Path=DigitalPanel, Mode=OneWay}"/>
                     </Grid>
@@ -123,7 +123,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_Update">
+                <Button Grid.Column="0" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="button_Update">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image />
@@ -131,7 +131,7 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Grid.Column="1" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_Delete">
+                <Button Grid.Column="1" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="button_Delete">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image  />

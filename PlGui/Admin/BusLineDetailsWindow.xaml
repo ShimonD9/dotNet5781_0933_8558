@@ -45,7 +45,7 @@
                         <Label Grid.Row="1" Grid.Column="0" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Bus line number:"/>
                         <Label Grid.Row="2" Grid.Column="0" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Area:"/>
                         <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusLineID}"/>
-                        <TextBox Name="tbLineNumber" Grid.Row="1" Grid.Column="1" MaxLength="3" PreviewTextInput="NumberValidationTextBoxNoDots"  HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusLineNumber, Mode=OneWay}"/>
+                        <TextBox Name="tbLineNumber" Grid.Row="1" Grid.Column="1" MaxLength="3" PreviewTextInput="numberValidationTextBoxNoDots"  HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=BusLineNumber, Mode=OneWay}"/>
                         <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=Area, Mode=OneWay}"/>
                     </Grid>
                 </Border>
@@ -199,10 +199,10 @@
                                     <Label Grid.Column="2" Grid.Row="0" Name="lbGapB" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Left"  FontWeight="DemiBold" />
                                     <Label Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Left"  Content="Travel time:" FontWeight="DemiBold" />
                                     <Label Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Left"  Content="Km:" FontWeight="DemiBold"/>
-                                    <TextBox Grid.Column="1"  Grid.Row="1"  Name="tbUpdateTime" Text="hh:mm:ss" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"/>
-                                    <TextBox Grid.Column="1"  Grid.Row="2"  Name="tbUpdateKM" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="5" PreviewTextInput="NumberValidationTextBoxDots"/>
-                                    <TextBox Grid.Column="2"  Grid.Row="1"  Name="tbUpdateTimeB" Text="hh:mm:ss" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"/>
-                                    <TextBox Grid.Column="2"  Grid.Row="2"  Name="tbUpdateKmB" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="5" PreviewTextInput="NumberValidationTextBoxDots"/>
+                                    <TextBox Grid.Column="1"  Grid.Row="1"  Name="tbUpdateTime" Text="hh:mm:ss" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="8" PreviewTextInput="numberValidationTextBoxColon"/>
+                                    <TextBox Grid.Column="1"  Grid.Row="2"  Name="tbUpdateKM" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="5" PreviewTextInput="numberValidationTextBoxDots"/>
+                                    <TextBox Grid.Column="2"  Grid.Row="1"  Name="tbUpdateTimeB" Text="hh:mm:ss" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="8" PreviewTextInput="numberValidationTextBoxColon"/>
+                                    <TextBox Grid.Column="2"  Grid.Row="2"  Name="tbUpdateKmB" Text="0" VerticalAlignment="Center" HorizontalAlignment="Center"  HorizontalContentAlignment="Center" MaxLength="5" PreviewTextInput="numberValidationTextBoxDots"/>
                                 </Grid>
 
                                 <!--Add/Delete station buttons grid-->
@@ -213,7 +213,7 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Button Name="bAddStation" Grid.Column="0" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_AddStation">
+                                        <Button Name="bAddStation" Grid.Column="0" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="button_AddStation">
                                             <Button.Content>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Image />
@@ -221,7 +221,7 @@
                                                 </StackPanel>
                                             </Button.Content>
                                         </Button>
-                                        <Button Name="bDeleteStation" Grid.Column="1" IsEnabled="False" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_DeleteStation">
+                                        <Button Name="bDeleteStation" Grid.Column="1" IsEnabled="False" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="button_DeleteStation">
                                             <Button.Content>
                                                 <StackPanel Orientation="Horizontal">
                                                     <Image  />
@@ -256,7 +256,7 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center"  Content="Enter the new departure time:" FontWeight="DemiBold"  />
-                                    <TextBox Name="tbAddDeparture" Grid.Column="1" Text="hh:mm:ss" VerticalAlignment="Center" HorizontalAlignment="Left"  HorizontalContentAlignment="Center" MaxLength="8" PreviewTextInput="NumberValidationTextBoxColon"/>
+                                    <TextBox Name="tbAddDeparture" Grid.Column="1" Text="hh:mm:ss" VerticalAlignment="Center" HorizontalAlignment="Left"  HorizontalContentAlignment="Center" MaxLength="8" PreviewTextInput="numberValidationTextBoxColon"/>
                                 </Grid>
 
                                 <!--Add departure time buttons grid-->
@@ -266,14 +266,14 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Name="bAddDeparture" Grid.Column="0" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_AddDeparture">
+                                    <Button Name="bAddDeparture" Grid.Column="0" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="button_AddDeparture">
                                         <Button.Content>
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="Add a departure time"  FontSize="16" VerticalAlignment="Center" FontWeight="SemiBold"/>
                                             </StackPanel>
                                         </Button.Content>
                                     </Button>
-                                    <Button Name="bDeleteDeparture" Grid.Column="1" IsEnabled="False" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_DeleteDeparture">
+                                    <Button Name="bDeleteDeparture" Grid.Column="1" IsEnabled="False" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="button_DeleteDeparture">
                                         <Button.Content>
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="Delete the departure time" TextWrapping="WrapWithOverflow" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center"/>
@@ -296,7 +296,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_Update">
+                <Button Grid.Column="0" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="button_Update">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image />
@@ -304,7 +304,7 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Grid.Column="1" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="Button_Delete">
+                <Button Grid.Column="1" Cursor="Hand" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin ="5" Click="button_Delete">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
                             <Image  />

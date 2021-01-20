@@ -44,7 +44,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Image_MouseEnter(object sender, MouseEventArgs e)
+        private void image_MouseEnter(object sender, MouseEventArgs e)
         {
             tbPasswordShow.Text = pbPassword.Password;
             tbPasswordShow.Visibility = Visibility.Visible;
@@ -56,7 +56,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Image_MouseLeave(object sender, MouseEventArgs e)
+        private void image_MouseLeave(object sender, MouseEventArgs e)
         {
             tbPasswordShow.Visibility = Visibility.Collapsed;
             pbPassword.Visibility = Visibility.Visible;
@@ -77,7 +77,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonSignIn_Click(object sender, RoutedEventArgs e)
+        private void buttonSignIn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -148,7 +148,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonSignUp_Click(object sender, RoutedEventArgs e)
+        private void buttonSignUp_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -221,7 +221,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
+        private void buttonCancel_Click(object sender, RoutedEventArgs e)
         {
             spRepeatPassword.Visibility = Visibility.Collapsed; // Collapsing the reapet password panel
             bSignIn.IsEnabled = true; // The sign in button is enabled again

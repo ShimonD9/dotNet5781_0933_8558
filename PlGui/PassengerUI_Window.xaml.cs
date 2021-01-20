@@ -99,7 +99,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void NumberValidationTextBoxColon(object sender, TextCompositionEventArgs e)
+        private void numberValidationTextBoxColon(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9/:]$");
             e.Handled = regex.IsMatch(e.Text);
@@ -110,7 +110,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        private void image_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow mainWindow = new MainWindow(); // Creates the new window, and then shows it
             mainWindow.Show();
@@ -123,7 +123,7 @@ namespace PlGui
         bool everStarted = false; // In case the background worker never has been started
         bool isStarted = false; // To know if the button is at start or pause
 
-        private void Start_Pause_Click(object sender, RoutedEventArgs e)
+        private void start_Pause_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -137,7 +137,7 @@ namespace PlGui
                         isStarted = true;
                         RunningTime = inputTime;
                         if (!everStarted)
-                            RunClock();
+                            runClock();
                         else clockWorker.RunWorkerAsync();
                         everStarted = true;
                         tbStart_Pause.Text = "Pause";
@@ -196,7 +196,7 @@ namespace PlGui
 
 
 
-        public static bool shouldStop = true;
+        private static bool shouldStop = true;
 
         // The background worker for the clock:
         private readonly BackgroundWorker clockWorker = new BackgroundWorker();
@@ -204,7 +204,7 @@ namespace PlGui
         /// <summary>
         /// The runClock background worker function
         /// </summary>
-        public void RunClock()
+        private void runClock()
         {
             int t = 5;
             clockWorker.WorkerReportsProgress = true;
@@ -216,7 +216,7 @@ namespace PlGui
                 timeDisplay.Text = RunningTime.ToString();
                 RunningTime = RunningTime.Add(TimeSpan.FromSeconds(secondsInterval));
                 if (RunningTime.Days > 0) RunningTime = RunningTime.Subtract(TimeSpan.FromDays(RunningTime.Days));
-                if (t == 100 / secondsInterval) // To make the update according the interval (so for interval of 20 seconds, it will update every 5 seconds real-time, and for 1 - every 100 seconds real-time)
+                if (t == (int) 100 / secondsInterval) // To make the update according the interval (so for interval of 20 seconds, it will update every 5 seconds real-time, and for 1 - every 100 seconds real-time)
                 {
                     changeTitleAsDayTime();
                     var minutesToBus = bl.GetLineTimingsPerStation(busStop, RunningTime);

@@ -51,7 +51,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Update(object sender, RoutedEventArgs e)
+        private void button_Update(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Delete(object sender, RoutedEventArgs e)
+        private void button_Delete(object sender, RoutedEventArgs e)
         {
             // Asks if the admin surely wants to delete the object:
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this bus line?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
@@ -118,7 +118,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_DeleteStation(object sender, RoutedEventArgs e)
+        private void button_DeleteStation(object sender, RoutedEventArgs e)
         {
             BO.BusLineStation chosenStation = (lvLineStations.SelectedValue as BusLineStation); // Stores the selected station to deleted
             if (isDeleteStationInProcess == false) // If the deletion only being started
@@ -466,7 +466,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_AddStation(object sender, RoutedEventArgs e)
+        private void button_AddStation(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -697,7 +697,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_AddDeparture(object sender, RoutedEventArgs e)
+        private void button_AddDeparture(object sender, RoutedEventArgs e)
         {
             if (gAddDeparture.Visibility != Visibility.Visible) // If the grid of add departure isn't visible, it makes it visible
                 gAddDeparture.Visibility = Visibility.Visible;
@@ -730,7 +730,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_DeleteDeparture(object sender, RoutedEventArgs e)
+        private void button_DeleteDeparture(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -763,7 +763,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
+        private void numberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]$");
             e.Handled = regex.IsMatch(e.Text);
@@ -774,7 +774,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void NumberValidationTextBoxColon(object sender, TextCompositionEventArgs e)
+        private void numberValidationTextBoxColon(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9/:]$");
             e.Handled = regex.IsMatch(e.Text);
@@ -785,7 +785,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void NumberValidationTextBoxDots(object sender, TextCompositionEventArgs e)
+        private void numberValidationTextBoxDots(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9/.]$");
             e.Handled = regex.IsMatch(e.Text);

@@ -39,26 +39,27 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void button_Click(object sender, RoutedEventArgs e)
         {
-           // Chosen dates (of license and last treatment) declared:
-            DateTime startDateChosen;
-            DateTime treatDateChosen;
-
-            // Checks if the user chose a date
-            if (!dateStart.SelectedDate.HasValue || !dateLastTreat.SelectedDate.HasValue) 
+            try
             {
-                MessageBox.Show("You didn't fill the required date fields!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            else
-            {
-                // The dates initialized:
-                startDateChosen = dateStart.SelectedDate.Value;
-                treatDateChosen = dateLastTreat.SelectedDate.Value;
+                // Chosen dates (of license and last treatment) declared:
+                DateTime startDateChosen;
+                DateTime treatDateChosen;
 
-                // Checks if the inputs are correct, and pops an appropriate message if not (not made in BL because the connection to the text box length and the double parse of string)
-                try
+                // Checks if the user chose a date
+                if (!dateStart.SelectedDate.HasValue || !dateLastTreat.SelectedDate.HasValue)
                 {
+                    MessageBox.Show("You didn't fill the required date fields!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    // The dates initialized:
+                    startDateChosen = dateStart.SelectedDate.Value;
+                    treatDateChosen = dateLastTreat.SelectedDate.Value;
+
+                    // Checks if the inputs are correct, and pops an appropriate message if not (not made in BL because the connection to the text box length and the double parse of string)
+
                     if (startDateChosen.Year < 2018 && license.Text.Length < 7
                     || startDateChosen.Year > 2017 && license.Text.Length < 8)
                     {
@@ -76,20 +77,25 @@ namespace PlGui
                         newBus.MileageAtLastTreat = milTreat;
                         newBus.LicenseDate = startDateChosen;
                         newBus.LastTreatmentDate = treatDateChosen;
-                        newBus.Fuel = Math.Round(fuel.Value * 12,2);  // The info from the slider
+                        newBus.Fuel = Math.Round(fuel.Value * 12, 2);  // The info from the slider
                         newBus.ObjectActive = true;
                         bl.AddBus(newBus);    // Inserts the new bus to the beginning of the list                 
                         this.Close();
                     }
                 }
-                catch (BO.ExceptionBL_KeyAlreadyExist) // In case the bus already exist
-                {
-                    MessageBox.Show("The bus license you entered already exists in the company!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                catch (BO.ExceptionBL_MileageValuesConflict) // In case there is a logical conflict between the two mileages entered
-                {
-                    MessageBox.Show("The total mileage cannot be smaller than the mileage at the last treat!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+
+            }
+            catch (BO.ExceptionBL_KeyAlreadyExist) // In case the bus already exist
+            {
+                MessageBox.Show("The bus license you entered already exists in the company!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (BO.ExceptionBL_MileageValuesConflict) // In case there is a logical conflict between the two mileages entered
+            {
+                MessageBox.Show("The total mileage cannot be smaller than the mileage at the last treat!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch // For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem accured!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -100,7 +106,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        private void numberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9/.]$");
             e.Handled = regex.IsMatch(e.Text);
@@ -111,7 +117,7 @@ namespace PlGui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void NumberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
+        private void numberValidationTextBoxNoDots(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]$");
             e.Handled = regex.IsMatch(e.Text);
