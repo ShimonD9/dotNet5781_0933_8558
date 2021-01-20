@@ -120,48 +120,56 @@ namespace PlGui
         #region Clock simulator
 
 
-        bool everStarted = false; // Needed for the clock start
+        bool everStarted = false; // In case the background worker never has been started
+        bool isStarted = false; // To know if the button is at start or pause
 
         private void Start_Pause_Click(object sender, RoutedEventArgs e)
         {
-            try { 
-            if (tbStart_Pause.Text == "Start")
+            try
             {
-                if (!TimeSpan.TryParse(timeEdit.Text, out TimeSpan inputTime))
-                    MessageBox.Show("Wrong time input!");
+                if (!isStarted)
+                {
+                    if (!TimeSpan.TryParse(timeEdit.Text, out TimeSpan inputTime))
+                        MessageBox.Show("Wrong time input!");
+                    else
+                    {
+                        shouldStop = false;
+                        isStarted = true;
+                        RunningTime = inputTime;
+                        if (!everStarted)
+                            RunClock();
+                        else clockWorker.RunWorkerAsync();
+                        everStarted = true;
+                        tbStart_Pause.Text = "Pause";
+                        timeDisplay.Visibility = Visibility.Visible;
+                        timeEdit.Visibility = Visibility.Collapsed;
+                        intervalSlider.IsEnabled = false;
+                        cbBusStop.IsEnabled = false;
+                    }
+                }
                 else
                 {
-                    shouldStop = false;
-                    RunningTime = inputTime;
-                    if (!everStarted)
-                        RunClock();
-                    else clockWorker.RunWorkerAsync();
-                    everStarted = true;
-                    tbStart_Pause.Text = "Pause";
-                    timeDisplay.Visibility = Visibility.Visible;
-                    timeEdit.Visibility = Visibility.Collapsed;
-                    intervalSlider.IsEnabled = false;
-                    cbBusStop.IsEnabled = false;
+                    if (clockWorker.IsBusy)
+                    {
+                        clockWorker.CancelAsync();
+                    }
+                    timeEdit.Text = RunningTime.ToString();
+                    shouldStop = true;
+                    isStarted = false;
+                    tbStart_Pause.Text = "Start";
+                    timeDisplay.Visibility = Visibility.Collapsed;
+                    timeEdit.Visibility = Visibility.Visible;
+                    intervalSlider.IsEnabled = true;
+                    cbBusStop.IsEnabled = true;
                 }
             }
-            else if (tbStart_Pause.Text == "Pause")
-            {
-                if (clockWorker.IsBusy)
-                {
-                    clockWorker.CancelAsync();
-                }
-                timeEdit.Text = RunningTime.ToString();
-                shouldStop = true;
-                tbStart_Pause.Text = "Start";
-                timeDisplay.Visibility = Visibility.Collapsed;
-                timeEdit.Visibility = Visibility.Visible;
-                intervalSlider.IsEnabled = true;
-                cbBusStop.IsEnabled = true;
-            }
-            }
-            catch(BO.ExceptionBL_UnexpectedProblem)
+            catch (BO.ExceptionBL_UnexpectedProblem)
             {
                 MessageBox.Show("Sorry, the program as met an unexpected problem. Please sign in again.");
+            }
+            catch // For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured", "ERROR");
             }
         }
 
@@ -207,10 +215,10 @@ namespace PlGui
                 secondsInterval = (int)intervalSlider.Value;
                 timeDisplay.Text = RunningTime.ToString();
                 RunningTime = RunningTime.Add(TimeSpan.FromSeconds(secondsInterval));
-                changeTitleAsDayTime();
                 if (RunningTime.Days > 0) RunningTime = RunningTime.Subtract(TimeSpan.FromDays(RunningTime.Days));
-                if (t == 5)
+                if (t == 100 / secondsInterval) // To make the update according the interval (so for interval of 20 seconds, it will update every 5 seconds real-time, and for 1 - every 100 seconds real-time)
                 {
+                    changeTitleAsDayTime();
                     var minutesToBus = bl.GetLineTimingsPerStation(busStop, RunningTime);
                     if (minutesToBus.Count() == 0)
                         tbNoBuses.Visibility = Visibility.Visible;
@@ -242,7 +250,7 @@ namespace PlGui
             {
                 clockWorker.RunWorkerAsync();
             }
-                
+
 
             clockWorker.RunWorkerCompleted += (sender, args) =>
             {

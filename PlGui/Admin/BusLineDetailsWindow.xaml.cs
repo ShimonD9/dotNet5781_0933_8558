@@ -69,7 +69,7 @@ namespace PlGui
             }
             catch // For other exceptions
             {
-                MessageBox.Show("An unexpected problem occured", "Unable to delete");
+                MessageBox.Show("An unexpected problem occured", "Unable to update");
             }
         }
 
@@ -287,7 +287,7 @@ namespace PlGui
             }
             catch // For unexpected issues
             {
-                MessageBox.Show("An unexpected problem occured", "Unable to delete");
+                MessageBox.Show("An unexpected problem occured", "Unable to check");
             }
         }
 
@@ -317,7 +317,7 @@ namespace PlGui
             }
             catch // For unexpected issues
             {
-                MessageBox.Show("An unexpected problem occured", "Unable to delete");
+                MessageBox.Show("An unexpected problem occured", "Unable to check");
             }
         }
 
@@ -366,7 +366,7 @@ namespace PlGui
             }
             catch // For unexpected issues
             {
-                MessageBox.Show("An unexpected problem occured", "Unable to delete");
+                MessageBox.Show("An unexpected problem occured", "Unable to check");
             }
         }
 
@@ -456,7 +456,7 @@ namespace PlGui
             }
             catch // For unexpected issues
             {
-                MessageBox.Show("An unexpected problem occured", "Unable to delete");
+                MessageBox.Show("An unexpected problem occured", "Unable to select");
             }
 
         }
@@ -638,7 +638,7 @@ namespace PlGui
             }
             catch // In case there are unexpected issues
             {
-                MessageBox.Show("An unexpected problem occured", "Unable to delete");
+                MessageBox.Show("An unexpected problem occured", "Unable to add");
             }
         }
 
@@ -721,7 +721,7 @@ namespace PlGui
                 }
                 catch // For other exceptions
                 {
-                    MessageBox.Show("An unexpected problem occured", "Unable to delete");
+                    MessageBox.Show("An unexpected problem occured", "Unable to add");
                 }
         }
 
