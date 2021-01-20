@@ -25,9 +25,9 @@ namespace PlGui
         IBL bl = BLFactory.GetBL("1"); // Calls and stores the instance of the bl interface
 
         // Appropriate BO objects creation:
-        BO.BusLine newBusLine = new BO.BusLine();
-        BO.BusLineStation newStationA = new BusLineStation();
-        BO.BusLineStation newStationB = new BusLineStation();
+        BusLine newBusLine = new BO.BusLine();
+        BusLineStation newStationA = new BusLineStation();
+        BusLineStation newStationB = new BusLineStation();
 
         /// <summary>
         /// Default window ctor

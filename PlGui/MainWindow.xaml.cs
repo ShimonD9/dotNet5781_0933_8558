@@ -85,7 +85,7 @@ namespace PlGui
                 string password = pbPassword.Password;
 
                 // If the user filled the fields:
-                if (userName != "" && password != "") 
+                if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(password)) 
                 {
 
                     // If the robot check box isn't checked:
@@ -97,7 +97,7 @@ namespace PlGui
                     else
                     {
                         // Asks for the user object from the bl
-                        BO.User user = bl.GetUser(userName);
+                        User user = bl.GetUser(userName);
                         
                         // If the passwords match:
                         if (user.Password == password) 
@@ -138,6 +138,10 @@ namespace PlGui
                 spInfo.Visibility = Visibility.Visible;
                 lblInfo.Content = "The user name you have entered does not exist.";
             }
+            catch
+            {
+                MessageBox.Show("An unexpected problem occured, please try again.", "Error");
+            }
         }
 
         #endregion
@@ -161,7 +165,7 @@ namespace PlGui
                     string passwordB = pbRepeatPassword.Password;
 
                     // If the use filled the fields:
-                    if (userName != "" && passwordA != "" && passwordB != "")
+                    if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(passwordA) && !string.IsNullOrEmpty(passwordB))
                     {
                         // If the repeat passwords doens't match
                         if (passwordA != passwordB)
