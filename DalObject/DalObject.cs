@@ -73,8 +73,9 @@ namespace DL
                 throw new DO.ExceptionDAL_KeyAlreadyExist(bus.License, "The bus alredy exist");
             else if (existBus != null && existBus.ObjectActive == false)            //in case the bus exist but inactive
             {
-                existBus.ObjectActive = true;
-                existBus = bus.Clone();
+                bus.ObjectActive = true;
+                DataSource.ListBuses.Remove(existBus);                  //remove old bus
+                DataSource.ListBuses.Insert(0 ,bus);                    //active the new one
             }
             else                                                        //in case the bus is not exist
             {
@@ -175,8 +176,9 @@ namespace DL
                 throw new DO.ExceptionDAL_KeyAlreadyExist(busAtTravel.BusLineID, "The bus line is already at travel");
             else if (existBus != null && existBus.ObjectActive == false)
             {
-                existBus.ObjectActive = true;
-                existBus = busAtTravel.Clone();
+                busAtTravel.ObjectActive = true;
+                DataSource.ListBusAtTravels.Remove(existBus);
+                DataSource.ListBusAtTravels.Insert(0,busAtTravel);
             }
             else
             {
