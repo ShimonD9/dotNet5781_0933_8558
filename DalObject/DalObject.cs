@@ -250,19 +250,18 @@ namespace DL
                    select busLineStation.Clone();
         }
         /// <summary>
-        /// Return bus line statuin using is speicel ID and is bos stop key
+        /// Return bus line station using is special ID and is bos stop key
         /// </summary>
         /// <param name="busLineID"></param>
         /// <param name="busStopCode"></param>
         /// <returns></returns>
         public BusLineStation GetBusLineStation(int busLineID, int busStopCode)
         {
-            BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID);
+            BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID 
+            && b.ObjectActive == true); // Assuming only active stations will be asked for 
 
-            if (bus != null && bus.ObjectActive)
+            if (bus != null)
                 return bus.Clone();
-            else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busStopCode, $"The bus station is  inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busStopCode, $"Station key not found: {busStopCode}");
         }
@@ -272,8 +271,8 @@ namespace DL
         /// <param name="busLineStation"></param>
         public void AddBusLineStation(BusLineStation busLineStation)
         {
-            BusLineStation existBusLineStation = DataSource.ListBusLineStations.FirstOrDefault(b => b.BusStopKey == busLineStation.BusStopKey
-            && b.BusLineID == busLineStation.BusLineID);                //in case we found the specific bus line station (by is ID and bus stop key)
+            BusLineStation existBusLineStation = DataSource.ListBusLineStations.FirstOrDefault(b => b.BusStopKey == busLineStation.BusStopKey //in case we found the specific bus line station (by is ID and bus stop key)
+            && b.BusLineID == busLineStation.BusLineID && b.PrevStation == busLineStation.PrevStation && b.NextStation == busLineStation.NextStation); // and checking by the prev and next (for avoiding collision with unactive bus line station)
             if (existBusLineStation != null && existBusLineStation.ObjectActive == true)
                 throw new DO.ExceptionDAL_KeyAlreadyExist(busLineStation.BusStopKey, "The bus line station already exist");
             else if (existBusLineStation != null && existBusLineStation.ObjectActive == false)
@@ -291,17 +290,15 @@ namespace DL
         /// Update bus line station 
         /// </summary>
         /// <param name="busLineStation"></param>
-        public void UpdateBusLineStation(BusLineStation busLineStation)
+        public void UpdateBusLineStation(BusLineStation busLineStation) // Assuming it will be asked to update only an active bus line station
         {
             //get the index of the specific bus line stationn in the list (using is speicel ID and is Bus Stop Key
-            int index = DataSource.ListBusLineStations.FindIndex(bus1 => bus1.BusLineID == busLineStation.BusLineID && bus1.BusStopKey == busLineStation.BusStopKey);
-            if (DataSource.ListBusLineStations[index] != null && DataSource.ListBusLineStations[index].ObjectActive)
+            int index = DataSource.ListBusLineStations.FindIndex(bus1 => bus1.BusLineID == busLineStation.BusLineID && bus1.BusStopKey == busLineStation.BusStopKey && bus1.ObjectActive == true);
+            if (DataSource.ListBusLineStations[index] != null)
             {
                 DataSource.ListBusLineStations.Remove(DataSource.ListBusLineStations[index]);       //remove the current bus line station
                 DataSource.ListBusLineStations.Add(busLineStation.Clone());                         //and add the update line station insted
             }
-            else if (DataSource.ListBusLineStations[index] != null && !DataSource.ListBusLineStations[index].ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busLineStation.BusStopKey, $"The bus line station is inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busLineStation.BusStopKey, $"Station key not found: {busLineStation.BusStopKey}");
         }
