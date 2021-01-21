@@ -135,6 +135,7 @@ namespace PlGui
                         MessageBox.Show("Wrong time input!");
                     else
                     {
+
                         shouldStop = false;
                         isStarted = true;
                         RunningTime = inputTime;
@@ -218,7 +219,7 @@ namespace PlGui
                 timeDisplay.Text = RunningTime.ToString();
                 RunningTime = RunningTime.Add(TimeSpan.FromSeconds(secondsInterval));
                 if (RunningTime.Days > 0) RunningTime = RunningTime.Subtract(TimeSpan.FromDays(RunningTime.Days));
-                if (t == (int) 100 / secondsInterval) // To make the update according the interval (so for interval of 20 seconds, it will update every 5 seconds real-time, and for 1 - every 100 seconds real-time)
+                if (t == 5) // To make the update according the interval (so for interval of 20 seconds, it will update every 5 seconds real-time, and for 1 - every 100 seconds real-time)
                 {
                     changeTitleAsDayTime();
                     var minutesToBus = bl.GetLineTimingsPerStation(busStop, RunningTime);

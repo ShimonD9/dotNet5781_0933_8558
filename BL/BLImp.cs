@@ -244,12 +244,19 @@ namespace BL
                     newStation.LineStationIndex = endStation.LineStationIndex + 1;
                     dl.UpdateBusLine(lineID, x => x.LastBusStopKey = newStation.BusStopKey);
                 }
+
                 else if (newStation.PrevStation != 0 && newStation.NextStation != 0)  // The station added to the middle of the route
                 {
                     DO.BusLineStation prevStation = dl.GetBusLineStation(lineID, newStation.PrevStation);
                     DO.BusLineStation nextStation = dl.GetBusLineStation(lineID, newStation.NextStation);
                     dl.UpdateBusLineStation(lineID, newStation.PrevStation, x => x.NextStation = newStation.BusStopKey);
                     dl.UpdateBusLineStation(lineID, newStation.NextStation, x => x.PrevStation = newStation.BusStopKey);
+
+                    // Delete consecutive stations entity if needed
+                    if (!IsConsecutiveInUse(prevStation.BusStopKey, nextStation.BusStopKey))
+                    {
+                        dl.DeleteConsecutiveStations(prevStation.BusStopKey, nextStation.BusStopKey);
+                    }
 
                     // Adding the consecutive stations entities if needed
                     if (newStation.DistanceToNext != 0 && newStation.TimeToNext != TimeSpan.FromMinutes(0))
@@ -837,12 +844,7 @@ namespace BL
                     var collB = collection.OrderBy(x => tsCurrentTime.Subtract(x.DepartureTime)); // Orders the departure times by the closest to the current time 
 
                     DO.LineDeparture lastDep = new DO.LineDeparture();
-                    //if (tsCurrentTime.Hours == 0)
-                    //{
-                    //    lastDep = collB.FirstOrDefault();
-                    //}
-                    //else if (tsCurrentTime.Hours > 0)
-                        lastDep = collB.FirstOrDefault(x => tsCurrentTime.Subtract(x.DepartureTime).CompareTo(TimeSpan.Zero) > 0); // Takes the first one (the closest departure time)
+                    lastDep = collB.FirstOrDefault(x => tsCurrentTime.Subtract(x.DepartureTime).CompareTo(TimeSpan.Zero) > 0); // Takes the first one (the closest departure time)
                     if (lastDep == null)                    // If there is no such departure time
                         return TimeSpan.FromMinutes(-1000); // As explained above
                     else
