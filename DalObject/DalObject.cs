@@ -265,6 +265,7 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busStopCode, $"Station key not found: {busStopCode}");
         }
+
         /// <summary>
         /// Add bus line station to the list
         /// </summary>
@@ -321,11 +322,9 @@ namespace DL
         /// <param name="busStopCode"></param>
         public void DeleteBusLineStation(int busLineID, int busStopCode)
         {
-            BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID);
-            if (bus != null && bus.ObjectActive)
+            BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID && b.ObjectActive == true);
+            if (bus != null)
                 bus.ObjectActive = false;
-            else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busStopCode, $"The bus line station is inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busStopCode, $"Station key not found: {busStopCode}");
         }
@@ -608,7 +607,10 @@ namespace DL
                 throw new DO.ExceptionDAL_KeyAlreadyExist("The consecutive stations alredy exist");
             else if (existConsecutiveStations != null && existConsecutiveStations.ObjectActive == false)
             {
+                // The object is activated and storing the new distance and travel time (in case the new object has new values)
                 existConsecutiveStations.ObjectActive = true;
+                existConsecutiveStations.Distance = newConsecutiveStations.Distance;
+                existConsecutiveStations.TravelTime = newConsecutiveStations.TravelTime;
             }
             else
             {

@@ -28,6 +28,7 @@ namespace PlGui
         BusLine newBusLine = new BO.BusLine();
         BusLineStation newStationA = new BusLineStation();
         BusLineStation newStationB = new BusLineStation();
+        bool mustUpdateGap = false; // To know if consecutive stations must be created
 
         /// <summary>
         /// Default window ctor
@@ -55,10 +56,9 @@ namespace PlGui
                 TimeSpan timeToNext = new TimeSpan(0, 0, 0);
 
                 // Validity check of inputs and combo box selections:
-                if (cbFirstBusStop.SelectedItem == null || cbLastBusStop.SelectedItem == null || cbArea.SelectedItem == null ||
-                    String.IsNullOrEmpty(tbKmToNext.GetLineText(0)) || String.IsNullOrEmpty(tbTimeToNext.GetLineText(0)) || String.IsNullOrEmpty(tbLineNumber.GetLineText(0)) ||
-                    tbKmToNext.Visibility == Visibility.Visible && !Double.TryParse(tbKmToNext.GetLineText(0), out kmToNext) ||
-                    tbTimeToNext.Visibility == Visibility.Visible && !TimeSpan.TryParse(tbTimeToNext.GetLineText(0), out timeToNext)) // In case the fields hasn't been filled correctly
+                if (cbFirstBusStop.SelectedItem == null || cbLastBusStop.SelectedItem == null || cbArea.SelectedItem == null || String.IsNullOrEmpty(tbLineNumber.GetLineText(0)) ||
+                    mustUpdateGap && (!Double.TryParse(tbKmToNext.GetLineText(0), out kmToNext) || kmToNext == 0) || // In case must update the gap, but the text is invalid or the distance is zero
+                    mustUpdateGap && (!TimeSpan.TryParse(tbTimeToNext.GetLineText(0), out timeToNext) || bl.isTimeSpanInvalid(timeToNext)))  // Same as above
                 {
                     MessageBox.Show("You didn't fill correctly all the required information", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
@@ -103,6 +103,7 @@ namespace PlGui
         /// <param name="e"></param>
         private void cbFirstBusStopSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            mustUpdateGap = false;
             cbLastBusStop.IsEnabled = true;
             if (cbFirstBusStop.SelectedItem != null) // In case it will be changed to null because of the second combo box method
                 cbLastBusStop.ItemsSource = bl.GetAllBusStops()
@@ -129,13 +130,16 @@ namespace PlGui
                 // If they are exist, or inactive, it means we know the time and distance between the two bus
                 // It means the consecutive doesn't exist, and we need to manager neeed to enter the distance and time
                 {
+                    mustUpdateGap = true;
                     lbKmToNext.Visibility = Visibility.Visible;
                     lbTimeToNext.Visibility = Visibility.Visible;
                     tbKmToNext.Visibility = Visibility.Visible;
                     tbTimeToNext.Visibility = Visibility.Visible;
+                    
                 }
                 else
                 {
+                    mustUpdateGap = false;
                     lbKmToNext.Visibility = Visibility.Collapsed;
                     lbTimeToNext.Visibility = Visibility.Collapsed;
                     tbKmToNext.Visibility = Visibility.Collapsed;

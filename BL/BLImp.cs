@@ -113,15 +113,24 @@ namespace BL
         {
             try
             {
+                // Deleting all the line departure objects:
                 foreach (DO.LineDeparture item in dl.GetAllLineDepartureBy(x => x.BusLineID == busLineID && x.ObjectActive == true))
                 {
                     dl.DeleteLineDeparture(item.DepartureID);
                 }
+
+                // Deleting all the stations objects:
                 foreach (DO.BusLineStation item in dl.GetAllBusLineStationsBy(x => x.BusLineID == busLineID && x.ObjectActive == true))
                 {
-
+                    // Deleting the station itself:
                     dl.DeleteBusLineStation(item.BusLineID, item.BusStopKey);
+
+                    // Deleting the consecutive stations (which existed before the bus line station deletion) if they aren't in use (after deleting the bus line station above)
+                    if (item.NextStation != 0 && !IsConsecutiveInUse(item.BusStopKey, item.NextStation))
+                         dl.DeleteConsecutiveStations(item.BusStopKey, item.NextStation);
                 }
+
+                // Finally, delete the bus line itself
                 dl.DeleteBusLine(busLineID);
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
@@ -323,8 +332,8 @@ namespace BL
                 dl.UpdateBusLineStation(busLineID, station.BusStopKey, x => x.LineStationIndex--);
             }
 
-            // Consecutive stations addition/deletion:
 
+            // Consecutive stations addition/deletion:
             if (currentStation.PrevStation != 0 && currentStation.NextStation != 0 && gapKmUpdate != 0) // It means there is need to fill the consecutive stations info gap (there are no consecutive stations to this case)
             {
                 DO.ConsecutiveStations newCons = new DO.ConsecutiveStations();
@@ -335,10 +344,8 @@ namespace BL
                 newCons.TravelTime = gapTimeUpdate;
                 dl.AddConsecutiveStations(newCons);
             }
-            else if (currentStation.PrevStation != 0 && currentStation.NextStation != 0 && gapKmUpdate == 0)//it means consecutive exist or inactive
+            else if (currentStation.PrevStation != 0 && currentStation.NextStation != 0 && gapKmUpdate == 0)// It means consecutive exist or inactive and there is no need to update the gap
             {
-                //DO.ConsecutiveStations existCon = dl.GetConsecutiveStations(currentStation.PrevStation, currentStation.NextStation);
-                //existCon.ObjectActive = true;
                 dl.UpdateConsecutiveStations(currentStation.PrevStation, currentStation.NextStation, con => con.ObjectActive = true);
             }
 
@@ -357,6 +364,7 @@ namespace BL
                 if (!IsConsecutiveInUse(currentStation.BusStopKey, currentStation.NextStation))
                     dl.DeleteConsecutiveStations(currentStation.BusStopKey, currentStation.NextStation);
             }
+
             // In case the station to delete is the first or the last one, will delete if they aren't in use
             else if (currentStation.PrevStation == 0 && currentStation.NextStation != 0
                 && !IsConsecutiveInUse(currentStation.BusStopKey, currentStation.NextStation))
@@ -647,7 +655,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_Inactive)
             {
-                return true; // Returns true, because it needs only to be activated
+                return false; // If the consecutive exist but is inactive, the admin will be able to update the distance and time travel
             }
             catch (DO.ExceptionDAL_KeyNotFound)
             {
@@ -655,6 +663,12 @@ namespace BL
             }
         }
 
+        /// <summary>
+        /// Checks if a pair of consecutive stations are in use
+        /// </summary>
+        /// <param name="busStopKeyA"></param>
+        /// <param name="busStopKeyB"></param>
+        /// <returns>True if in use, else - false</returns>
         public bool IsConsecutiveInUse(int busStopKeyA, int busStopKeyB)
         {
             return (from station
