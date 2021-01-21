@@ -28,8 +28,8 @@ namespace PlGui
     public partial class PassengerUI_Window : Window, INotifyPropertyChanged // Inotify - for the clock simulator property changes
     {
         IBL bl = BLFactory.GetBL("1"); // Calls and stores the instance of the bl interface
-        BO.User passenger; // Creates a BO.passenger for title greetings feature
-        BO.BusStop busStop; // Creates a BO.busStop 
+        User passenger; // Creates a BO.passenger for title greetings feature
+        BusStop busStop; // Creates a BO.busStop 
 
 
         /// <summary>
@@ -60,6 +60,8 @@ namespace PlGui
         /// <param name="e"></param>
         private void cbBusStop_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            intervalSlider.IsEnabled = true;
+            timeEdit.IsEnabled = true;
             Start_Pause.IsEnabled = true; // After choosing the bus stop, the user is able to start the clock simulator
             tbNoBuses.Visibility = Visibility.Collapsed; // The no buses info label collapsing
 

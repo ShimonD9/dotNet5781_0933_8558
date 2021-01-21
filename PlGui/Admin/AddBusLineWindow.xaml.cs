@@ -54,7 +54,9 @@ namespace PlGui
                 double kmToNext = 0;
                 TimeSpan timeToNext = new TimeSpan(0, 0, 0);
 
-                if (tbKmToNext.GetLineText(0) == "" || tbTimeToNext.GetLineText(0) == "" || tbLineNumber.GetLineText(0) == "" ||
+                // Validity check of inputs and combo box selections:
+                if (cbFirstBusStop.SelectedItem == null || cbLastBusStop.SelectedItem == null || cbArea.SelectedItem == null ||
+                    String.IsNullOrEmpty(tbKmToNext.GetLineText(0)) || String.IsNullOrEmpty(tbTimeToNext.GetLineText(0)) || String.IsNullOrEmpty(tbLineNumber.GetLineText(0)) ||
                     tbKmToNext.Visibility == Visibility.Visible && !Double.TryParse(tbKmToNext.GetLineText(0), out kmToNext) ||
                     tbTimeToNext.Visibility == Visibility.Visible && !TimeSpan.TryParse(tbTimeToNext.GetLineText(0), out timeToNext)) // In case the fields hasn't been filled correctly
                 {

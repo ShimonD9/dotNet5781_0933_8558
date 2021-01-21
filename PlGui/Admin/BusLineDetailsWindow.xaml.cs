@@ -23,7 +23,7 @@ namespace PlGui
     public partial class BusLineDetailsWindow : Window
     {
         IBL bl = BLFactory.GetBL("1"); // Calls and stores the instance of the bl interface
-        BO.BusLine busLine;  // Creates a BO.busLine to store the sent item from the list in admin window
+        BusLine busLine;  // Creates a BO.busLine to store the sent item from the list in admin window
 
         /// <summary>
         /// Default window ctor
@@ -155,7 +155,7 @@ namespace PlGui
                         stationDeletionEndProcess(); // The proccess ended, and the function will update the relevant grids
                     }
                 }
-                catch (BO.ExceptionBL_LessThanThreeStation) // Unable to delete if there are only two stations left!
+                catch (BO.ExceptionBL_LessThanThreeStations) // Unable to delete if there are only two stations left!
                 {
                     MessageBox.Show("A bus line must contain at least two stations", "Cannot delete station", MessageBoxButton.OK, MessageBoxImage.Warning);
                     stationDeletionEndProcess(); // The proccess ended, and the function will update the relevant grids
@@ -635,12 +635,12 @@ namespace PlGui
                     }
 
                 }
-            }
+        }
             catch // In case there are unexpected issues
             {
                 MessageBox.Show("An unexpected problem occured", "Unable to add");
             }
-        }
+}
 
         /// <summary>
         /// A function made for list context, grid and buttons style manipulations, when the addition proccess ends

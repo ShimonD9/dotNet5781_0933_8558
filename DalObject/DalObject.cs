@@ -126,7 +126,7 @@ namespace DL
         }
         #endregion 
 
-        #region BusAtTravel // IDL implemetation for Class BusAtTravel objects (crud)
+        #region BusAtTravel // IDL implemetation for Class BusAtTravel objects (crud) - currently not in use (will exist for future adaption)
         /// <summary>
         /// Return all bus at travel
         /// </summary>
@@ -335,6 +335,7 @@ namespace DL
         #endregion
 
         #region BusLine  // IDL implemetation for Class BusLine objects (crud)
+
         /// <summary>
         /// Return all bus lines
         /// </summary>
@@ -345,6 +346,8 @@ namespace DL
                    where busLine.ObjectActive == true
                    select busLine.Clone();
         }
+
+
         /// <summary>
         /// Return all specific bus line by predicate
         /// </summary>
@@ -356,6 +359,8 @@ namespace DL
                    where predicate(busLine)
                    select busLine.Clone();
         }
+
+
         /// <summary>
         /// Get bus line by is ID (runing number)
         /// </summary>
@@ -371,6 +376,8 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busLineID, $"Bus line number not found: {busLineID}");
         }
+
+
         /// <summary>
         /// Add bus line to the list
         /// </summary>
@@ -379,9 +386,9 @@ namespace DL
         public int AddBusLine(BusLine busLine)
         {
             int idToReturn;             //return the id for updating that in the BL
-            BusLine existBusLine = DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber);
-            if (existBusLine != null && existBusLine.ObjectActive == true && existBusLine.FirstBusStopKey == busLine.FirstBusStopKey
-                && existBusLine.LastBusStopKey == busLine.LastBusStopKey)
+            BusLine existBusLine = DataSource.ListBusLines.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber && b.FirstBusStopKey == busLine.FirstBusStopKey
+                && b.LastBusStopKey == busLine.LastBusStopKey);
+            if (existBusLine != null && existBusLine.ObjectActive == true)
                 throw new DO.ExceptionDAL_KeyAlreadyExist(busLine.BusLineNumber, "The bus line alredy exist");
 
             else if (existBusLine != null && existBusLine.ObjectActive == false)
@@ -445,6 +452,7 @@ namespace DL
         #endregion
 
         #region BusStop  // IDL implemetation for Class BusStop objects (crud)
+
         /// <summary>
         /// Returns all bus stops
         /// </summary>
@@ -455,6 +463,8 @@ namespace DL
                    where busStopLine.ObjectActive == true
                    select busStopLine.Clone();
         }
+
+
         /// <summary>
         /// Return all bus stops specifid using predicate
         /// </summary>
@@ -466,6 +476,8 @@ namespace DL
                    where predicate(busStop)
                    select busStop.Clone();
         }
+
+
         /// <summary>
         /// Get bus stop by is Key
         /// </summary>
@@ -481,6 +493,8 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busStopKey, $"Bus stop key not found: {busStopKey}");
         }
+
+
         /// <summary>
         /// Adding new bus stop to the list
         /// </summary>
@@ -501,6 +515,8 @@ namespace DL
                 DataSource.ListBusStops.Insert(0, busStop.Clone());
             }
         }
+
+
         /// <summary>
         /// Update bus stop
         /// </summary>
@@ -516,17 +532,20 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busStop.BusStopKey, $"Bus stop key not found");
         }
+
+
         /// <summary>
         /// Method that knows to update specific fields in BusStop using is key
         /// </summary>
         /// <param name="busStopKey"></param>
         /// <param name="update"></param>
-
         public void UpdateBusStop(int busStopKey, Action<BusStop> update) 
         {
             BusStop busStopUpdate = GetBusStop(busStopKey);
             update(busStopUpdate);
         }
+
+
         /// <summary>
         /// Delete bus stop by make it unactive
         /// </summary>

@@ -23,7 +23,7 @@ namespace PlGui
     public partial class BusStopDetailsWindow : Window
     {
         IBL bl = BLFactory.GetBL("1");  // Calls and stores the instance of the bl interface
-        BO.BusStop busStop;
+        BusStop busStop;
 
         /// <summary>
         /// Default window ctor

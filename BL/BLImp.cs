@@ -13,7 +13,7 @@ namespace BL
 {
     class BLImp : IBL //internal
     {
-        IDal dl = DalFactory.GetDL();
+        IDal dl = DalFactory.GetDL(); // Asks for the data layer 
 
 
         #region BusLine
@@ -298,7 +298,7 @@ namespace BL
         {
             BusLine line = GetBusLine(busLineID);
             if (line.LineStations.Count() < 3)
-                throw new ExceptionBL_LessThanThreeStation("there are only two stations in the line,Unable to delete station");
+                throw new ExceptionBL_LessThanThreeStations("there are only two stations in the line,Unable to delete station");
 
             DO.BusLineStation currentStation = dl.GetBusLineStation(busLineID, busStopCode);
             if (currentStation.PrevStation != 0 && currentStation.NextStation != 0) // It means the lateral stations are in the middle
@@ -413,16 +413,6 @@ namespace BL
             return busDoBoAdapter(busDO);
         }
 
-        public void BusStatusUpdate(BO.Bus busBo)
-        {
-            if (busBo.Mileage - busBo.MileageAtLastTreat < 20000 && busBo.LastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && busBo.Fuel > 0)
-                busBo.BusStatus = BO.Enums.BUS_STATUS.READY_FOR_TRAVEL;
-            else if (busBo.Mileage - busBo.MileageAtLastTreat >= 20000 || busBo.LastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
-                busBo.BusStatus = BO.Enums.BUS_STATUS.DANGEROUS;
-            else if (busBo.Fuel == 0)
-                busBo.BusStatus = BO.Enums.BUS_STATUS.NEEDS_REFUEL;
-        }
-
         public void AddBus(BO.Bus busBO)
         {
             try
@@ -454,6 +444,7 @@ namespace BL
             }
 
         }
+
         public void UpdateBus(int licenseNumber, Action<BO.Bus> update)  // method that knows to update specific fields in Person
         {
             try
@@ -466,6 +457,7 @@ namespace BL
                 throw new BO.ExceptionBL_KeyNotFound("License does not exist Or bus inactive", ex);
             }
         }
+
         public void DeleteBus(int license)
         {
             try
@@ -477,6 +469,17 @@ namespace BL
                 throw new BO.ExceptionBL_KeyNotFound("the bus license doesn't exist or the bus is inactive!", ex);
             }
         }
+
+        public void BusStatusUpdate(BO.Bus busBo)
+        {
+            if (busBo.Mileage - busBo.MileageAtLastTreat < 20000 && busBo.LastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && busBo.Fuel > 0)
+                busBo.BusStatus = BO.Enums.BUS_STATUS.READY_FOR_TRAVEL;
+            else if (busBo.Mileage - busBo.MileageAtLastTreat >= 20000 || busBo.LastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) <= 0)
+                busBo.BusStatus = BO.Enums.BUS_STATUS.DANGEROUS;
+            else if (busBo.Fuel == 0)
+                busBo.BusStatus = BO.Enums.BUS_STATUS.NEEDS_REFUEL;
+        }
+
         #endregion
 
         #region BusStop
@@ -500,9 +503,15 @@ namespace BL
             busStopBO.CopyPropertiesTo(busStopDO);
             return busStopDO;
         }
+
         public IEnumerable<BusStop> GetAllBusStops()
         {
             return from doBusStop in dl.GetAllBusStops() orderby doBusStop.BusStopKey select BusStopDoBoAdapter(doBusStop);
+        }
+
+        public IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate)
+        {
+            throw new NotImplementedException();
         }
 
         public BusStop GetBusStop(int busStopKeyDO)
@@ -541,12 +550,6 @@ namespace BL
             throw new NotImplementedException();
         }
 
-        public IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
-
         public void AddBusStop(BO.BusStop busStopBO)
         {
             try
@@ -580,12 +583,13 @@ namespace BL
         #endregion
 
         #region BusLineAtBusStop
+
         BO.BusLineAtBusStop BusLinetoBusLineAtStopConvertor(BO.BusLine busLine, int busStopCode)
         {
             BO.BusLineAtBusStop busLineAtBusStop = new BO.BusLineAtBusStop();
             busLine.CopyPropertiesTo(busLineAtBusStop);
             busLineAtBusStop.LastBusStopName = dl.GetBusStop(busLineAtBusStop.LastBusStopKey).BusStopName;
-            busLineAtBusStop.TravelTimeToBusStop = StationTravelTimeCalculation(busLine.BusLineID, busStopCode);
+            busLineAtBusStop.TravelTimeToBusStop = StationTravelTimeCalculation(busLine.BusLineID, busStopCode); // The travel calculated by function
             return busLineAtBusStop;
         }
         #endregion
@@ -599,7 +603,7 @@ namespace BL
                 DO.LineDeparture newLineDeparture = new DO.LineDeparture();
                 newLineDeparture.BusLineID = busLineID;
                 newLineDeparture.DepartureTime = departureTime;
-                (DalFactory.GetDL()).AddLineDeparture(newLineDeparture);
+                dl.AddLineDeparture(newLineDeparture);
             }
             catch (DO.ExceptionDAL_KeyAlreadyExist ex)
             {
@@ -625,25 +629,29 @@ namespace BL
         }
         #endregion
 
-
-
         #region Consecutive Stations
 
+        /// <summary>
+        /// Checks if the consecutive stations exist, so there is no need to add the information
+        /// </summary>
+        /// <param name="busStopKeyA"></param>
+        /// <param name="busStopKeyB"></param>
+        /// <returns></returns>
         public bool IsConsecutiveExist(int busStopKeyA, int busStopKeyB)
         {
             DO.ConsecutiveStations newConStations = new DO.ConsecutiveStations();
             try
             {
                 newConStations = dl.GetConsecutiveStations(busStopKeyA, busStopKeyB);
-                return true;
+                return true;// Returns true, because it exist (the dl.GetConsecutive didn't throw anything)
             }
             catch (DO.ExceptionDAL_Inactive)
             {
-                return true;
+                return true; // Returns true, because it needs only to be activated
             }
             catch (DO.ExceptionDAL_KeyNotFound)
             {
-                return false;
+                return false; // Returns true, because the consecutive doesn't exist
             }
         }
 
@@ -742,63 +750,158 @@ namespace BL
         #endregion
 
 
+        #region Other needed functions:
+
+        /// <summary>
+        /// Finds and creats LineTiming objects by given the current bus stop and time
+        /// </summary>
+        /// <param name="currBusStop"></param>
+        /// <param name="tsCurrentTime"></param>
+        /// <returns>Collection of LineTimings</returns>
         public IEnumerable<LineTiming> GetLineTimingsPerStation(BusStop currBusStop, TimeSpan tsCurrentTime)
         {
-            IEnumerable<LineTiming> stationTimings = from lineAtStop in GetBusStop(currBusStop.BusStopKey).LinesStopHere
-                                                     let depTime = FindLastDepartureTime(lineAtStop.BusLineID, tsCurrentTime)
-                                                     let timeLeft = depTime.Add(lineAtStop.TravelTimeToBusStop).Subtract(tsCurrentTime)
-                                                     where timeLeft.Hours == 0 && timeLeft.Minutes > -5 // It means the bus is late or passed maximum by 5 minutes, but only buses in a margin of one hour will be showed
-                                                     select new LineTiming
-                                                     {
-                                                         BusLineNumber = lineAtStop.BusLineNumber,
-                                                         LastBusStopName = lineAtStop.LastBusStopName,
-                                                         DepartureTime = depTime,
-                                                         ArrivalTime = depTime.Add(lineAtStop.TravelTimeToBusStop),
-                                                         MinutesToArrival = timeLeft.Minutes,
-                                                         ShowMinutesOrArrow = timeLeft.CompareTo(TimeSpan.Zero) > 0 ? timeLeft.Minutes.ToString() : "↓",
-                                                     };
+            // Explanation of the linq query:
+            // 1. from - It checks for every line in the LinesStopHere collection (created for BO.BusStop)
+            // 2. let -Finds the last departure time for a line according to the current given time (using a function)
+            // 3. let - Calculates the time left to the arrival (each BO.BusLineAtBusStop object holds the total time of travel to the bus stop)
+            // 4. Where - Filters by the time left within the hour until 5 minutes after the expected arrival
+            // 5. Select new - creatrs the new lineTiming object to be added to the new collection
 
+            try
+            {
+                IEnumerable<LineTiming> stationTimings = from lineAtStop in GetBusStop(currBusStop.BusStopKey).LinesStopHere
+                                                         let depTime = FindLastDepartureTime(lineAtStop.BusLineID, tsCurrentTime)
+                                                         let timeLeft = depTime.Add(lineAtStop.TravelTimeToBusStop).Subtract(tsCurrentTime)
+                                                         where timeLeft.Hours == 0 && timeLeft.Minutes > -5 // It means the bus is late or passed maximum by 5 minutes, but only buses in a margin of one hour will be showed
+                                                         select new LineTiming
+                                                         {
+                                                             BusLineNumber = lineAtStop.BusLineNumber,
+                                                             LastBusStopName = lineAtStop.LastBusStopName,
+                                                             DepartureTime = depTime,
+                                                             ArrivalTime = depTime.Add(lineAtStop.TravelTimeToBusStop), // Adds the total travel time to the departure timr
+                                                             MinutesToArrival = timeLeft.Minutes,
+                                                             ShowMinutesOrArrow = timeLeft.CompareTo(TimeSpan.Zero) > 0 ? timeLeft.Minutes.ToString() : "↓", // Checks the time left, and decides if to show minutes or arrow
+                                                         };
 
-            return stationTimings.OrderBy(x => x.MinutesToArrival);
+                return stationTimings.OrderBy(x => x.MinutesToArrival); // Orders the objects by the minutes left to the arrival (the closest will appear first) and returns the collection
+            }
+            catch (DO.ExceptionDAL_KeyNotFound ex)
+            {
+                throw new ExceptionBL_KeyNotFound("The bus stop code doesn't exist.", ex);
+            }
+            catch (DO.ExceptionDAL_Inactive ex)
+            {
+                throw new ExceptionBL_Inactive("The bus stop is inactive", ex);
+            }
+            catch
+            {
+                throw new ExceptionBL_UnexpectedProblem("Unexpected problem occured");
+            }
         }
 
+        /// <summary>
+        /// Finds the last departrue time of a bus line given the bus line ID and the current time
+        /// </summary>
+        /// <param name="busLineID"></param>
+        /// <param name="tsCurrentTime"></param>
+        /// <returns>The time span of the last departure time</returns>
         public TimeSpan FindLastDepartureTime(int busLineID, TimeSpan tsCurrentTime)
         {
-            var collection = (from lineDeparture in dl.GetAllLineDeparture()
-                              where lineDeparture.BusLineID == busLineID
-                              select lineDeparture);
-            if (collection.Count() == 0) // It means the line has no departure times (yet, or by manager accident)
-                return TimeSpan.FromMinutes(-1000); // A very far number so it will be exculded in the Linq Query of GetLineTimingsPerStation
-            else
+            try
             {
-                var collB = collection.OrderBy(x => tsCurrentTime.Subtract(x.DepartureTime));
-                var lastDep = collB.FirstOrDefault(x => tsCurrentTime.Subtract(x.DepartureTime).CompareTo(TimeSpan.Zero) > 0);
-                if (lastDep == null)
-                    return TimeSpan.FromMinutes(-1000);
+                // Linq query for the departure times of the desired bus line
+                var collection = (from lineDeparture in dl.GetAllLineDeparture()
+                                  where lineDeparture.BusLineID == busLineID
+                                  select lineDeparture);
+
+
+                if (collection.Count() == 0)            // It means the line has no departure times (yet, or by manager accident)
+                    return TimeSpan.FromMinutes(-1000); // A very far number so it will be exculded in the Linq Query of GetLineTimingsPerStation
+
                 else
-                    return lastDep.DepartureTime;
+                {
+                    var collB = collection.OrderBy(x => tsCurrentTime.Subtract(x.DepartureTime)); // Orders the departure times by the closest to the current time 
+
+                    DO.LineDeparture lastDep = new DO.LineDeparture();
+                    //if (tsCurrentTime.Hours == 0)
+                    //{
+                    //    lastDep = collB.FirstOrDefault();
+                    //}
+                    //else if (tsCurrentTime.Hours > 0)
+                        lastDep = collB.FirstOrDefault(x => tsCurrentTime.Subtract(x.DepartureTime).CompareTo(TimeSpan.Zero) > 0); // Takes the first one (the closest departure time)
+                    if (lastDep == null)                    // If there is no such departure time
+                        return TimeSpan.FromMinutes(-1000); // As explained above
+                    else
+                        return lastDep.DepartureTime;       // Returns the departure time
+                }
+            }
+            catch (DO.ExceptionDAL_KeyNotFound ex)
+            {
+                throw new ExceptionBL_KeyNotFound("The bus line doesn't exist.", ex);
+            }
+            catch (DO.ExceptionDAL_Inactive ex)
+            {
+                throw new ExceptionBL_Inactive("The bus line is inactive", ex);
+            }
+            catch
+            {
+                throw new ExceptionBL_UnexpectedProblem("Unexpected problem occured");
             }
         }
 
-
+        /// <summary>
+        /// Calculates the travel time from the first station of a given bus line ID to the given bus stop code
+        /// </summary>
+        /// <param name="busLineID"></param>
+        /// <param name="busStopCode"></param>
+        /// <returns></returns>
         public TimeSpan StationTravelTimeCalculation(int busLineID, int busStopCode)
         {
-            var collection = GetBusLine(busLineID).LineStations.TakeWhile(x => x.BusStopKey != busStopCode);
-            if (collection == null) // It means that the bus stop is the first one, so it returns zero timeSpan
-                return TimeSpan.Zero;
-            else
+            try
             {
-                TimeSpan calc = collection.Aggregate
-                    (TimeSpan.Zero,
-                    (sumSoFar, nextMyObject) => sumSoFar + nextMyObject.TimeToNext);
-                return calc;
+                if (!GetBusLine(busLineID).LineStations.Any(x => x.BusStopKey == busStopCode)) // in case the bus stop doesn't exist in the bus line route
+                {
+                    throw new BO.ExceptionBL_BusStopNotExistInTheRoute("The bus stop code doesn't sevre the given bus line");
+                }
+
+                // Creates a collection of all the bus stops in the routes until the current bus stop:
+                var collection = GetBusLine(busLineID).LineStations.TakeWhile(x => x.BusStopKey != busStopCode);
+
+                if (collection == null) // It means that the bus stop is the first one, so it returns zero timeSpan
+                    return TimeSpan.Zero;
+                else
+                {
+                    // The calculation of the travel time proccess (using aggregate)
+                    TimeSpan calc = collection.Aggregate
+                        (TimeSpan.Zero,
+                        (sumSoFar, nextMyObject) => sumSoFar + nextMyObject.TimeToNext);
+                    return calc; // Returns the calculated
+                }
+            } // In case the bus line doesn't exist (or inactive):
+            catch (DO.ExceptionDAL_KeyNotFound ex)
+            {
+                throw new ExceptionBL_KeyNotFound("The bus line wasn't found", ex);
+            }
+            catch (DO.ExceptionDAL_Inactive ex)
+            {
+                throw new ExceptionBL_Inactive("The bus line doesn't active (deleted)", ex);
+            }
+            catch
+            {
+                throw new ExceptionBL_UnexpectedProblem("Unexpected problem occured");
             }
         }
 
+        /// <summary>
+        /// A boolean function to check if a time span is valid
+        /// </summary>
+        /// <param name="timeUpdate"></param>
+        /// <returns>True if the timeSpan is invalid, else - false</returns>
         public bool isTimeSpanInvalid(TimeSpan timeUpdate)
         {
             return (timeUpdate.Days > 0 || timeUpdate.Hours > 23 || timeUpdate.Minutes > 59 || timeUpdate.Seconds > 59);
         }
 
+        #endregion
     }
 }

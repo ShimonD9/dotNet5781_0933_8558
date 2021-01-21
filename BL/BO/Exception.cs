@@ -51,22 +51,36 @@ namespace BO
         public ExceptionBL_WrongDetails(string id) : base() => ID = id;
         public ExceptionBL_WrongDetails(string id, string message) : base(message) => ID = id;
         public ExceptionBL_WrongDetails(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
-        public override string ToString() => base.ToString() + $", bus stop : {ID} serves bus lines";
+        public override string ToString() => base.ToString() + $", The {ID} details are wrong";
     }
 
-    public class ExceptionBL_LessThanThreeStation : Exception
+    public class ExceptionBL_BusStopNotExistInTheRoute : Exception
+    {
+        public string ID;
+        public ExceptionBL_BusStopNotExistInTheRoute(string id) : base() => ID = id;
+        public ExceptionBL_BusStopNotExistInTheRoute(string id, string message) : base(message) => ID = id;
+        public ExceptionBL_BusStopNotExistInTheRoute(string id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public override string ToString() => base.ToString() + $", the bus stop code : {ID} doesn't exist in the bus line route";
+    }
+
+    /// <summary>
+    /// Throws exception when the manager tries to delete station, with only two station left
+    /// </summary>
+    public class ExceptionBL_LessThanThreeStations : Exception
     {
         public int ID;
         public string ID1;
 
-        public ExceptionBL_LessThanThreeStation(string id) : base() => ID1 = id;
-        public ExceptionBL_LessThanThreeStation(int id) : base() => ID = id;
-        public ExceptionBL_LessThanThreeStation(int id, string message) : base(message) => ID = id;
-        public ExceptionBL_LessThanThreeStation(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public ExceptionBL_LessThanThreeStations(string id) : base() => ID1 = id;
+        public ExceptionBL_LessThanThreeStations(int id) : base() => ID = id;
+        public ExceptionBL_LessThanThreeStations(int id, string message) : base(message) => ID = id;
+        public ExceptionBL_LessThanThreeStations(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
         public override string ToString() => base.ToString() + $", less than two station: {ID}";
     }
 
-   
+    /// <summary>
+    /// Throws exception when the given bus stop coordinates are not in Israeli range
+    /// </summary>
     public class ExceptionBL_Incorrect_coordinates : Exception
     {
         public string ID;
@@ -77,6 +91,9 @@ namespace BO
         public override string ToString() => base.ToString() + $", The longitude or the latitude are incorrect: {ID}";
     }
 
+    /// <summary>
+    /// Throws exception when the mileage values of a bus are in logical conflict
+    /// </summary>
     public class ExceptionBL_MileageValuesConflict : Exception
     {
         public string ID;
@@ -109,6 +126,7 @@ namespace BO
     public class ExceptionBL_UnexpectedProblem : Exception
     {
         public string ID;
+        public ExceptionBL_UnexpectedProblem(string id) : base() => ID = id;
         public ExceptionBL_UnexpectedProblem(string message, Exception innerException) :
             base(message, innerException) => ID = ((DO.ExceptionDAL_UnexpectedProblem)innerException).ID;
         public override string ToString() => base.ToString() + $", Unexpected Problem: {ID}";
