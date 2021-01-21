@@ -163,10 +163,11 @@ namespace PlGui
                 catch
                 {
                     MessageBox.Show("An unexpected problem occured", "Unable to delete");
+                    stationDeletionEndProcess();
                 }
-
             }
-            else if (tbDeleteStation.Text == "Submit changes") // If it need to submit changes, it means there is need to update consecutive
+
+            else if (isDeleteStationInProcess == true) // If it need to submit changes, it means there is need to update consecutive
             {
                 if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate)  // Checks the string by tryparse
                     || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0) // If there is need to update, the km and time shoudln't be zero, and bl checks the logic of the timeSpan
