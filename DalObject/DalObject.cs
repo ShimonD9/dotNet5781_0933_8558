@@ -74,8 +74,8 @@ namespace DL
             else if (existBus != null && existBus.ObjectActive == false)            //in case the bus exist but inactive
             {
                 bus.ObjectActive = true;
-                DataSource.ListBuses.Remove(existBus);                  //remove old bus
-                DataSource.ListBuses.Insert(0 ,bus);                    //active the new one
+                DataSource.ListBuses.Remove(existBus);
+                DataSource.ListBuses.Insert(0, bus);
             }
             else                                                        //in case the bus is not exist
             {
@@ -176,9 +176,8 @@ namespace DL
                 throw new DO.ExceptionDAL_KeyAlreadyExist(busAtTravel.BusLineID, "The bus line is already at travel");
             else if (existBus != null && existBus.ObjectActive == false)
             {
-                busAtTravel.ObjectActive = true;
-                DataSource.ListBusAtTravels.Remove(existBus);
-                DataSource.ListBusAtTravels.Insert(0,busAtTravel);
+                existBus.ObjectActive = true;
+                existBus = busAtTravel.Clone();
             }
             else
             {
@@ -497,15 +496,16 @@ namespace DL
         /// Adding new bus stop to the list
         /// </summary>
         /// <param name="busStop"></param>
-        public void AddBusStop(BusStop busStop)
+        public void AddBusStop(BusStop busStop) 
         {
             BusStop existStop = DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey);
             if (existStop != null && existStop.ObjectActive == true)
                 throw new DO.ExceptionDAL_KeyAlreadyExist(busStop.BusStopKey, "Bus stop alredy exist");
             else if (existStop != null && existStop.ObjectActive == false)
             {
-                existStop.ObjectActive = true;
-                existStop = busStop.Clone();
+                busStop.ObjectActive = true;
+                DataSource.ListBusStops.Remove(existStop);
+                DataSource.ListBusStops.Insert(0, busStop);
             }
             else
             {
