@@ -23,13 +23,13 @@ namespace DL
 
         #region DS XML Files
 
-        //-----------------------Using Xelement------------------------------
+        //-----------------------------Using Xelement---------------------------------
 
         string busPath = @"BusXml.xml"; //XElement
         string lineDeparturePath = @"LineDepartureXml.xml"; //XElement
         string consecutiveStationPath = @"ConsecutiveStationXml.xml"; //XElement
 
-        //-----------------------Using XMLSerializer------------------------------
+        //---------------------------Using XMLSerializer------------------------------
 
         string busAtTravelPath = @"BusAtTravelXml.xml"; //XMLSerializer
         string busLinePath = @"BusLineXml.xml"; //XMLSerializer
