@@ -399,11 +399,10 @@ namespace DL
         {
             List<BusLineStation> ListBusLineStation = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
 
-            BusLineStation bus = ListBusLineStation.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID);
-            if (bus != null && bus.ObjectActive)
+            BusLineStation bus = ListBusLineStation.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID &&
+            b.ObjectActive == true);
+            if (bus != null)
                 return bus;
-            else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busStopCode, $"The bus station is  inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busStopCode, $"Station key not found: {busStopCode}");
         }
@@ -411,9 +410,10 @@ namespace DL
         {
             List<BusLineStation> ListBusLineStation = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
             BusLineStation existBusLineStation = ListBusLineStation.FirstOrDefault(b => b.BusStopKey == busLineStation.BusStopKey
-            && b.BusLineID == busLineStation.BusLineID);
+            && b.BusLineID == busLineStation.BusLineID && b.PrevStation == busLineStation.PrevStation
+            && b.NextStation == busLineStation.NextStation);
             if (existBusLineStation != null && existBusLineStation.ObjectActive == true)
-                throw new DO.ExceptionDAL_KeyAlreadyExist(busLineStation.BusStopKey, "Duplicate bus station key");
+                throw new DO.ExceptionDAL_KeyAlreadyExist(busLineStation.BusStopKey, "The bus line station already exist");
             else if (existBusLineStation != null && existBusLineStation.ObjectActive == false)
             {
                 existBusLineStation.ObjectActive = true;
@@ -431,15 +431,13 @@ namespace DL
         {
             List<BusLineStation> ListBusLineStations = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
 
-            int index = ListBusLineStations.FindIndex(bus1 => bus1.BusLineID == busLineStation.BusLineID && bus1.BusStopKey == busLineStation.BusStopKey);
+            int index = ListBusLineStations.FindIndex(bus1 => bus1.BusLineID == busLineStation.BusLineID && bus1.BusStopKey == busLineStation.BusStopKey && bus1.ObjectActive == true);
             if (ListBusLineStations[index] != null && ListBusLineStations[index].ObjectActive)
             {
                 ListBusLineStations.Remove(ListBusLineStations[index]);
                 ListBusLineStations.Add(busLineStation);
                 XMLTools.SaveListToXMLSerializer(ListBusLineStations, busLineStationPath);
             }
-            else if (ListBusLineStations[index] != null && !ListBusLineStations[index].ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busLineStation.BusStopKey, $"The bus line station is inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busLineStation.BusStopKey, $"Station key not found: {busLineStation.BusStopKey}");
         }
@@ -453,14 +451,12 @@ namespace DL
         {
             List<BusLineStation> ListBusLineStations = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
 
-            BusLineStation bus = ListBusLineStations.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID);
-            if (bus != null && bus.ObjectActive)
+            BusLineStation bus = ListBusLineStations.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID && b.ObjectActive == true);
+            if (bus != null)
             {
                 bus.ObjectActive = false;
                 XMLTools.SaveListToXMLSerializer(ListBusLineStations, busLineStationPath);
             }
-            else if (bus != null && !bus.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busStopCode, $"The bus line station is inactive");
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busStopCode, $"Station key not found: {busStopCode}");
         }
@@ -625,6 +621,8 @@ namespace DL
             else if (existCon != null && bool.Parse(existCon.Element("ObjectActive").Value) == false)
             {
                 existCon.Element("ObjectActive").Value = true.ToString();
+                existCon.Element("Distance").Value = newConsecutiveStations.Distance.ToString();
+                existCon.Element("TravelTime").Value = newConsecutiveStations.TravelTime.ToString();
             }
             else
             {
