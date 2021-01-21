@@ -468,8 +468,8 @@ namespace PlGui
         /// <param name="e"></param>
         private void button_AddStation(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop; // Stores the new chosen bus stop
                 BO.BusLineStation chosenPrevStation = cbChoosePrevStation.SelectedItem as BO.BusLineStation; // Stores the new chosen bus stop
                 BO.BusLineStation newStation = new BO.BusLineStation(); // Creats a new bus line station to add later in this method
@@ -635,12 +635,12 @@ namespace PlGui
                     }
 
                 }
-        //}
-        //    catch // In case there are unexpected issues
-        //    {
-        //        MessageBox.Show("An unexpected problem occured", "Unable to add");
-        //    }
-}
+            }
+            catch // In case there are unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured", "Unable to add");
+            }
+        }
 
         /// <summary>
         /// A function made for list context, grid and buttons style manipulations, when the addition proccess ends
