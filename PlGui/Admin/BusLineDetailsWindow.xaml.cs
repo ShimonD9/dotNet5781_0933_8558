@@ -309,11 +309,7 @@ namespace PlGui
                     // Enables to choose the station before:
                     cbChoosePrevStation.Text = "After which station you wish to place the new station?";
                     gChoosePrevStation.Visibility = Visibility.Visible;
-                    cbChoosePrevStation.ItemsSource = from station
-                                                      in busLine.LineStations
-                                                          // The query excludes the last station (for placing to the last, there is a radio button for last)
-                                                      where station.BusStopKey != busLine.LastBusStopKey
-                                                      select station;
+                    cbChoosePrevStation.ItemsSource = busLine.LineStations.Where(x => x.BusStopKey != busLine.LastBusStopKey); // Excludes the last station (And for placing to the last, there is a radio button for last)
                 }
             }
             catch // For unexpected issues
