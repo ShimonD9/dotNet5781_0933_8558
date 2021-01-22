@@ -23,24 +23,34 @@ namespace DL
 
         #region DS XML Files
 
+        //-----------------------------Using Xelement---------------------------------
+
         string busPath = @"BusXml.xml"; //XElement
+        string lineDeparturePath = @"LineDepartureXml.xml"; //XElement
+        string consecutiveStationPath = @"ConsecutiveStationXml.xml"; //XElement
+
+        //---------------------------Using XMLSerializer------------------------------
 
         string busAtTravelPath = @"BusAtTravelXml.xml"; //XMLSerializer
         string busLinePath = @"BusLineXml.xml"; //XMLSerializer
         string busLineStationPath = @"BusLineStationXml.xml"; //XMLSerializer
-        string busStopPath = @"BusStopXml.xml"; //XMLSerializer
-        string consecutiveStationPath = @"ConsecutiveStationXml.xml"; //XMLSerializer
-        string lineDeparturePath = @"LineDepartureXml.xml"; //XMLSerializer
+        string busStopPath = @"BusStopXml.xml"; //XMLSerializer       
         string userPath = @"UserXml.xml"; //XMLSerializer
 
         #endregion
 
-        #region Bus
+        #region Bus // XML implemetation for Class Bus objects (crud) // using XElement
+
+        /// <summary>
+        /// Get bus by is lisence using Xelement
+        /// </summary>
+        /// <param name="license"></param>
+        /// <returns></returns>
         public DO.Bus GetBus(int license)
         {
-            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
+            XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);        //load the file
 
-            Bus bus = (from b in busRootElem.Elements()
+            Bus bus = (from b in busRootElem.Elements()                             //linq that retuen the specific bus
                        where int.Parse(b.Element("License").Value) == license
                        select new Bus()
                        {
@@ -61,6 +71,11 @@ namespace DL
                 throw new DO.ExceptionDAL_Inactive(license, $"the bus is  inactive");
             return bus;
         }
+
+        /// <summary>
+        /// Return the all buses using Linq on Xelement
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DO.Bus> GetAllBuses()
         {
             XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
@@ -80,6 +95,12 @@ namespace DL
                     }
                    );
         }
+
+        /// <summary>
+        /// Return a specific bus using predicate
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public IEnumerable<DO.Bus> GetAllBusesBy(Predicate<DO.Bus> predicate)
         {
             XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
@@ -99,6 +120,13 @@ namespace DL
                    where predicate(bus)
                    select bus;
         }
+
+        /// <summary>
+        /// Add bus to the file using Xelement
+        /// in case the bus is alredy in the list but it is inactive
+        /// we copy the rights fields to the new bus and activate it
+        /// </summary>
+        /// <param name="bus"></param>
         public void AddBus(DO.Bus bus)
         {
             XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
@@ -109,7 +137,7 @@ namespace DL
 
             if (existBus != null && bool.Parse(existBus.Element("ObjectActive").Value))
                 throw new DO.ExceptionDAL_KeyAlreadyExist(bus.License, "License already exist");
-            if (existBus != null && !bool.Parse(existBus.Element("ObjectActive").Value))
+            if (existBus != null && !bool.Parse(existBus.Element("ObjectActive").Value))        //in case the bus found but inactive
             {
                 existBus.Element("License").Value = bus.License.ToString();
                 existBus.Element("LicenseDate").Value = bus.LicenseDate.ToString();
@@ -120,7 +148,7 @@ namespace DL
                 existBus.Element("MileageAtLastTreat").Value = bus.MileageAtLastTreat.ToString();
                 existBus.Element("ObjectActive").Value = true.ToString();
             }
-            else
+            else                                                                    //in case the bus is new
             {
                 XElement newBusElem = new XElement("Bus",
                                        new XElement("License", bus.License),
@@ -136,6 +164,11 @@ namespace DL
 
             XMLTools.SaveListToXMLElement(busRootElem, busPath);
         }
+
+        /// <summary>
+        /// Delete bus by is license using Xelement
+        /// </summary>
+        /// <param name="license"></param>
         public void DeleteBus(int license)
         {
             XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
@@ -147,10 +180,7 @@ namespace DL
             if (busToDelete == null)
                 throw new DO.ExceptionDAL_KeyNotFound(license, $"Bus not found: {license}");
 
-            if (!bool.Parse(busToDelete.Element("ObjectActive").Value))
-                throw new DO.ExceptionDAL_Inactive(license, $"Bus is alredy deleted: {license}");
-
-            if (bool.Parse(busToDelete.Element("ObjectActive").Value))
+            if (bool.Parse(busToDelete.Element("ObjectActive").Value) == true)
             {
                 busToDelete.Element("ObjectActive").Value = false.ToString();
                 XMLTools.SaveListToXMLElement(busRootElem, busPath);
@@ -158,6 +188,11 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_UnexpectedProblem("Unexpected Problem");
         }
+
+        /// <summary>
+        /// Update bus using Xelement
+        /// </summary>
+        /// <param name="bus"></param>
         public void UpdateBus(DO.Bus bus)
         {
             XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
@@ -184,6 +219,12 @@ namespace DL
                 XMLTools.SaveListToXMLElement(busRootElem, busPath);
             }
         }
+
+        /// <summary>
+        /// Update a specific bus using is id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="update"></param>
         public void UpdateBus(int id, Action<DO.Bus> update)
         {
             Bus updateBus = GetBus(id);
@@ -194,7 +235,12 @@ namespace DL
 
         #endregion Bus
 
-        #region BusAtTravel
+        #region BusAtTravel // XML implemetation for Class BusAtTravel objects (crud) // using XMLSerializer
+
+        /// <summary>
+        /// Return all bus at travel
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<DO.BusAtTravel> GetAllBusesAtTravel()
         {
             List<BusAtTravel> ListBusAtravel = XMLTools.LoadListFromXMLSerializer<BusAtTravel>(busAtTravelPath);
@@ -203,6 +249,12 @@ namespace DL
                    where bus.ObjectActive == true
                    select bus; //no need to Clone()
         }
+
+        /// <summary>
+        /// Return all specific bus at travel using predicate
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public IEnumerable<BusAtTravel> GetAllBusesAtTravelBy(Predicate<BusAtTravel> predicate)
         {
             List<BusAtTravel> ListBusAtravel = XMLTools.LoadListFromXMLSerializer<BusAtTravel>(busAtTravelPath);
@@ -211,6 +263,12 @@ namespace DL
                    where predicate(busAtTravel)
                    select busAtTravel;
         }
+
+        /// <summary>
+        /// Get bus at travel by is license
+        /// </summary>
+        /// <param name="license"></param>
+        /// <returns></returns>
         public DO.BusAtTravel GetBusAtTravel(int license)
         {
             List<BusAtTravel> ListBusAtravel = XMLTools.LoadListFromXMLSerializer<BusAtTravel>(busAtTravelPath);
@@ -222,6 +280,11 @@ namespace DL
                 throw new DO.ExceptionDAL_Inactive(license, $"Bus is inactive: {license}");
             return bus;  //no need to Clone()          
         }
+
+        /// <summary>
+        /// Add bus at travel to the List
+        /// </summary>
+        /// <param name="bus"></param>
         public void AddBusAtTravel(DO.BusAtTravel bus)
         {
             List<BusAtTravel> ListBusAtravel = XMLTools.LoadListFromXMLSerializer<BusAtTravel>(busAtTravelPath);
@@ -230,13 +293,14 @@ namespace DL
             if (existBus != null && existBus.ObjectActive)
                 throw new DO.ExceptionDAL_KeyAlreadyExist(bus.License, "Bus already in travel");
 
-            if (existBus != null && !existBus.ObjectActive)
+            if (existBus != null && !existBus.ObjectActive)             //in case the bus was found but inactive
             {
-                existBus.ObjectActive = true;
-                existBus = bus;
+                bus.ObjectActive = true;
+                ListBusAtravel.Remove(existBus);
+                ListBusAtravel.Insert(0, bus);
                 XMLTools.SaveListToXMLSerializer(ListBusAtravel, busAtTravelPath);
             }
-            else
+            else                                                        //in case the bus is new
             {
                 bus.BusLineID = XMLConfig.BusAtTravelCounter();
                 bus.ObjectActive = true;
@@ -244,8 +308,14 @@ namespace DL
                 XMLTools.SaveListToXMLSerializer(ListBusAtravel, busAtTravelPath);
             }
         }
+
+        /// <summary>
+        /// Update bus at travel
+        /// </summary>
+        /// <param name="bus"></param>
         public void UpdateBusAtTravel(DO.BusAtTravel bus)
         {
+            //update bus by is index in the list
             List<BusAtTravel> ListBusAtTravels = XMLTools.LoadListFromXMLSerializer<BusAtTravel>(busAtTravelPath);
             int index = ListBusAtTravels.FindIndex(bus1 => bus1.License == bus.License);  //get index to update bus
             if (ListBusAtTravels[index] == null)
@@ -257,12 +327,24 @@ namespace DL
 
             XMLTools.SaveListToXMLSerializer(ListBusAtTravels, busAtTravelPath);
         }
-        public void UpdateBusAtTravel(int license, Action<BusAtTravel> update) // method that knows to updt specific fields in bus at travel
+
+        /// <summary>
+        /// Update bus at travel by is license using action delegate
+        /// Method that knows to update specific fields in bus at travel
+        /// </summary>
+        /// <param name="license"></param>
+        /// <param name="update"></param>
+        public void UpdateBusAtTravel(int license, Action<BusAtTravel> update)
         {
             BusAtTravel busUpdate = GetBusAtTravel(license);
             update(busUpdate);
             UpdateBusAtTravel(busUpdate);
         }
+
+        /// <summary>
+        /// Delete bus at travek by make it unactive
+        /// </summary>
+        /// <param name="license"></param>
         public void DeleteBusAtTravel(int license)
         {
             List<BusAtTravel> ListBusAtTravel = XMLTools.LoadListFromXMLSerializer<BusAtTravel>(busAtTravelPath);
@@ -280,8 +362,13 @@ namespace DL
         }
         #endregion
 
-        #region BusLine
+        #region  BusLine // XML implemetation for Class BusLine objects (crud) // using XMLSerializer
 
+        /// <summary>
+        /// Get all specific buses Line using predicate
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public IEnumerable<DO.BusLine> GetAllBusLinesBy(Predicate<DO.BusLine> predicate)
         {
             List<BusLine> ListBusLine = XMLTools.LoadListFromXMLSerializer<BusLine>(busLinePath);
@@ -290,6 +377,11 @@ namespace DL
                    where predicate(bus)
                    select bus; //no need to Clone()
         }
+
+        /// <summary>
+        /// Return all buses Line 
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<BusLine> GetAllBusLines()
         {
             List<BusLine> ListBusLine = XMLTools.LoadListFromXMLSerializer<BusLine>(busLinePath);
@@ -299,20 +391,34 @@ namespace DL
                    select bus;
 
         }
+
+        /// <summary>
+        /// Get bus Line by is ID (running number)
+        /// </summary>
+        /// <param name="busLineID"></param>
+        /// <returns></returns>
         public BusLine GetBusLine(int busLineID)
         {
             List<BusLine> ListBusLine = XMLTools.LoadListFromXMLSerializer<BusLine>(busLinePath);
 
             DO.BusLine bus = ListBusLine.Find(b => b.BusLineID == busLineID);
-            if (bus == null)
-                throw new DO.ExceptionDAL_KeyNotFound(busLineID, $"Bus not found: {busLineID}");
-            if (!bus.ObjectActive)
+            if (bus != null && bus.ObjectActive)
+                return bus;                 //no need to Clone()   
+            else if (bus != null && !bus.ObjectActive)
                 throw new DO.ExceptionDAL_Inactive(busLineID, $"Bus is inactive: {busLineID}");
-            return bus;  //no need to Clone()   
+            else
+                throw new DO.ExceptionDAL_KeyNotFound(busLineID, $"Bus not found: {busLineID}");
         }
+
+        /// <summary>
+        /// Adding new bus line to the list
+        /// if the bus exist but inactive , so we activate it
+        /// </summary>
+        /// <param name="busLine"></param>
+        /// <returns></returns>
         public int AddBusLine(BusLine busLine)
         {
-            int idToReturn;
+            int idToReturn;                         //id (runing number) return to update the BL
             List<BusLine> ListBusLine = XMLTools.LoadListFromXMLSerializer<BusLine>(busLinePath);
 
             BusLine existBus = ListBusLine.FirstOrDefault(b => b.BusLineNumber == busLine.BusLineNumber);
@@ -336,10 +442,16 @@ namespace DL
             }
             return idToReturn;
         }
+
+        /// <summary>
+        /// Update bus line using is index
+        /// </summary>
+        /// <param name="busLine"></param>
         public void UpdateBusLine(BusLine busLine)
         {
             List<BusLine> ListBusLine = XMLTools.LoadListFromXMLSerializer<BusLine>(busLinePath);
 
+            //find the index of the bus line to update
             int index = ListBusLine.FindIndex(bus1 => bus1.BusLineID == busLine.BusLineID);
             if (ListBusLine[index] != null && ListBusLine[index].ObjectActive)
             {
@@ -353,12 +465,25 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busLine.BusLineID, $"Bus line number not found: {busLine.BusLineID}");
         }
-        public void UpdateBusLine(int busLineNumber, Action<BusLine> update) // method that knows to updt specific fields in Person
+
+        /// <summary>
+        /// Update Bus line by is bus line number
+        /// Using action delegate
+        /// Basiclly method that knows to updt specific fields in bus line
+        /// </summary>
+        /// <param name="busLineNumber"></param>
+        /// <param name="update"></param>
+        public void UpdateBusLine(int busLineNumber, Action<BusLine> update)
         {
             BusLine busUpdate = GetBusLine(busLineNumber);
             update(busUpdate);
             UpdateBusLine(busUpdate);
         }
+
+        /// <summary>
+        /// Delete bus line by make it unactive
+        /// </summary>
+        /// <param name="busLineID"></param>
         public void DeleteBusLine(int busLineID)
         {
             List<BusLine> ListBusLine = XMLTools.LoadListFromXMLSerializer<BusLine>(busLinePath);
@@ -378,7 +503,12 @@ namespace DL
 
         #endregion 
 
-        #region BusLineStation
+        #region  BusLineStation // XML implemetation for Class BusLineStation objects (crud) // using XMLSerializer
+
+        /// <summary>
+        /// Returns all Buses Line Stations
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<BusLineStation> GetAllBusLineStations()
         {
             List<BusLineStation> ListBusLineStation = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
@@ -387,6 +517,13 @@ namespace DL
                    where busLineStation.ObjectActive == true
                    select busLineStation;
         }
+
+        /// <summary>
+        /// Return all specific Bus Line Station
+        /// Using predicate
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
         {
             List<BusLineStation> ListBusLineStation = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
@@ -395,6 +532,13 @@ namespace DL
                    where predicate(bus)
                    select bus;
         }
+
+        /// <summary>
+        /// Get Bus Line Station by is Bus line ID(runing number) and by is bus stop key
+        /// </summary>
+        /// <param name="busLineID"></param>
+        /// <param name="busStopCode"></param>
+        /// <returns></returns>
         public BusLineStation GetBusLineStation(int busLineID, int busStopCode)
         {
             List<BusLineStation> ListBusLineStation = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
@@ -406,6 +550,12 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busStopCode, $"Station key not found: {busStopCode}");
         }
+
+        /// <summary>
+        /// Add Bus Line Station to the list
+        /// In case of the Bus Line Station is unactive we activate it
+        /// </summary>
+        /// <param name="busLineStation"></param>
         public void AddBusLineStation(BusLineStation busLineStation)
         {
             List<BusLineStation> ListBusLineStation = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
@@ -414,19 +564,24 @@ namespace DL
             && b.NextStation == busLineStation.NextStation);
             if (existBusLineStation != null && existBusLineStation.ObjectActive == true)
                 throw new DO.ExceptionDAL_KeyAlreadyExist(busLineStation.BusStopKey, "The bus line station already exist");
-            else if (existBusLineStation != null && existBusLineStation.ObjectActive == false)
+            else if (existBusLineStation != null && existBusLineStation.ObjectActive == false)      //in case the Bus unactive
             {
                 existBusLineStation.ObjectActive = true;
                 existBusLineStation = busLineStation;
                 XMLTools.SaveListToXMLSerializer(ListBusLineStation, busLineStationPath);
             }
-            else
+            else                                                            //in case the bus line station is new
             {
                 busLineStation.ObjectActive = true;
                 ListBusLineStation.Add(busLineStation);
                 XMLTools.SaveListToXMLSerializer(ListBusLineStation, busLineStationPath);
             }
         }
+
+        /// <summary>
+        /// Update bus line station
+        /// </summary>
+        /// <param name="busLineStation"></param>
         public void UpdateBusLineStation(BusLineStation busLineStation)
         {
             List<BusLineStation> ListBusLineStations = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
@@ -441,12 +596,26 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busLineStation.BusStopKey, $"Station key not found: {busLineStation.BusStopKey}");
         }
-        public void UpdateBusLineStation(int busLineID, int busStopCode, Action<BusLineStation> update) // method that knows to updt specific fields in Person
+
+        /// <summary>
+        /// Update Bus Line Station by is Bus line ID (runing number) and by is Bus stop code
+        /// Using Action delegate 
+        /// </summary>
+        /// <param name="busLineID"></param>
+        /// <param name="busStopCode"></param>
+        /// <param name="update"></param>
+        public void UpdateBusLineStation(int busLineID, int busStopCode, Action<BusLineStation> update) // method that knows to updt specific fields in BusLineStation
         {
             BusLineStation busUpdate = GetBusLineStation(busLineID, busStopCode);
             update(busUpdate);
             UpdateBusLineStation(busUpdate);
         }
+
+        /// <summary>
+        /// Delete Bus Line Station by make it unactive
+        /// </summary>
+        /// <param name="busLineID"></param>
+        /// <param name="busStopCode"></param>
         public void DeleteBusLineStation(int busLineID, int busStopCode)
         {
             List<BusLineStation> ListBusLineStations = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
@@ -463,7 +632,12 @@ namespace DL
 
         #endregion
 
-        #region BusStop
+        #region BusStop // XML implemetation for Class BusStop objects (crud) // using XMLSerializer
+
+        /// <summary>
+        /// Returns all bus stops
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<BusStop> GetAllBusStops()
         {
             List<BusStop> ListBusStop = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopPath);
@@ -472,6 +646,12 @@ namespace DL
                    where busLineStation.ObjectActive == true
                    select busLineStation;
         }
+
+        /// <summary>
+        /// Return all bus stops specifid using predicate
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate)
         {
             List<BusStop> ListBusStop = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopPath);
@@ -480,6 +660,12 @@ namespace DL
                    where predicate(busStop)
                    select busStop;
         }
+
+        /// <summary>
+        /// Get bus stop by is Key
+        /// </summary>
+        /// <param name="busStopKey"></param>
+        /// <returns></returns>
         public BusStop GetBusStop(int busStopKey)
         {
             List<BusStop> ListBusStops = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopPath);
@@ -492,6 +678,12 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busStopKey, $"Bus stop key not found: {busStopKey}");
         }
+
+        /// <summary>
+        /// Adding new bus stop to the list
+        /// In case the bus stop is unactive ,we activate it
+        /// </summary>
+        /// <param name="busStop"></param>
         public void AddBusStop(BusStop busStop)
         {
             List<BusStop> ListBusStops = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopPath);
@@ -502,8 +694,9 @@ namespace DL
                 throw new DO.ExceptionDAL_KeyAlreadyExist(busStop.BusStopKey, "Duplicate bus stop key");
             else if (existStop != null && existStop.ObjectActive == false)
             {
-                existStop.ObjectActive = true;
-                existStop = busStop;
+                busStop.ObjectActive = true;
+                ListBusStops.Remove(existStop);
+                ListBusStops.Insert(0, busStop);
                 XMLTools.SaveListToXMLSerializer(ListBusStops, busStopPath);
             }
             else
@@ -513,6 +706,11 @@ namespace DL
                 XMLTools.SaveListToXMLSerializer(ListBusStops, busStopPath);
             }
         }
+
+        /// <summary>
+        /// Update bus stop
+        /// </summary>
+        /// <param name="busStop"></param>
         public void UpdateBusStop(BusStop busStop)
         {
             // If the old bus stop code didn't change, or it changed but it's new:
@@ -529,12 +727,23 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busStop.BusStopKey, $"Bus stop key not found");
         }
-        public void UpdateBusStop(int busStopKey, Action<BusStop> update) // method that knows to updt specific fields in Person
+
+        /// <summary>
+        /// Method that knows to update specific fields in BusStop using is key
+        /// </summary>
+        /// <param name="busStopKey"></param>
+        /// <param name="update"></param>
+        public void UpdateBusStop(int busStopKey, Action<BusStop> update)
         {
             BusStop busUpdate = GetBusStop(busStopKey);
             update(busUpdate);
             UpdateBusStop(busUpdate);
         }
+
+        /// <summary>
+        /// Delete bus stop by make it unactive
+        /// </summary>
+        /// <param name="busStopKey"></param>
         public void DeleteBusStop(int busStopKey)
         {
             List<BusStop> ListBusStops = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopPath);
@@ -552,7 +761,12 @@ namespace DL
         }
         #endregion
 
-        #region ConsecutiveStations
+        #region ConsecutiveStations // XML implemetation for ConsecutiveStations Bus objects (crud) // using XElement
+
+        /// <summary>
+        /// Return all consecutive station
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<ConsecutiveStations> GetAllConsecutiveStations()
         {
             XElement consRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
@@ -569,6 +783,12 @@ namespace DL
                     }
                    );
         }
+
+        /// <summary>
+        /// Return all Consecutive Stations specifide using predicate
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public IEnumerable<ConsecutiveStations> GetAllConsecutiveStationsBy(Predicate<ConsecutiveStations> predicate)
         {
             XElement conRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
@@ -585,6 +805,13 @@ namespace DL
                    where predicate(conStation)
                    select conStation;
         }
+
+        /// <summary>
+        /// Get Consecutive Stations by is tow stations key
+        /// </summary>
+        /// <param name="busStopCodeA"></param>
+        /// <param name="busStopCodeB"></param>
+        /// <returns></returns>
         public ConsecutiveStations GetConsecutiveStations(int busStopCodeA, int busStopCodeB)
         {
             XElement conRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
@@ -602,12 +829,21 @@ namespace DL
                                               }
                         ).FirstOrDefault();
 
-            if (conStation == null)
-                throw new DO.ExceptionDAL_KeyNotFound("the consecutive stations not found");
+            if (conStation != null && conStation.ObjectActive == true)
+                return conStation;
             else if (conStation != null && !conStation.ObjectActive)
                 throw new DO.ExceptionDAL_Inactive("the consecutive stations is  inactive");
-            return conStation;
+            else
+                throw new DO.ExceptionDAL_KeyNotFound("the consecutive stations not found");
+
         }
+
+        /// <summary>
+        /// Add Consecutive Stations to the list
+        /// in case the Consecutive Stations is inavctive
+        /// so we copy the the fields of the new Consecutive Stations
+        /// </summary>
+        /// <param name="newConsecutiveStations"></param>
         public void AddConsecutiveStations(ConsecutiveStations newConsecutiveStations)
         {
             XElement conRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
@@ -618,13 +854,13 @@ namespace DL
                                  select b).FirstOrDefault();
             if (existCon != null && bool.Parse(existCon.Element("ObjectActive").Value) == true)
                 throw new DO.ExceptionDAL_KeyAlreadyExist("ConsecutiveStations already exist");
-            else if (existCon != null && bool.Parse(existCon.Element("ObjectActive").Value) == false)
-            {
+            else if (existCon != null && bool.Parse(existCon.Element("ObjectActive").Value) == false) //in case the Consecutive Stations unactive
+            {        //update the fields
                 existCon.Element("ObjectActive").Value = true.ToString();
                 existCon.Element("Distance").Value = newConsecutiveStations.Distance.ToString();
                 existCon.Element("TravelTime").Value = newConsecutiveStations.TravelTime.ToString();
             }
-            else
+            else                                                        // in case its new Consecutive Stations
             {
                 XElement newConElem = new XElement("ConsecutiveStations",
                        new XElement("BusStopKeyA", newConsecutiveStations.BusStopKeyA),
@@ -636,6 +872,11 @@ namespace DL
             }
             XMLTools.SaveListToXMLElement(conRootElem, consecutiveStationPath);
         }
+
+        /// <summary>
+        /// Update Consecutive Stations
+        /// </summary>
+        /// <param name="consecutiveStations"></param>
         public void UpdateConsecutiveStations(ConsecutiveStations consecutiveStations)
         {
             XElement conRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
@@ -662,12 +903,25 @@ namespace DL
                 throw new ExceptionDAL_UnexpectedProblem("Unexpected problem");
             }
         }
-        public void UpdateConsecutiveStations(int busStopCodeA, int busStopCodeB, Action<DO.ConsecutiveStations> update) // method that knows to updt specific fields in Person
+
+        /// <summary>
+        /// Method that knows to update specific fields in ConsecutiveStations using its two stops keys
+        /// </summary>
+        /// <param name="busStopCodeA"></param>
+        /// <param name="busStopCodeB"></param>
+        /// <param name="update"></param>
+        public void UpdateConsecutiveStations(int busStopCodeA, int busStopCodeB, Action<DO.ConsecutiveStations> update)
         {
             ConsecutiveStations conUpdate = GetConsecutiveStations(busStopCodeA, busStopCodeB);
             update(conUpdate);
             UpdateConsecutiveStations(conUpdate);
         }
+
+        /// <summary>
+        /// Delete Consecutive Stations by make it unactive
+        /// </summary>
+        /// <param name="busStopCodeA"></param>
+        /// <param name="busStopCodeB"></param>
         public void DeleteConsecutiveStations(int busStopCodeA, int busStopCodeB)
         {
             XElement conRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
@@ -693,7 +947,12 @@ namespace DL
         }
         #endregion  //
 
-        #region LineDeparture
+        #region LineDeparture // XML implemetation for LineDeparture Bus objects (crud) // using XElement
+
+        /// <summary>
+        /// Return all Line Departures
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<LineDeparture> GetAllLineDeparture()
         {
             //List<LineDeparture> ListCon = XMLTools.LoadListFromXMLSerializer<LineDeparture>(lineDeparturePath);
@@ -714,6 +973,12 @@ namespace DL
                     }
                    );
         }
+
+        /// <summary>
+        /// Return all specifide Line Departure using predicate
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public IEnumerable<LineDeparture> GetAllLineDepartureBy(Predicate<LineDeparture> predicate)
         {
             XElement lineRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
@@ -729,6 +994,12 @@ namespace DL
                    where predicate(lineDeparture)
                    select lineDeparture;
         }
+
+        /// <summary>
+        /// Get Line Departure using is ID (runing number)
+        /// </summary>
+        /// <param name="busLineID"></param>
+        /// <returns></returns>
         public LineDeparture GetLineDeparture(int busLineID)
         {
             XElement conRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
@@ -744,12 +1015,21 @@ namespace DL
                                                }
                         ).FirstOrDefault();
 
-            if (lineDepartStation == null)
-                throw new DO.ExceptionDAL_KeyNotFound(busLineID, $"the line departure is not found");
+            if (lineDepartStation != null && lineDepartStation.ObjectActive)
+                return lineDepartStation;
             else if (lineDepartStation != null && !lineDepartStation.ObjectActive)
-                throw new DO.ExceptionDAL_Inactive(busLineID, $"the line departure is inactive");
-            return lineDepartStation;
+                throw new DO.ExceptionDAL_Inactive(busLineID, $"The line departure is inactive");
+            else
+                throw new DO.ExceptionDAL_KeyNotFound(busLineID, $"The line departure is not found");
         }
+
+        /// <summary>
+        /// Get Line Departure by is ID (runing number) and is departure time
+        /// this function help when we want to delete specific Line Departure
+        /// </summary>
+        /// <param name="departureTime"></param>
+        /// <param name="busLineID"></param>
+        /// <returns></returns>
         public LineDeparture GetLineDepartureByTimeAndLine(TimeSpan departureTime, int busLineID)
         {
             XElement conRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
@@ -772,6 +1052,11 @@ namespace DL
                 throw new DO.ExceptionDAL_Inactive(busLineID, $"the line departure is inactive");
             return lineDepartStation;
         }
+
+        /// <summary>
+        /// Add Line Departure to the list
+        /// </summary>
+        /// <param name="lineDeparture"></param>
         public void AddLineDeparture(LineDeparture lineDeparture)
         {
             XElement lineRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
@@ -800,6 +1085,11 @@ namespace DL
 
             XMLTools.SaveListToXMLElement(lineRootElem, lineDeparturePath);
         }
+
+        /// <summary>
+        /// Update Line Departure
+        /// </summary>
+        /// <param name="lineDeparture"></param>
         public void UpdateLineDeparture(LineDeparture lineDeparture)
         {
             XElement lineRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
@@ -823,12 +1113,23 @@ namespace DL
                 throw new ExceptionDAL_UnexpectedProblem("Unexpected problem");
             }
         }
-        public void UpdateLineDeparture(int busLineID, Action<LineDeparture> update) // method that knows to updt specific fields in Person
+
+        /// <summary>
+        /// Method that knows to update specific fields in Line Departure usin gis ID (runing number)
+        /// </summary>
+        /// <param name="busLineID"></param>
+        /// <param name="update"></param>
+        public void UpdateLineDeparture(int busLineID, Action<LineDeparture> update)
         {
             LineDeparture busUpdate = GetLineDeparture(busLineID);
             update(busUpdate);
             UpdateLineDeparture(busUpdate);
         }
+
+        /// <summary>
+        /// Delete Line Departure by make it unactive
+        /// </summary>
+        /// <param name="departureID"></param>
         public void DeleteLineDeparture(int departureID)
         {
             XElement lineRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
@@ -854,7 +1155,12 @@ namespace DL
 
         #endregion
 
-        #region User
+        #region User // XML implemetation for Class User objects (crud) // using XMLSerializer
+
+        /// <summary>
+        /// Return all users
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<User> GetAllUsers()
         {
             List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(userPath);
@@ -863,6 +1169,12 @@ namespace DL
                    where user.ObjectActive == true
                    select user;
         }
+
+        /// <summary>
+        /// Return all specific users usinf predicate
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public IEnumerable<User> GetAllUsersBy(Predicate<User> predicate)
         {
             List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(userPath);
@@ -871,6 +1183,12 @@ namespace DL
                    where predicate(user)
                    select user;
         }
+
+        /// <summary>
+        /// Get user by is user name
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         public User GetUser(string userName)
         {
             List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(userPath);
@@ -883,6 +1201,11 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_UserKeyNotFound(userName, $"User name not found: {userName}");
         }
+
+        /// <summary>
+        /// Add user to the system
+        /// </summary>
+        /// <param name="user"></param>
         public void AddUser(User user)
         {
             List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(userPath);
@@ -903,6 +1226,11 @@ namespace DL
                 XMLTools.SaveListToXMLSerializer(ListUsers, userPath);
             }
         }
+
+        /// <summary>
+        /// Update user informations
+        /// </summary>
+        /// <param name="user"></param>
         public void UpdateUser(User user)
         {
             List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(userPath);
@@ -918,12 +1246,23 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_UserKeyNotFound(user.UserName, $"User name not found: {user.UserName}");
         }
+
+        /// <summary>
+        /// Method that knows to update specific fields in user by is user name
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="update"></param>
         public void UpdateUser(string userName, Action<User> update)
         {
             User userUpdate = GetUser(userName);
             update(userUpdate);
             UpdateUser(userUpdate);
         }
+
+        /// <summary>
+        /// Delte user from the system by make him inactive
+        /// </summary>
+        /// <param name="userName"></param>
         public void DeleteUser(string userName)
         {
             List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(userPath);

@@ -176,8 +176,9 @@ namespace DL
                 throw new DO.ExceptionDAL_KeyAlreadyExist(busAtTravel.BusLineID, "The bus line is already at travel");
             else if (existBus != null && existBus.ObjectActive == false)
             {
-                existBus.ObjectActive = true;
-                existBus = busAtTravel.Clone();
+                busAtTravel.ObjectActive = true;
+                DataSource.ListBusAtTravels.Remove(existBus);
+                DataSource.ListBusAtTravels.Insert(0, busAtTravel);
             }
             else
             {
@@ -461,7 +462,6 @@ namespace DL
                    select busStopLine.Clone();
         }
 
-
         /// <summary>
         /// Return all bus stops specifid using predicate
         /// </summary>
@@ -473,7 +473,6 @@ namespace DL
                    where predicate(busStop)
                    select busStop.Clone();
         }
-
 
         /// <summary>
         /// Get bus stop by is Key
@@ -490,7 +489,6 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound(busStopKey, $"Bus stop key not found: {busStopKey}");
         }
-
 
         /// <summary>
         /// Adding new bus stop to the list
@@ -514,7 +512,6 @@ namespace DL
             }
         }
 
-
         /// <summary>
         /// Update bus stop
         /// </summary>
@@ -531,7 +528,6 @@ namespace DL
                 throw new DO.ExceptionDAL_KeyNotFound(busStop.BusStopKey, $"Bus stop key not found");
         }
 
-
         /// <summary>
         /// Method that knows to update specific fields in BusStop using is key
         /// </summary>
@@ -542,7 +538,6 @@ namespace DL
             BusStop busStopUpdate = GetBusStop(busStopKey);
             update(busStopUpdate);
         }
-
 
         /// <summary>
         /// Delete bus stop by make it unactive
@@ -561,6 +556,7 @@ namespace DL
         #endregion
 
         #region ConsecutiveStations // IDL implemetation for Class ConsecutiveStations objects (crud)
+
         /// <summary>
         /// Return all consecutive station
         /// </summary>
@@ -571,6 +567,7 @@ namespace DL
                    where busConsecutiveStations.ObjectActive == true
                    select busConsecutiveStations.Clone();
         }
+
         /// <summary>
         /// Return all Consecutive Stations specifide using predicate
         /// </summary>
@@ -582,6 +579,7 @@ namespace DL
                    where predicate(busConsecutiveStations)
                    select busConsecutiveStations.Clone();
         }
+
         /// <summary>
         /// Get Consecutive Stations by is tow stations key
         /// </summary>
@@ -598,6 +596,7 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound("The consecutive stations not found");
         }
+
         /// <summary>
         /// Add Consecutive Stations to the list
         /// </summary>
@@ -620,6 +619,7 @@ namespace DL
                 DataSource.ListConsecutiveStations.Add(newConsecutiveStations.Clone());
             }
         }
+
         /// <summary>
         /// Update Consecutive Stations
         /// </summary>
@@ -635,6 +635,7 @@ namespace DL
             else
                 throw new DO.ExceptionDAL_KeyNotFound("The consecutive stations not found");
         }
+
         /// <summary>
         /// Method that knows to update specific fields in ConsecutiveStations using its two stops keys
         /// </summary>
@@ -647,6 +648,7 @@ namespace DL
             update(busConsecutiveUpdate);
             UpdateConsecutiveStations(busConsecutiveUpdate);
         }
+
         /// <summary>
         /// Delete Consecutive Stations by make it unactive
         /// </summary>
@@ -763,6 +765,7 @@ namespace DL
             LineDeparture busUpdate = GetLineDeparture(busLineID);
             update(busUpdate);
         }
+
         /// <summary>
         /// Delete Line Departure by make it unactive
         /// </summary>
