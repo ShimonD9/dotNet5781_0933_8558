@@ -103,16 +103,11 @@ namespace PlGui
         {
             var fxElt = sender as FrameworkElement;
             Bus bus = fxElt.DataContext as Bus;
-            if (bus.Fuel == 1200) // In case doesn't need refuel, pops a message
+            try 
+            { bl.RefuelBus(bus); lbBuses.Items.Refresh(); } // Calls bl.refuel and updates the list items
+            catch (BO.ExceptionBL_NoNeedToRefuel) // In case doesn't need refuel, pops a message
             {
                 MessageBox.Show("The gas tank is already full!", "Unable to fill", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            else
-            {
-                bus.Fuel = 1200;
-                bl.UpdateBus(bus); // Calls the bl.update function
-                lbBusStops.ItemsSource = bl.GetAllBusStops(); // Updates the list items
-                lbBuses.Items.Refresh();
             }
         }
 
@@ -126,17 +121,11 @@ namespace PlGui
         {
             var fxElt = sender as FrameworkElement;
             Bus bus = fxElt.DataContext as Bus;
-            if (bus.Mileage - bus.MileageAtLastTreat < 20000 && bus.LastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0) // In case the bus doesn't need a treatment (according to mileage and date of last treatment)
+            try 
+            { bl.TreatBus(bus); lbBuses.Items.Refresh(); } // Calls bl.treat and updates the list items
+            catch (BO.ExceptionBL_NoNeedToTreat)
             {
                 MessageBox.Show("The bus doesn't need a treatment yet", "No need to treat!", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-            else
-            {
-                bus.MileageAtLastTreat = bus.Mileage;
-                bus.LastTreatmentDate = DateTime.Now;
-                bl.UpdateBus(bus); // Calls the bl.update function
-                lbBusStops.ItemsSource = bl.GetAllBusStops(); // Updates the list items
-                lbBuses.Items.Refresh();
             }
         }
         #endregion

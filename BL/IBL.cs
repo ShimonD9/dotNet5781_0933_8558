@@ -18,6 +18,8 @@ namespace BLApi
         void UpdateBus(Bus bus);
         void UpdateBus(int license, Action<Bus> update); // method that knows to updt specific fields in Person
         void DeleteBus(int license);
+        void RefuelBus(BO.Bus bus);
+        void TreatBus(BO.Bus bus);
         #endregion
 
         #region BusStop

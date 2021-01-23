@@ -139,6 +139,7 @@ namespace BL
             }
         }
 
+
         #endregion
 
         #region BusLineStation
@@ -482,6 +483,38 @@ namespace BL
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
                 throw new BO.ExceptionBL_KeyNotFound("the bus license doesn't exist or the bus is inactive!", ex);
+            }
+        }
+
+        public void RefuelBus(BO.Bus bus)
+        {
+            if (bus.Fuel == 1200)
+            {
+                throw new BO.ExceptionBL_NoNeedToRefuel(bus.License);
+            }
+            else
+            {
+                bus.Fuel = 1200;
+                UpdateBus(bus); // Calls the bl.update function
+            }
+        }
+
+        public void TreatBus(BO.Bus bus)
+        {
+            if (bus.Mileage - bus.MileageAtLastTreat < 20000 && bus.LastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0) // In case the bus doesn't need a treatment (according to mileage and date of last treatment)
+            {
+                throw new BO.ExceptionBL_NoNeedToTreat(bus.License);
+            }
+            else
+            {
+                // Updates the mileage at last treatment and treatment date fields:
+                bus.MileageAtLastTreat = bus.Mileage;
+                bus.LastTreatmentDate = DateTime.Now;
+
+                // At any treat a refuel is also being made:
+                bus.Fuel = 1200;
+
+                UpdateBus(bus); // Calls the bl.update function
             }
         }
 

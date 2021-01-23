@@ -104,6 +104,25 @@ namespace BO
         public override string ToString() => base.ToString() + $",  Conflict between mileage values: {ID}";
     }
 
+    public class ExceptionBL_NoNeedToRefuel : Exception
+    {
+        public int ID;
+
+        public ExceptionBL_NoNeedToRefuel(int id) : base() => ID = id;
+        public ExceptionBL_NoNeedToRefuel(int id, string message) : base(message) => ID = id;
+        public ExceptionBL_NoNeedToRefuel(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public override string ToString() => base.ToString() + $",  The gas tank is already full: {ID}";
+    }
+
+    public class ExceptionBL_NoNeedToTreat : Exception
+    {
+        public int ID;
+
+        public ExceptionBL_NoNeedToTreat(int id) : base() => ID = id;
+        public ExceptionBL_NoNeedToTreat(int id, string message) : base(message) => ID = id;
+        public ExceptionBL_NoNeedToTreat(int id, string message, Exception innerException) : base(message, innerException) => ID = id;
+        public override string ToString() => base.ToString() + $",  The bus doesn't need a refuel yet: {ID}";
+    }
 
     //----------------------------user bl exception------------------------------
     public class ExceptionBL_UserKeyNotFound : Exception

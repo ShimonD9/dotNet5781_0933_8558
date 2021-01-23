@@ -74,7 +74,7 @@ namespace DS
                 License=7707707,
                 LicenseDate = new DateTime(2012,1,10),
                 Mileage = 500030,
-                Fuel = 1200,
+                Fuel = 100,
                 BusStatus = Enums.BUS_STATUS.DANGEROUS,
                 LastTreatmentDate =new DateTime(2016,10,17),
                 MileageAtLastTreat = 300010,
