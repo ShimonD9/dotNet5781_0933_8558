@@ -13,7 +13,7 @@ namespace BL
 {
     class BLImp : IBL //internal
     {
-        IDal dl = DalFactory.GetDL(); // Asks for the data layer 
+        IDal dl = DalFactory.GetDL(); // Asks for the data layer singelton
 
 
         #region BusLine

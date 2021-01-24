@@ -16,7 +16,7 @@ namespace DL
         public static DalObject Instance { get => instance; }// The public Instance property to use
         #endregion
 
-        //Implement IDL methods, CRUD
+        //Implement IDL methods, CRUD:
 
 
         #region Bus  // IDL implemetation for Class Bus objects (crud)

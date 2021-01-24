@@ -135,13 +135,13 @@ namespace PlGui
                         MessageBox.Show("Wrong time input!");
                     else
                     {
-
                         shouldStop = false;
                         isStarted = true;
                         RunningTime = inputTime;
                         if (!everStarted)
                             runClock();
-                        else clockWorker.RunWorkerAsync();
+                        else if (!clockWorker.IsBusy)
+                            clockWorker.RunWorkerAsync();
                         everStarted = true;
                         tbStart_Pause.Text = "Pause";
                         timeDisplay.Visibility = Visibility.Visible;
@@ -176,7 +176,7 @@ namespace PlGui
             }
         }
 
-        int secondsInterval;
+
         // For updating the simulator clock on the GUI we used the PropertyChanged method
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string property)
@@ -186,6 +186,10 @@ namespace PlGui
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
+
+        private static bool shouldStop = true; // Tells if the background worker loop should stop
+
+        int secondsInterval; // Holds the interval integer
 
         // The field of runningDate first initialized
         private TimeSpan runningTime = DateTime.Now.TimeOfDay;
@@ -198,9 +202,6 @@ namespace PlGui
         }
 
 
-
-        private static bool shouldStop = true;
-
         // The background worker for the clock:
         private readonly BackgroundWorker clockWorker = new BackgroundWorker();
 
@@ -209,7 +210,7 @@ namespace PlGui
         /// </summary>
         private void runClock()
         {
-            int t = 5;
+            int t = 5; // Meant for the digital panel update loop
             clockWorker.WorkerReportsProgress = true;
             clockWorker.WorkerSupportsCancellation = true;
 
@@ -243,8 +244,7 @@ namespace PlGui
                 {
                     while (shouldStop == false)
                     {
-                        clockWorker.ReportProgress(0);
-                        try { Thread.Sleep(1000); } catch (Exception) { }
+                        try { clockWorker.ReportProgress(0); Thread.Sleep(1000); } catch (Exception) { }
                     }
                 }
             };
