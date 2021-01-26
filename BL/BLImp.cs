@@ -28,20 +28,31 @@ namespace BL
             BO.BusLine busLineBO = new BO.BusLine();
             busLineDO.CopyPropertiesTo(busLineBO); // Using the deep copy method
 
-            // Creation of the line stations (route) iEnumarable
-            busLineBO.LineStations = from boLineStation
-                                     in GetAllBusLineStations()
-                                     where boLineStation.BusLineID == busLineBO.BusLineID
-                                     orderby boLineStation.LineStationIndex // Orders by the index
-                                     select boLineStation;
+            try
+            {
+                // Creation of the line stations (route) iEnumarable
+                busLineBO.LineStations = from boLineStation
+                                         in GetAllBusLineStations()
+                                         where boLineStation.BusLineID == busLineBO.BusLineID
+                                         orderby boLineStation.LineStationIndex // Orders by the index
+                                         select boLineStation;
 
-            // Creation of the schedule iEnumarable
-            busLineBO.Schedule = from doLineDeparture
-                                 in dl.GetAllLineDeparture()
-                                 where doLineDeparture.BusLineID == busLineBO.BusLineID
-                                 orderby doLineDeparture.DepartureTime // Orders by the timeSpan
-                                 select doLineDeparture.DepartureTime;
-            return busLineBO;
+                // Creation of the schedule iEnumarable
+                busLineBO.Schedule = from doLineDeparture
+                                     in dl.GetAllLineDeparture()
+                                     where doLineDeparture.BusLineID == busLineBO.BusLineID
+                                     orderby doLineDeparture.DepartureTime // Orders by the timeSpan
+                                     select doLineDeparture.DepartureTime;
+                return busLineBO;
+            }
+            catch (DO.ExceptionDAL_KeyNotFound ex)
+            {
+                throw new BO.ExceptionBL_KeyNotFound("The requested doesn't exist", ex);
+            }
+            catch (DO.ExceptionDAL_Inactive ex)
+            {
+                throw new BO.ExceptionBL_Inactive("The requested doesn't active", ex);
+            }
         }
 
         /// <summary>
@@ -62,7 +73,7 @@ namespace BL
         /// <returns>IEnumerable of all the bus lines</returns>
         public IEnumerable<BusLine> GetAllBusLines()
         {
-            return from doBusLine in dl.GetAllBusLines() 
+            return from doBusLine in dl.GetAllBusLines()
                    orderby doBusLine.BusLineID  // Orders by the bus line ID
                    select BusLineDoBoAdapter(doBusLine); // Adapts from DO to BO
         }
@@ -155,7 +166,7 @@ namespace BL
 
                     // Deleting the consecutive stations (which existed before the bus line station deletion) if they aren't in use (after deleting the bus line station above)
                     if (item.NextStation != 0 && !IsConsecutiveInUse(item.BusStopKey, item.NextStation))
-                         dl.DeleteConsecutiveStations(item.BusStopKey, item.NextStation);
+                        dl.DeleteConsecutiveStations(item.BusStopKey, item.NextStation);
                 }
 
                 // Finally, delete the bus line itself
@@ -172,29 +183,54 @@ namespace BL
 
         #region BusLineStation
 
+        /// <summary>
+        /// Adaption from DO to BO of the bus line station entity
+        /// </summary>
+        /// <param name="busLineDO"></param>
+        /// <returns>The BO.BusLineStation</returns>
         BO.BusLineStation BusLineStationDoBoAdapter(DO.BusLineStation busLineStationDO)
         {
-            BO.BusLineStation busLineStationBO = new BO.BusLineStation();
-            busLineStationDO.CopyPropertiesTo(busLineStationBO);
+            try
+            {
+                BO.BusLineStation busLineStationBO = new BO.BusLineStation();
+                busLineStationDO.CopyPropertiesTo(busLineStationBO); // Copies from do to bo
 
-            busLineStationBO.BusStopName = (from doBusStop
-                                            in dl.GetAllBusStops()
-                                            where doBusStop.BusStopKey == busLineStationBO.BusStopKey
-                                            select doBusStop.BusStopName).FirstOrDefault();
+                // Copies the bus stop name by get bus stop.
+                busLineStationBO.BusStopName = dl.GetBusStop(busLineStationBO.BusStopKey).BusStopName;
 
-            busLineStationBO.DistanceToNext = (from doConStations
-                                              in dl.GetAllConsecutiveStations()
-                                               where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
-                                                     doConStations.BusStopKeyB == busLineStationBO.NextStation
-                                               select doConStations.Distance).FirstOrDefault();
-            busLineStationBO.TimeToNext = (from doConStations
-                                              in dl.GetAllConsecutiveStations()
-                                           where doConStations.BusStopKeyA == busLineStationBO.BusStopKey &&
-                                                 doConStations.BusStopKeyB == busLineStationBO.NextStation
-                                           select doConStations.TravelTime).FirstOrDefault();
-            return busLineStationBO;
+
+                if (busLineStationBO.NextStation != 0) // If the next station code isn't 0, it means there must be a consecutive station
+                {
+                    DO.ConsecutiveStations cons = dl.GetConsecutiveStations(busLineStationBO.BusStopKey, busLineStationBO.NextStation);
+
+                    busLineStationBO.DistanceToNext = cons.Distance;
+
+                    busLineStationBO.TimeToNext = cons.TravelTime;
+                }
+                else // In case the current station is the last one in the route
+                {
+                    busLineStationBO.DistanceToNext = 0;
+
+                    busLineStationBO.TimeToNext = TimeSpan.FromMinutes(0);
+                }
+
+                return busLineStationBO;
+            }
+            catch (DO.ExceptionDAL_KeyNotFound ex)
+            {
+                throw new BO.ExceptionBL_KeyNotFound("The consecutive/bus stop doesn't exist", ex);
+            }
+            catch (DO.ExceptionDAL_Inactive ex)
+            {
+                throw new BO.ExceptionBL_Inactive("The consecutive/bus stop doesn't active", ex);
+            }
         }
 
+        /// <summary>
+        /// Adaption from BO to DO of the bus line station entity
+        /// </summary>
+        /// <param name="busLineDO"></param>
+        /// <returns>The BO.BusLineStation</returns>
         DO.BusLineStation BusLineStationBoDoAdapter(BO.BusLineStation busLineStationBO)
         {
             DO.BusLineStation busLineStationDO = new DO.BusLineStation();
@@ -209,10 +245,6 @@ namespace BL
                    select BusLineStationDoBoAdapter(doBusLineStation);
         }
 
-        public IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
-        {
-            throw new NotImplementedException();
-        }
 
         public BusLineStation GetBusLineStation(int busLineID, int busStopCode)
         {
@@ -327,16 +359,6 @@ namespace BL
             {
                 throw new BO.ExceptionBL_KeyNotFound("Bus stop code already exist", ex);
             }
-        }
-
-        public void UpdateBusLineStation(BusLineStation busLineStation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateBusLineStation(int busLineID, Action<BusLineStation> update)
-        {
-            throw new NotImplementedException();
         }
 
         public void DeleteBusLineStation(int busLineID, int busStopCode, TimeSpan gapTimeUpdate, double gapKmUpdate)
