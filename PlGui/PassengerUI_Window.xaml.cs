@@ -238,7 +238,7 @@ namespace PlGui
             {
                 if (clockWorker.CancellationPending == true)
                 {
-
+                    args.Cancel = true;
                 }
                 else
                 {
@@ -259,11 +259,11 @@ namespace PlGui
             {
                 if (args.Cancelled == true)
                 {
-
+                    // No need to update the user
                 }
                 else
                 {
-
+                    // No need to update the user
                 }
             };
         }

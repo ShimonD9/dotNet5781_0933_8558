@@ -18,53 +18,79 @@ namespace BL
 
         #region BusLine
 
+        /// <summary>
+        /// Adaption from DO to BO of the bus line entity
+        /// </summary>
+        /// <param name="busLineDO"></param>
+        /// <returns>The BO.BusLine</returns>
         BO.BusLine BusLineDoBoAdapter(DO.BusLine busLineDO)
         {
             BO.BusLine busLineBO = new BO.BusLine();
-            busLineDO.CopyPropertiesTo(busLineBO);
+            busLineDO.CopyPropertiesTo(busLineBO); // Using the deep copy method
+
+            // Creation of the line stations (route) iEnumarable
             busLineBO.LineStations = from boLineStation
                                      in GetAllBusLineStations()
                                      where boLineStation.BusLineID == busLineBO.BusLineID
-                                     orderby boLineStation.LineStationIndex
+                                     orderby boLineStation.LineStationIndex // Orders by the index
                                      select boLineStation;
+
+            // Creation of the schedule iEnumarable
             busLineBO.Schedule = from doLineDeparture
                                  in dl.GetAllLineDeparture()
                                  where doLineDeparture.BusLineID == busLineBO.BusLineID
-                                 orderby doLineDeparture.DepartureTime
+                                 orderby doLineDeparture.DepartureTime // Orders by the timeSpan
                                  select doLineDeparture.DepartureTime;
             return busLineBO;
         }
 
+        /// <summary>
+        /// Adaption from BO to DO of the bus line entity
+        /// </summary>
+        /// <param name="busLineDO"></param>
+        /// <returns>The BO.BusLine</returns>
         DO.BusLine BusLineBoDoAdapter(BO.BusLine busLineBO)
         {
             DO.BusLine busLineDO = new DO.BusLine();
-            busLineBO.CopyPropertiesTo(busLineDO);
+            busLineBO.CopyPropertiesTo(busLineDO); // Using the deep copy method
             return busLineDO;
         }
 
+        /// <summary>
+        /// Gets all the bus lines
+        /// </summary>
+        /// <returns>IEnumerable of all the bus lines</returns>
         public IEnumerable<BusLine> GetAllBusLines()
         {
-            return from doBusLine in dl.GetAllBusLines() orderby doBusLine.BusLineID select BusLineDoBoAdapter(doBusLine);
+            return from doBusLine in dl.GetAllBusLines() 
+                   orderby doBusLine.BusLineID  // Orders by the bus line ID
+                   select BusLineDoBoAdapter(doBusLine); // Adapts from DO to BO
         }
 
-        public IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Asks for a bus line by bus line id, and returns its BO adaption
+        /// </summary>
+        /// <param name="busLineID"></param>
+        /// <returns></returns>
         public BusLine GetBusLine(int busLineID)
         {
-            return BusLineDoBoAdapter(dl.GetBusLine(busLineID));
+            return BusLineDoBoAdapter(dl.GetBusLine(busLineID)); // Gets a bus line from bl and adapts it
         }
 
+        /// <summary>
+        /// Add bus line
+        /// </summary>
+        /// <param name="busLine"></param>
+        /// <param name="busLineStationA"></param>
+        /// <param name="busLineStationB"></param>
         public void AddBusLine(BusLine busLine, BusLineStation busLineStationA, BusLineStation busLineStationB)
         {
-            int idToReturn;
-            DO.BusLine newBus = BusLineBoDoAdapter(busLine);
+            int idToReturn; // id for adding the line stations
+            DO.BusLine newBus = BusLineBoDoAdapter(busLine); // Adapts the bus line from BO to DO
 
             try
             {
-                idToReturn = dl.AddBusLine(newBus);
+                idToReturn = dl.AddBusLine(newBus); // Add the bus line and gets an id
 
                 // Adding the consecutive stations entity if needed:
 
@@ -75,7 +101,7 @@ namespace BL
                     newConStations.BusStopKeyB = busLine.LastBusStopKey;
                     newConStations.Distance = busLineStationA.DistanceToNext;
                     newConStations.TravelTime = busLineStationA.TimeToNext;
-                    dl.AddConsecutiveStations(newConStations);
+                    dl.AddConsecutiveStations(newConStations); // Adds the consecutive stations
                 }
 
                 // Adding the bus line stations:
@@ -84,16 +110,19 @@ namespace BL
                 dl.AddBusLineStation(BusLineStationBoDoAdapter(busLineStationA));
                 dl.AddBusLineStation(BusLineStationBoDoAdapter(busLineStationB));
             }
-            catch (DO.ExceptionDAL_KeyAlreadyExist ex)
+            catch (DO.ExceptionDAL_KeyAlreadyExist ex) // In case the bus line already exist
             {
                 throw new BO.ExceptionBL_KeyAlreadyExist("Key or bus stop already exist", ex);
             }
-
-            // EXPAND WITH ANOTHER CATCH FOR BUS STOP KEY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
+        /// <summary>
+        /// Updates the bus line
+        /// </summary>
+        /// <param name="busLineBO"></param>
         public void UpdateBusLine(BusLine busLineBO)
         {
+            // It is only possible to update the number of the line, so there is only need to call the dl
             try
             {
                 dl.UpdateBusLine(BusLineBoDoAdapter(busLineBO));
@@ -104,11 +133,10 @@ namespace BL
             }
         }
 
-        public void UpdateBusLine(int busLineID, Action<BusLine> update)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Deletes a bus line by its ID
+        /// </summary>
+        /// <param name="busLineID"></param>
         public void DeleteBusLine(int busLineID)
         {
             try
@@ -133,7 +161,7 @@ namespace BL
                 // Finally, delete the bus line itself
                 dl.DeleteBusLine(busLineID);
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex) // In case the bus line doesn't exist
             {
                 throw new BO.ExceptionBL_KeyNotFound("The bus line not exist", ex);
             }
@@ -714,7 +742,7 @@ namespace BL
             return (from station
                          in dl.GetAllBusLineStations()
                     where station.BusStopKey == busStopKeyA && station.NextStation == busStopKeyB
-                    select station).Any();
+                    select station).Any(); // Returns true if any of the stations are consecutive
         }
         #endregion
 
@@ -802,7 +830,6 @@ namespace BL
             }
         }
         #endregion
-
 
         #region Other needed functions:
 
