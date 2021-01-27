@@ -74,7 +74,7 @@ namespace PlGui
                         if (startDateChosen.Year < 2018 && tbLicense.Text.Length < 7
                         || startDateChosen.Year > 2017 && tbLicense.Text.Length < 8)
                         {
-                            MessageBox.Show("The license you entered is too short!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            MessageBox.Show("The license you have entered is too short!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                         }
                         else if (!Double.TryParse(tbMileage.GetLineText(0), out double milNow) || !Double.TryParse(tbMileageAtTreat.GetLineText(0), out double milTreat))
                         {
