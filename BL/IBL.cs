@@ -47,18 +47,74 @@ namespace BLApi
         #endregion
 
         #region BusLineStation: Get, Add, Delete methods
+
+        /// <summary>
+        /// Gets all the bus line stations
+        /// </summary>
+        /// <returns>Returns the IEnumerable collection of bus line stations</returns>
         IEnumerable<BusLineStation> GetAllBusLineStations();
+
+        /// <summary>
+        /// Gets a bus line stations based on a bus line ID and a bus stop code
+        /// </summary>
+        /// <param name="busLineID"></param>
+        /// <param name="busStopCode"></param>
+        /// <returns>Returns a BO.BusLineStation</returns>
         BusLineStation GetBusLineStation(int busLineID, int busStopCode);
+
+        /// <summary>
+        /// Adds a bus line station, and adds/deletes consecutive stations if needed based on the parameters
+        /// </summary>
+        /// <param name="station"></param>
+        /// <param name="prevGapTimeUpdate"></param>
+        /// <param name="prevGapKmUpdate"></param>
         void AddBusLineStation(BusLineStation station, TimeSpan prevGapTimeUpdate, double prevGapKmUpdate);
+        
+        /// <summary>
+        /// Deletes a bus line stations, and adds/deletes consecutive stations based on the given parameters
+        /// </summary>
+        /// <param name="busLineID"></param>
+        /// <param name="busStopCode"></param>
+        /// <param name="gapTimeUpdate"></param>
+        /// <param name="gapKmUpdate"></param>
         void DeleteBusLineStation(int busLineID, int busStopCode, TimeSpan gapTimeUpdate, double gapKmUpdate);
+
         #endregion
 
         #region BusStop: Get, Add, Update, Delete methods
+
+        /// <summary>
+        /// Gets all the bus stops
+        /// </summary>
+        /// <returns>Returns the IEnumerable collection of bus stops</returns>
         IEnumerable<BusStop> GetAllBusStops();
+
+        /// <summary>
+        /// Gets a bus stop based on the bus stop code
+        /// </summary>
+        /// <param name="busLineID"></param>
+        /// <param name="busStopCode"></param>
+        /// <returns>Returns a BO.BusStop</returns>
         BusStop GetBusStop(int busStopCode);
+
+        /// <summary>
+        /// Adds a bus stop to the data
+        /// </summary>
+        /// <param name="busStop"></param>
         void AddBusStop(BusStop busStop);
+
+        /// <summary>
+        /// Updates the bus stop by a given BO.BusStop
+        /// </summary>
+        /// <param name="busStop"></param>
         void UpdateBusStop(BusStop busStop);
+
+        /// <summary>
+        /// Deletes a bus stop based on a given bus stop code
+        /// </summary>
+        /// <param name="busStopCode"></param>
         void DeleteBusStop(int busStopCode);
+
         #endregion
 
         #region Consecutive Stations: Boolean functions
@@ -81,29 +137,122 @@ namespace BLApi
         #endregion
 
         #region LineDeparture: Add, Delete methods
+
+        /// <summary>
+        /// Adds a line departure to a given bus line id
+        /// </summary>
+        /// <param name="departureTime"></param>
+        /// <param name="busLineID"></param>
         void AddLineDeparture(TimeSpan departureTime, int busLineID);
+
+        /// <summary>
+        /// Deletes a line departure based on the given parameters
+        /// </summary>
+        /// <param name="departureTime"></param>
+        /// <param name="busLineID"></param>
         void DeleteLineDeparture(TimeSpan departureTime, int busLineID);
         #endregion
 
         #region Bus: Get, Add, Update, Delete, Refuel and Treat methods
+
+        /// <summary>
+        /// Gets all the buses
+        /// </summary>
+        /// <returns>Returns the IEnumerable collection of buses</returns>
         IEnumerable<Bus> GetAllBuses();
+
+        /// <summary>
+        /// Gets a BO.Bus based on a given license
+        /// </summary>
+        /// <param name="license"></param>
+        /// <returns></returns>
         Bus GetBus(int license);
+
+        /// <summary>
+        /// Adds a bus to the data source
+        /// </summary>
+        /// <param name="bus"></param>
         void AddBus(Bus bus);
+
+        /// <summary>
+        /// Updates a bus by a given BO.Bus
+        /// </summary>
+        /// <param name="bus"></param>
         void UpdateBus(Bus bus);
+
+        /// <summary>
+        /// Updates a specific field of a bus by a given BO.Bus using an Action function
+        /// </summary>
+        /// <param name="license"></param>
+        /// <param name="update"></param>
         void UpdateBus(int license, Action<Bus> update); // method that knows to updt specific fields in Person
+        
+        /// <summary>
+        /// Deletes a bus by a given license number
+        /// </summary>
+        /// <param name="license"></param>
         void DeleteBus(int license);
+
+        /// <summary>
+        /// Refuels a given BO.Bus
+        /// </summary>
+        /// <param name="bus"></param>
         void RefuelBus(BO.Bus bus);
+
+        /// <summary>
+        /// Treats a given BO.Bus
+        /// </summary>
+        /// <param name="bus"></param>
         void TreatBus(BO.Bus bus);
+
         #endregion
 
         #region User: Get, Add, Update, Delete methods
+
+        /// <summary>
+        /// Gets all the users
+        /// </summary>
+        /// <returns>Returns the IEnumerable collection of users</returns>
         IEnumerable<User> GetAllUsers();
+
+        /// <summary>
+        /// Gets all the users matching the predicate
+        /// </summary>
+        /// <returns>Returns the IEnumerable collection of users</returns>
         IEnumerable<User> GetAllUsersBy(Predicate<User> predicate);
+
+        /// <summary>
+        /// Gets user by the user name string
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>BO.User</returns>
         User GetUser(string userName);
+
+        /// <summary>
+        /// Adds a new user to the data source
+        /// </summary>
+        /// <param name="user"></param>
         void AddUser(User user);
+
+        /// <summary>
+        /// Updates a user by a given BO.User
+        /// </summary>
+        /// <param name="user"></param>
         void UpdateUser(User user);
-        void UpdateUser(string license, Action<User> update); // method that knows to updt specific fields in Person
-        void DeleteUser(string license);
+
+        /// <summary>
+        /// Updates a user by an action function
+        /// </summary>
+        /// <param name="license"></param>
+        /// <param name="update"></param>
+        void UpdateUser(string userName, Action<User> update); // method that knows to updt specific fields in Person
+        
+        /// <summary>
+        /// Deletes a user by a given user name
+        /// </summary>
+        /// <param name="license"></param>
+        void DeleteUser(string userName);
+
         #endregion
 
         #region Other methods (Especially for the clock simulator)
