@@ -68,6 +68,7 @@ namespace PlGui
                     busStop.Longitude = longi;
                     bl.UpdateBusStop(busStop);   // Updates the bus stop by the bl 
                     this.Close();
+
                 }
             }
             catch (BO.ExceptionBL_KeyNotFound) // In case the bus stop doesn't found
@@ -77,6 +78,11 @@ namespace PlGui
             catch (BO.ExceptionBL_Incorrect_coordinates)
             {
                 MessageBox.Show("The bus company is in Israel, the coordinates should be in range!", "Cannot update the bus stop", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (BO.ExceptionBL_LinesStopHere) // In case the location was changed, it pops a message if the bus stop serves but lines (and therefore cannot be updated by the location)
+            {
+                string busLines = string.Join(", ", from lineBus in busStop.LinesStopHere select lineBus.BusLineNumber); // Creates string of the bus line numbers the bus stop serve
+                MessageBox.Show("This bus stop serves the next bus lines: \n" + busLines + ".\nYou must remove the bus station from the bus lines details window, before updating the bus stop location.", "Unable to update the bus stop!", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -89,7 +95,7 @@ namespace PlGui
         {
             // Asks if the admin surely wants to delete the object:
             MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this bus stop?", "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
-            
+
             if (result == MessageBoxResult.Yes)
             {
                 try
@@ -104,7 +110,7 @@ namespace PlGui
                 catch (BO.ExceptionBL_LinesStopHere) // In case the bus stop serves bus lines, the admin won't be able to delete it.
                 {
                     string busLines = string.Join(", ", from lineBus in busStop.LinesStopHere select lineBus.BusLineNumber); // Creates string of the bus line numbers the bus stop serve
-                    MessageBox.Show("This bus stop serves the next bus lines: \n" + busLines + ".\nYou must remove the bus station from the bus lines details window, before deleting the bus stop itself.", "Unable to delte the bus stop!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("This bus stop serves the next bus lines: \n" + busLines + ".\nYou must remove the bus station from the bus lines details window, before deleting the bus stop itself.", "Unable to delete the bus stop!", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
         }

@@ -314,7 +314,7 @@ namespace BL
                     dl.UpdateBusLineStation(lineID, newStation.PrevStation, x => x.NextStation = newStation.BusStopKey);
                     dl.UpdateBusLineStation(lineID, newStation.NextStation, x => x.PrevStation = newStation.BusStopKey);
 
-                    // Delete consecutive stations entity if needed
+                    // Delete consecutive stations entity if they aren't in use anymore (the new station is between the two previous consecutives!)
                     if (!IsConsecutiveInUse(prevStation.BusStopKey, nextStation.BusStopKey))
                     {
                         dl.DeleteConsecutiveStations(prevStation.BusStopKey, nextStation.BusStopKey);
@@ -421,7 +421,8 @@ namespace BL
 
             // Deleting the consecutive stations (which existed before the bus line station deletion) if they aren't in use (after deleting the bus line station above).
             // A deletion of consecutive stations, is enabling the admin to UPDATE THE CONSECUTIVE later, if he wishs the add the bus line station again.
-            // Therefore, if the admins wishs to update a consecutive stations object, he must delete the line stations which creating the consecutive stations, before adding and updating it.
+            // Therefore, if the admins wishs to update a consecutive stations object, he must delete all the line stations which creating the consecutive stations, before adding it with the updated time and distance
+            // (The logic is simple - if the station is in use by other line, it is problematic to update the distance and time 'without a warning'. The stations should be removed and added again from all the lines and then added again as updated.)
             if (currentStation.PrevStation != 0 && currentStation.NextStation != 0)
             {
                 if (!IsConsecutiveInUse(currentStation.PrevStation, currentStation.BusStopKey))
@@ -637,11 +638,22 @@ namespace BL
         {
             try
             {
+                DO.BusStop busStopBeforeUpdate = dl.GetBusStop(busStopBO.BusStopKey);
+                
+
+                if (busStopBO.BusStopAddress != busStopBeforeUpdate.BusStopAddress || busStopBO.Latitude != busStopBeforeUpdate.Latitude || busStopBO.Longitude != busStopBeforeUpdate.Longitude)
+                {
+                    if (busStopBO.LinesStopHere.Count() > 0)
+                        throw new BO.ExceptionBL_LinesStopHere("The bus stop serves bus lines, and the location cannot be changed.");
+                }
+
                 if (busStopBO.Latitude > 33.3 || busStopBO.Latitude < 31 || busStopBO.Longitude < 34.3 || busStopBO.Longitude > 35.5)
                 {
                     throw new BO.ExceptionBL_Incorrect_coordinates("The longitude or the latitude are not matching the range.");
                 }
-                dl.UpdateBusStop(BusStopBoDoAdapter(busStopBO));
+
+
+                    dl.UpdateBusStop(BusStopBoDoAdapter(busStopBO));
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
