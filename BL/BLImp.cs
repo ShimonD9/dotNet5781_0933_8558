@@ -16,7 +16,7 @@ namespace BL
         IDal dl = DalFactory.GetDL(); // Asks for the data layer singelton
 
 
-        #region BusLine
+        #region BusLine: Adaptors and CRUD implementations
 
         /// <summary>
         /// Adaption from DO to BO of the bus line entity
@@ -67,10 +67,6 @@ namespace BL
             return busLineDO;
         }
 
-        /// <summary>
-        /// Gets all the bus lines
-        /// </summary>
-        /// <returns>IEnumerable of all the bus lines</returns>
         public IEnumerable<BusLine> GetAllBusLines()
         {
             return from doBusLine in dl.GetAllBusLines()
@@ -78,22 +74,11 @@ namespace BL
                    select BusLineDoBoAdapter(doBusLine); // Adapts from DO to BO
         }
 
-        /// <summary>
-        /// Asks for a bus line by bus line id, and returns its BO adaption
-        /// </summary>
-        /// <param name="busLineID"></param>
-        /// <returns></returns>
         public BusLine GetBusLine(int busLineID)
         {
             return BusLineDoBoAdapter(dl.GetBusLine(busLineID)); // Gets a bus line from bl and adapts it
         }
 
-        /// <summary>
-        /// Add bus line
-        /// </summary>
-        /// <param name="busLine"></param>
-        /// <param name="busLineStationA"></param>
-        /// <param name="busLineStationB"></param>
         public void AddBusLine(BusLine busLine, BusLineStation busLineStationA, BusLineStation busLineStationB)
         {
             int idToReturn; // id for adding the line stations
@@ -127,10 +112,6 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// Updates the bus line
-        /// </summary>
-        /// <param name="busLineBO"></param>
         public void UpdateBusLine(BusLine busLineBO)
         {
             // It is only possible to update the number of the line, so there is only need to call the dl
@@ -144,10 +125,6 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// Deletes a bus line by its ID
-        /// </summary>
-        /// <param name="busLineID"></param>
         public void DeleteBusLine(int busLineID)
         {
             try
@@ -182,7 +159,7 @@ namespace BL
 
         #endregion
 
-        #region BusLineStation
+        #region BusLineStation: Adaptors and CRUD implementations
 
         /// <summary>
         /// Adaption from DO to BO of the bus line station entity
@@ -442,7 +419,7 @@ namespace BL
 
         #endregion
 
-        #region Bus
+        #region Bus: Adaptors and CRUD implementations
 
         BO.Bus busDoBoAdapter(DO.Bus busDO)
         {
@@ -463,14 +440,6 @@ namespace BL
         public IEnumerable<Bus> GetAllBuses()
         {
             return from doBus in dl.GetAllBuses() select busDoBoAdapter(doBus);
-        }
-
-        public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
-        {
-            throw new NotImplementedException();
-            //return from bus in DataSource.ListBuses
-            //       where predicate(bus)
-            //       select bus.Clone();
         }
 
         public Bus GetBus(int license)
@@ -576,6 +545,10 @@ namespace BL
             }
         }
 
+        /// <summary>
+        /// Updates the bus status, needed for add and update functions
+        /// </summary>
+        /// <param name="busBo"></param>
         public void BusStatusUpdate(BO.Bus busBo)
         {
             if (busBo.Mileage - busBo.MileageAtLastTreat < 20000 && busBo.LastTreatmentDate.AddYears(1).CompareTo(DateTime.Now) > 0 && busBo.Fuel > 0)
@@ -588,7 +561,7 @@ namespace BL
 
         #endregion
 
-        #region BusStop
+        #region BusStop: Adaptors and CRUD implementations
         BO.BusStop BusStopDoBoAdapter(DO.BusStop busStopDO)
         {
             BO.BusStop busStopBO = new BO.BusStop();
@@ -615,10 +588,6 @@ namespace BL
             return from doBusStop in dl.GetAllBusStops() orderby doBusStop.BusStopKey select BusStopDoBoAdapter(doBusStop);
         }
 
-        public IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate)
-        {
-            throw new NotImplementedException();
-        }
 
         public BusStop GetBusStop(int busStopKeyDO)
         {
@@ -640,32 +609,32 @@ namespace BL
             {
                 DO.BusStop busStopBeforeUpdate = dl.GetBusStop(busStopBO.BusStopKey);
                 
-
+                // In case the admin tries to update the location, while the bus stop currently serves bus lines:
                 if (busStopBO.BusStopAddress != busStopBeforeUpdate.BusStopAddress || busStopBO.Latitude != busStopBeforeUpdate.Latitude || busStopBO.Longitude != busStopBeforeUpdate.Longitude)
                 {
                     if (busStopBO.LinesStopHere.Count() > 0)
                         throw new BO.ExceptionBL_LinesStopHere("The bus stop serves bus lines, and the location cannot be changed.");
                 }
 
+                // In case the coordinates are impossible:
                 if (busStopBO.Latitude > 33.3 || busStopBO.Latitude < 31 || busStopBO.Longitude < 34.3 || busStopBO.Longitude > 35.5)
                 {
                     throw new BO.ExceptionBL_Incorrect_coordinates("The longitude or the latitude are not matching the range.");
                 }
 
-
-                    dl.UpdateBusStop(BusStopBoDoAdapter(busStopBO));
+                // Finnaly, updates the bus stop by dl:
+                dl.UpdateBusStop(BusStopBoDoAdapter(busStopBO));
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex) // In case the admin tries to update an unexisting bus stop
             {
                 throw new BO.ExceptionBL_KeyNotFound("The bus stop code doesn't exist", ex);
             }
-
+            catch (DO.ExceptionDAL_Inactive ex) // In case the admin tries to update an unactive bus stop
+            {
+                throw new BO.ExceptionBL_Inactive("The bus stop is inactive", ex);
+            }
         }
 
-        public void UpdateBusStop(int bosStopKeyDO, Action<BusStop> update)
-        {
-            throw new NotImplementedException();
-        }
 
         public void AddBusStop(BO.BusStop busStopBO)
         {
@@ -683,13 +652,13 @@ namespace BL
             }
         }
 
-        public void DeleteBusStop(int BusStopCode)
+        public void DeleteBusStop(int busStopCode)
         {
             try
             {
-                if (BusStopDoBoAdapter(dl.GetBusStop(BusStopCode)).LinesStopHere.Count() > 0)
+                if (BusStopDoBoAdapter(dl.GetBusStop(busStopCode)).LinesStopHere.Count() > 0)
                     throw new BO.ExceptionBL_LinesStopHere("The bus stop serves bus lines, and cannot be deleted.");
-                dl.DeleteBusStop(BusStopCode);
+                dl.DeleteBusStop(busStopCode);
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
             {
@@ -699,7 +668,7 @@ namespace BL
 
         #endregion
 
-        #region BusLineAtBusStop
+        #region BusLineAtBusStop: Convertor for bus line -> bus line at bus stop
 
         BO.BusLineAtBusStop BusLinetoBusLineAtStopConvertor(BO.BusLine busLine, int busStopCode)
         {
@@ -711,7 +680,7 @@ namespace BL
         }
         #endregion
 
-        #region LineDeparture
+        #region LineDeparture: Add and Delete methods
 
         public void AddLineDeparture(TimeSpan departureTime, int busLineID)
         {
@@ -746,14 +715,9 @@ namespace BL
         }
         #endregion
 
-        #region Consecutive Stations
+        #region Consecutive Stations: Boolean functions
 
-        /// <summary>
-        /// Checks if the consecutive stations exist, so there is no need to add the information
-        /// </summary>
-        /// <param name="busStopKeyA"></param>
-        /// <param name="busStopKeyB"></param>
-        /// <returns></returns>
+
         public bool IsConsecutiveExist(int busStopKeyA, int busStopKeyB)
         {
             DO.ConsecutiveStations newConStations = new DO.ConsecutiveStations();
@@ -772,12 +736,7 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// Checks if a pair of consecutive stations are in use
-        /// </summary>
-        /// <param name="busStopKeyA"></param>
-        /// <param name="busStopKeyB"></param>
-        /// <returns>True if in use, else - false</returns>
+
         public bool IsConsecutiveInUse(int busStopKeyA, int busStopKeyB)
         {
             return (from station
@@ -788,7 +747,8 @@ namespace BL
 
         #endregion
 
-        #region User
+        #region User: Adaptors and CRUD implementations
+
         BO.User userDoBoAdapter(DO.User userDO)
         {
             BO.User userBO = new BO.User();
@@ -804,10 +764,12 @@ namespace BL
             userBO.CopyPropertiesTo(userDO);
             return userDO;
         }
+
         public IEnumerable<User> GetAllUsers()
         {
             return from doUser in dl.GetAllUsers() select userDoBoAdapter(doUser);
         }
+
         public IEnumerable<User> GetAllUsersBy(Predicate<User> predicate)
         {
             return from user in dl.GetAllUsers()
@@ -873,16 +835,8 @@ namespace BL
         }
         #endregion
 
-        #region Other needed functions:
+        #region Other methods (Especially for the clock simulator)
 
-
-
-        /// <summary>
-        /// Finds and creats LineTiming objects by given the current bus stop and time
-        /// </summary>
-        /// <param name="currBusStop"></param>
-        /// <param name="tsCurrentTime"></param>
-        /// <returns>Collection of LineTimings</returns>
         public IEnumerable<LineTiming> GetLineTimingsPerStation(BusStop currBusStop, TimeSpan tsCurrentTime)
         {
             // Explanation of the linq query:
@@ -924,12 +878,6 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// Finds the last departrue time of a bus line given the bus line ID and the current time
-        /// </summary>
-        /// <param name="busLineID"></param>
-        /// <param name="tsCurrentTime"></param>
-        /// <returns>The time span of the last departure time</returns>
         public TimeSpan FindLastDepartureTime(int busLineID, TimeSpan tsCurrentTime)
         {
             try
@@ -969,12 +917,6 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// Calculates the travel time from the first station of a given bus line ID to the given bus stop code
-        /// </summary>
-        /// <param name="busLineID"></param>
-        /// <param name="busStopCode"></param>
-        /// <returns></returns>
         public TimeSpan StationTravelTimeCalculation(int busLineID, int busStopCode)
         {
             try
@@ -1012,11 +954,6 @@ namespace BL
             }
         }
 
-        /// <summary>
-        /// A boolean function to check if a time span is valid
-        /// </summary>
-        /// <param name="timeUpdate"></param>
-        /// <returns>True if the timeSpan is invalid, else - false</returns>
         public bool isTimeSpanInvalid(TimeSpan timeUpdate)
         {
             return (timeUpdate.Days > 0 || timeUpdate.Hours > 23 || timeUpdate.Minutes > 59 || timeUpdate.Seconds > 59);
