@@ -955,11 +955,7 @@ namespace DL
         /// <returns></returns>
         public IEnumerable<LineDeparture> GetAllLineDeparture()
         {
-            //List<LineDeparture> ListCon = XMLTools.LoadListFromXMLSerializer<LineDeparture>(lineDeparturePath);
 
-            //return from busLineStation in ListCon
-            //       where busLineStation.ObjectActive == true
-            //       select busLineStation;
             XElement lineRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
 
             return (from b in lineRootElem.Elements()
@@ -1067,7 +1063,7 @@ namespace DL
                                         select b).FirstOrDefault();
 
             if (existLineDepart != null && bool.Parse(existLineDepart.Element("ObjectActive").Value) == true)
-                throw new DO.ExceptionDAL_KeyNotFound(lineDeparture.BusLineID, $"The line departure is already exist");
+                throw new DO.ExceptionDAL_KeyAlreadyExist(lineDeparture.BusLineID, $"The line departure is already exist");
             else if (existLineDepart != null && bool.Parse(existLineDepart.Element("ObjectActive").Value) == false)
             {
                 existLineDepart.Element("ObjectActive").Value = true.ToString();
