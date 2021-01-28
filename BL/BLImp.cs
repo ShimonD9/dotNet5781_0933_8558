@@ -15,7 +15,6 @@ namespace BL
     {
         IDal dl = DalFactory.GetDL(); // Asks for the data layer singelton
 
-
         #region BusLine: Adaptors and CRUD implementations
 
         /// <summary>
@@ -730,10 +729,6 @@ namespace BL
             }
         }
 
-        #endregion
-
-        #region BusLineAtBusStop: Convertor for bus line -> bus line at bus stop
-
         /// <summary>
         /// Creats a new object of bus line at bus stop, containg info about the last bus stop name for the line and the travel time for the line until the bus stop.
         /// </summary>
@@ -748,6 +743,7 @@ namespace BL
             busLineAtBusStop.TravelTimeToBusStop = StationTravelTimeCalculation(busLine.BusLineID, busStopCode); // The travel calculated by function
             return busLineAtBusStop;
         }
+
         #endregion
 
         #region LineDeparture: Add and Delete methods
