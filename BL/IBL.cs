@@ -179,13 +179,6 @@ namespace BLApi
         /// </summary>
         /// <param name="bus"></param>
         void UpdateBus(Bus bus);
-
-        /// <summary>
-        /// Updates a specific field of a bus by a given BO.Bus using an Action function
-        /// </summary>
-        /// <param name="license"></param>
-        /// <param name="update"></param>
-        void UpdateBus(int license, Action<Bus> update); // method that knows to updt specific fields in Person
         
         /// <summary>
         /// Deletes a bus by a given license number
@@ -234,25 +227,6 @@ namespace BLApi
         /// <param name="user"></param>
         void AddUser(User user);
 
-        /// <summary>
-        /// Updates a user by a given BO.User
-        /// </summary>
-        /// <param name="user"></param>
-        void UpdateUser(User user);
-
-        /// <summary>
-        /// Updates a user by an action function
-        /// </summary>
-        /// <param name="license"></param>
-        /// <param name="update"></param>
-        void UpdateUser(string userName, Action<User> update); // method that knows to updt specific fields in Person
-        
-        /// <summary>
-        /// Deletes a user by a given user name
-        /// </summary>
-        /// <param name="license"></param>
-        void DeleteUser(string userName);
-
         #endregion
 
         #region Other methods (Especially for the clock simulator)
@@ -288,8 +262,6 @@ namespace BLApi
         /// <returns>True if the timeSpan is invalid, else - false</returns>
         bool isTimeSpanInvalid(TimeSpan timeUpdate);
         #endregion
-
-
 
     }
 }

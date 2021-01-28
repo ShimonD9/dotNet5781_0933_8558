@@ -11,9 +11,16 @@ namespace BL
 {
     public static class DeepCopyUtilities
     {
+        /// <summary>
+        /// Copies from Source S to Target T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="S"></typeparam>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
         public static void CopyPropertiesTo<T, S>(this S from, T to)
         {
-            foreach (PropertyInfo propTo in typeof(T).GetProperties())
+            foreach (PropertyInfo propTo in typeof(T).GetProperties()) // Copy is made for each property
             {
                 PropertyInfo propFrom = typeof(S).GetProperty(propTo.Name);
                 if (propFrom == null)
@@ -24,6 +31,13 @@ namespace BL
             }
         }
 
+        /// <summary>
+        /// Extanstion method that copies from a given object to a new one
+        /// </summary>
+        /// <typeparam name="S"></typeparam>
+        /// <param name="from"></param>
+        /// <param name="type"></param>
+        /// <returns>The new target object</returns>
         public static object CopyPropertiesToNew<S>(this S from, Type type)
         {
             object to = Activator.CreateInstance(type); // new object of Type
@@ -31,12 +45,5 @@ namespace BL
           
             return to;
         }
-        //public static BO.StudentCourse CopyToStudentCourse(this DO.Course course, DO.StudentInCourse sic)
-        //{
-        //    BO.StudentCourse result = (BO.StudentCourse)course.CopyPropertiesToNew(typeof(BO.StudentCourse));
-        //    // propertys' names changed? copy them here...
-        //    result.Grade = sic.Grade;
-        //    return result;
-        //}
     }
 }
