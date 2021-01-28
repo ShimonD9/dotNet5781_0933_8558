@@ -1,6 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BusXml.xml>
   <Bus>
+    <License>12322222</License>
+    <LicenseDate>2021-01-07T00:00:00</LicenseDate>
+    <Mileage>33</Mileage>
+    <Fuel>182.28</Fuel>
+    <BusStatus>READY_FOR_TRAVEL</BusStatus>
+    <LastTreatmentDate>2021-01-07T00:00:00</LastTreatmentDate>
+    <MileageAtLastTreat>3</MileageAtLastTreat>
+    <ObjectActive>False</ObjectActive>
+  </Bus>
+  <Bus>
     <License>1324544</License>
     <LicenseDate>2016-12-10T00:00:00</LicenseDate>
     <Mileage>200030</Mileage>
@@ -29,16 +39,6 @@
     <LastTreatmentDate>2020-11-04T00:00:00</LastTreatmentDate>
     <MileageAtLastTreat>130010</MileageAtLastTreat>
     <ObjectActive>true</ObjectActive>
-  </Bus>
-  <Bus>
-    <License>7707707</License>
-    <LicenseDate>1/10/2012 12:00:00 AM</LicenseDate>
-    <Mileage>500030</Mileage>
-    <Fuel>1200</Fuel>
-    <BusStatus>READY_FOR_TRAVEL</BusStatus>
-    <LastTreatmentDate>1/28/2021 6:32:11 PM</LastTreatmentDate>
-    <MileageAtLastTreat>500030</MileageAtLastTreat>
-    <ObjectActive>True</ObjectActive>
   </Bus>
   <Bus>
     <License>11231123</License>
