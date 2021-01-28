@@ -218,6 +218,7 @@ namespace BL
 
         public IEnumerable<BusLineStation> GetAllBusLineStations()
         {
+            // A linq query to get and adapt all the bus line stations from dl:
             return from doBusLineStation
                    in dl.GetAllBusLineStations()
                    select BusLineStationDoBoAdapter(doBusLineStation);
@@ -227,50 +228,47 @@ namespace BL
         {
             try
             {
-                DO.BusLineStation busStationDO;
-                busStationDO = dl.GetBusLineStation(busLineID, busStopCode);
-                return BusLineStationDoBoAdapter(busStationDO);
+                DO.BusLineStation busStationDO = dl.GetBusLineStation(busLineID, busStopCode); // Gets the line station from dl
+                return BusLineStationDoBoAdapter(busStationDO); // Returns the adapted station
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex) // In case the bus line station doesn't exist
             {
                 throw new BO.ExceptionBL_KeyNotFound("bus station does not exist", ex);
             }
-            catch (DO.ExceptionDAL_Inactive ex)
-            {
-                throw new BO.ExceptionBL_Inactive("bus station is inactive", ex);
-            }
-
         }
 
         public void AddBusLineStation(BusLineStation newStation, TimeSpan prevGapTimeUpdate, double prevGapKmUpdate)
         {
-            int lineID = newStation.BusLineID;
+            int lineID = newStation.BusLineID; // Holds the line id 
             try
             {
-                if (newStation.PrevStation == 0 && newStation.NextStation != 0) // The station added to the head of the route
+                // The station added to the head of the route:
+                if (newStation.PrevStation == 0 && newStation.NextStation != 0) // Indicates the new station is added to the head
                 {
-                    DO.BusLineStation headStation = dl.GetBusLineStation(lineID, newStation.NextStation);
-                    dl.UpdateBusLineStation(lineID, newStation.NextStation, x => x.PrevStation = newStation.BusStopKey);
+                    // Updates the prevStation property of the head station by action update:
+                    dl.UpdateBusLineStation(lineID, newStation.NextStation, x => x.PrevStation = newStation.BusStopKey); 
 
-                    // Adding the consecutive stations entity if needed
+                    // Adding the consecutive stations entity if needed (if it's different from zero, it means the admin has been requested to fill the gap)
                     if (newStation.DistanceToNext != 0 && newStation.TimeToNext != TimeSpan.FromMinutes(0))
                     {
-                        DO.ConsecutiveStations newCons = new DO.ConsecutiveStations();
+                        DO.ConsecutiveStations newCons = new DO.ConsecutiveStations(); 
                         newCons.BusStopKeyA = newStation.BusStopKey;
                         newCons.BusStopKeyB = newStation.NextStation;
                         newCons.Distance = newStation.DistanceToNext;
                         newCons.TravelTime = newStation.TimeToNext;
-                        dl.AddConsecutiveStations(newCons);
+                        dl.AddConsecutiveStations(newCons); // Adds the consecutive stations
                     }
-                    newStation.LineStationIndex = 0;
-                    dl.UpdateBusLine(lineID, x => x.FirstBusStopKey = newStation.BusStopKey);
+                    newStation.LineStationIndex = 0; // The index of the new station is zero
+                    dl.UpdateBusLine(lineID, x => x.FirstBusStopKey = newStation.BusStopKey); // The first bus stop key of the line is being updated via action
                 }
-                else if (newStation.PrevStation != 0 && newStation.NextStation == 0)  // The station added to the end of the route
-                {
-                    DO.BusLineStation endStation = dl.GetBusLineStation(lineID, newStation.PrevStation);
-                    dl.UpdateBusLineStation(lineID, newStation.PrevStation, x => x.NextStation = newStation.BusStopKey);
 
-                    // Adding the consecutive stations entity if needed
+                // The station added to the end of the route:
+                else if (newStation.PrevStation != 0 && newStation.NextStation == 0) // Indicates the new station is added to the end
+                {
+                    DO.BusLineStation endStation = dl.GetBusLineStation(lineID, newStation.PrevStation); // Gets the last station
+                    dl.UpdateBusLineStation(lineID, newStation.PrevStation, x => x.NextStation = newStation.BusStopKey); // Updates the previous last station via action
+
+                    // Adding the consecutive stations entity if needed (if it's different from zero, it means the admin has been requested to fill the gap)
                     if (prevGapKmUpdate != 0 && prevGapTimeUpdate != TimeSpan.FromMinutes(0))
                     {
                         DO.ConsecutiveStations newCons = new DO.ConsecutiveStations();
@@ -278,26 +276,31 @@ namespace BL
                         newCons.BusStopKeyB = newStation.BusStopKey;
                         newCons.Distance = prevGapKmUpdate;
                         newCons.TravelTime = prevGapTimeUpdate;
-                        dl.AddConsecutiveStations(newCons);
+                        dl.AddConsecutiveStations(newCons); // Adds the consecutive stations
                     }
-                    newStation.LineStationIndex = endStation.LineStationIndex + 1;
-                    dl.UpdateBusLine(lineID, x => x.LastBusStopKey = newStation.BusStopKey);
+                    newStation.LineStationIndex = endStation.LineStationIndex + 1; // Updates new station index 
+                    dl.UpdateBusLine(lineID, x => x.LastBusStopKey = newStation.BusStopKey); // Updates the bus line about the last bus stop via action
                 }
 
-                else if (newStation.PrevStation != 0 && newStation.NextStation != 0)  // The station added to the middle of the route
+                // The station added to the middle of the route:
+                else if (newStation.PrevStation != 0 && newStation.NextStation != 0) 
                 {
+                    // Gets the stations on the both sides of the new added station:
                     DO.BusLineStation prevStation = dl.GetBusLineStation(lineID, newStation.PrevStation);
                     DO.BusLineStation nextStation = dl.GetBusLineStation(lineID, newStation.NextStation);
+
+                    // Updates their prev and next accordingly, via action:
                     dl.UpdateBusLineStation(lineID, newStation.PrevStation, x => x.NextStation = newStation.BusStopKey);
                     dl.UpdateBusLineStation(lineID, newStation.NextStation, x => x.PrevStation = newStation.BusStopKey);
 
                     // Delete consecutive stations entity if they aren't in use anymore (the new station is between the two previous consecutives!)
                     if (!IsConsecutiveInUse(prevStation.BusStopKey, nextStation.BusStopKey))
                     {
+                        // The deletion will give the admin the opportunity to update the consecutive stations if being created again:
                         dl.DeleteConsecutiveStations(prevStation.BusStopKey, nextStation.BusStopKey);
                     }
 
-                    // Adding the consecutive stations entities if needed
+                    // Adding the consecutive stations entities if needed (from the new one to the next):
                     if (newStation.DistanceToNext != 0 && newStation.TimeToNext != TimeSpan.FromMinutes(0))
                     {
                         DO.ConsecutiveStations newCons = new DO.ConsecutiveStations();
@@ -307,6 +310,8 @@ namespace BL
                         newCons.TravelTime = newStation.TimeToNext;
                         dl.AddConsecutiveStations(newCons);
                     }
+
+                    // Adding the consecutive stations entities if needed (from the previous to the new one):
                     if (prevGapKmUpdate != 0 && prevGapTimeUpdate != TimeSpan.FromMinutes(0))
                     {
                         DO.ConsecutiveStations newCons = new DO.ConsecutiveStations();
@@ -316,27 +321,32 @@ namespace BL
                         newCons.TravelTime = prevGapTimeUpdate;
                         dl.AddConsecutiveStations(newCons);
                     }
+
+                    // Updating the index of the new added station:
                     newStation.LineStationIndex = nextStation.LineStationIndex;
                 }
 
-                // Indices update:
+
+                /// Indices update ///
+
                 int indexAdded = newStation.LineStationIndex;
 
-                // The query gets all the bus line stations which indices are bigger than ther one needed to be deleted
-                var query = (from station
+                // The query gets all the bus line stations which indices are bigger than ther one needed to be added:
+                var collection = (from station
                             in dl.GetAllBusLineStations()
-                             where station.BusLineID == lineID && station.LineStationIndex >= indexAdded
+                             where station.BusLineID == lineID && station.LineStationIndex >= indexAdded 
                              select station).ToList();
-                // And then updates the indices:
-                foreach (DO.BusLineStation station in query)
+
+                // Updates the bus line stations collection with action of updating the index UP by 1
+                foreach (DO.BusLineStation station in collection)
                 {
                     dl.UpdateBusLineStation(lineID, station.BusStopKey, x => x.LineStationIndex++);
                 }
 
-                // Adding the new bus line station:
+                // Finnaly, adding the new bus line station:
                 dl.AddBusLineStation(BusLineStationBoDoAdapter(newStation));
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex) // In case the bus line station already exist
             {
                 throw new BO.ExceptionBL_KeyNotFound("Bus stop code already exist", ex);
             }
@@ -346,83 +356,99 @@ namespace BL
         {
             try
             {
-                BusLine line = GetBusLine(busLineID);
-                if (line.LineStations.Count() < 3)
+                BusLine line = GetBusLine(busLineID); // Checks if the station can be deleted (a line must hold at least two stations)
+                if (line.LineStations.Count() < 3) // Throws an exception if not
                     throw new ExceptionBL_LessThanThreeStations("There are only two stations in the line. Unable to delete station");
 
-                DO.BusLineStation currentStation = dl.GetBusLineStation(busLineID, busStopCode);
+                DO.BusLineStation currentStation = dl.GetBusLineStation(busLineID, busStopCode); // Gets the station to be deleted
+
                 if (currentStation.PrevStation != 0 && currentStation.NextStation != 0) // It means the lateral stations are in the middle
                 {
+                    // Updates the next station field of the previous to the deleted one, via action:
                     dl.UpdateBusLineStation(busLineID, currentStation.PrevStation, station => station.NextStation = currentStation.NextStation);
+
+                    // Updates the previous station field of the next to the deleted one, via action:
                     dl.UpdateBusLineStation(busLineID, currentStation.NextStation, station => station.PrevStation = currentStation.PrevStation);
                 }
-                else if (currentStation.PrevStation == 0 && currentStation.NextStation != 0) // The station to be deleted is the first one
+
+                // The station to be deleted is the first one, updates the previous station field of the next to the deleted one, via action:
+                else if (currentStation.PrevStation == 0 && currentStation.NextStation != 0) 
+                {
                     dl.UpdateBusLineStation(busLineID, currentStation.NextStation, station => station.PrevStation = 0);
-                else if (currentStation.PrevStation != 0 && currentStation.NextStation == 0) // The station to be deleted is the last one
+                    dl.UpdateBusLine(busLineID, x => x.FirstBusStopKey = currentStation.NextStation); // Updates the bus line itself (first bus stop field)
+                }
+
+                // The station to be deleted is the last one, updates the next station field of the previous to the deleted one, via action:
+                else if (currentStation.PrevStation != 0 && currentStation.NextStation == 0) 
+                { 
                     dl.UpdateBusLineStation(busLineID, currentStation.PrevStation, station => station.NextStation = 0);
+                    dl.UpdateBusLine(busLineID, x => x.LastBusStopKey = currentStation.PrevStation);  // Updates the bus line itself (last bus stop field)
+                }
 
 
-                // Indices update:
-                int indexDeleted = currentStation.LineStationIndex;
+                /// Indices update ///
+
+                int indexDeleted = currentStation.LineStationIndex; // The index of the deleted one
+
                 // The query gets all the bus line stations which indices are bigger than ther one needed to be deleted
                 var query = (from station
                             in dl.GetAllBusLineStations()
                              where station.BusLineID == busLineID && station.LineStationIndex > indexDeleted
                              select station).ToList();
-                // And then updates the indices:
+
+                // Updates the bus line stations collection with action of updating the index DOWN by 1
                 foreach (DO.BusLineStation station in query)
                 {
                     dl.UpdateBusLineStation(busLineID, station.BusStopKey, x => x.LineStationIndex--);
                 }
 
-
                 // Consecutive stations addition/deletion:
+
                 if (currentStation.PrevStation != 0 && currentStation.NextStation != 0 && gapKmUpdate != 0) // It means there is a need to fill the consecutive stations info gap (there are no consecutive stations to this case)
                 {
                     DO.ConsecutiveStations newCons = new DO.ConsecutiveStations();
-
                     newCons.BusStopKeyA = currentStation.PrevStation;
                     newCons.BusStopKeyB = currentStation.NextStation;
                     newCons.Distance = gapKmUpdate;
                     newCons.TravelTime = gapTimeUpdate;
-                    dl.AddConsecutiveStations(newCons);
-                }
-                else if (currentStation.PrevStation != 0 && currentStation.NextStation != 0 && gapKmUpdate == 0)// It means consecutive exist or inactive
-                {
-                    dl.UpdateConsecutiveStations(currentStation.PrevStation, currentStation.NextStation, con => con.ObjectActive = true);
+                    dl.AddConsecutiveStations(newCons); // Adds the new consecutive stations entity
                 }
 
+                // Finally, deletes the bus line station:
                 dl.DeleteBusLineStation(busLineID, busStopCode);
-                if (currentStation.PrevStation == 0 && currentStation.NextStation != 0)
-                    dl.UpdateBusLine(busLineID, x => x.FirstBusStopKey = currentStation.NextStation);
-                else if (currentStation.PrevStation != 0 && currentStation.NextStation == 0)
-                    dl.UpdateBusLine(busLineID, x => x.LastBusStopKey = currentStation.PrevStation);
 
                 // Deleting the consecutive stations (which existed before the bus line station deletion) if they aren't in use (after deleting the bus line station above).
                 // A deletion of consecutive stations, is enabling the admin to UPDATE THE CONSECUTIVE later, if he wishs the add the bus line station again.
                 // Therefore, if the admins wishs to update a consecutive stations object, he must delete all the line stations which creating the consecutive stations, before adding it with the updated time and distance
                 // (The logic is simple - if the station is in use by other line, it is problematic to update the distance and time 'without a warning'. The stations should be removed and added again from all the lines and then added again as updated.)
+                
+                // If the station to deleted is in the middle
                 if (currentStation.PrevStation != 0 && currentStation.NextStation != 0)
                 {
+                    // First gap check and delete if not in use:
                     if (!IsConsecutiveInUse(currentStation.PrevStation, currentStation.BusStopKey))
                         dl.DeleteConsecutiveStations(currentStation.PrevStation, currentStation.BusStopKey);
+
+                    // Second gap check and delete if not in use:
                     if (!IsConsecutiveInUse(currentStation.BusStopKey, currentStation.NextStation))
                         dl.DeleteConsecutiveStations(currentStation.BusStopKey, currentStation.NextStation);
                 }
 
-                // In case the station to delete is the first or the last one, will delete if they aren't in use
+                // In case the station to delete is the first, will delete the "consecutive" if it not in use
                 else if (currentStation.PrevStation == 0 && currentStation.NextStation != 0
                     && !IsConsecutiveInUse(currentStation.BusStopKey, currentStation.NextStation))
                     dl.DeleteConsecutiveStations(currentStation.BusStopKey, currentStation.NextStation);
+
+                // In case the station to delete is the last, will delete the "consecutive" if it  not in use
                 else if (currentStation.PrevStation != 0 && currentStation.NextStation == 0
                     && !IsConsecutiveInUse(currentStation.PrevStation, currentStation.BusStopKey))
                     dl.DeleteConsecutiveStations(currentStation.PrevStation, currentStation.BusStopKey);
             }
-            catch (DO.ExceptionDAL_KeyNotFound ex)
+            catch (DO.ExceptionDAL_KeyNotFound ex) // In case the bus station to delete doesn't exist
             {
                 throw new BO.ExceptionBL_KeyNotFound("bus station does not exist", ex);
             }
-            catch (DO.ExceptionDAL_Inactive ex)
+            catch (DO.ExceptionDAL_Inactive ex) // In case the bus station to delete was already deleted
             {
                 throw new BO.ExceptionBL_Inactive("bus station is already inactive", ex);
             }
@@ -767,7 +793,7 @@ namespace BL
             try
             {
                 getConStations = dl.GetConsecutiveStations(busStopKeyA, busStopKeyB);
-                return true;// Returns true, because it exist (the dl.GetConsecutive didn't throw anything)
+                return true;// Returns true, because it exists (the dl.GetConsecutive didn't throw anything)
             }
             catch (DO.ExceptionDAL_Inactive)
             {
@@ -775,7 +801,7 @@ namespace BL
             }
             catch (DO.ExceptionDAL_KeyNotFound)
             {
-                return false; // Returns true, because the consecutive doesn't exist
+                return false; // Returns false, because the consecutive doesn't exist
             }
         }
 
