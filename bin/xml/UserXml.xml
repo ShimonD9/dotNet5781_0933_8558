@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <User>
+    <UserName>boss</UserName>
+    <Password>1234</Password>
+    <ManageAccess>true</ManageAccess>
+    <ObjectActive>true</ObjectActive>
+  </User>
+  <User>
+    <UserName>maga</UserName>
+    <Password>2020</Password>
+    <ManageAccess>false</ManageAccess>
+    <ObjectActive>true</ObjectActive>
+  </User>
+  <User>
+    <UserName>koko</UserName>
+    <Password>9876</Password>
+    <ManageAccess>false</ManageAccess>
+    <ObjectActive>true</ObjectActive>
+  </User>
+</ArrayOfUser>

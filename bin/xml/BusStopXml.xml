@@ -1,0 +1,533 @@
+<?xml version="1.0"?>
+<ArrayOfBusStop xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BusStop>
+    <BusStopKey>60261</BusStopKey>
+    <BusStopName>דובי דב 200</BusStopName>
+    <BusStopAddress>חפשוני נא בים החוככים</BusStopAddress>
+    <Latitude>31.7</Latitude>
+    <Longitude>34.7</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>26475</BusStopKey>
+    <BusStopName>חזון אי''ש/מרום נווה</BusStopName>
+    <BusStopAddress>חזון אי''ש 90 בני ברק</BusStopAddress>
+    <Latitude>32.07311</Latitude>
+    <Longitude>34.832921</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>20150</BusStopKey>
+    <BusStopName>אבו חצירא/הרב פתאיה</BusStopName>
+    <BusStopAddress>הרב ישראל אבו חצירא 24 בני ברק</BusStopAddress>
+    <Latitude>32.095152</Latitude>
+    <Longitude>34.830981</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>65299</BusStopKey>
+    <BusStopName>שדרות בית הלל/מרכז מסחרי</BusStopName>
+    <BusStopAddress>שדרות בית הלל 2 מודיעין עילית</BusStopAddress>
+    <Latitude>31.936436</Latitude>
+    <Longitude>35.039463</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>false</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60278</BusStopKey>
+    <BusStopName>רשב''י א</BusStopName>
+    <BusStopAddress>רבי שמעון בר יוחאי 47 מודיעין עילית</BusStopAddress>
+    <Latitude>31.937852</Latitude>
+    <Longitude>35.045995</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60817</BusStopKey>
+    <BusStopName>שדרות בית שמאי/שדרות בית הלל</BusStopName>
+    <BusStopAddress>שדרות בית שמאי 1 מודיעין עילית</BusStopAddress>
+    <Latitude>31.934442</Latitude>
+    <Longitude>35.050766</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>false</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60403</BusStopKey>
+    <BusStopName>מעלות החכמה</BusStopName>
+    <BusStopAddress>רשי מודיעין עילית</BusStopAddress>
+    <Latitude>31.930906</Latitude>
+    <Longitude>35.049892</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>21165</BusStopKey>
+    <BusStopName>מגדל ויטה/דרך בן גוריון</BusStopName>
+    <BusStopAddress>דרך בן גוריון 11 בני ברק</BusStopAddress>
+    <Latitude>32.094143</Latitude>
+    <Longitude>34.822193</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>4009</BusStopKey>
+    <BusStopName>צומת רמות/גולדה</BusStopName>
+    <BusStopAddress>שדרות גולדה מאיר ירושלים</BusStopAddress>
+    <Latitude>31.808253</Latitude>
+    <Longitude>35.204001</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>61416</BusStopKey>
+    <BusStopName>רמב''ן/שדרות בית שמאי</BusStopName>
+    <BusStopAddress>רמב''ן מודיעין עילית</BusStopAddress>
+    <Latitude>31.934343</Latitude>
+    <Longitude>35.052361</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>false</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60257</BusStopKey>
+    <BusStopName>אבי עזרי א</BusStopName>
+    <BusStopAddress>אבי עזרי 9 מודיעין עילית</BusStopAddress>
+    <Latitude>31.923385</Latitude>
+    <Longitude>35.053287</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60226</BusStopKey>
+    <BusStopName>אבני נזר/אור החיים</BusStopName>
+    <BusStopAddress>אבני נזר 32 מודיעין עילית</BusStopAddress>
+    <Latitude>31.931486</Latitude>
+    <Longitude>35.03977</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>65411</BusStopKey>
+    <BusStopName>אבי עזרי ז</BusStopName>
+    <BusStopAddress>אבי עזרי 28 מודיעין עילית</BusStopAddress>
+    <Latitude>31.923308</Latitude>
+    <Longitude>35.053342</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>false</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>63988</BusStopKey>
+    <BusStopName>מסילת ישרים/דרך קרית ספר</BusStopName>
+    <BusStopAddress>מסילת ישרים 1 מודיעין עילית</BusStopAddress>
+    <Latitude>31.935677</Latitude>
+    <Longitude>35.037737</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>61378</BusStopKey>
+    <BusStopName>אבי עזרי/מסוף</BusStopName>
+    <BusStopAddress>אבי עזרי 32 מודיעין עילית</BusStopAddress>
+    <Latitude>31.923647</Latitude>
+    <Longitude>35.054196</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>12284</BusStopKey>
+    <BusStopName>שדרות הפלמח/חטיבת כרמלי</BusStopName>
+    <BusStopAddress>שדרות הפלמ''ח 2 אשדוד</BusStopAddress>
+    <Latitude>31.804129</Latitude>
+    <Longitude>34.660742</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60225</BusStopKey>
+    <BusStopName>אור החיים/אוהלי ספר</BusStopName>
+    <BusStopAddress>אור החיים 29 מודיעין עילית</BusStopAddress>
+    <Latitude>31.931206</Latitude>
+    <Longitude>35.041019</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60227</BusStopKey>
+    <BusStopName>מרכז קסם/אבני נזר</BusStopName>
+    <BusStopAddress>אבני נזר 44 מודיעין עילית</BusStopAddress>
+    <Latitude>31.930259</Latitude>
+    <Longitude>35.039163</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60228</BusStopKey>
+    <BusStopName>חפץ חיים/קצות חושן</BusStopName>
+    <BusStopAddress>מעלות שמחה 2 מודיעין עילית</BusStopAddress>
+    <Latitude>31.930062</Latitude>
+    <Longitude>35.041693</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60229</BusStopKey>
+    <BusStopName>חפץ חיים ז</BusStopName>
+    <BusStopAddress>חפץ חיים 17 מודיעין עילית</BusStopAddress>
+    <Latitude>31.930769</Latitude>
+    <Longitude>35.043667</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60233</BusStopKey>
+    <BusStopName>מסילת יוסף ב</BusStopName>
+    <BusStopAddress>מסילת יוסף 28 מודיעין עילית</BusStopAddress>
+    <Latitude>31.930097</Latitude>
+    <Longitude>35.043896</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60234</BusStopKey>
+    <BusStopName>מסילת יוסף/מרומי שדה</BusStopName>
+    <BusStopAddress>מסילת יוסף 46 מודיעין עילית</BusStopAddress>
+    <Latitude>31.927997</Latitude>
+    <Longitude>35.043064</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60237</BusStopKey>
+    <BusStopName>גן ילדים/נתיבות המשפט</BusStopName>
+    <BusStopAddress>נתיבות המשפט 95 מודיעין עילית</BusStopAddress>
+    <Latitude>31.927233</Latitude>
+    <Longitude>35.040124</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60238</BusStopKey>
+    <BusStopName>נתיבות המשפט ח</BusStopName>
+    <BusStopAddress>נתיבות המשפט 100 מודיעין עילית</BusStopAddress>
+    <Latitude>31.92613</Latitude>
+    <Longitude>35.041169</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60239</BusStopKey>
+    <BusStopName>נתיבות המשפט י''ג</BusStopName>
+    <BusStopAddress>נתיבות המשפט 87 מודיעין עילית</BusStopAddress>
+    <Latitude>31.925009</Latitude>
+    <Longitude>35.041581</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60240</BusStopKey>
+    <BusStopName>נתיבות המשפט/מסילת יוסף</BusStopName>
+    <BusStopAddress> נתיבות המשפט 90 מודיעין עילית</BusStopAddress>
+    <Latitude>31.926719</Latitude>
+    <Longitude>35.040952</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60241</BusStopKey>
+    <BusStopName>נתיבות המשפט ז</BusStopName>
+    <BusStopAddress>נתיבות המשפט 76 מודיעין עילית</BusStopAddress>
+    <Latitude>31.924946</Latitude>
+    <Longitude>35.042655</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60243</BusStopKey>
+    <BusStopName>כיכר בית תפילה/נתיבות המשפט</BusStopName>
+    <BusStopAddress>נתיבות המשפט 66 מודיעין עילית</BusStopAddress>
+    <Latitude>31.925653</Latitude>
+    <Longitude>35.043741</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60244</BusStopKey>
+    <BusStopName>נתיבות המשפט ה</BusStopName>
+    <BusStopAddress>נתיבות המשפט 50 מודיעין עילית</BusStopAddress>
+    <Latitude>31.926916</Latitude>
+    <Longitude>35.045071</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60245</BusStopKey>
+    <BusStopName>נתיבות המשפט י''ז</BusStopName>
+    <BusStopAddress>נתיבות המשפט 56 מודיעין עילית</BusStopAddress>
+    <Latitude>31.926849</Latitude>
+    <Longitude>35.045163</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60247</BusStopKey>
+    <BusStopName>נתיבות המשפט/כיכר גפן</BusStopName>
+    <BusStopAddress>נתיבות המשפט 46 מודיעין עילית</BusStopAddress>
+    <Latitude>31.928316</Latitude>
+    <Longitude>35.044702</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60248</BusStopKey>
+    <BusStopName>נתיבות המשפט/מרומי שדה</BusStopName>
+    <BusStopAddress>נתיבות המשפט 34 מודיעין עילית</BusStopAddress>
+    <Latitude>31.930243</Latitude>
+    <Longitude>35.045065</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60249</BusStopKey>
+    <BusStopName>נתיבות המשפט ל</BusStopName>
+    <BusStopAddress>נתיבות המשפט 31 מודיעין עילית</BusStopAddress>
+    <Latitude>31.931</Latitude>
+    <Longitude>35.045806</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60250</BusStopKey>
+    <BusStopName>נתיבות המשפט כ</BusStopName>
+    <BusStopAddress>נתיבות המשפט 13 מודיעין עילית</BusStopAddress>
+    <Latitude>31.932529</Latitude>
+    <Longitude>35.047188</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60252</BusStopKey>
+    <BusStopName>נתיבות המשפט/חת''ם סופר</BusStopName>
+    <BusStopAddress>נתיבות המשפט 6 מודיעין עילית</BusStopAddress>
+    <Latitude>31.933294</Latitude>
+    <Longitude>35.047424</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60254</BusStopKey>
+    <BusStopName>חפץ חיים/אבני נזר</BusStopName>
+    <BusStopAddress>חפץ חיים 2 מודיעין עילית</BusStopAddress>
+    <Latitude>31.934342</Latitude>
+    <Longitude>35.046634</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60255</BusStopKey>
+    <BusStopName>שדרות בית הלל/שדרות בית שמאי</BusStopName>
+    <BusStopAddress>שדרות בית הלל 1 מודיעין עילית</BusStopAddress>
+    <Latitude>31.934638</Latitude>
+    <Longitude>35.047961</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60256</BusStopKey>
+    <BusStopName>אבי עזרי ב</BusStopName>
+    <BusStopAddress>אבי עזרי 3 מודיעין עילית</BusStopAddress>
+    <Latitude>31.923148</Latitude>
+    <Longitude>35.051371</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60319</BusStopKey>
+    <BusStopName>גרין פארק/הרב מפוניבז</BusStopName>
+    <BusStopAddress>שדרות הרב מפוניביז 4 מודיעין עילית</BusStopAddress>
+    <Latitude>31.924332</Latitude>
+    <Longitude>35.046591</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60258</BusStopKey>
+    <BusStopName>כיכר נאות הפסגה/רש''י</BusStopName>
+    <BusStopAddress>רש''י 1 מודיעין עילית</BusStopAddress>
+    <Latitude>31.928996</Latitude>
+    <Longitude>35.046171</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60262</BusStopKey>
+    <BusStopName>חפץ חיים/קצות חושן</BusStopName>
+    <BusStopAddress>מעלות שמחה 30 מודיעין עילית</BusStopAddress>
+    <Latitude>31.930206</Latitude>
+    <Longitude>35.041693</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60263</BusStopKey>
+    <BusStopName>חפץ חיים/אבני נזר</BusStopName>
+    <BusStopAddress>מעלות שמחה 23 מודיעין עילית</BusStopAddress>
+    <Latitude>31.929456</Latitude>
+    <Longitude>35.039434</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60266</BusStopKey>
+    <BusStopName>מסילת ישרים ג</BusStopName>
+    <BusStopAddress> מסילת ישרים 1 מודיעין עילית</BusStopAddress>
+    <Latitude>31.931171</Latitude>
+    <Longitude>35.037825</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60268</BusStopKey>
+    <BusStopName>מרכז מסחרי/שדרות יחזקאל</BusStopName>
+    <BusStopAddress>שדרות יחזקאל 2 מודיעין עילית</BusStopAddress>
+    <Latitude>31.93743</Latitude>
+    <Longitude>35.037612</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60270</BusStopKey>
+    <BusStopName>שד. יחזקאל/רב ושמואל</BusStopName>
+    <BusStopAddress>שדרות יחזקאל 1 מודיעין עילית</BusStopAddress>
+    <Latitude>31.93854</Latitude>
+    <Longitude>35.037621</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60271</BusStopKey>
+    <BusStopName>מכבי אש/שדרות יחזקאל</BusStopName>
+    <BusStopAddress>שדרות יחזקאל 9 מודיעין עילית</BusStopAddress>
+    <Latitude>31.937521</Latitude>
+    <Longitude>35.036854</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60272</BusStopKey>
+    <BusStopName>רשב''י ד</BusStopName>
+    <BusStopAddress>רבי שמעון בר יוחאי 7 מודיעין עילית</BusStopAddress>
+    <Latitude>31.937482</Latitude>
+    <Longitude>35.038868</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60276</BusStopKey>
+    <BusStopName>רשב''י ב</BusStopName>
+    <BusStopAddress>רבי שמעון בר יוחאי 31 מודיעין עילית</BusStopAddress>
+    <Latitude>31.937254</Latitude>
+    <Longitude>35.043655</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60277</BusStopKey>
+    <BusStopName>רשב''י ו</BusStopName>
+    <BusStopAddress>רבי שמעון בר יוחאי 30 מודיעין עילית</BusStopAddress>
+    <Latitude>31.937103</Latitude>
+    <Longitude>35.044334</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60279</BusStopKey>
+    <BusStopName>יהודה הנשיא/יחזקאל</BusStopName>
+    <BusStopAddress>רבי יהודה הנשיא 2 מודיעין עילית</BusStopAddress>
+    <Latitude>31.938428</Latitude>
+    <Longitude>35.039605</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60280</BusStopKey>
+    <BusStopName>תיבות דואר/יהודה הנשיא</BusStopName>
+    <BusStopAddress>רבי יהודה הנשיא 12 מודיעין עילית</BusStopAddress>
+    <Latitude>31.939044</Latitude>
+    <Longitude>35.040886</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60281</BusStopKey>
+    <BusStopName>יהודה הנשיא ה</BusStopName>
+    <BusStopAddress>רבי יהודה הנשיא 22 מודיעין עילית</BusStopAddress>
+    <Latitude>31.938451</Latitude>
+    <Longitude>35.043513</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>60282</BusStopKey>
+    <BusStopName>יהודה הנשיא / רשב''י</BusStopName>
+    <BusStopAddress>רבי יהודה הנשיא 30 מודיעין עילית</BusStopAddress>
+    <Latitude>31.93904</Latitude>
+    <Longitude>35.045744</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+</ArrayOfBusStop>
