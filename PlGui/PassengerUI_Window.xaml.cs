@@ -183,9 +183,9 @@ namespace PlGui
                     cbBusStop.IsEnabled = true;
                 }
             }
-            catch // For unexpected issues
+            catch (Exception ex)// For unexpected issues
             {
-                MessageBox.Show("An unexpected problem occured", "ERROR");
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "ERROR");
             }
         }
 

@@ -19,7 +19,7 @@ namespace BO
         public bool ObjectActive { get; set; }
         public int BusDriverID { get; set; }
         /// <summary>
-        /// Formats a string which represents the Bus object
+        /// Formats a string which represents the Bus at travel object
         /// </summary>
         /// <returns> Returns the string to print the object </returns>
         public override string ToString()

@@ -15,5 +15,14 @@ namespace BO
         public int MinutesToArrival { get; set; }
         public String ShowMinutesOrArrow { get; set; }
         public string LastBusStopName { get; set; }
+
+        /// <summary>
+        /// Formats a string which represents the LineTiming object
+        /// </summary>
+        /// <returns> Returns the string to print the object </returns>
+        public override string ToString()
+        {
+            return string.Format("User Name = {0}, BusLineNumber= {1},ArrivalTime = {2}", BusLineID, BusLineNumber, ArrivalTime);
+        }
     }
 }

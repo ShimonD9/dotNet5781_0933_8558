@@ -839,7 +839,9 @@ namespace BL
 
         public IEnumerable<User> GetAllUsers()
         {
-            return from doUser in dl.GetAllUsers() select userDoBoAdapter(doUser); // Returns all the users by dl, adapting it to BO
+            return from doUser 
+                   in dl.GetAllUsers() 
+                   select userDoBoAdapter(doUser); // Returns all the users by dl, adapting it to BO
         }
 
         public IEnumerable<User> GetAllUsersBy(Predicate<User> predicate)

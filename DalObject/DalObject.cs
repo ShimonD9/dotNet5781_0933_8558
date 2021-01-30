@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace DL
 {
-    sealed class DalObject : IDal    //internal
+    sealed class DalObject : IDal    // internal
     {
         #region singelton
         static readonly DalObject instance = new DalObject();

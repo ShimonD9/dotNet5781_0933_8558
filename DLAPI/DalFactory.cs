@@ -28,8 +28,10 @@ namespace DalApi
         {
             // get dal implementation name from config.xml according to <data> element
             string dlType = DalConfig.DLName;
+
             // bring package name (dll file name) for the dal name (above) from the list of packages in config.xml
             DalConfig.DalPackage dlPackage;
+
             try // get dal package info according to <dal> element value in config file
             {
                 dlPackage = DalConfig.DLPackages[dlType];
@@ -39,6 +41,7 @@ namespace DalApi
                 // if package name is not found in the list - there is a problem in config.xml
                 throw new DalConfigException($"Wrong DL type: {dlType}", ex);
             }
+
             string dlPackageName = dlPackage.PkgName;
             string dlNameSpace = dlPackage.NameSpace;
             string dlClass = dlPackage.ClassName;
@@ -62,6 +65,7 @@ namespace DalApi
             //    NB: the class may not be public - it will still be found... Our approach that the implemntation class
             //        should hold "internal" access permission (which is actually the default access permission)
             // 2nd element is the package name = assembly name (as above)
+
             Type type;
             try
             {
@@ -71,6 +75,7 @@ namespace DalApi
             { // If the type is not found - the implementation is not correct - it looks like the class name is wrong...
                 throw new DalConfigException($"Class not found due to a wrong namespace or/and class name: {dlPackageName}:{dlNameSpace}.{dlClass}", ex);
             }
+
             // *** Get concrete Dal implementation's Instance
             // Get property info for public static property named "Instance" (in the dal implementation class- taken above)
             // If the property is not found or it's not public or not static then it is not properly implemented

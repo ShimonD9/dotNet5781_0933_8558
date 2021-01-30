@@ -19,7 +19,7 @@ namespace BO
         public IEnumerable<TimeSpan> Schedule { get; set; }
 
         /// <summary>
-        /// Formats a string which represents the Bus object
+        /// Formats a string which represents the Bus line object
         /// </summary>
         /// <returns> Returns the string to print the object </returns>
         public override string ToString()

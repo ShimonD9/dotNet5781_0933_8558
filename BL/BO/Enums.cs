@@ -9,13 +9,13 @@ namespace BO
 {
     public class Enums
     {
-        //enum for the bus status
-        public enum BUS_STATUS
+       
+        public enum BUS_STATUS  // enum for the bus status
         {
             READY_FOR_TRAVEL, NEEDS_REFUEL, DANGEROUS, AT_TRAVEL, AT_TREATMENT, AT_REFUEL
         }
 
-        public enum AREA             //enum choices for aera buses
+        public enum AREA             // enum choices for aera buses
         {
             General, North, South, Center, Jerusalem
         }
