@@ -448,7 +448,7 @@
     <Longitude>35.037621</Longitude>
     <Sunshade>false</Sunshade>
     <DigitalPanel>true</DigitalPanel>
-    <ObjectActive>true</ObjectActive>
+    <ObjectActive>false</ObjectActive>
   </BusStop>
   <BusStop>
     <BusStopKey>60271</BusStopKey>

@@ -122,53 +122,68 @@ namespace PlGui
         #region Clock simulator
 
 
-        bool everStarted = false; // In case the background worker never has been started
-        bool isStarted = false; // To know if the button is at start or pause
+        private int secondsInterval; // Holds the interval integer
+        private static bool shouldStop = true; // Tells if the background worker loop should stop
+        private static bool everStarted = false; // In case the background worker never has been started
+        private static bool isStarted = false; // To know if the button is at start or pause
 
+        /// <summary>
+        /// Button start/pause click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void start_Pause_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (!isStarted)
+                if (!isStarted) // To know if the proccess at work
                 {
-                    if (!TimeSpan.TryParse(timeEdit.Text, out TimeSpan inputTime))
+                    if (!TimeSpan.TryParse(timeEdit.Text, out TimeSpan inputTime)) // Try parses the text box
                         MessageBox.Show("Wrong time input!");
                     else
                     {
-                        shouldStop = false;
-                        isStarted = true;
-                        RunningTime = inputTime;
-                        if (!everStarted)
-                            runClock();
+
+                        shouldStop = false; // It means the work should continue (at the background worker)
+                        isStarted = true; // For the button condition
+                       
+                        secondsInterval = (int)intervalSlider.Value;  // Updates the seconds interval
+                        RunningTime = inputTime; // Updates the running time variable
+                        
+                        if (!everStarted) // Runs the clock for the first time the button clicked
+                        {
+                            runClock(); // Calls the function which creates the background worker at the first place
+                            everStarted = true; 
+                        }
                         else if (!clockWorker.IsBusy)
-                            clockWorker.RunWorkerAsync();
-                        everStarted = true;
-                        tbStart_Pause.Text = "Pause";
+                            clockWorker.RunWorkerAsync(); // Continues the sync from the current backgroundworker
+
+                        // Text, buttons and visibility updates:
+                        tbStart_Pause.Text = "Pause"; 
                         timeDisplay.Visibility = Visibility.Visible;
                         timeEdit.Visibility = Visibility.Collapsed;
                         intervalSlider.IsEnabled = false;
                         cbBusStop.IsEnabled = false;
                     }
                 }
-                else
+                else // If the user wants to stop the running clock
                 {
                     if (clockWorker.IsBusy)
                     {
-                        clockWorker.CancelAsync();
+                        clockWorker.CancelAsync(); // Calls cancellation if the worker is busy
                     }
-                    timeEdit.Text = RunningTime.ToString();
+
+                    // Bool values update:
                     shouldStop = true;
                     isStarted = false;
+
+                    // Text, buttons and visibility updates:
+                    timeEdit.Text = RunningTime.ToString();
                     tbStart_Pause.Text = "Start";
                     timeDisplay.Visibility = Visibility.Collapsed;
                     timeEdit.Visibility = Visibility.Visible;
                     intervalSlider.IsEnabled = true;
                     cbBusStop.IsEnabled = true;
                 }
-            }
-            catch (BO.ExceptionBL_UnexpectedProblem)
-            {
-                MessageBox.Show("Sorry, the program as met an unexpected problem. Please sign in again.");
             }
             catch // For unexpected issues
             {
@@ -187,9 +202,7 @@ namespace PlGui
             }
         }
 
-        private static bool shouldStop = true; // Tells if the background worker loop should stop
 
-        int secondsInterval; // Holds the interval integer
 
         // The field of runningDate first initialized
         private TimeSpan runningTime = DateTime.Now.TimeOfDay;
@@ -210,52 +223,54 @@ namespace PlGui
         /// </summary>
         private void runClock()
         {
-            int t = 5; // Meant for the digital panel update loop
-            clockWorker.WorkerReportsProgress = true;
+            int t = 5; // Meant for the digital panel update loop (every 5 seconds real time)
+            clockWorker.WorkerReportsProgress = true; 
             clockWorker.WorkerSupportsCancellation = true;
 
+            // The progress changed update:
             clockWorker.ProgressChanged += (sender, args) =>
             {
-                secondsInterval = (int)intervalSlider.Value;
-                timeDisplay.Text = RunningTime.ToString();
+                // Running time and display update:
                 RunningTime = RunningTime.Add(TimeSpan.FromSeconds(secondsInterval));
-                if (RunningTime.Days > 0) RunningTime = RunningTime.Subtract(TimeSpan.FromDays(RunningTime.Days));
-                if (t == 5) // To make the update according the interval (so for interval of 20 seconds, it will update every 5 seconds real-time, and for 1 - every 100 seconds real-time)
+                if (RunningTime.Days > 0) RunningTime = RunningTime.Subtract(TimeSpan.FromDays(RunningTime.Days)); // To not show any days
+                timeDisplay.Text = RunningTime.ToString();
+
+                if (t == 5) 
                 {
-                    changeTitleAsDayTime();
-                    var minutesToBus = bl.GetLineTimingsPerStation(busStop, RunningTime);
-                    if (minutesToBus.Count() == 0)
+                    changeTitleAsDayTime(); // Window title update (just a boring feature)
+                    var minutesToBus = bl.GetLineTimingsPerStation(busStop, RunningTime); // Calls the bl to get the line timings for the current bus stop and time
+                    if (minutesToBus.Count() == 0) // If there are no line timings, it makes the text box of no buses visible
                         tbNoBuses.Visibility = Visibility.Visible;
                     else
                         tbNoBuses.Visibility = Visibility.Collapsed;
-                    lvMinutesToBus.ItemsSource = minutesToBus;
-                    t = 0;
+                    lvMinutesToBus.ItemsSource = minutesToBus; // Updates the list view with the collection
+                    t = 0; // For the digital panel be updated again in 5 seconds
                 }
                 t++;
             };
 
-            clockWorker.DoWork += (sender, args) =>
+            clockWorker.DoWork += (sender, args) => // Adding a new clock worker
             {
                 if (clockWorker.CancellationPending == true)
                 {
-                    args.Cancel = true;
+                    args.Cancel = true; // To cancel the work
                 }
                 else
                 {
-                    while (shouldStop == false)
+                    while (shouldStop == false) // While at work and shouldn't stop, it will update proccess each seconds
                     {
                         try { clockWorker.ReportProgress(0); Thread.Sleep(1000); } catch (Exception) { }
                     }
                 }
             };
 
-            if (clockWorker.IsBusy != true)
+            if (clockWorker.IsBusy != true) // Will run if it isn't busy
             {
                 clockWorker.RunWorkerAsync();
             }
 
 
-            clockWorker.RunWorkerCompleted += (sender, args) =>
+            clockWorker.RunWorkerCompleted += (sender, args) => // For the complition (nothing needed to be done, but for the correctnes of the backgroundworker I didn't touch it)
             {
                 if (args.Cancelled == true)
                 {
