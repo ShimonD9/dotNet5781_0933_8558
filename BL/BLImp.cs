@@ -349,6 +349,10 @@ namespace BL
             {
                 throw new BO.ExceptionBL_KeyNotFound("Bus stop code already exist", ex);
             }
+            catch (DO.ExceptionDAL_KeyAlreadyExist ex)
+            {
+                throw new BO.ExceptionBL_KeyAlreadyExist("The station already exist", ex);
+            }
         }
 
         public void DeleteBusLineStation(int busLineID, int busStopCode, TimeSpan gapTimeUpdate, double gapKmUpdate)

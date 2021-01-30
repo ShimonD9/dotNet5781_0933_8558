@@ -103,6 +103,14 @@ namespace PlGui
             {
                 MessageBox.Show("The total mileage cannot be smaller than the mileage at the last treat!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+            catch (BO.ExceptionBL_Inactive) // Catchs and prints message if the bus wasn't found
+            {
+                MessageBox.Show("The bus license doesn't active!", "Cannot delete the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (Exception ex)// For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "ERROR");
+            }
         }
 
         /// <summary>
@@ -124,7 +132,15 @@ namespace PlGui
                 }
                 catch (BO.ExceptionBL_KeyNotFound) // Catchs and prints message if the bus wasn't found
                 {
-                    MessageBox.Show("The bus license doesn't exist or the bus is inactive!", "Cannot delete the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("The bus license doesn't exist!", "Cannot delete the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                catch (BO.ExceptionBL_Inactive) // Catchs and prints message if the bus wasn't found
+                {
+                    MessageBox.Show("The bus license doesn't active!", "Cannot delete the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                catch (Exception ex)// For unexpected issues
+                {
+                    MessageBox.Show("An unexpected problem occured: " + ex.Message, "ERROR");
                 }
             }
         }

@@ -1,6 +1,36 @@
 <?xml version="1.0"?>
 <ArrayOfBusStop xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BusStop>
+    <BusStopKey>33</BusStopKey>
+    <BusStopName>dd</BusStopName>
+    <BusStopAddress>dd</BusStopAddress>
+    <Latitude>32</Latitude>
+    <Longitude>35</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>false</DigitalPanel>
+    <ObjectActive>false</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>11</BusStopKey>
+    <BusStopName>dd</BusStopName>
+    <BusStopAddress>dd</BusStopAddress>
+    <Latitude>32</Latitude>
+    <Longitude>35</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>false</DigitalPanel>
+    <ObjectActive>false</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>111</BusStopKey>
+    <BusStopName>sdd</BusStopName>
+    <BusStopAddress>dd</BusStopAddress>
+    <Latitude>32</Latitude>
+    <Longitude>35</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>false</DigitalPanel>
+    <ObjectActive>false</ObjectActive>
+  </BusStop>
+  <BusStop>
     <BusStopKey>60261</BusStopKey>
     <BusStopName>דובי דב 200</BusStopName>
     <BusStopAddress>חפשוני נא בים החוככים</BusStopAddress>
@@ -458,7 +488,7 @@
     <Longitude>35.036854</Longitude>
     <Sunshade>false</Sunshade>
     <DigitalPanel>true</DigitalPanel>
-    <ObjectActive>true</ObjectActive>
+    <ObjectActive>false</ObjectActive>
   </BusStop>
   <BusStop>
     <BusStopKey>60272</BusStopKey>

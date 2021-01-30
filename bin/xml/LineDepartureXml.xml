@@ -4,7 +4,7 @@
     <BusLineID>1</BusLineID>
     <DepartureID>1</DepartureID>
     <DepartureTime>06:00:00</DepartureTime>
-    <ObjectActive>true</ObjectActive>
+    <ObjectActive>False</ObjectActive>
   </LineDeparture>
   <LineDeparture>
     <BusLineID>1</BusLineID>
@@ -665,5 +665,11 @@
     <DepartureID>111</DepartureID>
     <DepartureTime>07:20:20</DepartureTime>
     <ObjectActive>False</ObjectActive>
+  </LineDeparture>
+  <LineDeparture>
+    <BusLineID>1</BusLineID>
+    <DepartureID>112</DepartureID>
+    <DepartureTime>05:00:00</DepartureTime>
+    <ObjectActive>true</ObjectActive>
   </LineDeparture>
 </LineDepartureXml.xml>

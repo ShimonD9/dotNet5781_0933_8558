@@ -67,9 +67,9 @@ namespace PlGui
             {
                 MessageBox.Show("The bus line is inactive", "Unable to delete");
             }
-            catch // For other exceptions
+            catch (Exception ex)// For unexpected issues
             {
-                MessageBox.Show("An unexpected problem occured", "Unable to update");
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "ERROR");
             }
         }
 
@@ -96,9 +96,9 @@ namespace PlGui
                 {
                     MessageBox.Show("The bus line has been already deleted", "Unable to delete");
                 }
-                catch // For other exceptions
+                catch (Exception ex)// For unexpected issues
                 {
-                    MessageBox.Show("An unexpected problem occured", "Unable to delete");
+                    MessageBox.Show("An unexpected problem occured: " + ex.Message, "ERROR");
                 }
 
         }
@@ -121,10 +121,11 @@ namespace PlGui
         private void button_DeleteStation(object sender, RoutedEventArgs e)
         {
             BO.BusLineStation chosenStation = (lvLineStations.SelectedValue as BusLineStation); // Stores the selected station to deleted
-            if (isDeleteStationInProcess == false) // If the deletion only being started
+            try
             {
-                try
+                if (isDeleteStationInProcess == false) // If the deletion only being started
                 {
+
                     isDeleteStationInProcess = true; // Needed for the grid and radio buttons manipulations
                     bAddStation.IsEnabled = false; // The button is disabled while waiting for the next selections
 
@@ -154,31 +155,39 @@ namespace PlGui
                         bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, TimeSpan.FromMinutes(0), 0); // Sends the bus line id, the bus stop key and time span and km equals to 0
                         stationDeletionEndProcess(); // The proccess ended, and the function will update the relevant grids
                     }
+
                 }
-                catch (BO.ExceptionBL_LessThanThreeStations) // Unable to delete if there are only two stations left!
+
+                else if (isDeleteStationInProcess == true) // If it need to submit changes, it means there is need to update consecutive
                 {
-                    MessageBox.Show("A bus line must contain at least two stations", "Cannot delete station", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    stationDeletionEndProcess(); // The proccess ended, and the function will update the relevant grids
-                }
-                catch
-                {
-                    MessageBox.Show("An unexpected problem occured", "Unable to delete");
-                    stationDeletionEndProcess();
+                    if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate)  // Checks the string by tryparse
+                        || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0) // If there is need to update, the km and time shoudln't be zero, and bl checks the logic of the timeSpan
+                    {
+                        MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
+                    else // If the input correct, it deletes trough the bl
+                    {
+                        bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, timeUpdate, kmUpdate);
+                        stationDeletionEndProcess(); // The proccess ended, and the function will update the relevant grids
+                    }
                 }
             }
-
-            else if (isDeleteStationInProcess == true) // If it need to submit changes, it means there is need to update consecutive
+            catch (BO.ExceptionBL_LessThanThreeStations) // Unable to delete if there are only two stations left!
             {
-                if (!Double.TryParse(tbUpdateKM.GetLineText(0), out double kmUpdate) || !TimeSpan.TryParse(tbUpdateTime.GetLineText(0), out TimeSpan timeUpdate)  // Checks the string by tryparse
-                    || timeUpdate == TimeSpan.FromMinutes(0) || bl.isTimeSpanInvalid(timeUpdate) || kmUpdate == 0) // If there is need to update, the km and time shoudln't be zero, and bl checks the logic of the timeSpan
-                {
-                    MessageBox.Show("You didn't fill correctly all the required information", "Cannot submit the changes", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                else // If the input correct, it deletes trough the bl
-                {
-                    bl.DeleteBusLineStation(busLine.BusLineID, chosenStation.BusStopKey, timeUpdate, kmUpdate);
-                    stationDeletionEndProcess(); // The proccess ended, and the function will update the relevant grids
-                }
+                MessageBox.Show("A bus line must contain at least two stations", "Cannot delete station", MessageBoxButton.OK, MessageBoxImage.Warning);
+                stationDeletionEndProcess(); // The proccess ended, and the function will update the relevant grids
+            }
+            catch (BO.ExceptionBL_Inactive ex) // In case the line departure already is inactive
+            {
+                MessageBox.Show("This station is already has been deleted and inactive!", ex.Message);
+            }
+            catch (BO.ExceptionBL_KeyNotFound ex) // In case the line departure already is inactive
+            {
+                MessageBox.Show("This station doesn't exist (or has been deleted)!", ex.Message);
+            }
+            catch (Exception ex)// For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "ERROR");
             }
         }
 
@@ -465,8 +474,8 @@ namespace PlGui
         /// <param name="e"></param>
         private void button_AddStation(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 BO.BusStop chosenBusStop = cbChooseNewStation.SelectedItem as BO.BusStop; // Stores the new chosen bus stop
                 BO.BusLineStation chosenPrevStation = cbChoosePrevStation.SelectedItem as BO.BusLineStation; // Stores the new chosen bus stop
                 BO.BusLineStation newStation = new BO.BusLineStation(); // Creats a new bus line station to add later in this method
@@ -632,11 +641,15 @@ namespace PlGui
                     }
 
                 }
-            //}
-            //catch // In case there are unexpected issues
-            //{
-            //    MessageBox.Show("An unexpected problem occured", "Unable to add");
-            //}
+            }
+            catch (BO.ExceptionBL_KeyAlreadyExist)
+            {
+                MessageBox.Show("The station you tried to add is already exist", "ERROR");
+            }
+            catch (Exception ex)// For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "ERROR");
+            }
         }
 
         /// <summary>
@@ -705,7 +718,6 @@ namespace PlGui
                         !bl.isTimeSpanInvalid(timeDeparture)) // Calls the logical check of the timeSpan entered
                     {
                         bl.AddLineDeparture(timeDeparture, busLine.BusLineID); // Adds by the bl
-                        BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID); // Updates the list view of the departures
                         gAddDeparture.Visibility = Visibility.Collapsed; // The grid of adding collapsing 
                         tbAddDeparture.Text = "hh:mm:ss";
                     }
@@ -716,9 +728,13 @@ namespace PlGui
                 {
                     MessageBox.Show("This time departure already exist!");
                 }
-                catch // For other exceptions
+                catch (Exception ex)// For unexpected issues
                 {
-                    MessageBox.Show("An unexpected problem occured", "Unable to add");
+                    MessageBox.Show("An unexpected problem occured: " + ex.Message, "ERROR");
+                }
+                finally
+                {
+                    BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID); // Updates the list view
                 }
         }
 
@@ -734,7 +750,6 @@ namespace PlGui
                 gAddDeparture.Visibility = Visibility.Collapsed; // Collapsing the addition grid
                 if (lvSchedule.SelectedValue != null) // Checks that a selection actually has been made
                     bl.DeleteLineDeparture((TimeSpan)lvSchedule.SelectedValue, busLine.BusLineID); // Calls bl for the deletion of the list view selected item
-                BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID); // Updates the list view
                 bDeleteDeparture.IsEnabled = false;
             }
             catch (BO.ExceptionBL_KeyNotFound ex) // In case the time departure doesn't exist
@@ -745,9 +760,13 @@ namespace PlGui
             {
                 MessageBox.Show("This time departure already is inactive!", ex.Message);
             }
-            catch // For other exceptions
+            catch (Exception ex)// For unexpected issues
             {
-                MessageBox.Show("An unexpected problem occured", "Unable to delete");
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "ERROR");
+            }
+            finally
+            {
+                BusLineDet.DataContext = bl.GetBusLine(busLine.BusLineID); // Updates the list view
             }
         }
 

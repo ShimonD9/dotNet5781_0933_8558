@@ -75,6 +75,10 @@ namespace PlGui
             {
                 MessageBox.Show("The bus stop code does not exists in the company!", "Cannot update the bus stop", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+            catch (BO.ExceptionBL_Inactive)
+            {
+                MessageBox.Show("The bus license doesn't is inactive!", "Cannot delete the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
             catch (BO.ExceptionBL_Incorrect_coordinates)
             {
                 MessageBox.Show("The bus company is in Israel, the coordinates should be in range!", "Cannot update the bus stop", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -105,12 +109,20 @@ namespace PlGui
                 }
                 catch (BO.ExceptionBL_KeyNotFound) // Catchs and prints message if the bus wasn't found
                 {
-                    MessageBox.Show("The bus license doesn't exist or the bus is inactive!", "Cannot delete the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("The bus license doesn't doesn't exist!", "Cannot delete the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                catch (BO.ExceptionBL_Inactive)
+                {
+                    MessageBox.Show("The bus license doesn't is inactive!", "Cannot delete the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
                 catch (BO.ExceptionBL_LinesStopHere) // In case the bus stop serves bus lines, the admin won't be able to delete it.
                 {
                     string busLines = string.Join(", ", from lineBus in busStop.LinesStopHere select lineBus.BusLineNumber); // Creates string of the bus line numbers the bus stop serve
                     MessageBox.Show("This bus stop serves the next bus lines: \n" + busLines + ".\nYou must remove the bus station from the bus lines details window, before deleting the bus stop itself.", "Unable to delete the bus stop!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                catch (Exception ex)// For unexpected issues
+                {
+                    MessageBox.Show("An unexpected problem occured: " + ex.Message, "ERROR");
                 }
             }
         }

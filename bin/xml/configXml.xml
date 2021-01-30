@@ -2,5 +2,5 @@
 <config>
   <BusInTravelCounter>0</BusInTravelCounter>
   <BusLineCounter>11</BusLineCounter>
-  <PassengTravelCounter>111</PassengTravelCounter>
+  <PassengTravelCounter>112</PassengTravelCounter>
 </config>

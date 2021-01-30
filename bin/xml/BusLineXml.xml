@@ -1,14 +1,6 @@
 <?xml version="1.0"?>
 <ArrayOfBusLine xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BusLine>
-    <BusLineID>1</BusLineID>
-    <BusLineNumber>210</BusLineNumber>
-    <Area>Center</Area>
-    <FirstBusStopKey>26475</FirstBusStopKey>
-    <LastBusStopKey>65299</LastBusStopKey>
-    <ObjectActive>true</ObjectActive>
-  </BusLine>
-  <BusLine>
     <BusLineID>2</BusLineID>
     <BusLineNumber>220</BusLineNumber>
     <Area>Center</Area>
@@ -87,5 +79,13 @@
     <FirstBusStopKey>60257</FirstBusStopKey>
     <LastBusStopKey>61416</LastBusStopKey>
     <ObjectActive>false</ObjectActive>
+  </BusLine>
+  <BusLine>
+    <BusLineID>1</BusLineID>
+    <BusLineNumber>210</BusLineNumber>
+    <Area>Center</Area>
+    <FirstBusStopKey>26475</FirstBusStopKey>
+    <LastBusStopKey>65299</LastBusStopKey>
+    <ObjectActive>true</ObjectActive>
   </BusLine>
 </ArrayOfBusLine>

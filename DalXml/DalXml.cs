@@ -621,13 +621,15 @@ namespace DL
             List<BusLineStation> ListBusLineStations = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
 
             BusLineStation bus = ListBusLineStations.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID && b.ObjectActive == true);
-            if (bus != null)
+            if (bus != null && bus.ObjectActive == true)
             {
                 bus.ObjectActive = false;
                 XMLTools.SaveListToXMLSerializer(ListBusLineStations, busLineStationPath);
             }
-            else
-                throw new DO.ExceptionDAL_KeyNotFound(busStopCode, $"Station key not found: {busStopCode}");
+            else if (bus != null && bus.ObjectActive == false)
+                throw new DO.ExceptionDAL_Inactive(busStopCode, $"Station is inactive: {busStopCode}");
+            else // bus == null
+                throw new DO.ExceptionDAL_KeyNotFound(busStopCode, $"Station key to delete not found: {busStopCode}");
         }
 
         #endregion
