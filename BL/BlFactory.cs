@@ -10,6 +10,11 @@ namespace BLApi
 {
     public static class BLFactory
     {
+        /// <summary>
+        /// Gets the singelton of the bl
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>BL Singelton</returns>
         public static IBL GetBL(string type)
         {
             switch (type)

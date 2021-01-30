@@ -75,7 +75,6 @@ namespace PlGui
             lvMinutesToBus.ItemsSource = linesForDigitalPanelCollection;
         }
 
-
         /// <summary>
         /// The title greetings feature
         /// </summary>
@@ -94,7 +93,6 @@ namespace PlGui
                 time = "Good night, ";
             PassengerWindow.Title = time + passenger.UserName;
         }
-
 
         /// <summary>
         /// For input preview validation in the text box of time
