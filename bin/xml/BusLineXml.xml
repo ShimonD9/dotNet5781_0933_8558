@@ -88,4 +88,28 @@
     <LastBusStopKey>65299</LastBusStopKey>
     <ObjectActive>true</ObjectActive>
   </BusLine>
+  <BusLine>
+    <BusLineID>12</BusLineID>
+    <BusLineNumber>1</BusLineNumber>
+    <Area>North</Area>
+    <FirstBusStopKey>4009</FirstBusStopKey>
+    <LastBusStopKey>12284</LastBusStopKey>
+    <ObjectActive>true</ObjectActive>
+  </BusLine>
+  <BusLine>
+    <BusLineID>13</BusLineID>
+    <BusLineNumber>222</BusLineNumber>
+    <Area>North</Area>
+    <FirstBusStopKey>11</FirstBusStopKey>
+    <LastBusStopKey>4009</LastBusStopKey>
+    <ObjectActive>false</ObjectActive>
+  </BusLine>
+  <BusLine>
+    <BusLineID>14</BusLineID>
+    <BusLineNumber>33</BusLineNumber>
+    <Area>South</Area>
+    <FirstBusStopKey>11</FirstBusStopKey>
+    <LastBusStopKey>12284</LastBusStopKey>
+    <ObjectActive>false</ObjectActive>
+  </BusLine>
 </ArrayOfBusLine>

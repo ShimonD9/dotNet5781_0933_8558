@@ -64,7 +64,8 @@ namespace PlGui
             timeEdit.IsEnabled = true;
             Start_Pause.IsEnabled = true; // After choosing the bus stop, the user is able to start the clock simulator
             tbNoBuses.Visibility = Visibility.Collapsed; // The no buses info label collapsing
-
+            try 
+            { 
             busStop = cbBusStop.SelectedItem as BO.BusStop;
             lvLinesStopHere.DataContext = busStop; // The list view data context is updated
 
@@ -73,6 +74,23 @@ namespace PlGui
             if (linesForDigitalPanelCollection.Count() == 0)
                 tbNoBuses.Visibility = Visibility.Visible; // In case there are no close bus lines, the info label will be visible
             lvMinutesToBus.ItemsSource = linesForDigitalPanelCollection;
+            }
+            catch (BO.ExceptionBL_Inactive)
+            {
+                MessageBox.Show("The bus stop has been deactivated", "Error");
+                Finish_Work();
+
+            }
+            catch (BO.ExceptionBL_KeyNotFound)
+            {
+                MessageBox.Show("The bus stop actually doesn't exist", "Error");
+                Finish_Work();
+            }
+            catch (Exception ex)// For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "ERROR");
+                Finish_Work();
+            }
         }
 
         /// <summary>
@@ -165,14 +183,7 @@ namespace PlGui
                 }
                 else // If the user wants to stop the running clock
                 {
-                    if (clockWorker.IsBusy)
-                    {
-                        clockWorker.CancelAsync(); // Calls cancellation if the worker is busy
-                    }
-
-                    // Bool values update:
-                    shouldStop = true;
-                    isStarted = false;
+                    Finish_Work(); // Calls to finish the proccess
 
                     // Text, buttons and visibility updates:
                     timeEdit.Text = RunningTime.ToString();
@@ -183,9 +194,21 @@ namespace PlGui
                     cbBusStop.IsEnabled = true;
                 }
             }
+            catch (BO.ExceptionBL_Inactive)
+            {
+                MessageBox.Show("The bus stop has been deactivated", "Error");
+                Finish_Work();
+
+            }
+            catch (BO.ExceptionBL_KeyNotFound)
+            {
+                MessageBox.Show("The bus stop actually doesn't exist", "Error");
+                Finish_Work();
+            }
             catch (Exception ex)// For unexpected issues
             {
                 MessageBox.Show("An unexpected problem occured: " + ex.Message, "ERROR");
+                Finish_Work();
             }
         }
 
@@ -288,13 +311,21 @@ namespace PlGui
         /// <param name="e"></param>
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            Finish_Work();
+        }
+
+        /// <summary>
+        /// Finishes the clock worker work
+        /// </summary>
+        private void Finish_Work()
+        {
             if (clockWorker.IsBusy)
             {
                 clockWorker.CancelAsync();
             }
+            shouldStop = true;
+            isStarted = false;
         }
-
-
         #endregion
 
     }

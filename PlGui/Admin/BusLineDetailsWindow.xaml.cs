@@ -295,9 +295,9 @@ namespace PlGui
                     }
                 }
             }
-            catch // For unexpected issues
+            catch (Exception ex)// For unexpected issues
             {
-                MessageBox.Show("An unexpected problem occured", "Unable to check");
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "Unable to check");
             }
         }
 
@@ -321,9 +321,9 @@ namespace PlGui
                     cbChoosePrevStation.ItemsSource = busLine.LineStations.Where(x => x.BusStopKey != busLine.LastBusStopKey); // Excludes the last station (And for placing to the last, there is a radio button for last)
                 }
             }
-            catch // For unexpected issues
+            catch (Exception ex)// For unexpected issues
             {
-                MessageBox.Show("An unexpected problem occured", "Unable to check");
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "Unable to check");
             }
         }
 
@@ -370,9 +370,9 @@ namespace PlGui
                     }
                 }
             }
-            catch // For unexpected issues
+            catch (Exception ex)// For unexpected issues
             {
-                MessageBox.Show("An unexpected problem occured", "Unable to check");
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "Unable to check");
             }
         }
 
@@ -460,9 +460,9 @@ namespace PlGui
                     }
                 }
             }
-            catch // For unexpected issues
+            catch (Exception ex)// For unexpected issues
             {
-                MessageBox.Show("An unexpected problem occured", "Unable to select");
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "Unable to select");
             }
 
         }

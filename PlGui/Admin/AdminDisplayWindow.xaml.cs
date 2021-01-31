@@ -109,6 +109,10 @@ namespace PlGui
             {
                 MessageBox.Show("The gas tank is already full!", "Unable to fill", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+            catch (Exception ex)// For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "Unable to fill");
+            }
         }
 
 
@@ -126,6 +130,10 @@ namespace PlGui
             catch (BO.ExceptionBL_NoNeedToTreat)
             {
                 MessageBox.Show("The bus doesn't need a treatment yet", "No need to treat!", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            catch (Exception ex)// For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "Unable to treat");
             }
         }
         #endregion

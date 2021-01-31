@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ArrayOfBusStop xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BusStop>
-    <BusStopKey>33</BusStopKey>
-    <BusStopName>dd</BusStopName>
+    <BusStopKey>333</BusStopKey>
+    <BusStopName>sss</BusStopName>
     <BusStopAddress>dd</BusStopAddress>
     <Latitude>32</Latitude>
     <Longitude>35</Longitude>
@@ -12,12 +12,52 @@
   </BusStop>
   <BusStop>
     <BusStopKey>11</BusStopKey>
-    <BusStopName>dd</BusStopName>
-    <BusStopAddress>dd</BusStopAddress>
-    <Latitude>32</Latitude>
+    <BusStopName>sss</BusStopName>
+    <BusStopAddress>sddd</BusStopAddress>
+    <Latitude>33</Latitude>
     <Longitude>35</Longitude>
     <Sunshade>true</Sunshade>
     <DigitalPanel>false</DigitalPanel>
+    <ObjectActive>false</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>33</BusStopKey>
+    <BusStopName>d</BusStopName>
+    <BusStopAddress>d</BusStopAddress>
+    <Latitude>33</Latitude>
+    <Longitude>35</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>false</DigitalPanel>
+    <ObjectActive>false</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>44</BusStopKey>
+    <BusStopName>dd</BusStopName>
+    <BusStopAddress>dd</BusStopAddress>
+    <Latitude>33</Latitude>
+    <Longitude>35</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>false</DigitalPanel>
+    <ObjectActive>false</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>12</BusStopKey>
+    <BusStopName>ss</BusStopName>
+    <BusStopAddress>dd</BusStopAddress>
+    <Latitude>33</Latitude>
+    <Longitude>35</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>false</DigitalPanel>
+    <ObjectActive>false</ObjectActive>
+  </BusStop>
+  <BusStop>
+    <BusStopKey>222</BusStopKey>
+    <BusStopName>גגג</BusStopName>
+    <BusStopAddress>ג</BusStopAddress>
+    <Latitude>33</Latitude>
+    <Longitude>35</Longitude>
+    <Sunshade>false</Sunshade>
+    <DigitalPanel>true</DigitalPanel>
     <ObjectActive>false</ObjectActive>
   </BusStop>
   <BusStop>

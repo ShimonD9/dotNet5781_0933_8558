@@ -721,4 +721,25 @@
     <TravelTime>04:04:04</TravelTime>
     <ObjectActive>False</ObjectActive>
   </ConsecutiveStations>
+  <ConsecutiveStations>
+    <BusStopKeyA>4009</BusStopKeyA>
+    <BusStopKeyB>12284</BusStopKeyB>
+    <Distance>1</Distance>
+    <TravelTime>01:01:01</TravelTime>
+    <ObjectActive>true</ObjectActive>
+  </ConsecutiveStations>
+  <ConsecutiveStations>
+    <BusStopKeyA>11</BusStopKeyA>
+    <BusStopKeyB>4009</BusStopKeyB>
+    <Distance>33</Distance>
+    <TravelTime>00:01:01</TravelTime>
+    <ObjectActive>False</ObjectActive>
+  </ConsecutiveStations>
+  <ConsecutiveStations>
+    <BusStopKeyA>11</BusStopKeyA>
+    <BusStopKeyB>12284</BusStopKeyB>
+    <Distance>3</Distance>
+    <TravelTime>00:03:10</TravelTime>
+    <ObjectActive>False</ObjectActive>
+  </ConsecutiveStations>
 </ConsecutiveStationXml.xml>

@@ -79,6 +79,10 @@ namespace PlGui
             {
                 MessageBox.Show("The bus company is in Israel, the coordinates should be in range!", "Cannot add the bus stop", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+            catch (Exception ex)// For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "Cannot add the bus stop");
+            }
         }
 
 

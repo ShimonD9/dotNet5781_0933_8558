@@ -138,9 +138,9 @@ namespace PlGui
                 spInfo.Visibility = Visibility.Visible;
                 lblInfo.Content = "The user name you have entered does not exist.";
             }
-            catch
+            catch (Exception ex)// For unexpected issues
             {
-                MessageBox.Show("An unexpected problem occured, please try again.", "Error");
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "ERROR");
             }
         }
 

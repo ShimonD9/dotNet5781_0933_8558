@@ -15,6 +15,13 @@ namespace BL
     {
         IDal dl = DalFactory.GetDL(); // Asks for the data layer singelton
 
+        #region singelton
+        static readonly BLImp instance = new BLImp();
+        static BLImp() { } // static ctor to ensure instance init is done just before first usage
+        BLImp() { } // default => private
+        public static BLImp Instance { get => instance; }// The public Instance property to use
+        #endregion
+
         #region BusLine: Adaptors and CRUD implementations
 
         /// <summary>
@@ -896,7 +903,8 @@ namespace BL
 
             try
             {
-                IEnumerable<LineTiming> stationTimings = from lineAtStop in GetBusStop(currBusStop.BusStopKey).LinesStopHere
+                BO.BusStop busStop = GetBusStop(currBusStop.BusStopKey);
+                IEnumerable<LineTiming> stationTimings = from lineAtStop in busStop.LinesStopHere
                                                          let depTime = FindLastDepartureTime(lineAtStop.BusLineID, tsCurrentTime)
                                                          let timeLeft = depTime.Add(lineAtStop.TravelTimeToBusStop).Subtract(tsCurrentTime)
                                                          where timeLeft.Hours == 0 && timeLeft.Minutes > -5 // It means the bus is late or passed maximum by 5 minutes, but only buses in a margin of one hour will be showed
@@ -919,10 +927,6 @@ namespace BL
             catch (DO.ExceptionDAL_Inactive ex)
             {
                 throw new ExceptionBL_Inactive("The bus stop is inactive", ex);
-            }
-            catch
-            {
-                throw new ExceptionBL_UnexpectedProblem("Unexpected problem occured");
             }
         }
 
@@ -959,10 +963,6 @@ namespace BL
             {
                 throw new ExceptionBL_Inactive("The bus line is inactive", ex);
             }
-            catch
-            {
-                throw new ExceptionBL_UnexpectedProblem("Unexpected problem occured");
-            }
         }
 
         public TimeSpan StationTravelTimeCalculation(int busLineID, int busStopCode)
@@ -995,10 +995,6 @@ namespace BL
             catch (DO.ExceptionDAL_Inactive ex)
             {
                 throw new ExceptionBL_Inactive("The bus line doesn't active (deleted)", ex);
-            }
-            catch
-            {
-                throw new ExceptionBL_UnexpectedProblem("Unexpected problem occured");
             }
         }
 

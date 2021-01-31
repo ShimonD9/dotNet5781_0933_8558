@@ -93,9 +93,9 @@ namespace PlGui
             {
                 MessageBox.Show("The total mileage cannot be smaller than the mileage at the last treat!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            catch // For unexpected issues
+            catch (Exception ex)// For unexpected issues
             {
-                MessageBox.Show("An unexpected problem accured!", "Cannot add the bus", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "Unable to add");
             }
         }
 

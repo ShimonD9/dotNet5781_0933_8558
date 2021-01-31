@@ -672,4 +672,34 @@
     <DepartureTime>05:00:00</DepartureTime>
     <ObjectActive>true</ObjectActive>
   </LineDeparture>
+  <LineDeparture>
+    <BusLineID>13</BusLineID>
+    <DepartureID>113</DepartureID>
+    <DepartureTime>13:02:00</DepartureTime>
+    <ObjectActive>False</ObjectActive>
+  </LineDeparture>
+  <LineDeparture>
+    <BusLineID>13</BusLineID>
+    <DepartureID>114</DepartureID>
+    <DepartureTime>13:04:00</DepartureTime>
+    <ObjectActive>False</ObjectActive>
+  </LineDeparture>
+  <LineDeparture>
+    <BusLineID>14</BusLineID>
+    <DepartureID>115</DepartureID>
+    <DepartureTime>13:04:00</DepartureTime>
+    <ObjectActive>False</ObjectActive>
+  </LineDeparture>
+  <LineDeparture>
+    <BusLineID>14</BusLineID>
+    <DepartureID>116</DepartureID>
+    <DepartureTime>13:04:04</DepartureTime>
+    <ObjectActive>False</ObjectActive>
+  </LineDeparture>
+  <LineDeparture>
+    <BusLineID>14</BusLineID>
+    <DepartureID>117</DepartureID>
+    <DepartureTime>13:05:05</DepartureTime>
+    <ObjectActive>False</ObjectActive>
+  </LineDeparture>
 </LineDepartureXml.xml>

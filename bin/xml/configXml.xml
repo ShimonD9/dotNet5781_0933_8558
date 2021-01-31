@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <config>
   <BusInTravelCounter>0</BusInTravelCounter>
-  <BusLineCounter>11</BusLineCounter>
-  <PassengTravelCounter>112</PassengTravelCounter>
+  <BusLineCounter>14</BusLineCounter>
+  <PassengTravelCounter>117</PassengTravelCounter>
 </config>

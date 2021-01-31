@@ -73,7 +73,7 @@ namespace PlGui
                     // First bus stop properties filled:
                     newStationA.LineStationIndex = 0;
                     newStationA.PrevStation = 0;
-                    newStationA.BusStopKey = newBusLine.FirstBusStopKey; 
+                    newStationA.BusStopKey = newBusLine.FirstBusStopKey;
                     newStationA.NextStation = newBusLine.LastBusStopKey;
                     newStationA.DistanceToNext = kmToNext; // Used for the consecutive station creation in Blimp
                     newStationA.TimeToNext = timeToNext;  // Used for the consecutive station creation in Blimp
@@ -93,6 +93,10 @@ namespace PlGui
             {
                 MessageBox.Show("The bus line number you entered already exists in the company!", "Cannot add the bus stop", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+            catch (Exception ex)// For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "Cannot add the bus line");
+            }
         }
 
 
@@ -105,10 +109,17 @@ namespace PlGui
         {
             mustUpdateGap = false;
             cbLastBusStop.IsEnabled = true;
-            if (cbFirstBusStop.SelectedItem != null) // In case it will be changed to null because of the second combo box method
-                cbLastBusStop.ItemsSource = bl.GetAllBusStops()
-                    .Where(busStop => busStop.BusStopKey != (cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey)
-                    .OrderBy(busStop => busStop.BusStopKey);
+            try
+            {
+                if (cbFirstBusStop.SelectedItem != null) // In case it will be changed to null because of the second combo box method
+                    cbLastBusStop.ItemsSource = bl.GetAllBusStops()
+                        .Where(busStop => busStop.BusStopKey != (cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey)
+                        .OrderBy(busStop => busStop.BusStopKey);
+            }
+            catch (Exception ex)// For unexpected issues
+            {
+                MessageBox.Show("An unexpected problem occured: " + ex.Message, "Error!");
+            }
             // Visiblity changes:
             lbKmToNext.Visibility = Visibility.Collapsed;
             lbTimeToNext.Visibility = Visibility.Collapsed;
@@ -126,24 +137,31 @@ namespace PlGui
         {
             if (cbFirstBusStop.SelectedItem != null && cbLastBusStop.SelectedItem != null)
             {
-                if (!bl.IsConsecutiveExist((cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey, (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey))
-                // If they are exist, or inactive, it means we know the time and distance between the two bus
-                // It means the consecutive doesn't exist, and we need to manager neeed to enter the distance and time
+                try
                 {
-                    mustUpdateGap = true;
-                    lbKmToNext.Visibility = Visibility.Visible;
-                    lbTimeToNext.Visibility = Visibility.Visible;
-                    tbKmToNext.Visibility = Visibility.Visible;
-                    tbTimeToNext.Visibility = Visibility.Visible;
-                    
+                    if (!bl.IsConsecutiveExist((cbFirstBusStop.SelectedItem as BO.BusStop).BusStopKey, (cbLastBusStop.SelectedItem as BO.BusStop).BusStopKey))
+                    // If they are exist, or inactive, it means we know the time and distance between the two bus
+                    // It means the consecutive doesn't exist, and we need to manager neeed to enter the distance and time
+                    {
+                        mustUpdateGap = true;
+                        lbKmToNext.Visibility = Visibility.Visible;
+                        lbTimeToNext.Visibility = Visibility.Visible;
+                        tbKmToNext.Visibility = Visibility.Visible;
+                        tbTimeToNext.Visibility = Visibility.Visible;
+
+                    }
+                    else
+                    {
+                        mustUpdateGap = false;
+                        lbKmToNext.Visibility = Visibility.Collapsed;
+                        lbTimeToNext.Visibility = Visibility.Collapsed;
+                        tbKmToNext.Visibility = Visibility.Collapsed;
+                        tbTimeToNext.Visibility = Visibility.Collapsed;
+                    }
                 }
-                else
+                catch (Exception ex)// For unexpected issues
                 {
-                    mustUpdateGap = false;
-                    lbKmToNext.Visibility = Visibility.Collapsed;
-                    lbTimeToNext.Visibility = Visibility.Collapsed;
-                    tbKmToNext.Visibility = Visibility.Collapsed;
-                    tbTimeToNext.Visibility = Visibility.Collapsed;
+                    MessageBox.Show("An unexpected problem occured: " + ex.Message, "Error!");
                 }
             }
         }
