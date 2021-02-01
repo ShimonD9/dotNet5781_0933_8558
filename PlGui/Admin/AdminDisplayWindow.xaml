@@ -36,7 +36,7 @@
         </Menu>
 
         <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-            
+
             <!--Bus lines tab - list of busses, with option to add a bus line-->
 
             <TabItem Header="Bus Lines">
@@ -94,7 +94,7 @@
                                             <ColumnDefinition Width="160" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Column="0" BorderBrush="Black" Background="{Binding Path='StatusColor'}" BorderThickness="1 1 1 1">
+                                        <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1 1 1 1">
                                             <TextBlock Name ="tbBusLineID" Text="{Binding Path = 'BusLineID'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
                                         </Border>
 
@@ -119,7 +119,7 @@
                             </ListView.ItemTemplate>
                         </ListView>
                     </Grid>
-                    
+
                     <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="20,0,20,46">
                         <Button Name ="AddBusLine"  Content="Add a new bus line" Cursor="Hand" FontSize="16" FontWeight="Bold"  Click="button_OpenAddBusLineWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="161" Margin="304,3,283,3" />
                     </Grid>
@@ -175,9 +175,9 @@
                             <TextBlock  Text="Digital panel" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold"/>
                         </Border>
                     </Grid>
-                    
+
                     <!--List of bus stops-->
-                    
+
                     <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
                         <ListView Name ="lbBusStops" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gainsboro" MouseDoubleClick="lBBusStops_MouseDoubleClick"  Margin="0,0,0,47">
                             <ListView.ItemTemplate>
@@ -355,6 +355,54 @@
                     </Grid>
                 </Grid>
             </TabItem>
+
+            <!--Statistics tab-->
+
+            <TabItem Header="Statistics">
+
+                <Grid Name="gStatistics" DataContext="{Binding}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="50,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition  />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="20">
+                            <Ellipse Fill="#FFF4F4F5" Height="218" Stroke="Black" Width="304" Canvas.Left="38" Canvas.Top="42"/>
+                            <TextBlock Text="Consecutive Stations" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="50"/>
+                            <TextBlock Text="{Binding Path = 'BusLineNumber'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxWidth="100" FontSize="40" Margin="50"/>
+                        </Grid>
+                        <Grid Grid.Column="1" Margin="20">
+                            <Ellipse Fill="#FFF4F4F5" Height="218" Stroke="Black" Width="304" Canvas.Left="38" Canvas.Top="42"/>
+                            <TextBlock Text="Line Stations" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="50"/>
+                            <TextBlock Text="{Binding Path = 'BusLineNumber'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxWidth="100" FontSize="40" Margin="50"/>
+                        </Grid>
+                    </Grid>
+
+                    <Grid Grid.Row="1"  Margin="50,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition  />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Margin="20">
+                            <Ellipse Fill="#FFF4F4F5" Height="218" Stroke="Black" Width="304" Canvas.Left="38" Canvas.Top="42"/>
+                            <TextBlock Text="Bus Stops" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="50"/>
+                            <TextBlock Text="{Binding Path = 'BusLineNumber'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxWidth="100" FontSize="40" Margin="50"/>
+                        </Grid>
+                        <Grid Grid.Column="1" Margin="20">
+                            <Ellipse Fill="#FFF4F4F5" Height="218" Stroke="Black" Width="304" Canvas.Left="38" Canvas.Top="42"/>
+                            <TextBlock Text="Buses" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="50"/>
+                            <TextBlock Text="{Binding Path = 'BusLineNumber'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxWidth="100" FontSize="40" Margin="50"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+
 
         </TabControl>
     </DockPanel>

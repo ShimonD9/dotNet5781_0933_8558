@@ -18,4 +18,10 @@
     <ManageAccess>false</ManageAccess>
     <ObjectActive>true</ObjectActive>
   </User>
+  <User>
+    <UserName>kuku</UserName>
+    <Password>100</Password>
+    <ManageAccess>false</ManageAccess>
+    <ObjectActive>true</ObjectActive>
+  </User>
 </ArrayOfUser>
