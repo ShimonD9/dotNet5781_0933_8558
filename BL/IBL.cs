@@ -79,6 +79,12 @@ namespace BLApi
         /// <param name="gapKmUpdate"></param>
         void DeleteBusLineStation(int busLineID, int busStopCode, TimeSpan gapTimeUpdate, double gapKmUpdate);
 
+        /// <summary>
+        /// Groups a route by its line id
+        /// </summary>
+        /// <returns>A collection of grouping by id and bus line station</returns>
+        IEnumerable<IGrouping<int, BusLineStation>> RouteByLine();
+
         #endregion
 
         #region BusStop: Get, Add, Update, Delete methods

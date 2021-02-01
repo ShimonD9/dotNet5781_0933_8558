@@ -463,7 +463,14 @@ namespace BL
                 throw new BO.ExceptionBL_Inactive("bus station is already inactive", ex);
             }
         }
-
+       
+        public IEnumerable<IGrouping<int, BusLineStation>> RouteByLine()
+        {
+            return from b in GetAllBusLineStations()
+                       orderby b.LineStationIndex
+                       group b by b.BusLineID into g
+                       select g;
+        }
         #endregion
 
         #region Bus: Adaptors and CRUD implementations

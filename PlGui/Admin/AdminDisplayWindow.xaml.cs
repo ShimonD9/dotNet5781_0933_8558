@@ -33,9 +33,9 @@ namespace PlGui
         public AdminDisplayWindow()
         {
             InitializeComponent();
-            lbBuses.DataContext = bl.GetAllBuses();
-            lbBusStops.DataContext = bl.GetAllBusStops();
-            lbBusLines.DataContext = bl.GetAllBusLines();
+            lvBuses.DataContext = bl.GetAllBuses();
+            lvBusStops.DataContext = bl.GetAllBusStops();
+            lvBusLines.DataContext = bl.GetAllBusLines();
         }
 
 
@@ -49,10 +49,10 @@ namespace PlGui
             admin = user;
             string hello = "Hello, ";
             adminWindow.Title = hello + admin.UserName;
-            lbBuses.DataContext = bl.GetAllBuses();
-            lbBusStops.DataContext = bl.GetAllBusStops();
-            lbBusLines.DataContext = bl.GetAllBusLines();
-            gStatistics.DataContext = bl.GetStats();
+            lvBuses.DataContext = bl.GetAllBuses();
+            lvBusStops.DataContext = bl.GetAllBusStops();
+            lvBusLines.DataContext = bl.GetAllBusLines();
+            lvRoute.DataContext = bl.RouteByLine();
         }
 
 
@@ -72,7 +72,7 @@ namespace PlGui
                     object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
                     BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
                     busDetailsWindow.ShowDialog();
-                    lbBuses.ItemsSource = bl.GetAllBuses(); // Updates the list view
+                    lvBuses.ItemsSource = bl.GetAllBuses(); // Updates the list view
 
                 }
             }
@@ -89,7 +89,7 @@ namespace PlGui
             {
                 AddBusWindow addBusWindow = new AddBusWindow(); // Creates the new window, and then shows it
                 addBusWindow.ShowDialog();
-                lbBuses.ItemsSource = bl.GetAllBuses();
+                lvBuses.ItemsSource = bl.GetAllBuses();
             }
         }
 
@@ -105,7 +105,7 @@ namespace PlGui
             var fxElt = sender as FrameworkElement;
             Bus bus = fxElt.DataContext as Bus;
             try 
-            { bl.RefuelBus(bus); lbBuses.Items.Refresh(); } // Calls bl.refuel and updates the list items
+            { bl.RefuelBus(bus); lvBuses.Items.Refresh(); } // Calls bl.refuel and updates the list items
             catch (BO.ExceptionBL_NoNeedToRefuel) // In case doesn't need refuel, pops a message
             {
                 MessageBox.Show("The gas tank is already full!", "Unable to fill", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -127,7 +127,7 @@ namespace PlGui
             var fxElt = sender as FrameworkElement;
             Bus bus = fxElt.DataContext as Bus;
             try 
-            { bl.TreatBus(bus); lbBuses.Items.Refresh(); } // Calls bl.treat and updates the list items
+            { bl.TreatBus(bus); lvBuses.Items.Refresh(); } // Calls bl.treat and updates the list items
             catch (BO.ExceptionBL_NoNeedToTreat)
             {
                 MessageBox.Show("The bus doesn't need a treatment yet", "No need to treat!", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -155,7 +155,7 @@ namespace PlGui
                     object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
                     BusLineDetailsWindow busLineDetailsWindow = new BusLineDetailsWindow(item);
                     busLineDetailsWindow.ShowDialog();
-                    lbBusLines.ItemsSource = bl.GetAllBusLines();  // Updates the list view
+                    lvBusLines.ItemsSource = bl.GetAllBusLines();  // Updates the list view
                 }
             }
         }
@@ -171,7 +171,7 @@ namespace PlGui
             {
                 AddBusLineWindow addBusLineWindow = new AddBusLineWindow(); // Creates the new window, and then shows it
                 addBusLineWindow.ShowDialog();
-                lbBusLines.ItemsSource = bl.GetAllBusLines();
+                lvBusLines.ItemsSource = bl.GetAllBusLines();
             }
         }
         #endregion
@@ -192,7 +192,7 @@ namespace PlGui
                     object item = list.SelectedItem; // Gets the selected item, and sends it to the new window builder
                     BusStopDetailsWindow busStopDetailsWindow = new BusStopDetailsWindow(item);
                     busStopDetailsWindow.ShowDialog();
-                    lbBusStops.ItemsSource = bl.GetAllBusStops();  // Updates the list view
+                    lvBusStops.ItemsSource = bl.GetAllBusStops();  // Updates the list view
                 }
             }
         }
@@ -208,7 +208,7 @@ namespace PlGui
             {
                 AddBusStopWindow addBusStopWindow = new AddBusStopWindow(); // Creates the new window, and then shows it
                 addBusStopWindow.ShowDialog();
-                lbBusStops.ItemsSource = bl.GetAllBusStops();
+                lvBusStops.ItemsSource = bl.GetAllBusStops();
             }
         }
         #endregion

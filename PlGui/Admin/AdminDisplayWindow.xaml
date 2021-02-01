@@ -82,7 +82,7 @@
                     <!--List of bus lines-->
 
                     <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
-                        <ListView Name ="lbBusLines" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="lBBusLines_MouseDoubleClick" Margin="0,0,0,-330">
+                        <ListView Name ="lvBusLines" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="lBBusLines_MouseDoubleClick" Margin="0,0,0,-330">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="0,2">
@@ -122,6 +122,77 @@
 
                     <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="20,0,20,46">
                         <Button Name ="AddBusLine"  Content="Add a new bus line" Cursor="Hand" FontSize="16" FontWeight="Bold"  Click="button_OpenAddBusLineWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="161" Margin="304,3,283,3" />
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+
+            <!--Routes by bus lines tab-->
+
+            <TabItem Header="Routes by bus line">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--headline of the list-->
+
+                    <Grid Grid.Row="0" VerticalAlignment="Bottom" Margin="27,0,20,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="200" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Bus Line ID" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Border>
+
+                        <Border Grid.Column="1" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
+                            <TextBlock  Text="Bus Stop Name" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                        </Border>
+                    </Grid>
+
+                    <!--List of bus lines-->
+
+                    <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
+                        <ListView Name ="lvRoute" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" Margin="0,0,0,-330">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="100" />
+                                            <ColumnDefinition Width="200" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1 1 1 1">
+                                            <TextBlock Name ="tbBusLineID" Text="{Binding Path = Key}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
+                                        </Border>
+
+                                        <Border Grid.Column="1" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
+                                            <ListView ItemsSource="{Binding Path = .}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" Margin="0,0,0,-330">
+                                                <ListView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid Margin="0,2">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="200" />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <Border Grid.Column="0" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
+                                                                <TextBlock Name ="tbBusStopName" Text="{Binding Path = 'BusStopName'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
+                                                            </Border>
+
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ListView.ItemTemplate>
+                                            </ListView>
+                                        </Border>
+
+
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -179,7 +250,7 @@
                     <!--List of bus stops-->
 
                     <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
-                        <ListView Name ="lbBusStops" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gainsboro" MouseDoubleClick="lBBusStops_MouseDoubleClick"  Margin="0,0,0,47">
+                        <ListView Name ="lvBusStops" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Gainsboro" MouseDoubleClick="lBBusStops_MouseDoubleClick"  Margin="0,0,0,47">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="0,2">
@@ -287,7 +358,7 @@
                     <!--List of buses-->
 
                     <Grid Grid.Row="1" VerticalAlignment="Stretch">
-                        <ListView Name ="lbBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="lBBuses_MouseDoubleClick" Margin="27,0,27,0">
+                        <ListView Name ="lvBuses" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" MouseDoubleClick="lBBuses_MouseDoubleClick" Margin="27,0,27,0">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="0,2">
@@ -356,7 +427,7 @@
                 </Grid>
             </TabItem>
 
-            <!--Statistics tab-->
+            <!--Statistics tab--><!--
 
             <TabItem Header="Statistics">
 
@@ -400,7 +471,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
-            </TabItem>
+            </TabItem>-->
 
 
 
