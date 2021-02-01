@@ -52,6 +52,7 @@ namespace PlGui
             lbBuses.DataContext = bl.GetAllBuses();
             lbBusStops.DataContext = bl.GetAllBusStops();
             lbBusLines.DataContext = bl.GetAllBusLines();
+            gStatistics.DataContext = bl.GetStats();
         }
 
 

@@ -52,6 +52,7 @@
     <Compile Include="BO\Enums.cs" />
     <Compile Include="BO\Exception.cs" />
     <Compile Include="BO\LineTiming.cs" />
+    <Compile Include="BO\Statistics.cs" />
     <Compile Include="BO\User.cs" />
     <Compile Include="DeepCopyUtilities.cs" />
     <Compile Include="IBL.cs" />

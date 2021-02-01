@@ -261,6 +261,13 @@ namespace BLApi
         /// <param name="timeUpdate"></param>
         /// <returns>True if the timeSpan is invalid, else - false</returns>
         bool isTimeSpanInvalid(TimeSpan timeUpdate);
+
+        /// <summary>
+        /// Statistics information
+        /// </summary>
+        /// <returns>Statistics object</returns>
+        Statistics GetStats();
+        
         #endregion
 
     }

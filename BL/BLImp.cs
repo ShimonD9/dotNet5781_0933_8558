@@ -1003,6 +1003,14 @@ namespace BL
             return (timeUpdate.Days > 0 || timeUpdate.Hours > 23 || timeUpdate.Minutes > 59 || timeUpdate.Seconds > 59);
         }
 
+        public Statistics GetStats()
+        {
+            Statistics Stats = new Statistics();
+            Stats.TotalOfBusStops = dl.GetAllBusStops().ToList().Count;
+            Stats.TotalOfCons = dl.GetAllConsecutiveStations().ToList().Count;
+            return Stats;
+        }
+
         #endregion
     }
 }
