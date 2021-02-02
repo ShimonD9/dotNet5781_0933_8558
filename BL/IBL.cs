@@ -246,12 +246,13 @@ namespace BLApi
         IEnumerable<LineTiming> GetLineTimingsPerStation(BusStop currBusStation, TimeSpan tsCurrentTime);
 
         /// <summary>
-        /// Finds the last departrue time of a bus line given the bus line ID and the current time
+        /// Finds the closest last departrue time of a bus line given the bus line ID and the current time and the total time to a given bus stop 
         /// </summary>
         /// <param name="busLineID"></param>
         /// <param name="tsCurrentTime"></param>
-        /// <returns>The time span of the last departure time</returns>
-        TimeSpan FindLastDepartureTime(int busLineID, TimeSpan tsCurrentTime);
+        /// <param name="totalTravel"></param>
+        /// <returns>Closest last departure in time span</returns>
+        TimeSpan FindLastDepartureTime(int busLineID, TimeSpan tsCurrentTime, TimeSpan totalTravel);
 
         /// <summary>
         /// Calculates the travel time from the first station of a given bus line ID to the given bus stop code

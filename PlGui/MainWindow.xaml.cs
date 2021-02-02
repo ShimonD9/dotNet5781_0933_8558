@@ -92,7 +92,7 @@ namespace PlGui
                     if (cbHuman.IsChecked == false)
                     {
                         spInfo.Visibility = Visibility.Visible; // The info label made visible with the appropriate info
-                        lblInfo.Content = "So... are you a zombie?";
+                        lblInfo.Content = "So... are you a robot?";
                     }
                     else
                     {
@@ -179,7 +179,7 @@ namespace PlGui
                             if (cbHuman.IsChecked == false)
                             {
                                 spInfo.Visibility = Visibility.Visible;
-                                lblInfo.Content = "So... are you a zombie?";
+                                lblInfo.Content = "So... are you a robot?";
                             }
                             // Starts the sign up proccess - creates a BO.User, initializing it and sends it to bl.AddUser
                             else

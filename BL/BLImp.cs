@@ -912,8 +912,9 @@ namespace BL
             {
                 BO.BusStop busStop = GetBusStop(currBusStop.BusStopKey);
                 IEnumerable<LineTiming> stationTimings = from lineAtStop in busStop.LinesStopHere
-                                                         let depTime = FindLastDepartureTime(lineAtStop.BusLineID, tsCurrentTime)
-                                                         let timeLeft = depTime.Add(lineAtStop.TravelTimeToBusStop).Subtract(tsCurrentTime)
+                                                         let totalTravel = lineAtStop.TravelTimeToBusStop
+                                                         let depTime = FindLastDepartureTime(lineAtStop.BusLineID, tsCurrentTime, totalTravel)                                                         
+                                                         let timeLeft = depTime.Add(totalTravel).Subtract(tsCurrentTime)
                                                          where timeLeft.Hours == 0 && timeLeft.Minutes > -5 // It means the bus is late or passed maximum by 5 minutes, but only buses in a margin of one hour will be showed
                                                          select new LineTiming
                                                          {
@@ -937,14 +938,14 @@ namespace BL
             }
         }
 
-        public TimeSpan FindLastDepartureTime(int busLineID, TimeSpan tsCurrentTime)
+        public TimeSpan FindLastDepartureTime(int busLineID, TimeSpan tsCurrentTime, TimeSpan totalTravel)
         {
             try
             {
                 // Linq query for the departure times of the desired bus line
-                var collection = (from lineDeparture in dl.GetAllLineDeparture()
+                var collection = from lineDeparture in dl.GetAllLineDeparture()
                                   where lineDeparture.BusLineID == busLineID
-                                  select lineDeparture);
+                                  select lineDeparture;
 
 
                 if (collection.Count() == 0)            // It means the line has no departure times (yet, or by manager accident)
@@ -952,14 +953,15 @@ namespace BL
 
                 else
                 {
-                    var collB = collection.OrderBy(x => tsCurrentTime.Subtract(x.DepartureTime)); // Orders the departure times by the closest to the current time 
+                    var collB = collection.OrderBy(x => x.DepartureTime); // Orders the departure times by the departure time field
 
-                    DO.LineDeparture lastDep = new DO.LineDeparture();
-                    lastDep = collB.FirstOrDefault(x => tsCurrentTime.Subtract(x.DepartureTime).CompareTo(TimeSpan.Zero) > 0); // Takes the first one (the closest departure time)
-                    if (lastDep == null)                    // If there is no such departure time
-                        return TimeSpan.FromMinutes(-1000); // As explained above
+                    DO.LineDeparture closestDep = new DO.LineDeparture();
+                    // Takes the first one (the closest arrival time) by adding the total travel and subtracting the current time, and then taking the first one which is close by 5 minutes late
+                    closestDep = collB.FirstOrDefault(x => (x.DepartureTime.Add(totalTravel)).Subtract(tsCurrentTime).CompareTo(TimeSpan.FromMinutes(-5)) > 0); 
+                    if (closestDep == null)                    // If there is no such departure time
+                        return TimeSpan.FromMinutes(-1000);     // As explained above
                     else
-                        return lastDep.DepartureTime;       // Returns the departure time
+                        return closestDep.DepartureTime;       // Returns the departure time
                 }
             }
             catch (DO.ExceptionDAL_KeyNotFound ex)
