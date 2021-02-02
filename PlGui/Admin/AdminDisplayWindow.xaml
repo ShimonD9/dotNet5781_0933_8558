@@ -140,26 +140,39 @@
 
                     <!--List of bus lines-->
 
-                    <Grid Name="lvAreas" VerticalAlignment="Top" Margin="20,20,20,20" HorizontalAlignment="Center">
+                    <Grid Name="lvAreas" VerticalAlignment="Top" Margin="20,20,20,20" HorizontalAlignment="Stretch">
                         <TreeView ItemsSource="{Binding}" Background="Gainsboro">
                             <TreeView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="auto" />
                                         </Grid.ColumnDefinitions>
 
                                         <Border Grid.Column="0" ToolTip="Area" BorderBrush="Black" BorderThickness="1 1 1 1">
                                             <TextBlock Name ="tbBusLineID" Text="{Binding Path = Key}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" TextAlignment="Center" />
                                         </Border>
 
-                                        <Border Grid.Column="1" ToolTip="Bus line ID"  BorderBrush="Black" BorderThickness="1 1 1 1">
+                                        <Border Grid.Column="1"  BorderBrush="Black" BorderThickness="1 1 1 1">
 
-                                            <ListView ItemsSource="{Binding Path = .}" Background="LemonChiffon" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  MouseDoubleClick="lBBusLines_MouseDoubleClick">
+                                            <ListView ItemsSource="{Binding Path = .}" Background="LemonChiffon" HorizontalAlignment="Center" VerticalAlignment="Stretch"  MouseDoubleClick="lBBusLines_MouseDoubleClick">
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Path = BusLineID}" FontSize="12" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center" />
+                                                        <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="100" />
+                                                                <ColumnDefinition Width="100" />
+                                                               </Grid.ColumnDefinitions>
+
+                                                            <Border Grid.Column="0" ToolTip="Bus line ID"  BorderBrush="Black" BorderThickness="1 1 1 1">
+                                                            <TextBlock Name ="tbBusLineID" Text="{Binding Path = 'BusLineID'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
+                                                        </Border>
+
+                                                            <Border Grid.Column="1" ToolTip="Bus line Number" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
+                                                                <TextBlock Name ="tbBusLineNumber" Text="{Binding Path = 'BusLineNumber'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
+                                                            </Border>
+                                                        </Grid>
                                                     </DataTemplate>
                                                 </ListView.ItemTemplate>
                                             </ListView>
@@ -352,11 +365,11 @@
                                             <ColumnDefinition Width="50" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Column="0" BorderBrush="Black" Background="{Binding Path='StatusColor'}" BorderThickness="1 1 1 1">
+                                        <Border Grid.Column="0" BorderBrush="Black"  Background="LemonChiffon" BorderThickness="1 1 1 1">
                                             <TextBlock Name ="tbLicense" Text="{Binding Path = 'License'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
                                         </Border>
 
-                                        <Border Grid.Column="1" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
+                                        <Border Grid.Column="1" BorderBrush="Black"  BorderThickness="0 1 1 1">
                                             <ProgressBar Name ="pbFuel" Foreground="SeaGreen" Value="{Binding Path='Fuel'}" BorderThickness="1" Minimum="0" Maximum="1200" Margin="10"/>
                                         </Border>
 
@@ -364,11 +377,11 @@
                                             <TextBlock Name ="tbFuel" FontSize="20" Text="{Binding Path='Fuel'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Grid.Column="1" Margin="5"/>
                                         </Border>
 
-                                        <Border Grid.Column="2" BorderBrush="Black"  Background="LemonChiffon" BorderThickness="0 1 1 1">
+                                        <Border Grid.Column="2" BorderBrush="Black"   BorderThickness="0 1 1 1">
                                             <TextBlock Name ="tbMileage" FontSize="16" Text="{Binding Path='Mileage'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
                                         </Border>
 
-                                        <Border Grid.Column="3" BorderBrush="Black" Background="LemonChiffon" BorderThickness="0 1 1 1">
+                                        <Border Grid.Column="3" BorderBrush="Black"  BorderThickness="0 1 1 1">
                                             <TextBlock Name ="tbLastTreatmentDate" FontSize="16" Text="{Binding Path='LastTreatmentDate'}" HorizontalAlignment="Stretch" TextAlignment="Center" Grid.Column="1" Margin="10"/>
                                         </Border>
 

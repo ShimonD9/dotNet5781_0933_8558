@@ -20,6 +20,7 @@
         <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label" x:Key="TitleText">
             <Setter Property="FontSize" Value="35"/>
             <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontFamily" Value="Constantia"/>
             <Setter Property="Foreground">
                 <Setter.Value>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
