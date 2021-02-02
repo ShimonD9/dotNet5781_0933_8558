@@ -80,10 +80,10 @@ namespace BLApi
         void DeleteBusLineStation(int busLineID, int busStopCode, TimeSpan gapTimeUpdate, double gapKmUpdate);
 
         /// <summary>
-        /// Groups a route by its line id
+        /// Groups bus lines by their area
         /// </summary>
-        /// <returns>A collection of grouping by id and bus line station</returns>
-        IEnumerable<IGrouping<int, BusLineStation>> RouteByLine();
+        /// <returns>A collection of bus lines grouped by the area key</returns>
+        IEnumerable<IGrouping<BO.Enums.AREA, BusLine>> GetLineByArea();
 
         #endregion
 

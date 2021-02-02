@@ -464,11 +464,11 @@ namespace BL
             }
         }
        
-        public IEnumerable<IGrouping<int, BusLineStation>> RouteByLine()
+        public IEnumerable<IGrouping<BO.Enums.AREA, BusLine>> GetLineByArea()
         {
-            return from b in GetAllBusLineStations()
-                       orderby b.LineStationIndex
-                       group b by b.BusLineID into g
+            return from b in GetAllBusLines()
+                       orderby b.BusLineNumber // Orders by the bus line number
+                       group b by b.Area into g // Groups by Area
                        select g;
         }
         #endregion

@@ -52,7 +52,7 @@ namespace PlGui
             lvBuses.DataContext = bl.GetAllBuses();
             lvBusStops.DataContext = bl.GetAllBusStops();
             lvBusLines.DataContext = bl.GetAllBusLines();
-            lvRoute.DataContext = bl.RouteByLine();
+            lvAreas.DataContext = bl.GetLineByArea();
         }
 
 

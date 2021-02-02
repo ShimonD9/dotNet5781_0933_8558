@@ -127,13 +127,13 @@
             </TabItem>
 
 
-            <!--Routes by bus lines tab-->
+            <!--Lines by area tab-->
 
-            <TabItem Header="Routes by bus line">
+            <TabItem Header="Bus Lines by Area">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.2*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
                     <!--headline of the list-->
@@ -145,18 +145,18 @@
                         </Grid.ColumnDefinitions>
 
                         <Border Grid.Column="0" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                            <TextBlock  Text="Bus Line ID" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                            <TextBlock  Text="Area" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
                         </Border>
 
                         <Border Grid.Column="1" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                            <TextBlock  Text="Bus Stop Name" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                            <TextBlock  Text="Bus Line Number" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
                         </Border>
                     </Grid>
 
                     <!--List of bus lines-->
 
                     <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
-                        <ListView Name ="lvRoute" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" Margin="0,0,0,-330">
+                        <ListView Name ="lvAreas" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" Margin="0,0,0,-330">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Margin="0,2">
@@ -170,16 +170,16 @@
                                         </Border>
 
                                         <Border Grid.Column="1" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
-                                            <ListView ItemsSource="{Binding Path = .}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" Margin="0,0,0,-330">
+                                            <ListView ItemsSource="{Binding Path = .}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" Margin="0,0,0,-330" MouseDoubleClick="lBBusLines_MouseDoubleClick">
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate>
                                                         <Grid Margin="0,2">
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="200" />
                                                             </Grid.ColumnDefinitions>
-
+                                                            
                                                             <Border Grid.Column="0" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
-                                                                <TextBlock Name ="tbBusStopName" Text="{Binding Path = 'BusStopName'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
+                                                                <TextBlock Text="{Binding Path = 'BusLineNumber'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
                                                             </Border>
 
                                                         </Grid>
@@ -187,8 +187,6 @@
                                                 </ListView.ItemTemplate>
                                             </ListView>
                                         </Border>
-
-
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
