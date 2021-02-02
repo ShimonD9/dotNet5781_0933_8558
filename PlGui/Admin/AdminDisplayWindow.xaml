@@ -155,7 +155,7 @@
                                         </Border>
 
                                         <Border Grid.Column="1"  BorderBrush="Black" BorderThickness="1 1 1 1">
-
+                                            <Expander>
                                             <ListView ItemsSource="{Binding Path = .}" Background="LemonChiffon" HorizontalAlignment="Center" VerticalAlignment="Stretch"  MouseDoubleClick="lBBusLines_MouseDoubleClick">
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate>
@@ -176,6 +176,7 @@
                                                     </DataTemplate>
                                                 </ListView.ItemTemplate>
                                             </ListView>
+                                            </Expander>
                                         </Border>
                                     </Grid>
                                 </DataTemplate>
