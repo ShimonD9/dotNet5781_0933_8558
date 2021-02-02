@@ -120,9 +120,11 @@
                         </ListView>
                     </Grid>
 
-                    <Grid Grid.Row="2" VerticalAlignment="Stretch" Margin="20,0,20,46">
-                        <Button Name ="AddBusLine"  Content="Add a new bus line" Cursor="Hand" FontSize="16" FontWeight="Bold"  Click="button_OpenAddBusLineWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="161" Margin="304,3,283,3" />
-                    </Grid>
+
+
+                    <StackPanel Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
+                        <Button Name ="AddBusLine"  Content="Add a new bus line" Cursor="Hand" FontSize="16" FontWeight="Bold"  Click="button_OpenAddBusLineWindow" HorizontalAlignment="Center" VerticalAlignment="Center" Height="62" Width="161" />
+                    </StackPanel>
                 </Grid>
             </TabItem>
 
@@ -133,64 +135,44 @@
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
 
-                    <!--headline of the list-->
-
-                    <Grid Grid.Row="0" VerticalAlignment="Bottom" Margin="27,0,20,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="200" />
-                        </Grid.ColumnDefinitions>
-
-                        <Border Grid.Column="0" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                            <TextBlock  Text="Area" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                        </Border>
-
-                        <Border Grid.Column="1" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                            <TextBlock  Text="Bus Line Number" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                        </Border>
-                    </Grid>
 
                     <!--List of bus lines-->
 
-                    <Grid Grid.Row="1" VerticalAlignment="Top" Margin="20,0,20,0">
-                        <ListView Name ="lvAreas" ItemsSource="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" Margin="0,0,0,-330">
-                            <ListView.ItemTemplate>
+                    <Grid Name="lvAreas" VerticalAlignment="Top" Margin="20,20,20,20" HorizontalAlignment="Center">
+                        <TreeView ItemsSource="{Binding}" Background="Gainsboro">
+                            <TreeView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Margin="0,2">
+                                    <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="50" />
                                         </Grid.ColumnDefinitions>
 
-                                        <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1 1 1 1">
-                                            <TextBlock Name ="tbBusLineID" Text="{Binding Path = Key}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
+                                        <Border Grid.Column="0" ToolTip="Area" BorderBrush="Black" BorderThickness="1 1 1 1">
+                                            <TextBlock Name ="tbBusLineID" Text="{Binding Path = Key}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" TextAlignment="Center" />
                                         </Border>
 
-                                        <Border Grid.Column="1" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
-                                            <ListView ItemsSource="{Binding Path = .}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Gainsboro" Margin="0,0,0,-330" MouseDoubleClick="lBBusLines_MouseDoubleClick">
+                                        <Border Grid.Column="1" ToolTip="Bus line ID"  BorderBrush="Black" BorderThickness="1 1 1 1">
+
+                                            <ListView ItemsSource="{Binding Path = .}" Background="LemonChiffon" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  MouseDoubleClick="lBBusLines_MouseDoubleClick">
                                                 <ListView.ItemTemplate>
                                                     <DataTemplate>
-                                                        <Grid Margin="0,2">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="200" />
-                                                            </Grid.ColumnDefinitions>
-                                                            
-                                                            <Border Grid.Column="0" BorderBrush="Black" Background="LemonChiffon"  BorderThickness="0 1 1 1">
-                                                                <TextBlock Text="{Binding Path = 'BusLineNumber'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" FontWeight="Bold" TextAlignment="Center" />
-                                                            </Border>
-
-                                                        </Grid>
+                                                        <TextBlock Text="{Binding Path = BusLineID}" FontSize="12" FontWeight="Bold" TextAlignment="Center" HorizontalAlignment="Center" />
                                                     </DataTemplate>
                                                 </ListView.ItemTemplate>
                                             </ListView>
                                         </Border>
                                     </Grid>
                                 </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                            </TreeView.ItemTemplate>
+                            <TreeView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Background="Transparent" Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </TreeView.ItemsPanel>
+                        </TreeView>
                     </Grid>
                 </Grid>
             </TabItem>

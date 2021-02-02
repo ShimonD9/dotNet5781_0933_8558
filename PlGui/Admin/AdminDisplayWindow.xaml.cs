@@ -38,7 +38,6 @@ namespace PlGui
             lvBusLines.DataContext = bl.GetAllBusLines();
         }
 
-
         /// <summary>
         /// Window ctor which get and displays Admin's user name (a feature)
         /// </summary>
@@ -234,5 +233,6 @@ namespace PlGui
             mainWindow.Show();
             this.Close();
         }
+
     }
 }

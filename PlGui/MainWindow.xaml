@@ -24,8 +24,8 @@
                 <Setter.Value>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                         <LinearGradientBrush.GradientStops>
-                            <GradientStop Offset="0.0" Color="Gray" />
-                            <GradientStop Offset="0.4" Color="Black" />
+                            <GradientStop Offset="0.1" Color="CornflowerBlue" />
+                            <GradientStop Offset="0.5" Color="Black" />
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
                 </Setter.Value>
@@ -50,28 +50,28 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Border  Grid.Row="0"  BorderBrush="Black" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="7">
+        <Border  Grid.Row="0"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="7">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Ross Bus Company Ltd." Style="{StaticResource TitleText}"/>
         </Border>
         
         <!--User Name-->
         <StackPanel HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal" Margin="49,0,83,0" Width="304">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center"  VerticalContentAlignment="Top" Content="Enter user name:" FontSize="20" FontWeight="SemiBold"/>
-            <TextBox Name="tbUserName"  HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="14" Width="100" Margin="5,0,0,0"/>
+            <TextBox Name="tbUserName" Background="Transparent" BorderBrush="Black" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"  FontSize="16" Width="100" Margin="5,0,0,0"/>
         </StackPanel>
 
         <!--User Password-->
         <StackPanel HorizontalAlignment="Center" Grid.Row="2" Orientation="Horizontal" Margin="49,0,80,0" Width="307">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Content="Enter password:" FontSize="20" FontWeight="SemiBold"/>
-            <PasswordBox x:Name="pbPassword" Visibility="Visible" HorizontalAlignment="Center" FontSize="14" VerticalAlignment="Center" Width="100"  Margin="13,0,0,0"/>
-            <TextBox x:Name="tbPasswordShow" Visibility="Collapsed" HorizontalAlignment="Center"  FontSize="14" VerticalAlignment="Center" Width="100" Margin="13,0,0,0"/>
-            <Image  Source="/PlGui;component/Images/eye.png" IsEnabled="True" Cursor="Hand" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="25" Height="25" Margin="10" MouseLeave="image_MouseLeave" MouseLeftButtonDown="image_MouseEnter"/>
+            <PasswordBox x:Name="pbPassword" Background="Transparent" BorderBrush="Black"  Visibility="Visible" HorizontalAlignment="Center" FontSize="14" VerticalAlignment="Center" Width="100"  Margin="13,0,0,0"/>
+            <TextBox x:Name="tbPasswordShow" Background="Transparent" BorderBrush="Black"  Visibility="Collapsed" HorizontalAlignment="Center"  FontSize="14" VerticalAlignment="Center" Width="100" Margin="13,0,0,0"/>
+            <Image  Source="/PlGui;component/Images/eye.png" IsEnabled="True" Cursor="Hand" ToolTip="Show the password" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="25" Height="25" Margin="10" MouseLeave="image_MouseLeave" MouseLeftButtonDown="image_MouseEnter"/>
         </StackPanel>
 
         <!--Repeat Password-->
         <StackPanel Name="spRepeatPassword" HorizontalAlignment="Center" Visibility="Collapsed" Grid.Row="3" Orientation="Horizontal"  Margin="49,0,40,0" Width="347">
             <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Repeat password:" FontSize="18" FontWeight="SemiBold"/>
-            <PasswordBox Name="pbRepeatPassword" Visibility="Visible" HorizontalAlignment="Center" FontSize="14" VerticalAlignment="Center" Width="100"/>
+            <PasswordBox Name="pbRepeatPassword" Background="Transparent" BorderBrush="Black"  Visibility="Visible" HorizontalAlignment="Center" FontSize="14" VerticalAlignment="Center" Width="100"/>
             <Button x:Name="bCancel" Width="67" Height="40" Margin="10,0,0,0" Content="Cancel"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Cursor="Hand" Click="buttonCancel_Click"/>
         </StackPanel>
 
