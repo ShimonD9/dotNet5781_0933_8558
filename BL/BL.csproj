@@ -44,7 +44,6 @@
     <Compile Include="BlFactory.cs" />
     <Compile Include="BLImp.cs" />
     <Compile Include="BO\Bus.cs" />
-    <Compile Include="BO\BusAtTravel.cs" />
     <Compile Include="BO\BusLine.cs" />
     <Compile Include="BO\BusLineAtBusStop.cs" />
     <Compile Include="BO\BusLineStation.cs" />
