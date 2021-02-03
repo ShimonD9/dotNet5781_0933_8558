@@ -33,9 +33,6 @@ namespace PlGui
         public AdminDisplayWindow()
         {
             InitializeComponent();
-            lvBuses.DataContext = bl.GetAllBuses();
-            lvBusStops.DataContext = bl.GetAllBusStops();
-            lvBusLines.DataContext = bl.GetAllBusLines();
         }
 
         /// <summary>
@@ -52,6 +49,7 @@ namespace PlGui
             lvBusStops.DataContext = bl.GetAllBusStops();
             lvBusLines.DataContext = bl.GetAllBusLines();
             lvAreas.DataContext = bl.GetLineByArea();
+            gStatistics.DataContext = bl.GetStats();
         }
 
 
@@ -72,7 +70,7 @@ namespace PlGui
                     BusDetailsWindow busDetailsWindow = new BusDetailsWindow(item);
                     busDetailsWindow.ShowDialog();
                     lvBuses.ItemsSource = bl.GetAllBuses(); // Updates the list view
-
+                    gStatistics.DataContext = bl.GetStats(); // Updates the statistics tab
                 }
             }
         }
@@ -89,6 +87,7 @@ namespace PlGui
                 AddBusWindow addBusWindow = new AddBusWindow(); // Creates the new window, and then shows it
                 addBusWindow.ShowDialog();
                 lvBuses.ItemsSource = bl.GetAllBuses();
+                gStatistics.DataContext = bl.GetStats(); // Updates the statistics tab
             }
         }
 
@@ -155,6 +154,8 @@ namespace PlGui
                     BusLineDetailsWindow busLineDetailsWindow = new BusLineDetailsWindow(item);
                     busLineDetailsWindow.ShowDialog();
                     lvBusLines.ItemsSource = bl.GetAllBusLines();  // Updates the list view
+                    lvAreas.DataContext = bl.GetLineByArea(); // Updates the line by area tab
+                    gStatistics.DataContext = bl.GetStats(); // Updates the statistics tab
                 }
             }
         }
@@ -170,7 +171,9 @@ namespace PlGui
             {
                 AddBusLineWindow addBusLineWindow = new AddBusLineWindow(); // Creates the new window, and then shows it
                 addBusLineWindow.ShowDialog();
-                lvBusLines.ItemsSource = bl.GetAllBusLines();
+                lvBusLines.ItemsSource = bl.GetAllBusLines();  // Updates the list view
+                lvAreas.DataContext = bl.GetLineByArea(); // Updates the line by area tab
+                gStatistics.DataContext = bl.GetStats(); // Updates the statistics tab
             }
         }
         #endregion
@@ -192,6 +195,8 @@ namespace PlGui
                     BusStopDetailsWindow busStopDetailsWindow = new BusStopDetailsWindow(item);
                     busStopDetailsWindow.ShowDialog();
                     lvBusStops.ItemsSource = bl.GetAllBusStops();  // Updates the list view
+                    gStatistics.DataContext = bl.GetStats(); // Updates the statistics tab
+
                 }
             }
         }
@@ -207,7 +212,8 @@ namespace PlGui
             {
                 AddBusStopWindow addBusStopWindow = new AddBusStopWindow(); // Creates the new window, and then shows it
                 addBusStopWindow.ShowDialog();
-                lvBusStops.ItemsSource = bl.GetAllBusStops();
+                lvBusStops.ItemsSource = bl.GetAllBusStops();  // Updates the list view
+                gStatistics.DataContext = bl.GetStats(); // Updates the statistics tab
             }
         }
         #endregion

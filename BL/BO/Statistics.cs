@@ -10,6 +10,8 @@ namespace BO
     {
         public int TotalOfCons { get; set; }
         public int TotalOfBusStops { get; set; }
+        public int TotalOfBuses { get; set; }
+        public int TotalOfBusLines { get; set; }
 
         /// <summary>
         /// Formats a string which represents the Statistics object

@@ -1017,6 +1017,8 @@ namespace BL
             Statistics Stats = new Statistics();
             Stats.TotalOfBusStops = dl.GetAllBusStops().ToList().Count;
             Stats.TotalOfCons = dl.GetAllConsecutiveStations().ToList().Count;
+            Stats.TotalOfBuses = dl.GetAllBuses().ToList().Count;
+            Stats.TotalOfBusLines = dl.GetAllBusLines().ToList().Count;
             return Stats;
         }
 

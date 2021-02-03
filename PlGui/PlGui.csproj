@@ -175,9 +175,7 @@
   <ItemGroup>
     <Resource Include="Images\busRepair.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PO\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\eye.png" />
   </ItemGroup>

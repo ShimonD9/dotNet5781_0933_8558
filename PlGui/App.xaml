@@ -4,7 +4,18 @@
              xmlns:local="clr-namespace:PlGui"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
+        <Style TargetType="{x:Type Ellipse}">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Width" Value="10"/>
+            <Setter Property="Fill">
+                <Setter.Value>
+                        <LinearGradientBrush EndPoint="1.7,0.603" StartPoint="0.3,0.603">
+                            <GradientStop Color="White" Offset="1"/>
+                            <GradientStop Color="CadetBlue" Offset="0.009"/>
+                        </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#373737" />

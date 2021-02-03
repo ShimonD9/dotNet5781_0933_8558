@@ -421,7 +421,7 @@
                 </Grid>
             </TabItem>
 
-            <!--Statistics tab--><!--
+            <!--Statistics tab-->
 
             <TabItem Header="Statistics">
 
@@ -437,14 +437,14 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0" Margin="10">
-                            <Ellipse Fill="#FFF4F4F5" Height="218" Stroke="Black" Width="304" Canvas.Left="38" Canvas.Top="42"/>
-                            <TextBlock Text="Consecutive Stations" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="50"/>
-                            <TextBlock Text="{Binding Path = 'TotalOfCons'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxWidth="100" FontSize="40" Margin="50"/>
+                            <Ellipse Width="304" Canvas.Left="38" Canvas.Top="42"/>
+                            <TextBlock Text="Bus Lines" TextDecorations="Underline" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="50"/>
+                            <TextBlock Text="{Binding Path = 'TotalOfBusLines'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxWidth="100" FontSize="40" Margin="50"/>
                         </Grid>
                         <Grid Grid.Column="1" Margin="10">
-                            <Ellipse Fill="#FFF4F4F5" Height="218" Stroke="Black" Width="304" Canvas.Left="38" Canvas.Top="42"/>
-                            <TextBlock Text="Line Stations" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="50"/>
-                            <TextBlock Text="{Binding Path = 'TotalOfStations'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxWidth="100" FontSize="40" Margin="50"/>
+                            <Ellipse Width="304" Canvas.Left="38" Canvas.Top="42"/>
+                            <TextBlock Text="Consecutive Stations" TextDecorations="Underline" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="50"/>
+                            <TextBlock Text="{Binding Path = 'TotalOfCons'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxWidth="100" FontSize="40" Margin="50"/>
                         </Grid>
                     </Grid>
 
@@ -454,18 +454,18 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0" Margin="10">
-                            <Ellipse Fill="#FFF4F4F5" Height="218" Stroke="Black" Width="304" Canvas.Left="38" Canvas.Top="42"/>
-                            <TextBlock Text="Bus Stops" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="50"/>
+                            <Ellipse Width="304" Canvas.Left="38" Canvas.Top="42"/>
+                            <TextBlock Text="Bus Stops" TextDecorations="Underline" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="50"/>
                             <TextBlock Text="{Binding Path = 'TotalOfBusStops'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxWidth="100" FontSize="40" Margin="50"/>
                         </Grid>
                         <Grid Grid.Column="1" Margin="10">
-                            <Ellipse Fill="#FFF4F4F5" Height="218" Stroke="Black" Width="304" Canvas.Left="38" Canvas.Top="42"/>
-                            <TextBlock Text="Stations per line:" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="50"/>
-                            <TextBlock Text="{Binding Path = 'StationsPerLineAvrg'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxWidth="100" FontSize="40" Margin="50"/>
+                            <Ellipse Width="304" Canvas.Left="38" Canvas.Top="42"/>
+                            <TextBlock Text="Buses" TextDecorations="Underline" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="50"/>
+                            <TextBlock Text="{Binding Path = 'TotalOfBuses'}" HorizontalAlignment="Center" VerticalAlignment="Bottom" MaxWidth="100" FontSize="40" Margin="50"/>
                         </Grid>
                     </Grid>
                 </Grid>
-            </TabItem>-->
+            </TabItem>
 
 
 
