@@ -80,7 +80,7 @@
                                     </Border>
 
                                     <Border Grid.Column="1" BorderBrush="Black" Background="PapayaWhip" BorderThickness="0 1 1 1">
-                                        <TextBlock  Text="Bus Stop Name" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="13" FontWeight="Bold"/>
+                                        <TextBlock  Text="Bus Stop Name" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold"/>
                                     </Border>
 
                                     <Border Grid.Column="2" BorderBrush="Black" Background="PapayaWhip" BorderThickness="0 1 1 1">

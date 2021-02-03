@@ -252,12 +252,12 @@ namespace BL
                 if (newStation.PrevStation == 0 && newStation.NextStation != 0) // Indicates the new station is added to the head
                 {
                     // Updates the prevStation property of the head station by action update:
-                    dl.UpdateBusLineStation(lineID, newStation.NextStation, x => x.PrevStation = newStation.BusStopKey); 
+                    dl.UpdateBusLineStation(lineID, newStation.NextStation, x => x.PrevStation = newStation.BusStopKey);
 
                     // Adding the consecutive stations entity if needed (if it's different from zero, it means the admin has been requested to fill the gap)
                     if (newStation.DistanceToNext != 0 && newStation.TimeToNext != TimeSpan.FromMinutes(0))
                     {
-                        DO.ConsecutiveStations newCons = new DO.ConsecutiveStations(); 
+                        DO.ConsecutiveStations newCons = new DO.ConsecutiveStations();
                         newCons.BusStopKeyA = newStation.BusStopKey;
                         newCons.BusStopKeyB = newStation.NextStation;
                         newCons.Distance = newStation.DistanceToNext;
@@ -289,7 +289,7 @@ namespace BL
                 }
 
                 // The station added to the middle of the route:
-                else if (newStation.PrevStation != 0 && newStation.NextStation != 0) 
+                else if (newStation.PrevStation != 0 && newStation.NextStation != 0)
                 {
                     // Gets the stations on the both sides of the new added station:
                     DO.BusLineStation prevStation = dl.GetBusLineStation(lineID, newStation.PrevStation);
@@ -340,8 +340,8 @@ namespace BL
                 // The query gets all the bus line stations which indices are bigger than ther one needed to be added:
                 var collection = (from station
                             in dl.GetAllBusLineStations()
-                             where station.BusLineID == lineID && station.LineStationIndex >= indexAdded 
-                             select station).ToList();
+                                  where station.BusLineID == lineID && station.LineStationIndex >= indexAdded
+                                  select station).ToList();
 
                 // Updates the bus line stations collection with action of updating the index UP by 1
                 foreach (DO.BusLineStation station in collection)
@@ -382,15 +382,15 @@ namespace BL
                 }
 
                 // The station to be deleted is the first one, updates the previous station field of the next to the deleted one, via action:
-                else if (currentStation.PrevStation == 0 && currentStation.NextStation != 0) 
+                else if (currentStation.PrevStation == 0 && currentStation.NextStation != 0)
                 {
                     dl.UpdateBusLineStation(busLineID, currentStation.NextStation, station => station.PrevStation = 0);
                     dl.UpdateBusLine(busLineID, x => x.FirstBusStopKey = currentStation.NextStation); // Updates the bus line itself (first bus stop field)
                 }
 
                 // The station to be deleted is the last one, updates the next station field of the previous to the deleted one, via action:
-                else if (currentStation.PrevStation != 0 && currentStation.NextStation == 0) 
-                { 
+                else if (currentStation.PrevStation != 0 && currentStation.NextStation == 0)
+                {
                     dl.UpdateBusLineStation(busLineID, currentStation.PrevStation, station => station.NextStation = 0);
                     dl.UpdateBusLine(busLineID, x => x.LastBusStopKey = currentStation.PrevStation);  // Updates the bus line itself (last bus stop field)
                 }
@@ -431,7 +431,7 @@ namespace BL
                 // A deletion of consecutive stations, is enabling the admin to UPDATE THE CONSECUTIVE later, if he wishs the add the bus line station again.
                 // Therefore, if the admins wishs to update a consecutive stations object, he must delete all the line stations which creating the consecutive stations, before adding it with the updated time and distance
                 // (The logic is simple - if the station is in use by other line, it is problematic to update the distance and time 'without a warning'. The stations should be removed and added again from all the lines and then added again as updated.)
-                
+
                 // If the station to deleted is in the middle
                 if (currentStation.PrevStation != 0 && currentStation.NextStation != 0)
                 {
@@ -463,13 +463,15 @@ namespace BL
                 throw new BO.ExceptionBL_Inactive("bus station is already inactive", ex);
             }
         }
-       
+
+
+
         public IEnumerable<IGrouping<BO.Enums.AREA, BusLine>> GetLineByArea()
         {
             return from b in GetAllBusLines()
-                       orderby b.BusLineNumber // Orders by the bus line number
-                       group b by b.Area into g // Groups by Area
-                       select g;
+                   orderby b.BusLineNumber // Orders by the bus line number
+                   group b by b.Area into g // Groups by Area
+                   select g;
         }
         #endregion
 
@@ -857,8 +859,8 @@ namespace BL
 
         public IEnumerable<User> GetAllUsers()
         {
-            return from doUser 
-                   in dl.GetAllUsers() 
+            return from doUser
+                   in dl.GetAllUsers()
                    select userDoBoAdapter(doUser); // Returns all the users by dl, adapting it to BO
         }
 
@@ -913,7 +915,7 @@ namespace BL
                 BO.BusStop busStop = GetBusStop(currBusStop.BusStopKey);
                 IEnumerable<LineTiming> stationTimings = from lineAtStop in busStop.LinesStopHere
                                                          let totalTravel = lineAtStop.TravelTimeToBusStop
-                                                         let depTime = FindLastDepartureTime(lineAtStop.BusLineID, tsCurrentTime, totalTravel)                                                         
+                                                         let depTime = FindLastDepartureTime(lineAtStop.BusLineID, tsCurrentTime, totalTravel)
                                                          let timeLeft = depTime.Add(totalTravel).Subtract(tsCurrentTime)
                                                          where timeLeft.Hours == 0 && timeLeft.Minutes > -5 // It means the bus is late or passed maximum by 5 minutes, but only buses in a margin of one hour will be showed
                                                          select new LineTiming
@@ -944,8 +946,8 @@ namespace BL
             {
                 // Linq query for the departure times of the desired bus line
                 var collection = from lineDeparture in dl.GetAllLineDeparture()
-                                  where lineDeparture.BusLineID == busLineID
-                                  select lineDeparture;
+                                 where lineDeparture.BusLineID == busLineID
+                                 select lineDeparture;
 
 
                 if (collection.Count() == 0)            // It means the line has no departure times (yet, or by manager accident)
@@ -957,7 +959,7 @@ namespace BL
 
                     DO.LineDeparture closestDep = new DO.LineDeparture();
                     // Takes the first one (the closest arrival time) by adding the total travel and subtracting the current time, and then taking the first one which is close by 5 minutes late
-                    closestDep = collB.FirstOrDefault(x => (x.DepartureTime.Add(totalTravel)).Subtract(tsCurrentTime).CompareTo(TimeSpan.FromMinutes(-5)) > 0); 
+                    closestDep = collB.FirstOrDefault(x => (x.DepartureTime.Add(totalTravel)).Subtract(tsCurrentTime).CompareTo(TimeSpan.FromMinutes(-5)) > 0);
                     if (closestDep == null)                    // If there is no such departure time
                         return TimeSpan.FromMinutes(-1000);     // As explained above
                     else

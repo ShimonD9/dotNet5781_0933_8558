@@ -70,7 +70,7 @@
                         </Grid.RowDefinitions>
 
                         <!--Lines stoping at the bus stop headline-->
-                        <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Bus Lines stopping at this bus stop:" FontWeight="Bold" />
+                        <Label Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="The bus stop serves the next bus lines:" FontWeight="Bold" />
 
 
                         <!--Lines stoping at the bus stop columns headlines-->
@@ -80,7 +80,7 @@
                                 <ColumnDefinition Width="170" />
                             </Grid.ColumnDefinitions>
                             <Border Grid.Column="0" Grid.Row="1" BorderBrush="Black" Background="PapayaWhip" BorderThickness="1 1 1 1">
-                                <TextBlock  Text="Bus Line Number" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold"/>
+                                <TextBlock  Text="Bus Line Number" TextWrapping="Wrap"  TextAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="15" FontWeight="Bold"/>
                             </Border>
 
                             <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" Background="PapayaWhip" BorderThickness="0 1 1 1">

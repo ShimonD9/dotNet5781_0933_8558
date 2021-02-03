@@ -968,4 +968,20 @@
     <NextStation>0</NextStation>
     <ObjectActive>false</ObjectActive>
   </BusLineStation>
+  <BusLineStation>
+    <BusLineID>15</BusLineID>
+    <BusStopKey>60226</BusStopKey>
+    <LineStationIndex>0</LineStationIndex>
+    <PrevStation>0</PrevStation>
+    <NextStation>60227</NextStation>
+    <ObjectActive>true</ObjectActive>
+  </BusLineStation>
+  <BusLineStation>
+    <BusLineID>15</BusLineID>
+    <BusStopKey>60227</BusStopKey>
+    <LineStationIndex>1</LineStationIndex>
+    <PrevStation>60226</PrevStation>
+    <NextStation>0</NextStation>
+    <ObjectActive>true</ObjectActive>
+  </BusLineStation>
 </ArrayOfBusLineStation>

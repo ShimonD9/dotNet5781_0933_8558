@@ -69,7 +69,7 @@ namespace BLApi
         /// <param name="prevGapTimeUpdate"></param>
         /// <param name="prevGapKmUpdate"></param>
         void AddBusLineStation(BusLineStation station, TimeSpan prevGapTimeUpdate, double prevGapKmUpdate);
-        
+
         /// <summary>
         /// Deletes a bus line stations, and adds/deletes consecutive stations based on the given parameters
         /// </summary>
@@ -185,7 +185,7 @@ namespace BLApi
         /// </summary>
         /// <param name="bus"></param>
         void UpdateBus(Bus bus);
-        
+
         /// <summary>
         /// Deletes a bus by a given license number
         /// </summary>
@@ -274,7 +274,7 @@ namespace BLApi
         /// </summary>
         /// <returns>Statistics object</returns>
         Statistics GetStats();
-        
+
         #endregion
 
     }

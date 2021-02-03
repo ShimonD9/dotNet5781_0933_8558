@@ -22,9 +22,9 @@
                         <BeginStoryboard>
                             <Storyboard>
                                 <DoubleAnimation Storyboard.TargetProperty="(TextBox.RenderTransform).(TranslateTransform.X)"
-                                             From="-300"
+                                             From="-500"
                                              To="300"
-                                             SpeedRatio="0.3"
+                                             SpeedRatio="0.1"
                                              AutoReverse="True"
                                              RepeatBehavior="Forever"/>
                             </Storyboard>

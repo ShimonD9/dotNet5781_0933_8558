@@ -742,4 +742,11 @@
     <TravelTime>00:03:10</TravelTime>
     <ObjectActive>False</ObjectActive>
   </ConsecutiveStations>
+  <ConsecutiveStations>
+    <BusStopKeyA>60226</BusStopKeyA>
+    <BusStopKeyB>60227</BusStopKeyB>
+    <Distance>0.3</Distance>
+    <TravelTime>00:04:00</TravelTime>
+    <ObjectActive>true</ObjectActive>
+  </ConsecutiveStations>
 </ConsecutiveStationXml.xml>

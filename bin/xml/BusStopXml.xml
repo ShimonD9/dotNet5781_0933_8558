@@ -1,6 +1,16 @@
 <?xml version="1.0"?>
 <ArrayOfBusStop xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BusStop>
+    <BusStopKey>32333</BusStopKey>
+    <BusStopName>צה''ל 7</BusStopName>
+    <BusStopAddress>צה''ל 7 קרית ים</BusStopAddress>
+    <Latitude>32</Latitude>
+    <Longitude>35</Longitude>
+    <Sunshade>true</Sunshade>
+    <DigitalPanel>false</DigitalPanel>
+    <ObjectActive>true</ObjectActive>
+  </BusStop>
+  <BusStop>
     <BusStopKey>12</BusStopKey>
     <BusStopName>sddd</BusStopName>
     <BusStopAddress>dssd</BusStopAddress>

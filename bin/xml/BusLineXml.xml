@@ -112,4 +112,12 @@
     <LastBusStopKey>12284</LastBusStopKey>
     <ObjectActive>false</ObjectActive>
   </BusLine>
+  <BusLine>
+    <BusLineID>15</BusLineID>
+    <BusLineNumber>333</BusLineNumber>
+    <Area>North</Area>
+    <FirstBusStopKey>60226</FirstBusStopKey>
+    <LastBusStopKey>60227</LastBusStopKey>
+    <ObjectActive>true</ObjectActive>
+  </BusLine>
 </ArrayOfBusLine>
