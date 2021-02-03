@@ -9,6 +9,31 @@
     <Window.Resources>
         <!-- .... other resources .... -->
 
+        <!--Picture animation-->
+        <Style TargetType="Image" x:Key="BusMove">
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TranslateTransform X="0" Y="0"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(TextBox.RenderTransform).(TranslateTransform.X)"
+                                             From="-300"
+                                             To="300"
+                                             SpeedRatio="0.3"
+                                             AutoReverse="True"
+                                             RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+
         <!--A Style that affects all TextBlocks-->
         <Style TargetType="Label" x:Key="baseStyle">
             <Setter Property="FontFamily" Value="Comic Sans MS"/>
@@ -20,7 +45,7 @@
         <Style BasedOn="{StaticResource {x:Type Label}}" TargetType="Label" x:Key="TitleText">
             <Setter Property="FontSize" Value="35"/>
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontFamily" Value="Constantia"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
             <Setter Property="Foreground">
                 <Setter.Value>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
@@ -31,6 +56,7 @@
                     </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
+
         </Style>
 
     </Window.Resources>
@@ -51,8 +77,11 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Border  Grid.Row="0"  HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="7">
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Ross Bus Company Ltd." Style="{StaticResource TitleText}"/>
+        <Border  Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Center" BorderThickness="7">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                <Image  Source="/PlGui;component/Images/bus2.png" ToolTip="בסייעתא דשמיא" RenderOptions.BitmapScalingMode="Fant" Stretch="Fill" Width="50" Height="25" Style="{StaticResource BusMove}"/>
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="Ross Bus Company Ltd." Style="{StaticResource TitleText}"/>
+            </StackPanel>
         </Border>
         
         <!--User Name-->
