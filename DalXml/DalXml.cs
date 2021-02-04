@@ -45,7 +45,7 @@ namespace DL
         /// Get bus by is lisence using Xelement
         /// </summary>
         /// <param name="license"></param>
-        /// <returns></returns>
+        /// <returns>DO.Bus</returns>
         public DO.Bus GetBus(int license)
         {
             XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);        //load the file
@@ -75,7 +75,7 @@ namespace DL
         /// <summary>
         /// Return the all buses using Linq on Xelement
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable DO.Bus </returns>
         public IEnumerable<DO.Bus> GetAllBuses()
         {
             XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
@@ -100,7 +100,7 @@ namespace DL
         /// Return a specific bus using predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable DO.Bus </returns>
         public IEnumerable<DO.Bus> GetAllBusesBy(Predicate<DO.Bus> predicate)
         {
             XElement busRootElem = XMLTools.LoadListFromXMLElement(busPath);
@@ -240,7 +240,7 @@ namespace DL
         /// <summary>
         /// Return all bus at travel
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable DO.BusAtTravel</returns>
         public IEnumerable<DO.BusAtTravel> GetAllBusesAtTravel()
         {
             List<BusAtTravel> ListBusAtravel = XMLTools.LoadListFromXMLSerializer<BusAtTravel>(busAtTravelPath);
@@ -254,7 +254,7 @@ namespace DL
         /// Return all specific bus at travel using predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable BusAtTravel </returns>
         public IEnumerable<BusAtTravel> GetAllBusesAtTravelBy(Predicate<BusAtTravel> predicate)
         {
             List<BusAtTravel> ListBusAtravel = XMLTools.LoadListFromXMLSerializer<BusAtTravel>(busAtTravelPath);
@@ -268,7 +268,7 @@ namespace DL
         /// Get bus at travel by is license
         /// </summary>
         /// <param name="license"></param>
-        /// <returns></returns>
+        /// <returns>DO.BusAtTravel</returns>
         public DO.BusAtTravel GetBusAtTravel(int license)
         {
             List<BusAtTravel> ListBusAtravel = XMLTools.LoadListFromXMLSerializer<BusAtTravel>(busAtTravelPath);
@@ -368,7 +368,7 @@ namespace DL
         /// Get all specific buses Line using predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable DO.BusLine </returns>
         public IEnumerable<DO.BusLine> GetAllBusLinesBy(Predicate<DO.BusLine> predicate)
         {
             List<BusLine> ListBusLine = XMLTools.LoadListFromXMLSerializer<BusLine>(busLinePath);
@@ -381,7 +381,7 @@ namespace DL
         /// <summary>
         /// Return all buses Line 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable BusLine </returns>
         public IEnumerable<BusLine> GetAllBusLines()
         {
             List<BusLine> ListBusLine = XMLTools.LoadListFromXMLSerializer<BusLine>(busLinePath);
@@ -396,7 +396,7 @@ namespace DL
         /// Get bus Line by is ID (running number)
         /// </summary>
         /// <param name="busLineID"></param>
-        /// <returns></returns>
+        /// <returns>DO.BusLine</returns>
         public BusLine GetBusLine(int busLineID)
         {
             List<BusLine> ListBusLine = XMLTools.LoadListFromXMLSerializer<BusLine>(busLinePath);
@@ -415,7 +415,7 @@ namespace DL
         /// if the bus exist but inactive , so we activate it
         /// </summary>
         /// <param name="busLine"></param>
-        /// <returns></returns>
+        /// <returns>bus line ID</returns>
         public int AddBusLine(BusLine busLine)
         {
             int idToReturn;                         //id (runing number) return to update the BL
@@ -508,7 +508,7 @@ namespace DL
         /// <summary>
         /// Returns all Buses Line Stations
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable BusLineStation </returns>
         public IEnumerable<BusLineStation> GetAllBusLineStations()
         {
             List<BusLineStation> ListBusLineStation = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
@@ -523,7 +523,7 @@ namespace DL
         /// Using predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable BusLineStation </returns>
         public IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
         {
             List<BusLineStation> ListBusLineStation = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
@@ -538,7 +538,7 @@ namespace DL
         /// </summary>
         /// <param name="busLineID"></param>
         /// <param name="busStopCode"></param>
-        /// <returns></returns>
+        /// <returns>DO.BusLineStation</returns>
         public BusLineStation GetBusLineStation(int busLineID, int busStopCode)
         {
             List<BusLineStation> ListBusLineStation = XMLTools.LoadListFromXMLSerializer<BusLineStation>(busLineStationPath);
@@ -639,7 +639,7 @@ namespace DL
         /// <summary>
         /// Returns all bus stops
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable BusStop </returns>
         public IEnumerable<BusStop> GetAllBusStops()
         {
             List<BusStop> ListBusStop = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopPath);
@@ -653,7 +653,7 @@ namespace DL
         /// Return all bus stops specifid using predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable BusStop </returns>
         public IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate)
         {
             List<BusStop> ListBusStop = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopPath);
@@ -667,7 +667,7 @@ namespace DL
         /// Get bus stop by is Key
         /// </summary>
         /// <param name="busStopKey"></param>
-        /// <returns></returns>
+        /// <returns>DO.BusStop</returns>
         public BusStop GetBusStop(int busStopKey)
         {
             List<BusStop> ListBusStops = XMLTools.LoadListFromXMLSerializer<BusStop>(busStopPath);
@@ -768,7 +768,7 @@ namespace DL
         /// <summary>
         /// Return all consecutive station
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable ConsecutiveStations </returns>
         public IEnumerable<ConsecutiveStations> GetAllConsecutiveStations()
         {
             XElement consRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
@@ -790,7 +790,7 @@ namespace DL
         /// Return all Consecutive Stations specifide using predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable ConsecutiveStations </returns>
         public IEnumerable<ConsecutiveStations> GetAllConsecutiveStationsBy(Predicate<ConsecutiveStations> predicate)
         {
             XElement conRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
@@ -813,7 +813,7 @@ namespace DL
         /// </summary>
         /// <param name="busStopCodeA"></param>
         /// <param name="busStopCodeB"></param>
-        /// <returns></returns>
+        /// <returns>DO.ConsecutiveStations</returns>
         public ConsecutiveStations GetConsecutiveStations(int busStopCodeA, int busStopCodeB)
         {
             XElement conRootElem = XMLTools.LoadListFromXMLElement(consecutiveStationPath);
@@ -954,7 +954,7 @@ namespace DL
         /// <summary>
         /// Return all Line Departures
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable LineDeparture </returns>
         public IEnumerable<LineDeparture> GetAllLineDeparture()
         {
 
@@ -976,7 +976,7 @@ namespace DL
         /// Return all specifide Line Departure using predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable LineDeparture </returns>
         public IEnumerable<LineDeparture> GetAllLineDepartureBy(Predicate<LineDeparture> predicate)
         {
             XElement lineRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
@@ -997,7 +997,7 @@ namespace DL
         /// Get Line Departure using is ID (runing number)
         /// </summary>
         /// <param name="busLineID"></param>
-        /// <returns></returns>
+        /// <returns>DO.LineDeparture</returns>
         public LineDeparture GetLineDeparture(int busLineID)
         {
             XElement conRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
@@ -1027,7 +1027,7 @@ namespace DL
         /// </summary>
         /// <param name="departureTime"></param>
         /// <param name="busLineID"></param>
-        /// <returns></returns>
+        /// <returns>DO.LineDeparture</returns>
         public LineDeparture GetLineDepartureByTimeAndLine(TimeSpan departureTime, int busLineID)
         {
             XElement conRootElem = XMLTools.LoadListFromXMLElement(lineDeparturePath);
@@ -1158,7 +1158,7 @@ namespace DL
         /// <summary>
         /// Return all users
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable User </returns>
         public IEnumerable<User> GetAllUsers()
         {
             List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(userPath);
@@ -1172,7 +1172,7 @@ namespace DL
         /// Return all specific users usinf predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable User </returns>
         public IEnumerable<User> GetAllUsersBy(Predicate<User> predicate)
         {
             List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(userPath);
@@ -1186,7 +1186,7 @@ namespace DL
         /// Get user by is user name
         /// </summary>
         /// <param name="userName"></param>
-        /// <returns></returns>
+        /// <returns>DO.User</returns>
         public User GetUser(string userName)
         {
             List<User> ListUsers = XMLTools.LoadListFromXMLSerializer<User>(userPath);

@@ -24,7 +24,7 @@ namespace DL
         /// <summary>
         /// Return all buses using linq
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable Bus</returns>
         public IEnumerable<Bus> GetAllBuses()
         {
 
@@ -38,7 +38,7 @@ namespace DL
         /// Return all buses with condition using predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable Bus </returns>
         public IEnumerable<Bus> GetAllBusesBy(Predicate<Bus> predicate)
         {
             return from bus in DataSource.ListBuses
@@ -50,7 +50,7 @@ namespace DL
         /// Return bus by is license
         /// </summary>
         /// <param name="license"></param>
-        /// <returns></returns>
+        /// <returns>DO.Bus</returns>
         public Bus GetBus(int license)
         {
             Bus bus = DataSource.ListBuses.Find(b => b.License == license);
@@ -131,7 +131,7 @@ namespace DL
         /// <summary>
         /// Return all bus at travel
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable BusAtTravel </returns>
         public IEnumerable<BusAtTravel> GetAllBusesAtTravel()  
         {
             return from busAtTravel in DataSource.ListBusAtTravels
@@ -142,7 +142,7 @@ namespace DL
         /// Returns all bus at travel specifide using predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable BusAtTravel </returns>
         public IEnumerable<BusAtTravel> GetAllBusesAtTravelBy(Predicate<BusAtTravel> predicate)
         {
             return from busAtTravel in DataSource.ListBusAtTravels
@@ -153,7 +153,7 @@ namespace DL
         /// Get bus at travel by is license
         /// </summary>
         /// <param name="license"></param>
-        /// <returns></returns>
+        /// <returns>DO.BusAtTravel</returns>
         public BusAtTravel GetBusAtTravel(int license)
         {
             BusAtTravel bus = DataSource.ListBusAtTravels.Find(b => b.License == license);
@@ -233,7 +233,7 @@ namespace DL
         /// <summary>
         /// Returns all buses line stations
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable BusLineStation</returns>
         public IEnumerable<BusLineStation> GetAllBusLineStations()
         {
             return from busLineStation in DataSource.ListBusLineStations
@@ -244,7 +244,7 @@ namespace DL
         /// Return all buses lines stations sprcifide using predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable BusLineStation </returns>
         public IEnumerable<BusLineStation> GetAllBusLineStationsBy(Predicate<BusLineStation> predicate)
         {
             return from busLineStation in DataSource.ListBusLineStations
@@ -256,7 +256,7 @@ namespace DL
         /// </summary>
         /// <param name="busLineID"></param>
         /// <param name="busStopCode"></param>
-        /// <returns></returns>
+        /// <returns>DO.BusLineStation</returns>
         public BusLineStation GetBusLineStation(int busLineID, int busStopCode)
         {
             BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID 
@@ -337,7 +337,7 @@ namespace DL
         /// <summary>
         /// Return all bus lines
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable BusLine </returns>
         public IEnumerable<BusLine> GetAllBusLines()
         {
             return from busLine in DataSource.ListBusLines
@@ -350,7 +350,7 @@ namespace DL
         /// Return all specific bus line by predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable BusLine </returns>
         public IEnumerable<BusLine> GetAllBusLinesBy(Predicate<BusLine> predicate)
         {
             return from busLine in DataSource.ListBusLines
@@ -358,12 +358,11 @@ namespace DL
                    select busLine.Clone();
         }
 
-
         /// <summary>
         /// Get bus line by is ID (runing number)
         /// </summary>
         /// <param name="busLineID"></param>
-        /// <returns></returns>
+        /// <returns>DO.BusLine</returns>
         public BusLine GetBusLine(int busLineID)
         {
             BusLine bus = DataSource.ListBusLines.Find(b => b.BusLineID == busLineID);
@@ -375,12 +374,11 @@ namespace DL
                 throw new DO.ExceptionDAL_KeyNotFound(busLineID, $"Bus line number not found: {busLineID}");
         }
 
-
         /// <summary>
         /// Add bus line to the list
         /// </summary>
         /// <param name="busLine"></param>
-        /// <returns></returns>
+        /// <returns>bus line ID</returns>
         public int AddBusLine(BusLine busLine)
         {
             int idToReturn;             //return the id for updating that in the BL
@@ -454,7 +452,7 @@ namespace DL
         /// <summary>
         /// Returns all bus stops
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable BusStop </returns>
         public IEnumerable<BusStop> GetAllBusStops()
         {
             return from busStopLine in DataSource.ListBusStops
@@ -466,7 +464,7 @@ namespace DL
         /// Return all bus stops specifid using predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable BusStop</returns>
         public IEnumerable<BusStop> GetAllBusStopsBy(Predicate<BusStop> predicate)
         {
             return from busStop in DataSource.ListBusStops
@@ -478,7 +476,7 @@ namespace DL
         /// Get bus stop by is Key
         /// </summary>
         /// <param name="busStopKey"></param>
-        /// <returns></returns>
+        /// <returns>DO.BusStop</returns>
         public BusStop GetBusStop(int busStopKey)
         {
             BusStop busStop = DataSource.ListBusStops.Find(b => b.BusStopKey == busStopKey);
@@ -560,7 +558,7 @@ namespace DL
         /// <summary>
         /// Return all consecutive station
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable ConsecutiveStations</returns>
         public IEnumerable<ConsecutiveStations> GetAllConsecutiveStations()
         {
             return from busConsecutiveStations in DataSource.ListConsecutiveStations
@@ -572,7 +570,7 @@ namespace DL
         /// Return all Consecutive Stations specifide using predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable ConsecutiveStations</returns>
         public IEnumerable<ConsecutiveStations> GetAllConsecutiveStationsBy(Predicate<ConsecutiveStations> predicate)
         {
             return from busConsecutiveStations in DataSource.ListConsecutiveStations
@@ -585,7 +583,7 @@ namespace DL
         /// </summary>
         /// <param name="busStopCodeA"></param>
         /// <param name="busStopCodeB"></param>
-        /// <returns></returns>
+        /// <returns>DO.ConsecutiveStations</returns>
         public ConsecutiveStations GetConsecutiveStations(int busStopCodeA, int busStopCodeB)
         {
             ConsecutiveStations conStations = DataSource.ListConsecutiveStations.Find(b => b.BusStopKeyA == busStopCodeA && b.BusStopKeyB == busStopCodeB);
@@ -670,7 +668,7 @@ namespace DL
         /// <summary>
         /// Return all Line Departures
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable LineDeparture</returns>
         public IEnumerable<LineDeparture> GetAllLineDeparture()
         {
             return from busLineDeparture in DataSource.ListLineDepartures
@@ -681,7 +679,7 @@ namespace DL
         /// Return all specifide Line Departure using predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable LineDeparture</returns>
         public IEnumerable<LineDeparture> GetAllLineDepartureBy(Predicate<LineDeparture> predicate)
         {
             return from busLineDeparture in DataSource.ListLineDepartures
@@ -692,7 +690,7 @@ namespace DL
         /// Get Line Departure using is ID (runing number)
         /// </summary>
         /// <param name="busLineID"></param>
-        /// <returns></returns>
+        /// <returns>DO.LineDeparture</returns>
         public LineDeparture GetLineDeparture(int busLineID)
         {
             LineDeparture busLineDeparture = DataSource.ListLineDepartures.Find(b => b.BusLineID == busLineID);
@@ -709,7 +707,7 @@ namespace DL
         /// </summary>
         /// <param name="departureTime"></param>
         /// <param name="busLineID"></param>
-        /// <returns></returns>
+        /// <returns>DO.LineDeparture</returns>
         public LineDeparture GetLineDepartureByTimeAndLine(TimeSpan departureTime, int busLineID)
         {
             LineDeparture busLineDeparture = DataSource.ListLineDepartures.Find(b => b.BusLineID == busLineID && b.DepartureTime == departureTime);
@@ -787,7 +785,7 @@ namespace DL
         /// <summary>
         /// Return all users
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IEnumerable User</returns>
         public IEnumerable<User> GetAllUsers()
         {
             return from user in DataSource.ListUsers
@@ -798,7 +796,7 @@ namespace DL
         /// Return all specific users usinf predicate
         /// </summary>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>IEnumerable User</returns>
         public IEnumerable<User> GetAllUsersBy(Predicate<User> predicate)
         {
             return from user in DataSource.ListUsers
@@ -809,7 +807,7 @@ namespace DL
         /// Get user by is user name
         /// </summary>
         /// <param name="userName"></param>
-        /// <returns></returns>
+        /// <returns>DO.User</returns>
         public User GetUser(string userName)
         {
             User user = DataSource.ListUsers.Find(b => b.UserName == userName);
