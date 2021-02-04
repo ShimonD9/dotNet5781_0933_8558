@@ -13,15 +13,19 @@ namespace DL
 
     static class XMLConfig
     {
+        /// <summary>
+        /// class XML config helper for the running number
+        /// </summary>
+
         static XElement root;
         static string dir = @"xml\";
         static string configPath = @"configXml.xml";
         static XMLConfig()
         {
-            if (!Directory.Exists(dir))
+            if (!Directory.Exists(dir))                 //in case there is still no file, so open new one
                 Directory.CreateDirectory(dir);
-            if (!File.Exists(dir + configPath))
-            {
+            if (!File.Exists(dir + configPath))         //in case the filr not exist yet
+            {                                           //create new file for running number
                 root = new XElement("config",
                     new XElement("BusInTravelCounter",0),
                     new XElement("BusLineCounter",0),
@@ -33,7 +37,7 @@ namespace DL
             else
                 try
                 {
-                    root = XElement.Load(dir + configPath);
+                    root = XElement.Load(dir + configPath);         //load file
                 }
                 catch
                 {
@@ -41,7 +45,7 @@ namespace DL
                 }
         }
 
-        public static int BusAtTravelCounter()
+        public static int BusAtTravelCounter()          //running number (ID) of the bus at travel
         {
 
             int counter = int.Parse(root.Element("BusInTravelCounter").Value);
@@ -52,7 +56,7 @@ namespace DL
 
         }
 
-        public static int BusLineCounter()
+        public static int BusLineCounter()              //running number (ID) of the bus line
         {
             int counter = int.Parse(root.Element("BusLineCounter").Value);
             counter++;
@@ -61,7 +65,7 @@ namespace DL
             return counter;
         }
 
-        public static int LineDepartureCounter()
+        public static int LineDepartureCounter()        //running number (ID) of the line departure
         {
             int counter = int.Parse(root.Element("PassengTravelCounter").Value);
             counter++;

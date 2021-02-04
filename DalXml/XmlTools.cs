@@ -14,14 +14,21 @@ namespace DL
 
     class XMLTools     //xmlTools(save and load)
     {
-        static string dir = @"xml\";
+        static string dir = @"xml\";        //the head path
 
         static XMLTools()
 
         {
-            if (!Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
+            if (!Directory.Exists(dir))                  //in case the file not created yet
+                Directory.CreateDirectory(dir);          //open new one  
         }
+
+        /// <summary>
+        /// function that save changes in to the file
+        /// works with Xelement 
+        /// </summary>
+        /// <param name="rootElem"></param>
+        /// <param name="filePath"></param>
         #region SaveLoadWithXElement
         public static void SaveListToXMLElement(XElement rootElem, string filePath)
         {
@@ -35,6 +42,12 @@ namespace DL
             }
         }
 
+        /// <summary>
+        /// function that load details from file
+        /// works with Xelement 
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public static XElement LoadListFromXMLElement(string filePath)
         {
             try
@@ -58,6 +71,14 @@ namespace DL
         #endregion
 
         #region SaveLoadWithXMLSerializer
+
+        /// <summary>
+        /// function that save changes in to the file
+        /// using XmlSerializer
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list"></param>
+        /// <param name="filePath"></param>
         public static void SaveListToXMLSerializer<T>(List<T> list, string filePath)
         {
             try
@@ -72,6 +93,14 @@ namespace DL
                 throw new DO.ExceptionDAL_XMLFileLoadCreate(filePath, $"fail to create xml file: {filePath}", ex);
             }
         }
+
+        /// <summary>
+        /// function that load details from file
+        /// using XmlSerializer
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public static List<T> LoadListFromXMLSerializer<T>(string filePath)
         {
             try
