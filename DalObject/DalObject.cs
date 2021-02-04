@@ -18,7 +18,6 @@ namespace DL
 
         //Implement IDL methods, CRUD:
 
-
         #region Bus  // IDL implemetation for Class Bus objects (crud)
 
         /// <summary>
@@ -105,7 +104,7 @@ namespace DL
         /// </summary>
         /// <param name="licenseNumber"></param>
         /// <param name="update"></param>
-        public void UpdateBus(int licenseNumber, Action<Bus> update)  
+        public void UpdateBus(int licenseNumber, Action<Bus> update)
         {
             Bus busUpdate = GetBus(licenseNumber);
             update(busUpdate);
@@ -115,7 +114,7 @@ namespace DL
         /// Unactive specifid Bus
         /// </summary>
         /// <param name="license"></param>
-        public void DeleteBus(int license)      
+        public void DeleteBus(int license)
         {
             Bus bus = DataSource.ListBuses.Find(b => b.License == license);
             if (bus != null && bus.ObjectActive)                                //in case the bus found 
@@ -132,7 +131,7 @@ namespace DL
         /// Return all bus at travel
         /// </summary>
         /// <returns>IEnumerable BusAtTravel </returns>
-        public IEnumerable<BusAtTravel> GetAllBusesAtTravel()  
+        public IEnumerable<BusAtTravel> GetAllBusesAtTravel()
         {
             return from busAtTravel in DataSource.ListBusAtTravels
                    where busAtTravel.ObjectActive == true
@@ -206,7 +205,7 @@ namespace DL
         /// </summary>
         /// <param name="license"></param>
         /// <param name="update"></param>
-        public void UpdateBusAtTravel(int license, Action<BusAtTravel> update) 
+        public void UpdateBusAtTravel(int license, Action<BusAtTravel> update)
         {
             BusAtTravel busUpdate = GetBusAtTravel(license);
             update(busUpdate);
@@ -259,7 +258,7 @@ namespace DL
         /// <returns>DO.BusLineStation</returns>
         public BusLineStation GetBusLineStation(int busLineID, int busStopCode)
         {
-            BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID 
+            BusLineStation bus = DataSource.ListBusLineStations.Find(b => b.BusStopKey == busStopCode && b.BusLineID == busLineID
             && b.ObjectActive == true); // Assuming only active stations will be asked for 
 
             if (bus != null)
@@ -311,7 +310,7 @@ namespace DL
         /// <param name="busLineID"></param>
         /// <param name="busStopCode"></param>
         /// <param name="update"></param>
-        public void UpdateBusLineStation(int busLineID, int busStopCode, Action<BusLineStation> update) 
+        public void UpdateBusLineStation(int busLineID, int busStopCode, Action<BusLineStation> update)
         {
             BusLineStation busUpdate = GetBusLineStation(busLineID, busStopCode);
             update(busUpdate);
@@ -425,7 +424,7 @@ namespace DL
         /// </summary>
         /// <param name="busLineNumber"></param>
         /// <param name="update"></param>
-        public void UpdateBusLine(int busLineNumber, Action<BusLine> update) 
+        public void UpdateBusLine(int busLineNumber, Action<BusLine> update)
         {
             BusLine busUpdate = GetBusLine(busLineNumber);
             update(busUpdate);
@@ -492,7 +491,7 @@ namespace DL
         /// Adding new bus stop to the list
         /// </summary>
         /// <param name="busStop"></param>
-        public void AddBusStop(BusStop busStop) 
+        public void AddBusStop(BusStop busStop)
         {
             BusStop existStop = DataSource.ListBusStops.FirstOrDefault(b => b.BusStopKey == busStop.BusStopKey);
             if (existStop != null && existStop.ObjectActive == true)
@@ -516,7 +515,7 @@ namespace DL
         /// <param name="busStop"></param>
         public void UpdateBusStop(BusStop busStop)
         {
-           //find the index of the specific bus stop to update
+            //find the index of the specific bus stop to update
             int index = DataSource.ListBusStops.FindIndex(b => b.BusStopKey == busStop.BusStopKey);
             if (DataSource.ListBusStops[index] != null && DataSource.ListBusStops[index].ObjectActive)
                 DataSource.ListBusStops[index] = busStop.Clone();                       //update the bus stop
@@ -531,7 +530,7 @@ namespace DL
         /// </summary>
         /// <param name="busStopKey"></param>
         /// <param name="update"></param>
-        public void UpdateBusStop(int busStopKey, Action<BusStop> update) 
+        public void UpdateBusStop(int busStopKey, Action<BusStop> update)
         {
             BusStop busStopUpdate = GetBusStop(busStopKey);
             update(busStopUpdate);
@@ -640,7 +639,7 @@ namespace DL
         /// <param name="busStopCodeA"></param>
         /// <param name="busStopCodeB"></param>
         /// <param name="update"></param>
-        public void UpdateConsecutiveStations(int busStopCodeA, int busStopCodeB, Action<ConsecutiveStations> update) 
+        public void UpdateConsecutiveStations(int busStopCodeA, int busStopCodeB, Action<ConsecutiveStations> update)
         {
             ConsecutiveStations busConsecutiveUpdate = GetConsecutiveStations(busStopCodeA, busStopCodeB);
             update(busConsecutiveUpdate);
@@ -758,7 +757,7 @@ namespace DL
         /// </summary>
         /// <param name="busLineID"></param>
         /// <param name="update"></param>
-        public void UpdateLineDeparture(int busLineID, Action<LineDeparture> update) 
+        public void UpdateLineDeparture(int busLineID, Action<LineDeparture> update)
         {
             LineDeparture busUpdate = GetLineDeparture(busLineID);
             update(busUpdate);
@@ -858,7 +857,7 @@ namespace DL
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="update"></param>
-        public void UpdateUser(string userName, Action<User> update) 
+        public void UpdateUser(string userName, Action<User> update)
         {
             User userUpdate = GetUser(userName);
             update(userUpdate);

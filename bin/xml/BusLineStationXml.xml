@@ -854,7 +854,7 @@
     <LineStationIndex>0</LineStationIndex>
     <PrevStation>0</PrevStation>
     <NextStation>12284</NextStation>
-    <ObjectActive>true</ObjectActive>
+    <ObjectActive>false</ObjectActive>
   </BusLineStation>
   <BusLineStation>
     <BusLineID>12</BusLineID>
@@ -862,7 +862,7 @@
     <LineStationIndex>1</LineStationIndex>
     <PrevStation>4009</PrevStation>
     <NextStation>0</NextStation>
-    <ObjectActive>true</ObjectActive>
+    <ObjectActive>false</ObjectActive>
   </BusLineStation>
   <BusLineStation>
     <BusLineID>13</BusLineID>
@@ -1013,6 +1013,22 @@
     <BusStopKey>60228</BusStopKey>
     <LineStationIndex>1</LineStationIndex>
     <PrevStation>12284</PrevStation>
+    <NextStation>0</NextStation>
+    <ObjectActive>true</ObjectActive>
+  </BusLineStation>
+  <BusLineStation>
+    <BusLineID>17</BusLineID>
+    <BusStopKey>65299</BusStopKey>
+    <LineStationIndex>0</LineStationIndex>
+    <PrevStation>0</PrevStation>
+    <NextStation>26475</NextStation>
+    <ObjectActive>true</ObjectActive>
+  </BusLineStation>
+  <BusLineStation>
+    <BusLineID>17</BusLineID>
+    <BusStopKey>26475</BusStopKey>
+    <LineStationIndex>1</LineStationIndex>
+    <PrevStation>65299</PrevStation>
     <NextStation>0</NextStation>
     <ObjectActive>true</ObjectActive>
   </BusLineStation>

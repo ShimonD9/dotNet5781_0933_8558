@@ -24,4 +24,10 @@
     <ManageAccess>false</ManageAccess>
     <ObjectActive>true</ObjectActive>
   </User>
+  <User>
+    <UserName>koko2</UserName>
+    <Password>2001</Password>
+    <ManageAccess>false</ManageAccess>
+    <ObjectActive>true</ObjectActive>
+  </User>
 </ArrayOfUser>
