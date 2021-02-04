@@ -17,14 +17,6 @@
     <ObjectActive>true</ObjectActive>
   </BusLine>
   <BusLine>
-    <BusLineID>4</BusLineID>
-    <BusLineNumber>240</BusLineNumber>
-    <Area>Center</Area>
-    <FirstBusStopKey>60403</FirstBusStopKey>
-    <LastBusStopKey>21165</LastBusStopKey>
-    <ObjectActive>true</ObjectActive>
-  </BusLine>
-  <BusLine>
     <BusLineID>5</BusLineID>
     <BusLineNumber>310</BusLineNumber>
     <Area>Jerusalem</Area>
@@ -118,6 +110,14 @@
     <Area>North</Area>
     <FirstBusStopKey>60226</FirstBusStopKey>
     <LastBusStopKey>60227</LastBusStopKey>
+    <ObjectActive>true</ObjectActive>
+  </BusLine>
+  <BusLine>
+    <BusLineID>4</BusLineID>
+    <BusLineNumber>240</BusLineNumber>
+    <Area>Center</Area>
+    <FirstBusStopKey>60403</FirstBusStopKey>
+    <LastBusStopKey>21165</LastBusStopKey>
     <ObjectActive>true</ObjectActive>
   </BusLine>
 </ArrayOfBusLine>

@@ -114,11 +114,11 @@
                                                 </Border>
 
                                                 <Border Grid.Column="2" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                                    <TextBlock Name ="tbDistanceToNext" Text="{Binding Path = 'DistanceToNext'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" TextAlignment="Center" />
+                                                    <TextBlock Name ="tbDistanceToNext" Text="{Binding Path = 'DistanceToNext'}" ToolTip="To update distance, delete the station and add again" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" TextAlignment="Center" />
                                                 </Border>
 
                                                 <Border Grid.Column="3" BorderBrush="Black" BorderThickness="0 1 1 1">
-                                                    <TextBlock Name ="tbTimeToNext" Text="{Binding Path = 'TimeToNext'}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" TextAlignment="Center" />
+                                                    <TextBlock Name ="tbTimeToNext" Text="{Binding Path = 'TimeToNext'}" ToolTip="To update time, delete the station and add again" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" TextAlignment="Center" />
                                                 </Border>
                                             </Grid>
                                         </DataTemplate>

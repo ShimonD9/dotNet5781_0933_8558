@@ -192,9 +192,9 @@
   <ConsecutiveStations>
     <BusStopKeyA>60403</BusStopKeyA>
     <BusStopKeyB>60237</BusStopKeyB>
-    <Distance>0.64</Distance>
-    <TravelTime>00:02:04</TravelTime>
-    <ObjectActive>true</ObjectActive>
+    <Distance>1.2</Distance>
+    <TravelTime>00:03:10</TravelTime>
+    <ObjectActive>True</ObjectActive>
   </ConsecutiveStations>
   <ConsecutiveStations>
     <BusStopKeyA>60237</BusStopKeyA>

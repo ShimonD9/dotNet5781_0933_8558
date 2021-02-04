@@ -52,12 +52,12 @@
   </Bus>
   <Bus>
     <License>32207541</License>
-    <LicenseDate>10/3/2018 12:00:00 AM</LicenseDate>
+    <LicenseDate>03/10/2018 00:00:00</LicenseDate>
     <Mileage>16000</Mileage>
-    <Fuel>122</Fuel>
-    <BusStatus>READY_FOR_TRAVEL</BusStatus>
-    <LastTreatmentDate>3/1/2020 12:00:00 AM</LastTreatmentDate>
-    <MileageAtLastTreat>20</MileageAtLastTreat>
+    <Fuel>1200</Fuel>
+    <BusStatus>DANGEROUS</BusStatus>
+    <LastTreatmentDate>01/03/2017 00:00:00</LastTreatmentDate>
+    <MileageAtLastTreat>16000</MileageAtLastTreat>
     <ObjectActive>True</ObjectActive>
   </Bus>
   <Bus>
