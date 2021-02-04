@@ -44,6 +44,13 @@ namespace BLApi
         /// </summary>
         /// <param name="busLineID"></param>
         void DeleteBusLine(int busLineID);
+
+        /// <summary>
+        /// Groups bus lines by their area
+        /// </summary>
+        /// <returns>A collection of bus lines grouped by the area key</returns>
+        IEnumerable<IGrouping<BO.Enums.AREA, BusLine>> GetLineByArea();
+
         #endregion
 
         #region BusLineStation: Get, Add, Delete methods
@@ -79,11 +86,6 @@ namespace BLApi
         /// <param name="gapKmUpdate"></param>
         void DeleteBusLineStation(int busLineID, int busStopCode, TimeSpan gapTimeUpdate, double gapKmUpdate);
 
-        /// <summary>
-        /// Groups bus lines by their area
-        /// </summary>
-        /// <returns>A collection of bus lines grouped by the area key</returns>
-        IEnumerable<IGrouping<BO.Enums.AREA, BusLine>> GetLineByArea();
 
         #endregion
 

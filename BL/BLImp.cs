@@ -163,6 +163,15 @@ namespace BL
         }
 
 
+        public IEnumerable<IGrouping<BO.Enums.AREA, BusLine>> GetLineByArea()
+        {
+            return from b in GetAllBusLines()
+                   orderby b.BusLineNumber // Orders by the bus line number
+                   group b by b.Area into g // Groups by Area
+                   select g;
+        }
+
+
         #endregion
 
         #region BusLineStation: Adaptors and CRUD implementations
@@ -465,14 +474,6 @@ namespace BL
         }
 
 
-
-        public IEnumerable<IGrouping<BO.Enums.AREA, BusLine>> GetLineByArea()
-        {
-            return from b in GetAllBusLines()
-                   orderby b.BusLineNumber // Orders by the bus line number
-                   group b by b.Area into g // Groups by Area
-                   select g;
-        }
         #endregion
 
         #region Bus: Adaptors and CRUD implementations

@@ -424,7 +424,6 @@
             <!--Statistics tab-->
 
             <TabItem Header="Statistics">
-
                 <Grid Name="gStatistics" DataContext="{Binding}" Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
                         <RowDefinition/>

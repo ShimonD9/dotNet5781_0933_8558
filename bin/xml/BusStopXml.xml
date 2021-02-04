@@ -107,7 +107,7 @@
     <Latitude>32.095152</Latitude>
     <Longitude>34.830981</Longitude>
     <Sunshade>true</Sunshade>
-    <DigitalPanel>true</DigitalPanel>
+    <DigitalPanel>false</DigitalPanel>
     <ObjectActive>true</ObjectActive>
   </BusStop>
   <BusStop>
@@ -236,7 +236,7 @@
     <BusStopAddress>שדרות הפלמ''ח 2 אשדוד</BusStopAddress>
     <Latitude>31.804129</Latitude>
     <Longitude>34.660742</Longitude>
-    <Sunshade>true</Sunshade>
+    <Sunshade>false</Sunshade>
     <DigitalPanel>true</DigitalPanel>
     <ObjectActive>true</ObjectActive>
   </BusStop>
